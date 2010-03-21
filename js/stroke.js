@@ -121,35 +121,40 @@ StrokeManager.prototype = {
             ", " + bg_color[2] + ")";
         context.fillRect(0, 0, this.canvas.width, this.canvas.height);
 
-        // render strokes till index
-        console.log('current stroke index ' + this.current_stroke_index);
         if(this.current_stroke_index > 0) {
             this.current_stroke_index--;
         }
         for(i = 0; i < this.current_stroke_index; i++) {
             stroke = this.strokes[i];
 
-            if(stroke) {
-                if(stroke[0] == 'stroke') {
-                    console.log('render stroke');
-                    segments = stroke[1];
-
-                    for(j = 0; j < segments.length; j++) {
-                        segment = segments[j];
-                        this.strokeTemplate(segment[0], segment[1], segment[2],
-                            segment[3], segment[4], segment[5], segment[6],
-                            segment[7], segment[8], segment[9], segment[10],
-                            segment[11], segment[12], false);
-                    }
-                }
-                else if(stroke[0] == 'setStyle') {
-                    console.log('set style');
-                    this.setStyle(stroke[1], stroke[2], false);
-                }
-            }
+            this.render(stroke);
         }
     },
     redo: function() {
-        // if current_stroke index is not the same as stroke stack len, render a stroke from there and ++ index
+        if(this.strokes.length > this.current_stroke_index) {
+            stroke = this.strokes[this.current_stroke_index];
+            this.render(stroke);
+            this.current_stroke_index++;
+        }
+    },
+    render: function(stroke) {
+        if(stroke) {
+            if(stroke[0] == 'stroke') {
+                console.log('render stroke');
+                segments = stroke[1];
+
+                for(j = 0; j < segments.length; j++) {
+                    segment = segments[j];
+                    this.strokeTemplate(segment[0], segment[1], segment[2],
+                        segment[3], segment[4], segment[5], segment[6],
+                        segment[7], segment[8], segment[9], segment[10],
+                        segment[11], segment[12], false);
+                }
+            }
+            else if(stroke[0] == 'setStyle') {
+                console.log('set style');
+                this.setStyle(stroke[1], stroke[2], false);
+            }
+        }
     }
 };
