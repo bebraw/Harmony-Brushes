@@ -56,6 +56,8 @@ function init() {
     menu.xMirror.addEventListener("click", onMenuXMirror, false);
     menu.yMirror.addEventListener("click", onMenuYMirror, false);
     menu.xyMirror.addEventListener("click", onMenuXYMirror, false);
+    menu.undo.addEventListener("click", onMenuUndo, false);
+    menu.redo.addEventListener("click", onMenuRedo, false);
     menu.save.addEventListener("click", onMenuSave, false);
     menu.clear.addEventListener("click", onMenuClear, false);
     menu.about.addEventListener("click", onMenuAbout, false);
@@ -69,7 +71,7 @@ function init() {
         hash = window.location.hash.substr(1, window.location.hash.length);
         for (i = 0; i < STYLES.length; i++) {
             if (hash == STYLES[i]) {
-                strokeManager.setStyle(STYLES[i], context);
+                strokeManager.setStyle(STYLES[i], context, true);
                 menu.selector.selectedIndex = i;
                 manager_set = true;
                 break
@@ -77,7 +79,7 @@ function init() {
         }
     }
     if (!manager_set) {
-        strokeManager.setStyle(STYLES[0], context);
+        strokeManager.setStyle(STYLES[0], context, true);
     }
 
     about = new About();
@@ -217,7 +219,7 @@ function onMenuSelectorChange(e) {
         return
     }
     strokeManager.destroy(); // XXX: is this needed?
-    strokeManager.setStyle(STYLES[menu.selector.selectedIndex], context);
+    strokeManager.setStyle(STYLES[menu.selector.selectedIndex], context, true);
     window.location.hash = STYLES[menu.selector.selectedIndex]
 }
 function onMenuMouseOver(a) {
@@ -252,6 +254,16 @@ function onMenuXYMirror() {
     setToggle(this, xyMirrorIsDown);
 }
 
+function onMenuUndo() {
+    // XXX: perhaps context should be passed to manager at init
+    console.log('undo');
+    strokeManager.undo(context, BACKGROUND_COLOR);
+}
+function onMenuRedo() {
+    console.log('redo');
+    strokeManager.redo();
+}
+
 function onMenuSave() {
     var a = flattenCanvas.getContext("2d");
     a.fillStyle = "rgb(" + BACKGROUND_COLOR[0] + ", " + BACKGROUND_COLOR[1] + ", " + BACKGROUND_COLOR[2] + ")";
@@ -261,7 +273,7 @@ function onMenuSave() {
 }
 function onMenuClear() {
     context.clearRect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
-    strokeManager.setStyle(STYLES[menu.selector.selectedIndex], context);
+    strokeManager.setStyle(STYLES[menu.selector.selectedIndex], context, true);
 }
 function onMenuAbout(a) {
     cleanPopUps();
@@ -281,12 +293,16 @@ function onCanvasMouseDown(a) {
         targetX, targetY);
 }
 function onCanvasMouseUp(a) {
-    isMouseDown = false;
+    if(isMouseDown) {
+        console.log('canvas mouse up after drawing');
 
-    // XXX: move mirrors and keys to a state variables
-    strokeManager.strokeEnd(mouseX, mouseY, xMirrorIsDown, yMirrorIsDown,
-        xyMirrorIsDown, aKeyIsDown, sKeyIsDown, dKeyIsDown, initialX, initialY,
-        targetX, targetY);
+        // XXX: move mirrors and keys to a state variables
+        strokeManager.strokeEnd(mouseX, mouseY, xMirrorIsDown, yMirrorIsDown,
+            xyMirrorIsDown, aKeyIsDown, sKeyIsDown, dKeyIsDown, initialX,
+            initialY, targetX, targetY);
+
+        isMouseDown = false;
+    }
 }
 function onCanvasMouseMove(a) {
     if (!a) {
@@ -317,6 +333,8 @@ function onCanvasTouchStart(a) {
 function onCanvasTouchEnd(a) {
     if (a.touches.length == 1) {
         var b = a.touches[0];
+
+        console.log('canvas touch end');
 
         strokeManager.strokeEnd(b.pageX, b.pageY, xMirrorIsDown, yMirrorIsDown,
             xyMirrorIsDown, aKeyIsDown, sKeyIsDown, dKeyIsDown, initialX,

@@ -14,13 +14,16 @@ function project_coordinate(x1, y1, x2, y2, x3, y3) {
         y0 = y1 + t * dy;
     }
 
-    return Array(x0, y0);
+    return [x0, y0];
 }
 
 function StrokeManager(a) {
     this.init(a)
 }
 StrokeManager.prototype = {
+    strokes: [],
+    current_stroke: [],
+    current_stroke_index: 0,
     canvas: null,
     style: null,
     xMirrorStyle: null,
@@ -30,15 +33,21 @@ StrokeManager.prototype = {
         this.canvas = canvas;
     },
     destroy: function () {},
-    setStyle: function(styleClass, context) {
+    setStyle: function(styleClass, context, isRealStroke) {
         this.style = eval("new " + styleClass + "(context)");
         this.xMirrorStyle = eval("new " + styleClass + "(context)");
         this.yMirrorStyle = eval("new " + styleClass + "(context)");
         this.xyMirrorStyle = eval("new " + styleClass + "(context)");
+
+        if(isRealStroke) {
+            // TODO!
+            //this.strokes.push(['setStyle', styleClass, context]);
+            //this.current_stroke_index++;
+        }
     },
     strokeTemplate: function (mouseX, mouseY, xMirrorIsDown, yMirrorIsDown,
             xyMirrorIsDown, aKeyIsDown, sKeyIsDown, dKeyIsDown,
-            initialX, initialY, targetX, targetY, method) {
+            initialX, initialY, targetX, targetY, method, isRealStroke) {
         x = sKeyIsDown? initialX: mouseX;
         y = aKeyIsDown? initialY: mouseY;
 
@@ -65,26 +74,82 @@ StrokeManager.prototype = {
         if((xMirrorIsDown && yMirrorIsDown) || xyMirrorIsDown) {
             this.xyMirrorStyle[method](mirrorX, mirrorY);
         }
+
+        if(isRealStroke) {
+            this.current_stroke.push([mouseX, mouseY, xMirrorIsDown,
+                yMirrorIsDown, xyMirrorIsDown, aKeyIsDown, sKeyIsDown,
+                dKeyIsDown, initialX, initialY, targetX, targetY, method]);
+        }
     },
     strokeStart: function (mouseX, mouseY, xMirrorIsDown, yMirrorIsDown,
             xyMirrorIsDown, aKeyIsDown, sKeyIsDown, dKeyIsDown,
             initialX, initialY, targetX, targetY) {
         this.strokeTemplate(mouseX, mouseY, xMirrorIsDown, yMirrorIsDown,
             xyMirrorIsDown, aKeyIsDown, sKeyIsDown, dKeyIsDown,
-            initialX, initialY, targetX, targetY, 'strokeStart');
+            initialX, initialY, targetX, targetY, 'strokeStart', true);
+
+        if(this.strokes.length > this.current_stroke_index) {
+            amountOfExtras = this.strokes.length - this.current_stroke_index;
+            console.log('amount of extras ' + amountOfExtras);
+
+            for(i = 0; i < amountOfExtras; i++) {
+                this.strokes.pop();
+            }
+        }
     },
     stroke: function (mouseX, mouseY, xMirrorIsDown, yMirrorIsDown,
             xyMirrorIsDown, aKeyIsDown, sKeyIsDown, dKeyIsDown,
             initialX, initialY, targetX, targetY) {
         this.strokeTemplate(mouseX, mouseY, xMirrorIsDown, yMirrorIsDown,
             xyMirrorIsDown, aKeyIsDown, sKeyIsDown, dKeyIsDown,
-            initialX, initialY, targetX, targetY, 'stroke');
+            initialX, initialY, targetX, targetY, 'stroke', true);
     },
     strokeEnd: function (mouseX, mouseY, xMirrorIsDown, yMirrorIsDown,
             xyMirrorIsDown, aKeyIsDown, sKeyIsDown, dKeyIsDown,
             initialX, initialY, targetX, targetY) {
         this.strokeTemplate(mouseX, mouseY, xMirrorIsDown, yMirrorIsDown,
             xyMirrorIsDown, aKeyIsDown, sKeyIsDown, dKeyIsDown,
-            initialX, initialY, targetX, targetY, 'strokeEnd');
+            initialX, initialY, targetX, targetY, 'strokeEnd', true);
+
+        this.strokes.push(['stroke', this.current_stroke]);
+        this.current_stroke = [];
+        this.current_stroke_index++;
+    },
+    undo: function(context, bg_color) {
+        // empty canvas
+        context.fillStyle = "rgb(" + bg_color[0] + ", " + bg_color[1] +
+            ", " + bg_color[2] + ")";
+        context.fillRect(0, 0, this.canvas.width, this.canvas.height);
+
+        // render strokes till index
+        console.log('current stroke index ' + this.current_stroke_index);
+        if(this.current_stroke_index > 0) {
+            this.current_stroke_index--;
+        }
+        for(i = 0; i < this.current_stroke_index; i++) {
+            stroke = this.strokes[i];
+
+            if(stroke) {
+                if(stroke[0] == 'stroke') {
+                    console.log('render stroke');
+                    segments = stroke[1];
+
+                    for(j = 0; j < segments.length; j++) {
+                        segment = segments[j];
+                        this.strokeTemplate(segment[0], segment[1], segment[2],
+                            segment[3], segment[4], segment[5], segment[6],
+                            segment[7], segment[8], segment[9], segment[10],
+                            segment[11], segment[12], false);
+                    }
+                }
+                else if(stroke[0] == 'setStyle') {
+                    console.log('set style');
+                    this.setStyle(stroke[1], stroke[2], false);
+                }
+            }
+        }
+    },
+    redo: function() {
+        // if current_stroke index is not the same as stroke stack len, render a stroke from there and ++ index
     }
 };

@@ -62,6 +62,20 @@ Menu.prototype = {
 
         d = document.createTextNode(" | ");
         this.container.appendChild(d);
+
+        this.undo = document.createElement("span");
+        this.undo.className = "button";
+        this.undo.innerHTML = "Undo";
+        this.container.appendChild(this.undo);
+
+        this.redo = document.createElement("span");
+        this.redo.className = "button";
+        this.redo.innerHTML = "Redo";
+        this.container.appendChild(this.redo);
+
+        d = document.createTextNode(" | ");
+        this.container.appendChild(d);
+
         this.save = document.createElement("span");
         this.save.className = "button";
         this.save.innerHTML = "Save";
