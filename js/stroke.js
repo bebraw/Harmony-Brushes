@@ -26,8 +26,9 @@ StrokeManager.prototype = {
     context: null,
     // undo
     strokes: [],
-    current_stroke: [],
-    current_stroke_index: 0,
+    currentStroke: [],
+    currentStrokeIndex: 0,
+    strokeStyleClass: null,
     // strokes (TODO: move to array)
     style: null,
     xMirrorStyle: null,
@@ -39,7 +40,10 @@ StrokeManager.prototype = {
     },
     destroy: function () {},
     setStyle: function(styleClass) {
-        // TODO: stash style to each stroke! (exec before drawing)
+        this.strokeStyleClass = styleClass;
+        this.redoableSetStyle(styleClass);
+    },
+    redoableSetStyle: function(styleClass) {
         this.style = eval("new " + styleClass + "(this.context)");
         this.xMirrorStyle = eval("new " + styleClass + "(this.context)");
         this.yMirrorStyle = eval("new " + styleClass + "(this.context)");
@@ -76,7 +80,7 @@ StrokeManager.prototype = {
         }
 
         if(isRealStroke) {
-            this.current_stroke.push([mouseX, mouseY, xMirrorIsDown,
+            this.currentStroke.push([mouseX, mouseY, xMirrorIsDown,
                 yMirrorIsDown, xyMirrorIsDown, aKeyIsDown, sKeyIsDown,
                 dKeyIsDown, initialX, initialY, targetX, targetY, method]);
         }
@@ -88,8 +92,8 @@ StrokeManager.prototype = {
             xyMirrorIsDown, aKeyIsDown, sKeyIsDown, dKeyIsDown,
             initialX, initialY, targetX, targetY, 'strokeStart', true);
 
-        if(this.strokes.length > this.current_stroke_index) {
-            amountOfExtras = this.strokes.length - this.current_stroke_index;
+        if(this.strokes.length > this.currentStrokeIndex) {
+            amountOfExtras = this.strokes.length - this.currentStrokeIndex;
             console.log('amount of extras ' + amountOfExtras);
 
             for(i = 0; i < amountOfExtras; i++) {
@@ -111,9 +115,9 @@ StrokeManager.prototype = {
             xyMirrorIsDown, aKeyIsDown, sKeyIsDown, dKeyIsDown,
             initialX, initialY, targetX, targetY, 'strokeEnd', true);
 
-        this.strokes.push(['stroke', this.current_stroke]);
-        this.current_stroke = [];
-        this.current_stroke_index++;
+        this.strokes.push([this.strokeStyleClass, this.currentStroke]);
+        this.currentStroke = [];
+        this.currentStrokeIndex++;
     },
     undo: function(context, bg_color) {
         // empty canvas
@@ -121,39 +125,36 @@ StrokeManager.prototype = {
             ", " + bg_color[2] + ")";
         context.fillRect(0, 0, this.canvas.width, this.canvas.height);
 
-        if(this.current_stroke_index > 0) {
-            this.current_stroke_index--;
+        if(this.currentStrokeIndex > 0) {
+            this.currentStrokeIndex--;
         }
-        for(i = 0; i < this.current_stroke_index; i++) {
+        for(i = 0; i < this.currentStrokeIndex; i++) {
             stroke = this.strokes[i];
 
             this.render(stroke);
         }
     },
     redo: function() {
-        if(this.strokes.length > this.current_stroke_index) {
-            stroke = this.strokes[this.current_stroke_index];
+        if(this.strokes.length > this.currentStrokeIndex) {
+            stroke = this.strokes[this.currentStrokeIndex];
             this.render(stroke);
-            this.current_stroke_index++;
+            this.currentStrokeIndex++;
         }
     },
     render: function(stroke) {
         if(stroke) {
-            if(stroke[0] == 'stroke') {
-                console.log('render stroke');
-                segments = stroke[1];
+            console.log('render stroke ' + stroke[0]);
 
-                for(j = 0; j < segments.length; j++) {
-                    segment = segments[j];
-                    this.strokeTemplate(segment[0], segment[1], segment[2],
-                        segment[3], segment[4], segment[5], segment[6],
-                        segment[7], segment[8], segment[9], segment[10],
-                        segment[11], segment[12], false);
-                }
-            }
-            else if(stroke[0] == 'setStyle') {
-                console.log('set style');
-                this.setStyle(stroke[1], stroke[2], false);
+            this.redoableSetStyle(stroke[0]);
+
+            segments = stroke[1];
+
+            for(j = 0; j < segments.length; j++) {
+                segment = segments[j];
+                this.strokeTemplate(segment[0], segment[1], segment[2],
+                    segment[3], segment[4], segment[5], segment[6],
+                    segment[7], segment[8], segment[9], segment[10],
+                    segment[11], segment[12], false);
             }
         }
     }
