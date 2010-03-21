@@ -95,7 +95,6 @@ StrokeManager.prototype = {
 
         if(this.strokes.length > this.currentStrokeIndex) {
             amountOfExtras = this.strokes.length - this.currentStrokeIndex;
-            console.log('amount of extras ' + amountOfExtras);
 
             for(i = 0; i < amountOfExtras; i++) {
                 this.strokes.pop();
@@ -145,13 +144,10 @@ StrokeManager.prototype = {
     render: function(stroke) {
         if(stroke) {
             style = stroke[0];
-            console.log('render stroke ' + style);
 
             this.redoableSetStyle(style);
 
             color = stroke[1];
-
-            // set color now!
 
             segments = stroke[2];
 

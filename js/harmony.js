@@ -255,12 +255,9 @@ function onMenuXYMirror() {
 }
 
 function onMenuUndo() {
-    // XXX: perhaps context should be passed to manager at init
-    console.log('undo');
     strokeManager.undo(context, BACKGROUND_COLOR);
 }
 function onMenuRedo() {
-    console.log('redo');
     strokeManager.redo();
 }
 
@@ -294,8 +291,6 @@ function onCanvasMouseDown(a) {
 }
 function onCanvasMouseUp(a) {
     if(isMouseDown) {
-        console.log('canvas mouse up after drawing');
-
         // XXX: move mirrors and keys to a state variables
         strokeManager.strokeEnd(mouseX, mouseY, xMirrorIsDown, yMirrorIsDown,
             xyMirrorIsDown, aKeyIsDown, sKeyIsDown, dKeyIsDown, initialX,
@@ -333,8 +328,6 @@ function onCanvasTouchStart(a) {
 function onCanvasTouchEnd(a) {
     if (a.touches.length == 1) {
         var b = a.touches[0];
-
-        console.log('canvas touch end');
 
         strokeManager.strokeEnd(b.pageX, b.pageY, xMirrorIsDown, yMirrorIsDown,
             xyMirrorIsDown, aKeyIsDown, sKeyIsDown, dKeyIsDown, initialX,
