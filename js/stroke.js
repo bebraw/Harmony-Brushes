@@ -17,33 +17,33 @@ function project_coordinate(x1, y1, x2, y2, x3, y3) {
     return [x0, y0];
 }
 
-function StrokeManager(a) {
-    this.init(a)
+function StrokeManager(canvas, context) {
+    this.init(canvas, context)
 }
 StrokeManager.prototype = {
+    // general
+    canvas: null,
+    context: null,
+    // undo
     strokes: [],
     current_stroke: [],
     current_stroke_index: 0,
-    canvas: null,
+    // strokes (TODO: move to array)
     style: null,
     xMirrorStyle: null,
     yMirrorStyle: null,
     xyMirrorStyle: null,
-    init: function (canvas) {
+    init: function (canvas, context) {
         this.canvas = canvas;
+        this.context = context;
     },
     destroy: function () {},
-    setStyle: function(styleClass, context, isRealStroke) {
-        this.style = eval("new " + styleClass + "(context)");
-        this.xMirrorStyle = eval("new " + styleClass + "(context)");
-        this.yMirrorStyle = eval("new " + styleClass + "(context)");
-        this.xyMirrorStyle = eval("new " + styleClass + "(context)");
-
-        if(isRealStroke) {
-            // TODO!
-            //this.strokes.push(['setStyle', styleClass, context]);
-            //this.current_stroke_index++;
-        }
+    setStyle: function(styleClass) {
+        // TODO: stash style to each stroke! (exec before drawing)
+        this.style = eval("new " + styleClass + "(this.context)");
+        this.xMirrorStyle = eval("new " + styleClass + "(this.context)");
+        this.yMirrorStyle = eval("new " + styleClass + "(this.context)");
+        this.xyMirrorStyle = eval("new " + styleClass + "(this.context)");
     },
     strokeTemplate: function (mouseX, mouseY, xMirrorIsDown, yMirrorIsDown,
             xyMirrorIsDown, aKeyIsDown, sKeyIsDown, dKeyIsDown,

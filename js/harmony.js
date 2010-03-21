@@ -33,7 +33,8 @@ function init() {
     canvas.width = SCREEN_WIDTH;
     canvas.height = SCREEN_HEIGHT;
     canvas.style.cursor = "crosshair";
-    strokeManager = new StrokeManager(canvas);
+    context = canvas.getContext("2d");
+    strokeManager = new StrokeManager(canvas, context);
     container.appendChild(canvas);
     flattenCanvas = document.createElement("canvas");
     flattenCanvas.width = SCREEN_WIDTH;
@@ -64,14 +65,13 @@ function init() {
     menu.container.onmouseover = onMenuMouseOver;
     menu.container.onmouseout = onMenuMouseOut;
     container.appendChild(menu.container);
-    context = canvas.getContext("2d");
 
     manager_set = false;
     if (window.location.hash) {
         hash = window.location.hash.substr(1, window.location.hash.length);
         for (i = 0; i < STYLES.length; i++) {
             if (hash == STYLES[i]) {
-                strokeManager.setStyle(STYLES[i], context, true);
+                strokeManager.setStyle(STYLES[i]);
                 menu.selector.selectedIndex = i;
                 manager_set = true;
                 break
@@ -79,7 +79,7 @@ function init() {
         }
     }
     if (!manager_set) {
-        strokeManager.setStyle(STYLES[0], context, true);
+        strokeManager.setStyle(STYLES[0]);
     }
 
     about = new About();
@@ -219,7 +219,7 @@ function onMenuSelectorChange(e) {
         return
     }
     strokeManager.destroy(); // XXX: is this needed?
-    strokeManager.setStyle(STYLES[menu.selector.selectedIndex], context, true);
+    strokeManager.setStyle(STYLES[menu.selector.selectedIndex]);
     window.location.hash = STYLES[menu.selector.selectedIndex]
 }
 function onMenuMouseOver(a) {
@@ -273,7 +273,7 @@ function onMenuSave() {
 }
 function onMenuClear() {
     context.clearRect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
-    strokeManager.setStyle(STYLES[menu.selector.selectedIndex], context, true);
+    strokeManager.setStyle(STYLES[menu.selector.selectedIndex]);
 }
 function onMenuAbout(a) {
     cleanPopUps();
