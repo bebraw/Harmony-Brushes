@@ -43,21 +43,22 @@ ribbon.prototype = {
     destroy: function () {
         clearInterval(this.interval)
     },
-    strokeStart: function (c, a) {
+    strokeStart: function (c, a, color) {
         this.mouseX = c;
         this.mouseY = a;
-        this.context.strokeStyle = "rgba(" + COLOR[0] + ", " + COLOR[1] + ", " + COLOR[2] + ", 0.05 )";
+        this.context.strokeStyle = "rgba(" + color[0] + ", " +
+            color[1] + ", " + color[2] + ", 0.05 )";
         for (var b = 0; b < this.painters.length; b++) {
             this.painters[b].dx = c;
             this.painters[b].dy = a
         }
         this.shouldDraw = true
     },
-    stroke: function (b, a) {
+    stroke: function (b, a, color) {
         this.mouseX = b;
         this.mouseY = a
     },
-    strokeEnd: function (b, a) {},
+    strokeEnd: function (b, a, color) {},
     update: function () {
         var a;
         for (a = 0; a < this.painters.length; a++) {

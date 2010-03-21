@@ -14,12 +14,13 @@ circles.prototype = {
         this.points = new Array()
     },
     destroy: function () {},
-    strokeStart: function (b, a) {
+    strokeStart: function (b, a, color) {
         this.prevMouseX = b;
         this.prevMouseY = a;
-        this.context.strokeStyle = "rgba(" + COLOR[0] + ", " + COLOR[1] + ", " + COLOR[2] + ", 0.1)"
+        this.context.strokeStyle = "rgba(" + color[0] + ", " + color[1] +
+            ", " + color[2] + ", 0.1)"
     },
-    stroke: function (e, b) {
+    stroke: function (e, b, color) {
         var g, l, k, h, f, c, j, a;
         this.points.push([e, b]);
         l = e - this.prevMouseX;
@@ -37,5 +38,5 @@ circles.prototype = {
         this.prevMouseX = e;
         this.prevMouseY = b
     },
-    strokeEnd: function (b, a) {}
+    strokeEnd: function (b, a, color) {}
 };

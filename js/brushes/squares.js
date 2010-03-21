@@ -12,12 +12,13 @@ squares.prototype = {
         this.context.lineWidth = 1
     },
     destroy: function () {},
-    strokeStart: function (b, a) {
+    strokeStart: function (b, a, color) {
         this.prevMouseX = b;
         this.prevMouseY = a;
-        this.context.strokeStyle = "rgb(" + COLOR[0] + ", " + COLOR[1] + ", " + COLOR[2] + ")"
+        this.context.strokeStyle = "rgb(" + color[0] + ", " + color[1] +
+            ", " + color[2] + ")"
     },
-    stroke: function (f, d) {
+    stroke: function (f, d, color) {
         var b, a, g, e, c;
         b = f - this.prevMouseX;
         a = d - this.prevMouseY;
@@ -35,5 +36,5 @@ squares.prototype = {
         this.prevMouseX = f;
         this.prevMouseY = d
     },
-    strokeEnd: function (b, a) {}
+    strokeEnd: function (b, a, color) {}
 };

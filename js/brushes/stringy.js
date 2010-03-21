@@ -14,13 +14,14 @@ stringy.prototype = {
         this.count = 0
     },
     destroy: function () {},
-    strokeStart: function (b, a) {
+    strokeStart: function (b, a, color) {
         this.prevMouseX = b;
         this.prevMouseY = a;
         this.points = new Array();
-        this.context.strokeStyle = "rgba(" + COLOR[0] + ", " + COLOR[1] + ", " + COLOR[2] + ", 0.5)";
+        this.context.strokeStyle = "rgba(" + color[0] + ", " + color[1] +
+            ", " + color[2] + ", 0.5)";
     },
-    stroke: function (b, a) {
+    stroke: function (b, a, color) {
         var FACTOR = 10, 
             HISTORY = 15,
             sliced,
@@ -36,7 +37,8 @@ stringy.prototype = {
             sliced = this.points.slice(this.points.length - HISTORY, this.points.length);
             for (e=0; e < sliced.length; e++) {
                 oldStroke = this.context.strokeStyle;
-                this.context.strokeStyle = "rgba(" + COLOR[0] + ", " + COLOR[1] + ", " + COLOR[2] + ", 0.15)";
+                this.context.strokeStyle = "rgba(" + color[0] + ", " +
+                    color[1] + ", " + color[2] + ", 0.15)";
                 this.context.beginPath();
                 this.context.moveTo(c,d);
                 this.context.lineTo(sliced[e][0], sliced[e][1]);
@@ -48,6 +50,6 @@ stringy.prototype = {
         }
         this.count++;
     },
-    strokeEnd: function (b, a) {}
+    strokeEnd: function (b, a, color) {}
 };
 

@@ -11,10 +11,11 @@ grid.prototype = {
         }
     },
     destroy: function () {},
-    strokeStart: function (b, a) {
-        this.context.strokeStyle = "rgba(" + COLOR[0] + ", " + COLOR[1] + ", " + COLOR[2] + ", 0.01)"
+    strokeStart: function (b, a, color) {
+        this.context.strokeStyle = "rgba(" + color[0] + ", " + color[1] +
+            ", " + color[2] + ", 0.01)"
     },
-    stroke: function (f, d) {
+    stroke: function (f, d, color) {
         var e, a, g, c, b;
         a = Math.round(f / 100) * 100;
         g = Math.round(d / 100) * 100;
@@ -27,5 +28,5 @@ grid.prototype = {
             this.context.stroke()
         }
     },
-    strokeEnd: function (b, a) {}
+    strokeEnd: function (b, a, color) {}
 };

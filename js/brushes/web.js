@@ -15,19 +15,21 @@ web.prototype = {
         this.count = 0
     },
     destroy: function () {},
-    strokeStart: function (b, a) {
+    strokeStart: function (b, a, color) {
         this.prevMouseX = b;
         this.prevMouseY = a
     },
-    stroke: function (f, c) {
+    stroke: function (f, c, color) {
         var e, b, a, g;
         this.points.push([f, c]);
-        this.context.strokeStyle = "rgba(" + COLOR[0] + ", " + COLOR[1] + ", " + COLOR[2] + ", 0.5)";
+        this.context.strokeStyle = "rgba(" + color[0] + ", " + color[1] +
+            ", " + color[2] + ", 0.5)";
         this.context.beginPath();
         this.context.moveTo(this.prevMouseX, this.prevMouseY);
         this.context.lineTo(f, c);
         this.context.stroke();
-        this.context.strokeStyle = "rgba(" + COLOR[0] + ", " + COLOR[1] + ", " + COLOR[2] + ", 0.1)";
+        this.context.strokeStyle = "rgba(" + color[0] + ", " + color[1] +
+            ", " + color[2] + ", 0.1)";
         for (e = 0; e < this.points.length; e++) {
             b = this.points[e][0] - this.points[this.count][0];
             a = this.points[e][1] - this.points[this.count][1];
@@ -43,5 +45,5 @@ web.prototype = {
         this.prevMouseY = c;
         this.count++
     },
-    strokeEnd: function (b, a) {}
+    strokeEnd: function (b, a, color) {}
 };

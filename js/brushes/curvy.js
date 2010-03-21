@@ -14,13 +14,14 @@ curvy.prototype = {
         this.count = 0
     },
     destroy: function () {},
-    strokeStart: function (b, a) {
+    strokeStart: function (b, a, color) {
         this.prevMouseX = b;
         this.prevMouseY = a;
         this.points = new Array();
-        this.context.strokeStyle = "rgba(" + COLOR[0] + ", " + COLOR[1] + ", " + COLOR[2] + ", 0.5)";
+        this.context.strokeStyle = "rgba(" + color[0] + ", " + color[1] +
+            ", " + color[2] + ", 0.5)";
     },
-    stroke: function (x,y) {
+    stroke: function (x, y, color) {
         var CTL_PNT1_DIST = 10, 
             CTL_PNT2_DIST = 20,
             START = 30,
@@ -57,6 +58,6 @@ curvy.prototype = {
         this.prevMouseY = y;
         this.count++;
     },
-    strokeEnd: function (b, a) {}
+    strokeEnd: function (b, a, color) {}
 };
 

@@ -14,12 +14,13 @@ fur.prototype = {
         this.count = 0
     },
     destroy: function () {},
-    strokeStart: function (b, a) {
+    strokeStart: function (b, a, color) {
         this.prevMouseX = b;
         this.prevMouseY = a;
-        this.context.strokeStyle = "rgba(" + COLOR[0] + ", " + COLOR[1] + ", " + COLOR[2] + ", 0.1)"
+        this.context.strokeStyle = "rgba(" + color[0] + ", " + color[1] +
+            ", " + color[2] + ", 0.1)"
     },
-    stroke: function (f, c) {
+    stroke: function (f, c, color) {
         var e, b, a, g;
         this.points.push([f, c]);
         this.context.beginPath();
@@ -41,5 +42,5 @@ fur.prototype = {
         this.prevMouseY = c;
         this.count++
     },
-    strokeEnd: function (b, a) {}
+    strokeEnd: function (b, a, color) {}
 };

@@ -51,7 +51,8 @@ StrokeManager.prototype = {
     },
     strokeTemplate: function (mouseX, mouseY, xMirrorIsDown, yMirrorIsDown,
             xyMirrorIsDown, aKeyIsDown, sKeyIsDown, dKeyIsDown,
-            initialX, initialY, targetX, targetY, method, isRealStroke) {
+            initialX, initialY, targetX, targetY, method, color,
+            isRealStroke) {
         x = sKeyIsDown? initialX: mouseX;
         y = aKeyIsDown? initialY: mouseY;
 
@@ -62,21 +63,21 @@ StrokeManager.prototype = {
             y = projection[1];
         }
 
-        this.style[method](x, y);
+        this.style[method](x, y, color);
 
         mirrorX = this.canvas.width - x;
         mirrorY = this.canvas.height - y;
 
         if(xMirrorIsDown) {
-            this.xMirrorStyle[method](mirrorX, y);
+            this.xMirrorStyle[method](mirrorX, y, color);
         }
 
         if(yMirrorIsDown) {
-            this.yMirrorStyle[method](x, mirrorY);
+            this.yMirrorStyle[method](x, mirrorY, color);
         }
 
         if((xMirrorIsDown && yMirrorIsDown) || xyMirrorIsDown) {
-            this.xyMirrorStyle[method](mirrorX, mirrorY);
+            this.xyMirrorStyle[method](mirrorX, mirrorY, color);
         }
 
         if(isRealStroke) {
@@ -90,7 +91,7 @@ StrokeManager.prototype = {
             initialX, initialY, targetX, targetY) {
         this.strokeTemplate(mouseX, mouseY, xMirrorIsDown, yMirrorIsDown,
             xyMirrorIsDown, aKeyIsDown, sKeyIsDown, dKeyIsDown,
-            initialX, initialY, targetX, targetY, 'strokeStart', true);
+            initialX, initialY, targetX, targetY, 'strokeStart', COLOR, true);
 
         if(this.strokes.length > this.currentStrokeIndex) {
             amountOfExtras = this.strokes.length - this.currentStrokeIndex;
@@ -106,16 +107,16 @@ StrokeManager.prototype = {
             initialX, initialY, targetX, targetY) {
         this.strokeTemplate(mouseX, mouseY, xMirrorIsDown, yMirrorIsDown,
             xyMirrorIsDown, aKeyIsDown, sKeyIsDown, dKeyIsDown,
-            initialX, initialY, targetX, targetY, 'stroke', true);
+            initialX, initialY, targetX, targetY, 'stroke', COLOR, true);
     },
     strokeEnd: function (mouseX, mouseY, xMirrorIsDown, yMirrorIsDown,
             xyMirrorIsDown, aKeyIsDown, sKeyIsDown, dKeyIsDown,
             initialX, initialY, targetX, targetY) {
         this.strokeTemplate(mouseX, mouseY, xMirrorIsDown, yMirrorIsDown,
             xyMirrorIsDown, aKeyIsDown, sKeyIsDown, dKeyIsDown,
-            initialX, initialY, targetX, targetY, 'strokeEnd', true);
+            initialX, initialY, targetX, targetY, 'strokeEnd', COLOR, true);
 
-        this.strokes.push([this.strokeStyleClass, this.currentStroke]);
+        this.strokes.push([this.strokeStyleClass, COLOR, this.currentStroke]);
         this.currentStroke = [];
         this.currentStrokeIndex++;
     },
@@ -143,18 +144,23 @@ StrokeManager.prototype = {
     },
     render: function(stroke) {
         if(stroke) {
-            console.log('render stroke ' + stroke[0]);
+            style = stroke[0];
+            console.log('render stroke ' + style);
 
-            this.redoableSetStyle(stroke[0]);
+            this.redoableSetStyle(style);
 
-            segments = stroke[1];
+            color = stroke[1];
+
+            // set color now!
+
+            segments = stroke[2];
 
             for(j = 0; j < segments.length; j++) {
                 segment = segments[j];
                 this.strokeTemplate(segment[0], segment[1], segment[2],
                     segment[3], segment[4], segment[5], segment[6],
                     segment[7], segment[8], segment[9], segment[10],
-                    segment[11], segment[12], false);
+                    segment[11], segment[12], color, false);
             }
         }
     }

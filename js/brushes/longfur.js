@@ -13,10 +13,11 @@ longfur.prototype = {
         this.count = 0
     },
     destroy: function () {},
-    strokeStart: function (b, a) {
-        this.context.strokeStyle = "rgba(" + COLOR[0] + ", " + COLOR[1] + ", " + COLOR[2] + ", 0.05 )"
+    strokeStart: function (b, a, color) {
+        this.context.strokeStyle = "rgba(" + color[0] + ", " + color[1] +
+            ", " + color[2] + ", 0.05 )"
     },
-    stroke: function (g, c) {
+    stroke: function (g, c, color) {
         var f, e, b, a, h;
         this.points.push([g, c]);
         for (f = 0; f < this.points.length; f++) {
@@ -33,5 +34,5 @@ longfur.prototype = {
         }
         this.count++
     },
-    strokeEnd: function (b, a) {}
+    strokeEnd: function (b, a, color) {}
 };
