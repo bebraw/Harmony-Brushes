@@ -2,7 +2,7 @@ This version of mrdoob's and rhyolight's Harmony application aims to provide
 some extra functionality including:
 
 - better palette (bounds + slots interpolated between those)
-- undo/redo
+- faster undo!
 - gradient background (x/y/others?)
 - scanfill brush
 
@@ -14,6 +14,7 @@ Currently it provides following extra functionality:
 - vertical constraint (hit s while painting)
 - horizontal constraint (hit a while painting)
 - perspective constraint (hit d while painting, set target with f)
+- undo/redo (undo is slow as it redraws everything!)
 
 You can find more information about Harmony at http://mrdoob.com/blog/post/689.
 
