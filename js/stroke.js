@@ -24,11 +24,6 @@ StrokeManager.prototype = {
     // general
     canvas: null,
     context: null,
-    // undo
-    strokes: [],
-    currentStroke: [],
-    currentStrokeIndex: 0,
-    strokeStyleClass: null,
     // strokes (TODO: move to array)
     style: null,
     xMirrorStyle: null,
@@ -37,8 +32,16 @@ StrokeManager.prototype = {
     init: function (canvas, context) {
         this.canvas = canvas;
         this.context = context;
+
+        this.initUndo();
     },
     destroy: function () {},
+    initUndo: function () {
+        this.strokes = [];
+        this.currentStroke = [];
+        this.currentStrokeIndex = 0;
+        this.strokeStyleClass = null;
+    },
     setStyle: function(styleClass) {
         this.strokeStyleClass = styleClass;
         this.redoableSetStyle(styleClass);

@@ -270,6 +270,7 @@ function onMenuSave() {
 }
 function onMenuClear() {
     context.clearRect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
+    strokeManager.initUndo();
     strokeManager.setStyle(STYLES[menu.selector.selectedIndex]);
 }
 function onMenuAbout(a) {
