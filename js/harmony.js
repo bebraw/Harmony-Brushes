@@ -19,9 +19,7 @@ var i,
     xMirrorIsDown = false, // XXX: stash these to controls variable
     yMirrorIsDown = false,
     xyMirrorIsDown = false,
-    aKeyIsDown = false, // XXX: stash these to a keyboard variable
-    sKeyIsDown = false,
-    dKeyIsDown = false;
+    keysDown = {'a': false, 's': false, 'd': false }, // TODO: use more generic solution
 init();
 
 function init() {
@@ -118,26 +116,26 @@ function onDocumentKeyDown(a) {
         console.log('set persp target to x: ' + targetX + ' , y: ' + targetY);
         break;
     case 65: // a
-        if(!aKeyIsDown) {
+        if(!keysDown['a']) {
             initialY = mouseY;
         }
 
-        aKeyIsDown = true;
+        keysDown['a'] = true;
         break;
     case 83: // s
-        if(!sKeyIsDown) {
+        if(!keysDown['s']) {
             initialX = mouseX;
         }
 
-        sKeyIsDown = true;
+        keysDown['s'] = true;
         break;
     case 68: // d
-        if(!dKeyIsDown) {
+        if(!keysDown['d']) {
             initialX = mouseX;
             initialY = mouseY;
         }
 
-        dKeyIsDown = true;
+        keysDown['d'] = true;
         break;
     case 16: // shift
         if(controlKeyIsDown) {
@@ -156,13 +154,13 @@ function onDocumentKeyDown(a) {
 function onDocumentKeyUp(a) {
     switch (a.keyCode) {
     case 65: // a
-        aKeyIsDown = false;
+        keysDown['a'] = false;
         break;
     case 83: // s
-        sKeyIsDown = false;
+        keysDown['s'] = false;
         break;
     case 68: // d
-        dKeyIsDown = false;
+        keysDown['d'] = false;
         break;
     }
 }
@@ -324,15 +322,13 @@ function onCanvasMouseDown(a) {
 
     // XXX: move mirrors and keys to a state variables
     strokeManager.strokeStart(mouseX, mouseY, xMirrorIsDown, yMirrorIsDown,
-        xyMirrorIsDown, aKeyIsDown, sKeyIsDown, dKeyIsDown, initialX, initialY,
-        targetX, targetY);
+        xyMirrorIsDown, keysDown, initialX, initialY, targetX, targetY);
 }
 function onCanvasMouseUp(a) {
     if(isMouseDown) {
         // XXX: move mirrors and keys to a state variables
         strokeManager.strokeEnd(mouseX, mouseY, xMirrorIsDown, yMirrorIsDown,
-            xyMirrorIsDown, aKeyIsDown, sKeyIsDown, dKeyIsDown, initialX,
-            initialY, targetX, targetY);
+            xyMirrorIsDown, keysDown, initialX, initialY, targetX, targetY);
 
         isMouseDown = false;
     }
@@ -350,16 +346,14 @@ function onCanvasMouseMove(a) {
 
     // XXX: move mirrors and keys to a state variables
     strokeManager.stroke(mouseX, mouseY, xMirrorIsDown, yMirrorIsDown,
-        xyMirrorIsDown, aKeyIsDown, sKeyIsDown, dKeyIsDown, initialX, initialY,
-        targetX, targetY);
+        xyMirrorIsDown, keysDown, initialX, initialY, targetX, targetY);
 }
 function onCanvasTouchStart(a) {
     if (a.touches.length == 1) {
         var b = a.touches[0];
 
         strokeManager.strokeStart(b.pageX, b.pageY, xMirrorIsDown, yMirrorIsDown,
-            xyMirrorIsDown, aKeyIsDown, sKeyIsDown, dKeyIsDown, initialX,
-            initialY, targetX, targetY);
+            xyMirrorIsDown, keysDown, initialX, initialY, targetX, targetY);
         return false
     }
 }
@@ -368,8 +362,7 @@ function onCanvasTouchEnd(a) {
         var b = a.touches[0];
 
         strokeManager.strokeEnd(b.pageX, b.pageY, xMirrorIsDown, yMirrorIsDown,
-            xyMirrorIsDown, aKeyIsDown, sKeyIsDown, dKeyIsDown, initialX,
-            initialY, targetX, targetY);
+            xyMirrorIsDown, keysDown, initialX, initialY, targetX, targetY);
         return false
     }
 }
@@ -378,8 +371,7 @@ function onCanvasTouchMove(a) {
         var b = a.touches[0];
 
         strokeManager.stroke(b.pageX, b.pageY, xMirrorIsDown, yMirrorIsDown,
-            xyMirrorIsDown, aKeyIsDown, sKeyIsDown, dKeyIsDown, initialX,
-            initialY, targetX, targetY);
+            xyMirrorIsDown, keysDown, initialX, initialY, targetX, targetY);
         return false
     }
 }

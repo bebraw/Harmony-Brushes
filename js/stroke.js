@@ -54,13 +54,12 @@ StrokeManager.prototype = {
         this.xyMirrorStyle = eval("new " + styleClass + "(this.context)");
     },
     strokeTemplate: function (mouseX, mouseY, xMirrorIsDown, yMirrorIsDown,
-            xyMirrorIsDown, aKeyIsDown, sKeyIsDown, dKeyIsDown,
-            initialX, initialY, targetX, targetY, method, color,
-            isRealStroke) {
-        x = sKeyIsDown? initialX: mouseX;
-        y = aKeyIsDown? initialY: mouseY;
+            xyMirrorIsDown, keysDown, initialX, initialY, targetX, targetY,
+            method, color, isRealStroke) {
+        x = keysDown['s']? initialX: mouseX;
+        y = keysDown['a']? initialY: mouseY;
 
-        if(dKeyIsDown) {
+        if(keysDown['d']) {
             projection = project_coordinate(targetX, targetY, initialX,
                 initialY, mouseX, mouseY);
             x = projection[0];
@@ -86,16 +85,15 @@ StrokeManager.prototype = {
 
         if(isRealStroke) {
             this.currentStroke.push([mouseX, mouseY, xMirrorIsDown,
-                yMirrorIsDown, xyMirrorIsDown, aKeyIsDown, sKeyIsDown,
-                dKeyIsDown, initialX, initialY, targetX, targetY, method]);
+                yMirrorIsDown, xyMirrorIsDown, keysDown, initialX, initialY,
+                targetX, targetY, method]);
         }
     },
     strokeStart: function (mouseX, mouseY, xMirrorIsDown, yMirrorIsDown,
-            xyMirrorIsDown, aKeyIsDown, sKeyIsDown, dKeyIsDown,
-            initialX, initialY, targetX, targetY) {
+            xyMirrorIsDown, keysDown, initialX, initialY, targetX, targetY) {
         this.strokeTemplate(mouseX, mouseY, xMirrorIsDown, yMirrorIsDown,
-            xyMirrorIsDown, aKeyIsDown, sKeyIsDown, dKeyIsDown,
-            initialX, initialY, targetX, targetY, 'strokeStart', COLOR, true);
+            xyMirrorIsDown, keysDown, initialX, initialY, targetX, targetY,
+            'strokeStart', COLOR, true);
 
         if(this.strokes.length > this.currentStrokeIndex) {
             amountOfExtras = this.strokes.length - this.currentStrokeIndex;
@@ -106,18 +104,16 @@ StrokeManager.prototype = {
         }
     },
     stroke: function (mouseX, mouseY, xMirrorIsDown, yMirrorIsDown,
-            xyMirrorIsDown, aKeyIsDown, sKeyIsDown, dKeyIsDown,
-            initialX, initialY, targetX, targetY) {
+            xyMirrorIsDown, keysDown, initialX, initialY, targetX, targetY) {
         this.strokeTemplate(mouseX, mouseY, xMirrorIsDown, yMirrorIsDown,
-            xyMirrorIsDown, aKeyIsDown, sKeyIsDown, dKeyIsDown,
-            initialX, initialY, targetX, targetY, 'stroke', COLOR, true);
+            xyMirrorIsDown, keysDown, initialX, initialY, targetX, targetY,
+            'stroke', COLOR, true);
     },
     strokeEnd: function (mouseX, mouseY, xMirrorIsDown, yMirrorIsDown,
-            xyMirrorIsDown, aKeyIsDown, sKeyIsDown, dKeyIsDown,
-            initialX, initialY, targetX, targetY) {
+            xyMirrorIsDown, keysDown, initialX, initialY, targetX, targetY) {
         this.strokeTemplate(mouseX, mouseY, xMirrorIsDown, yMirrorIsDown,
-            xyMirrorIsDown, aKeyIsDown, sKeyIsDown, dKeyIsDown,
-            initialX, initialY, targetX, targetY, 'strokeEnd', COLOR, true);
+            xyMirrorIsDown, keysDown, initialX, initialY, targetX, targetY,
+            'strokeEnd', COLOR, true);
 
         this.strokes.push([this.strokeStyleClass, COLOR, this.currentStroke]);
         this.currentStroke = [];
@@ -191,7 +187,7 @@ StrokeManager.prototype = {
                 this.strokeTemplate(segment[0], segment[1], segment[2],
                     segment[3], segment[4], segment[5], segment[6],
                     segment[7], segment[8], segment[9], segment[10],
-                    segment[11], segment[12], color, false);
+                    color, false);
             }
         }
     },
@@ -203,8 +199,7 @@ StrokeManager.prototype = {
             dab = segments[dabIndex];
 
             this.strokeTemplate(dab[0], dab[1], dab[2], dab[3], dab[4], dab[5],
-                dab[6], dab[7], dab[8], dab[9], dab[10], dab[11], dab[12],
-                color, false);
+                dab[6], dab[7], dab[8], dab[9], dab[10], color, false);
         }
     }
 };
