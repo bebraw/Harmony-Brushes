@@ -16,10 +16,8 @@ var i,
     isMenuMouseOver = false,
     isMouseDown = false,
     controlKeyIsDown = false,
-    xMirrorIsDown = false, // XXX: stash these to controls variable
-    yMirrorIsDown = false,
-    xyMirrorIsDown = false,
-    keysDown = {'a': false, 's': false, 'd': false }, // TODO: use more generic solution
+    mirrorsDown = {'x': false, 'y': false, 'xy': false},
+    keysDown = {'a': false, 's': false, 'd': false }; // TODO: use more generic solution
 init();
 
 function init() {
@@ -239,19 +237,19 @@ function setToggle(e, state) {
     }
 }
 function onMenuXMirror(a) {
-    xMirrorIsDown = !xMirrorIsDown;
+    mirrorsDown['x'] = !mirrorsDown['x'];
 
-    setToggle(this, xMirrorIsDown);
+    setToggle(this, mirrorsDown['x']);
 }
 function onMenuYMirror() {
-    yMirrorIsDown = !yMirrorIsDown;
+    mirrorsDown['y'] = !mirrorsDown['y'];
 
-    setToggle(this, yMirrorIsDown);
+    setToggle(this, mirrorsDown['y']);
 }
 function onMenuXYMirror() {
-    xyMirrorIsDown = !xyMirrorIsDown;
+    mirrorsDown['xy'] = !mirrorsDown['xy'];
 
-    setToggle(this, xyMirrorIsDown);
+    setToggle(this, mirrorsDown['xy']);
 }
 
 function onMenuUndo() {
@@ -320,15 +318,13 @@ function onCanvasMouseDown(a) {
     initialX = mouseX;
     initialY = mouseY;
 
-    // XXX: move mirrors and keys to a state variables
-    strokeManager.strokeStart(mouseX, mouseY, xMirrorIsDown, yMirrorIsDown,
-        xyMirrorIsDown, keysDown, initialX, initialY, targetX, targetY);
+    strokeManager.strokeStart(mouseX, mouseY, mirrorsDown, keysDown, initialX,
+        initialY, targetX, targetY);
 }
 function onCanvasMouseUp(a) {
     if(isMouseDown) {
-        // XXX: move mirrors and keys to a state variables
-        strokeManager.strokeEnd(mouseX, mouseY, xMirrorIsDown, yMirrorIsDown,
-            xyMirrorIsDown, keysDown, initialX, initialY, targetX, targetY);
+        strokeManager.strokeEnd(mouseX, mouseY, mirrorsDown, keysDown,
+            initialX, initialY, targetX, targetY);
 
         isMouseDown = false;
     }
@@ -344,16 +340,15 @@ function onCanvasMouseMove(a) {
         return
     }
 
-    // XXX: move mirrors and keys to a state variables
-    strokeManager.stroke(mouseX, mouseY, xMirrorIsDown, yMirrorIsDown,
-        xyMirrorIsDown, keysDown, initialX, initialY, targetX, targetY);
+    strokeManager.stroke(mouseX, mouseY, mirrorsDown, keysDown, initialX,
+        initialY, targetX, targetY);
 }
 function onCanvasTouchStart(a) {
     if (a.touches.length == 1) {
         var b = a.touches[0];
 
-        strokeManager.strokeStart(b.pageX, b.pageY, xMirrorIsDown, yMirrorIsDown,
-            xyMirrorIsDown, keysDown, initialX, initialY, targetX, targetY);
+        strokeManager.strokeStart(b.pageX, b.pageY, mirrorsDown, keysDown,
+            initialX, initialY, targetX, targetY);
         return false
     }
 }
@@ -361,8 +356,8 @@ function onCanvasTouchEnd(a) {
     if (a.touches.length == 1) {
         var b = a.touches[0];
 
-        strokeManager.strokeEnd(b.pageX, b.pageY, xMirrorIsDown, yMirrorIsDown,
-            xyMirrorIsDown, keysDown, initialX, initialY, targetX, targetY);
+        strokeManager.strokeEnd(b.pageX, b.pageY, mirrorsDown, keysDown,
+            initialX, initialY, targetX, targetY);
         return false
     }
 }
@@ -370,8 +365,8 @@ function onCanvasTouchMove(a) {
     if (a.touches.length == 1) {
         var b = a.touches[0];
 
-        strokeManager.stroke(b.pageX, b.pageY, xMirrorIsDown, yMirrorIsDown,
-            xyMirrorIsDown, keysDown, initialX, initialY, targetX, targetY);
+        strokeManager.stroke(b.pageX, b.pageY, mirrorsDown, keysDown, initialX,
+            initialY, targetX, targetY);
         return false
     }
 }
