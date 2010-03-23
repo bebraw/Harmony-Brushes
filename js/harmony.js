@@ -59,6 +59,8 @@ function init() {
     menu.xyMirror.addEventListener("click", onMenuXYMirror, false);
     menu.undo.addEventListener("click", onMenuUndo, false);
     menu.redo.addEventListener("click", onMenuRedo, false);
+    menu.play.addEventListener("click", onMenuPlay, false);
+    menu.stop.addEventListener("click", onMenuStop, false);
     menu.save.addEventListener("click", onMenuSave, false);
     menu.clear.addEventListener("click", onMenuClear, false);
     menu.about.addEventListener("click", onMenuAbout, false);
@@ -261,9 +263,44 @@ function onMenuRedo() {
     strokeManager.redo();
 }
 
+var t, timerIsOn = false, stopped = false;
+function advanceFrame()
+{
+    strokeManager.playbackDab();
+
+    if(strokeManager.playbackLeft()) {
+        // TODO: stash time deltas to advance frame properly
+        t = setTimeout("advanceFrame()", 50);
+    }
+    else {
+        stopped = false;
+    }
+}
+
+function onMenuPlay() {
+    if (!timerIsOn) {
+        if(!stopped) {
+            // empty canvas -> make this a method of canvas!
+            context.fillStyle = "rgb(" + BACKGROUND_COLOR[0] + ", " +
+                BACKGROUND_COLOR[1] + ", " + BACKGROUND_COLOR[2] + ")";
+            context.fillRect(0, 0, canvas.width, canvas.height);
+        }
+
+        strokeManager.currentStrokeIndex = 0;
+        timerIsOn = true;
+        advanceFrame();
+    }
+}
+function onMenuStop() {
+    clearTimeout(t);
+    timerIsOn = false;
+    stopped = true;
+}
+
 function onMenuSave() {
     var a = flattenCanvas.getContext("2d");
-    a.fillStyle = "rgb(" + BACKGROUND_COLOR[0] + ", " + BACKGROUND_COLOR[1] + ", " + BACKGROUND_COLOR[2] + ")";
+    a.fillStyle = "rgb(" + BACKGROUND_COLOR[0] + ", " + BACKGROUND_COLOR[1] +
+        ", " + BACKGROUND_COLOR[2] + ")";
     a.fillRect(0, 0, canvas.width, canvas.height);
     a.drawImage(canvas, 0, 0);
     window.open(flattenCanvas.toDataURL("image/png"), "mywindow")

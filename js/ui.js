@@ -54,6 +54,9 @@ Menu.prototype = {
         this.createButton("Undo", "undo");
         this.createButton("Redo", "redo");
         this.createText(" | ");
+        this.createButton("Play", "play");
+        this.createButton("Stop", "stop");
+        this.createText(" | ");
         this.createButton("Save", "save");
         this.createText(" ");
         this.createButton("Clear", "clear");

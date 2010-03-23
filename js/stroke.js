@@ -40,6 +40,7 @@ StrokeManager.prototype = {
         this.strokes = [];
         this.currentStroke = [];
         this.currentStrokeIndex = 0;
+        this.currentDabIndex = 0; // used only for playback for now
         this.strokeStyleClass = null;
     },
     setStyle: function(styleClass) {
@@ -144,6 +145,37 @@ StrokeManager.prototype = {
             this.currentStrokeIndex++;
         }
     },
+    playbackLeft: function() {
+        if(this.strokes.length == this.currentStrokeIndex) {
+            stroke = this.strokes[this.currentStrokeIndex];
+
+            if(this.currentDabIndex == stroke[2].length) {
+                return false;
+            }
+        }
+
+        return true;
+    },
+    playbackDab: function() {
+        if(this.strokes.length > this.currentStrokeIndex) {
+            stroke = this.strokes[this.currentStrokeIndex];
+
+            if(this.currentDabIndex == 0) {
+                style = stroke[0];
+
+                this.redoableSetStyle(style);
+            }
+            
+            this.renderDab(stroke, this.currentDabIndex);
+            this.currentDabIndex++;
+
+            if(this.currentDabIndex == stroke[2].length) {
+                // advance to the next stroke
+                this.currentStrokeIndex++;
+                this.currentDabIndex = 0;
+            }
+        }
+    },
     render: function(stroke) {
         if(stroke) {
             style = stroke[0];
@@ -161,6 +193,18 @@ StrokeManager.prototype = {
                     segment[7], segment[8], segment[9], segment[10],
                     segment[11], segment[12], color, false);
             }
+        }
+    },
+    renderDab: function(stroke, dabIndex) {
+        if(stroke) {
+            color = stroke[1];
+
+            segments = stroke[2];
+            dab = segments[dabIndex];
+
+            this.strokeTemplate(dab[0], dab[1], dab[2], dab[3], dab[4], dab[5],
+                dab[6], dab[7], dab[8], dab[9], dab[10], dab[11], dab[12],
+                color, false);
         }
     }
 };
