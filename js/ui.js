@@ -10,12 +10,13 @@ Menu.prototype = {
     clear: null,
     about: null,
     init: function () {
-        var b, c, d, e = 15,
-            a = 15;
+        var b, e = 15, a = 15;
+
         this.container = document.createElement("div");
         this.container.className = "gui";
         this.container.style.position = "absolute";
         this.container.style.top = "0px";
+
         this.foregroundColor = document.createElement("canvas");
         this.foregroundColor.style.marginBottom = "-3px";
         this.foregroundColor.style.cursor = "pointer";
@@ -23,8 +24,9 @@ Menu.prototype = {
         this.foregroundColor.height = a;
         this.container.appendChild(this.foregroundColor);
         this.setForegroundColor([0, 0, 0]);
-        c = document.createTextNode(" ");
-        this.container.appendChild(c);
+
+        this.createText(" ");
+        
         this.backgroundColor = document.createElement("canvas");
         this.backgroundColor.style.marginBottom = "-3px";
         this.backgroundColor.style.cursor = "pointer";
@@ -32,8 +34,9 @@ Menu.prototype = {
         this.backgroundColor.height = a;
         this.container.appendChild(this.backgroundColor);
         this.setBackgroundColor([250, 250, 250]);
-        c = document.createTextNode(" ");
-        this.container.appendChild(c);
+
+        this.createText(" ");
+
         this.selector = document.createElement("select");
         for (i = 0; i < STYLES.length; i++) {
             b = document.createElement("option");
@@ -42,8 +45,8 @@ Menu.prototype = {
             this.selector.appendChild(b)
         }
         this.container.appendChild(this.selector);
-        c = document.createTextNode(" ");
-        this.container.appendChild(c);
+
+        this.createText(" ");
 
         this.xMirror = document.createElement("span");
         this.xMirror.className = "button";
@@ -60,8 +63,7 @@ Menu.prototype = {
         this.xyMirror.innerHTML = "Radial Mirror";
         this.container.appendChild(this.xyMirror);
 
-        d = document.createTextNode(" | ");
-        this.container.appendChild(d);
+        this.createText(" | ");
 
         this.undo = document.createElement("span");
         this.undo.className = "button";
@@ -73,26 +75,30 @@ Menu.prototype = {
         this.redo.innerHTML = "Redo";
         this.container.appendChild(this.redo);
 
-        d = document.createTextNode(" | ");
-        this.container.appendChild(d);
+        this.createText(" | ");
 
         this.save = document.createElement("span");
         this.save.className = "button";
         this.save.innerHTML = "Save";
         this.container.appendChild(this.save);
-        c = document.createTextNode(" ");
-        this.container.appendChild(c);
+
+        this.createText(" ");
+        
         this.clear = document.createElement("Clear");
         this.clear.className = "button";
         this.clear.innerHTML = "Clear";
         this.container.appendChild(this.clear);
 
-        d = document.createTextNode(" | ");
-        this.container.appendChild(d);
+        this.createText(" | ");
+
         this.about = document.createElement("About");
         this.about.className = "button";
         this.about.innerHTML = "About";
         this.container.appendChild(this.about)
+    },
+    createText: function (text) {
+        c = document.createTextNode(text);
+        this.container.appendChild(c);
     },
     setForegroundColor: function (a) {
         var b = this.foregroundColor.getContext("2d");
