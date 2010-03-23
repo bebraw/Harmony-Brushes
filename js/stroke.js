@@ -84,11 +84,13 @@ StrokeManager.prototype = {
 
         if(isRealStroke) {
             this.currentStroke.push([mouseX, mouseY, mirrorsDown, keysDown,
-                initialX, initialY, targetX, targetY, method]);
+                initialX, initialY, targetX, targetY, method,
+                this.strokeTime]);
         }
     },
     strokeStart: function (mouseX, mouseY, mirrorsDown, keysDown, initialX,
             initialY, targetX, targetY) {
+        this.strokeTime = 0
         this.strokeTemplate(mouseX, mouseY, mirrorsDown, keysDown, initialX,
             initialY, targetX, targetY, 'strokeStart', COLOR, true);
 
@@ -102,11 +104,17 @@ StrokeManager.prototype = {
     },
     stroke: function (mouseX, mouseY, mirrorsDown, keysDown, initialX,
             initialY, targetX, targetY) {
+        currentTime = new Date().getTime();
+        this.strokeTime = currentTime - this.strokeTime;
+
         this.strokeTemplate(mouseX, mouseY, mirrorsDown, keysDown, initialX,
             initialY, targetX, targetY, 'stroke', COLOR, true);
     },
     strokeEnd: function (mouseX, mouseY, mirrorsDown, keysDown, initialX,
             initialY, targetX, targetY) {
+        currentTime = new Date().getTime();
+        this.strokeTime = currentTime - this.strokeTime;
+
         this.strokeTemplate(mouseX, mouseY,  mirrorsDown, keysDown, initialX,
             initialY, targetX, targetY, 'strokeEnd', COLOR, true);
 
@@ -139,6 +147,10 @@ StrokeManager.prototype = {
     playbackLeft: function() {
         if(this.strokes.length == this.currentStrokeIndex) {
             stroke = this.strokes[this.currentStrokeIndex];
+
+            if(!stroke) {
+                return false;
+            }
 
             if(this.currentDabIndex == stroke[2].length) {
                 return false;
@@ -195,5 +207,14 @@ StrokeManager.prototype = {
             this.strokeTemplate(dab[0], dab[1], dab[2], dab[3], dab[4], dab[5],
                 dab[6], dab[7], dab[8], color, false);
         }
+    },
+    getDabTimeDelta: function() {
+        stroke = this.strokes[this.currentStrokeIndex];
+        segments = stroke[2];
+        dab = segments[this.currentDabIndex];
+
+        time = dab[9];
+
+        return time;
     }
 };

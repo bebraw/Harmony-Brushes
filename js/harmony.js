@@ -265,8 +265,11 @@ function advanceFrame()
     strokeManager.playbackDab();
 
     if(strokeManager.playbackLeft()) {
-        // TODO: stash time deltas to advance frame properly
-        t = setTimeout("advanceFrame()", 50);
+        timeDelta = strokeManager.getDabTimeDelta();
+
+        // XXX: use timeDelta for ~showing~ renders instead of actually
+        // rendering dabs!
+        t = setTimeout("advanceFrame()", 10); //timeDelta);
     }
     else {
         stopped = false;
