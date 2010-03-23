@@ -259,7 +259,7 @@ function onMenuRedo() {
     strokeManager.redo();
 }
 
-var t, timerIsOn = false, stopped = false;
+var t, timerIsOn = false, running = false, stopped = false;
 function advanceFrame()
 {
     strokeManager.playbackDab();
@@ -272,27 +272,29 @@ function advanceFrame()
         t = setTimeout("advanceFrame()", 10); //timeDelta);
     }
     else {
+        running = false;
         stopped = false;
     }
 }
 
 function onMenuPlay() {
-    if (!timerIsOn) {
+    if(!running) {
         if(!stopped) {
             // empty canvas -> make this a method of canvas!
             context.fillStyle = "rgb(" + BACKGROUND_COLOR[0] + ", " +
                 BACKGROUND_COLOR[1] + ", " + BACKGROUND_COLOR[2] + ")";
             context.fillRect(0, 0, canvas.width, canvas.height);
+            
+            strokeManager.currentStrokeIndex = 0;
         }
-
-        strokeManager.currentStrokeIndex = 0;
-        timerIsOn = true;
+        
+        running = true;
         advanceFrame();
     }
 }
 function onMenuStop() {
     clearTimeout(t);
-    timerIsOn = false;
+    running = false;
     stopped = true;
 }
 
