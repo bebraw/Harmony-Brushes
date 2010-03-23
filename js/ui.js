@@ -47,58 +47,28 @@ Menu.prototype = {
         this.container.appendChild(this.selector);
 
         this.createText(" ");
-
-        this.xMirror = document.createElement("span");
-        this.xMirror.className = "button";
-        this.xMirror.innerHTML = "X-Mirror";
-        this.container.appendChild(this.xMirror);
-
-        this.yMirror = document.createElement("span");
-        this.yMirror.className = "button";
-        this.yMirror.innerHTML = "Y-Mirror";
-        this.container.appendChild(this.yMirror);
-
-        this.xyMirror = document.createElement("span");
-        this.xyMirror.className = "button";
-        this.xyMirror.innerHTML = "Radial Mirror";
-        this.container.appendChild(this.xyMirror);
-
+        this.createButton("X-Mirror", "xMirror");
+        this.createButton("Y-Mirror", "yMirror");
+        this.createButton("Radial Mirror", "xyMirror");
         this.createText(" | ");
-
-        this.undo = document.createElement("span");
-        this.undo.className = "button";
-        this.undo.innerHTML = "Undo";
-        this.container.appendChild(this.undo);
-
-        this.redo = document.createElement("span");
-        this.redo.className = "button";
-        this.redo.innerHTML = "Redo";
-        this.container.appendChild(this.redo);
-
+        this.createButton("Undo", "undo");
+        this.createButton("Redo", "redo");
         this.createText(" | ");
-
-        this.save = document.createElement("span");
-        this.save.className = "button";
-        this.save.innerHTML = "Save";
-        this.container.appendChild(this.save);
-
+        this.createButton("Save", "save");
         this.createText(" ");
-        
-        this.clear = document.createElement("Clear");
-        this.clear.className = "button";
-        this.clear.innerHTML = "Clear";
-        this.container.appendChild(this.clear);
-
+        this.createButton("Clear", "clear");
         this.createText(" | ");
-
-        this.about = document.createElement("About");
-        this.about.className = "button";
-        this.about.innerHTML = "About";
-        this.container.appendChild(this.about)
+        this.createButton("About", "about");
     },
     createText: function (text) {
         c = document.createTextNode(text);
         this.container.appendChild(c);
+    },
+    createButton: function (name, attr) {
+        this[attr] = document.createElement("span");
+        this[attr].className = "button";
+        this[attr].innerHTML = name;
+        this.container.appendChild(this[attr]);
     },
     setForegroundColor: function (a) {
         var b = this.foregroundColor.getContext("2d");
