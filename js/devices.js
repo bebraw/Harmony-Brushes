@@ -32,6 +32,8 @@ Device.prototype = {
     }
 }
 
+// TODO: add getX() and getY() to mouse!
+
 // API:
 // devices.mouse.key('left').press()
 // devices.mouse.key('left').isPressed()

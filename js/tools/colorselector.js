@@ -1,3 +1,20 @@
+/*
+ * TODO!!!
+     case 16: // shift
+        if(controlKeyIsDown) {
+            controlKeyIsDown = false;
+            foregroundColorSelector.container.style.visibility = "hidden";
+        }
+        else {
+            controlKeyIsDown = true;
+            foregroundColorSelector.container.style.left = mouseX - 125 + "px";
+            foregroundColorSelector.container.style.top = mouseY - 125 + "px";
+            foregroundColorSelector.container.style.visibility = "visible";
+        }
+        break
+    }
+ **/
+
 function ColorSelector(a) {
     this.init(a)
 }

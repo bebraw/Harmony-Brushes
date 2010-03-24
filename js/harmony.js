@@ -100,13 +100,13 @@ function onWindowResize(a) {
     SCREEN_HEIGHT = window.innerHeight;
     menu.container.style.left = ((SCREEN_WIDTH - menu.container.offsetWidth) / 2) + "px";
     about.container.style.left = ((SCREEN_WIDTH - about.container.offsetWidth) / 2) + "px";
-    about.container.style.top = ((SCREEN_HEIGHT - about.container.offsetHeight) / 2) + "px"
+    about.container.style.top = ((SCREEN_HEIGHT - about.container.offsetHeight) / 2) + "px";
 }
 function onDocumentMouseDown(a) {
-    return isMenuMouseOver
+    return isMenuMouseOver;
 }
 function onDocumentKeyDown(a) {
-    devices.keyboard.key(a.keyCode).press();
+    
 
     // TODO: separate these to Tools!
     /*
@@ -114,66 +114,18 @@ function onDocumentKeyDown(a) {
      * hotkey: 'f'
      * handler(toolContext) XXX: strokeManager should have reference to toolContext
      */
-    switch (a.keyCode) {
-    case 70: // f
-        targetX = mouseX;
-        targetY = mouseY;
 
-        console.log('set persp target to x: ' + targetX + ' , y: ' + targetY);
-        break;
-    case 65: // a
-        if(!keysDown['a']) {
-            initialY = mouseY;
-        }
-
-        //keysDown['a'] = true;
-        break;
-    case 83: // s
-        if(!keysDown['s']) {
-            initialX = mouseX;
-        }
-
-        //keysDown['s'] = true;
-        break;
-    case 68: // d
-        if(!keysDown['d']) {
-            initialX = mouseX;
-            initialY = mouseY;
-        }
-
-        //keysDown['d'] = true;
-        break;
-    case 16: // shift
-        if(controlKeyIsDown) {
-            controlKeyIsDown = false;
-            foregroundColorSelector.container.style.visibility = "hidden";
-        }
-        else {
-            controlKeyIsDown = true;
-            foregroundColorSelector.container.style.left = mouseX - 125 + "px";
-            foregroundColorSelector.container.style.top = mouseY - 125 + "px";
-            foregroundColorSelector.container.style.visibility = "visible";
-        }
-        break
-    }
+    //TODO
+    toolManager.checkPress(a.keyCode);
+    // toolManager should
+    // 1. call devices.keyboard.key(a.keyCode).press();
+    // 2. match keycode to tool hotkey
+    // 3. exec tool if match was found (note that manager should exec only the
+    // first time match is found!!! (JS can trigger press many times without
+    // release!)
 }
 function onDocumentKeyUp(a) {
     devices.keyboard.key(a.keyCode).release();
-
-    /*
-    switch (a.keyCode) {
-    case 65: // a
-        keysDown['a'] = false;
-        // devices.keyboard.key(a.keyCode).release()
-        break;
-    case 83: // s
-        keysDown['s'] = false;
-        break;
-    case 68: // d
-        keysDown['d'] = false;
-        break;
-    }
-    */
 }
 function onForegroundColorSelectorMouseDown(a) {
     isForegroundColorSelectorMouseDown = true
