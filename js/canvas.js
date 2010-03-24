@@ -1,5 +1,3 @@
-// XXXXXX: merge with Background! -> Canvas
-
 /*
 canvas = document.createElement("canvas");
 canvas.width = SCREEN_WIDTH;
@@ -21,11 +19,34 @@ flattenCanvas.width = SCREEN_WIDTH;
 flattenCanvas.height = SCREEN_HEIGHT;
 */
 
+//document.body.style.backgroundColor = "rgb(" + BACKGROUND_COLOR[0] + ", " + BACKGROUND_COLOR[1] + ", " + BACKGROUND_COLOR[2] + ")";
+
 function Canvas() {
     this.init();
 }
 Canvas.prototype = {
-    init: function () {},
+    init: function () {
+        setUpPod("Canvas");
+
+        $('#canvasPod').click(function() {
+            $(this).hide();
+            $('#canvas').dialog('open');
+        });
+
+        // set up background panel
+        $("body").append('<div class="panel" id="canvas" title="Canvas"> \
+            canvas options, texture ie. \
+            </div>');
+
+        $("#canvas button").button();
+
+        $("#canvas").dialog({
+           closeOnEscape: false, resizable: false, width: 230, autoOpen: false
+        });
+
+        $("#canvas").dialog( "option", "position", ["left", "bottom"] );
+        $("#canvas").bind( "dialogclose", function(event, ui) { $("#canvasPod").show();} );
+    },
     destroy: function () {}
 }
 

@@ -1,5 +1,4 @@
-var background = new Background(),
-    devices = new Devices(),
+var devices = new Devices(),
     menu = new Menu(),
     palette = new Palette(),
     modifiers = new Modifiers(),
