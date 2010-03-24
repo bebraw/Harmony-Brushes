@@ -4,6 +4,8 @@ function Background() {
     this.init();
 }
 Background.prototype = {
-    init: function () {},
+    init: function () {
+        setUpPod("Background");
+    },
     destroy: function () {}
 }

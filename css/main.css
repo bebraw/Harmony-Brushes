@@ -1,7 +1,9 @@
 * {
-    color: #555;
-    font-family:Monospace;
-    font-size:12px;
+    font-size: 12px;
+}
+
+button {
+    height: 30px;
 }
 
 body {
@@ -9,35 +11,13 @@ body {
     overflow: hidden;
 }
 
-select {
-    text-transform: uppercase;
-    font-size:11px;
-    text-align:center;
-}
-
-hr {
-    border: 0;
-    height: 1px;
-    background-color: #ccc;
-    margin: 20px 0px;
-}
-
-.gui {
-    color: #ccc;
-    width: 200px;
-    background-color: #fff;
-    border-bottom: 1px solid #ddd;
-    padding: 5px 10px;
+.colorwell {
+    border: 2px solid #fff;
+    width: 6em;
     text-align: center;
-    text-transform: uppercase;
-    cursor: default;
-}
-
-.gui span {
-    padding-right: 1em;
-}
-
-.button {
-    padding: 2px;
     cursor: pointer;
+}
+body .colorwell-selected {
+    border: 2px solid #000;
+    font-weight: bold;
 }

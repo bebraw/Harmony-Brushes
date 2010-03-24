@@ -1,3 +1,6 @@
+// TODO!
+//setUpPod("Palette");
+
 /*
 palette = new Palette();
 foregroundColorSelector = new ColorSelector(palette);

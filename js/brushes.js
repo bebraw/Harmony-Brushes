@@ -28,7 +28,9 @@ function Brushes() {
     this.init();
 }
 Brushes.prototype = {
-    init: function () {},
+    init: function () {
+        setUpPod("Brushes");
+    },
     destroy: function () {}
 }
 

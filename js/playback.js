@@ -2,7 +2,9 @@ function Playback() {
     this.init();
 }
 Playback.prototype = {
-    init: function () {},
+    init: function () {
+        setUpPod("Playback");
+    },
     destroy: function () {}
 }
 

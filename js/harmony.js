@@ -68,28 +68,6 @@ function init() {
 function onDocumentMouseDown(a) {
     return isMenuMouseOver;
 }
-function onDocumentKeyDown(a) {
-    
-
-    // TODO: separate these to Tools!
-    /*
-     * Tool:
-     * hotkey: 'f'
-     * handler(toolContext) XXX: strokeManager should have reference to toolContext
-     */
-
-    //TODO
-    toolManager.checkPress(a.keyCode);
-    // toolManager should
-    // 1. call devices.keyboard.key(a.keyCode).press();
-    // 2. match keycode to tool hotkey
-    // 3. exec tool if match was found (note that manager should exec only the
-    // first time match is found!!! (JS can trigger press many times without
-    // release!)
-}
-function onDocumentKeyUp(a) {
-    devices.keyboard.key(a.keyCode).release();
-}
 function onMenuMouseOver(a) {
     isMenuMouseOver = true
 }

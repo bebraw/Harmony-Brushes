@@ -3,8 +3,33 @@ function Menu() {
 }
 Menu.prototype = {
     init: function () {
+        setUpPod("Menu");
+
+        // set up menu
+        $("body").append('<div class="panel" id="menu" title="Menu"> \
+            <button>New</button> \
+            <button>Load</button> \
+            <button>Save</button> \
+            <button>Export</button> \
+            <button>About</button> \
+        </div>');
+
+        $("#menu button").button();
+
+        $("#menu").dialog({
+           closeOnEscape: false, resizable: false, width: 230, autoOpen: false
+        });
+
+        $("#menu").dialog("option", "position", "top");
+        $("#menu").dialog("option", "width", 325);
+        $("#menu").dialog("option", "height", 60);
+        $("#menu").bind("dialogclose",
+            function(event, ui) {$("#menuPod").show();});
+
+        // TODO: hook up events to menu items!
+
         documentContainer = document.createElement("div");
-        document.body.appendChild(documentContainer);
+        //document.body.appendChild(documentContainer);
 
         this.handlers = new MenuHandlers();
 
@@ -13,7 +38,7 @@ Menu.prototype = {
         this.container.style.position = "absolute";
         this.container.style.top = "0px";
 
-        documentContainer.appendChild(this.container);
+        //documentContainer.appendChild(this.container);
 
         options = ["New", "Load", "Save", "Export", "About"];
         for (i = 0; i < options.length; i++) {

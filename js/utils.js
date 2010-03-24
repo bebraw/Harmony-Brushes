@@ -30,3 +30,15 @@ function importDirectory(files, dir) {
         }
     }
 }
+
+function setUpPod(name) {
+    id = name.toLowerCase();
+    $("#pods").append('<button id="' + id + 'Pod">' + name + '</button>');
+
+    $("#" + id + "Pod").button();
+
+    $('#' + id + 'Pod').click(function() {
+        $(this).hide();
+        $('#' + id).dialog('open');
+    });
+}

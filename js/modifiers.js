@@ -6,6 +6,8 @@ function Modifiers() {
     this.init();
 }
 Modifiers.prototype = {
-    init: function () {},
+    init: function () {
+        setUpPod("Modifiers");
+    },
     destroy: function () {}
 }
