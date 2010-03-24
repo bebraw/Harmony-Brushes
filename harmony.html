@@ -10,10 +10,6 @@
     </head>
     <body>
         <script type="text/javascript">
-        var STYLES = ["sketchy", "shaded", "chrome", "fur", "longfur", "web",
-            "", "simple", "squares", "ribbon", "", "circles", "grid", "",
-            "stringy", "curvy"];
-
         function importScript(url){
             // http://www.webmaster-talk.com/javascript-forum/87702-import-javascript-in-javascript.html
             var tag = document.createElement("script");
@@ -22,6 +18,12 @@
             document.body.appendChild(tag);
         }
 
+        // TODO: see if it's possible to introspect brushes/tools from the dirs
+
+        // import brushes (TODO: rename to brushes + break global dependency)
+        var STYLES = ["sketchy", "shaded", "chrome", "fur", "longfur", "web",
+            "", "simple", "squares", "ribbon", "", "circles", "grid", "",
+            "stringy", "curvy"];
         for (var i in STYLES) {
             var styleName = STYLES[i];
 
@@ -29,8 +31,18 @@
                 importScript("js/brushes/" + styleName + ".js");
             }
         }
+
+        // import tools
+        tools = ["colorselector", "palette"];
+        for (var i in tools) {
+            var toolName = tools[i];
+
+            if(toolName) {
+                importScript("js/tools/" + toolName + ".js");
+            }
+        }
         </script>
-        <script type="text/javascript" src="js/tools.js"></script>
+        <script type="text/javascript" src="js/devices.js"></script>
         <script type="text/javascript" src="js/ui.js"></script>
         <script type="text/javascript" src="js/stroke.js"></script>
         <script type="text/javascript" src="js/harmony.js"></script>

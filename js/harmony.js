@@ -106,6 +106,14 @@ function onDocumentMouseDown(a) {
     return isMenuMouseOver
 }
 function onDocumentKeyDown(a) {
+    devices.keyboard.key(a.keyCode).press();
+
+    // TODO: separate these to Tools!
+    /*
+     * Tool:
+     * hotkey: 'f'
+     * handler(toolContext) XXX: strokeManager should have reference to toolContext
+     */
     switch (a.keyCode) {
     case 70: // f
         targetX = mouseX;
@@ -118,14 +126,14 @@ function onDocumentKeyDown(a) {
             initialY = mouseY;
         }
 
-        keysDown['a'] = true;
+        //keysDown['a'] = true;
         break;
     case 83: // s
         if(!keysDown['s']) {
             initialX = mouseX;
         }
 
-        keysDown['s'] = true;
+        //keysDown['s'] = true;
         break;
     case 68: // d
         if(!keysDown['d']) {
@@ -133,7 +141,7 @@ function onDocumentKeyDown(a) {
             initialY = mouseY;
         }
 
-        keysDown['d'] = true;
+        //keysDown['d'] = true;
         break;
     case 16: // shift
         if(controlKeyIsDown) {
@@ -150,9 +158,13 @@ function onDocumentKeyDown(a) {
     }
 }
 function onDocumentKeyUp(a) {
+    devices.keyboard.key(a.keyCode).release();
+
+    /*
     switch (a.keyCode) {
     case 65: // a
         keysDown['a'] = false;
+        // devices.keyboard.key(a.keyCode).release()
         break;
     case 83: // s
         keysDown['s'] = false;
@@ -161,6 +173,7 @@ function onDocumentKeyUp(a) {
         keysDown['d'] = false;
         break;
     }
+    */
 }
 function onForegroundColorSelectorMouseDown(a) {
     isForegroundColorSelectorMouseDown = true
@@ -262,10 +275,17 @@ function onMenuRedo() {
 var t, timerIsOn = false, running = false, stopped = false;
 function advanceFrame()
 {
-    strokeManager.playbackDab();
+    //strokeManager.playbackDab();
+    strokePlayer.step();
 
-    if(strokeManager.playbackLeft()) {
-        timeDelta = strokeManager.getDabTimeDelta();
+    if(strokePlayer.playbackLeft()) {
+    //if(strokeManager.playbackLeft()) {
+        //timeDelta = strokeManager.getDabTimeDelta();
+
+        // XXX: calculate scaling factor at init() and use that
+        // to vary delta between [1, 50] (replace 50 with bigger num?)
+        // note that this should filter out really slow dabs to avoid bad
+        // scaling!
 
         // XXX: use timeDelta for ~showing~ renders instead of actually
         // rendering dabs!
@@ -280,12 +300,16 @@ function advanceFrame()
 function onMenuPlay() {
     if(!running) {
         if(!stopped) {
+            canvas.empty(); // TODO! this should get rid of strokes (just render bg again)
             // empty canvas -> make this a method of canvas!
-            context.fillStyle = "rgb(" + BACKGROUND_COLOR[0] + ", " +
-                BACKGROUND_COLOR[1] + ", " + BACKGROUND_COLOR[2] + ")";
-            context.fillRect(0, 0, canvas.width, canvas.height);
-            
-            strokeManager.currentStrokeIndex = 0;
+            //context.fillStyle = "rgb(" + BACKGROUND_COLOR[0] + ", " +
+            //    BACKGROUND_COLOR[1] + ", " + BACKGROUND_COLOR[2] + ")";
+            //context.fillRect(0, 0, canvas.width, canvas.height);
+
+            strokePlayer.init();
+            // TODO: move these to some init method
+            //strokeManager.currentStrokeIndex = 0;
+            //strokeManager.currentDabIndex = 0;
         }
         
         running = true;
@@ -322,16 +346,30 @@ function onCanvasMouseDown(a) {
 
     initialX = mouseX;
     initialY = mouseY;
+    // update mouse state with new x, y
 
-    strokeManager.strokeStart(mouseX, mouseY, mirrorsDown, keysDown, initialX,
-        initialY, targetX, targetY);
+    strokeRecorder.start(); // pass devices, menu ie. at init
+    //strokeRecorder.start(devices, menu, targets);
+    // devices should contain mouse and keyboard. keyboard should contain key
+    // access
+    // menu should contain access to menu item states (bad decoupling? handle
+    // at modifier level?)
+    // get rid of targets?
+
+    //strokeRecorder.record(mouse, menu, keys, targets);
+    //strokeManager.strokeStart(mouseX, mouseY, mirrorsDown, keysDown, initialX,
+    //    initialY, targetX, targetY);
 }
 function onCanvasMouseUp(a) {
     if(isMouseDown) {
-        strokeManager.strokeEnd(mouseX, mouseY, mirrorsDown, keysDown,
-            initialX, initialY, targetX, targetY);
+        stroke = strokeRecorder.finish();
+        strokeManager.append(stroke);
+        //strokeManager.strokeEnd(mouseX, mouseY, mirrorsDown, keysDown,
+        //    initialX, initialY, targetX, targetY);
 
+        // TODO: move this to state dict (is this lmb always?)
         isMouseDown = false;
+        // devices.mouse['left'].pressed = false;
     }
 }
 function onCanvasMouseMove(a) {
@@ -345,13 +383,15 @@ function onCanvasMouseMove(a) {
         return
     }
 
-    strokeManager.stroke(mouseX, mouseY, mirrorsDown, keysDown, initialX,
-        initialY, targetX, targetY);
+    strokeRecorder.step();
+    //strokeManager.stroke(mouseX, mouseY, mirrorsDown, keysDown, initialX,
+    //    initialY, targetX, targetY);
 }
 function onCanvasTouchStart(a) {
     if (a.touches.length == 1) {
         var b = a.touches[0];
 
+        // XXX: figure out what's this for! note that this uses pageX, pageY!
         strokeManager.strokeStart(b.pageX, b.pageY, mirrorsDown, keysDown,
             initialX, initialY, targetX, targetY);
         return false
@@ -361,6 +401,7 @@ function onCanvasTouchEnd(a) {
     if (a.touches.length == 1) {
         var b = a.touches[0];
 
+        // XXX: figure out what's this for! note that this uses pageX, pageY!
         strokeManager.strokeEnd(b.pageX, b.pageY, mirrorsDown, keysDown,
             initialX, initialY, targetX, targetY);
         return false
@@ -370,6 +411,7 @@ function onCanvasTouchMove(a) {
     if (a.touches.length == 1) {
         var b = a.touches[0];
 
+        // XXX: figure out what's this for! note that this uses pageX, pageY!
         strokeManager.stroke(b.pageX, b.pageY, mirrorsDown, keysDown, initialX,
             initialY, targetX, targetY);
         return false
