@@ -30,20 +30,19 @@
 
         // TODO: see if it's possible to introspect brushes/tools from the dirs
 
-        // import brushes (TODO: rename to brushes + break global dependency)
-        // TODO: get rid of ""'s (ui dependency!)
-        var STYLES = ["sketchy", "shaded", "chrome", "fur", "longfur", "web",
-            "", "simple", "squares", "ribbon", "", "circles", "grid", "",
-            "stringy", "curvy"];
-        importDirectory(STYLES, 'brushes');
+        // import brushes
+        brushes = ["sketchy", "shaded", "chrome", "fur", "longfur", "web",
+            "simple", "squares", "ribbon", "circles", "grid", "stringy",
+            "curvy"];
+        importDirectory(brushes, "brushes");
 
-        // import tools XXX: rename tools as constraints and separate them?
-        tools = ["constraints"];
-        importDirectory(tools, 'tools');
+        // import constraints
+        constraints = ["horizontal", "perspective", "vertical"];
+        importDirectory(constraints, "constraints");
 
         // import brush modifiers
         modifiers = ["mirror"]; // "jitter"
-        importDirectory(modifiers, 'modifiers');
+        importDirectory(modifiers, "modifiers");
         </script>
         <script type="text/javascript" src="js/devices.js"></script>
         <script type="text/javascript" src="js/menu.js"></script>
