@@ -1,3 +1,17 @@
+/*
+palette = new Palette();
+foregroundColorSelector = new ColorSelector(palette);
+foregroundColorSelector.container.onmousedown = onForegroundColorSelectorMouseDown;
+foregroundColorSelector.container.onmouseup = onForegroundColorSelectorMouseUp;
+foregroundColorSelector.container.onmousemove = onForegroundColorSelectorMouseMove;
+container.appendChild(foregroundColorSelector.container);
+backgroundColorSelector = new ColorSelector(palette);
+backgroundColorSelector.container.onmousedown = onBackgroundColorSelectorMouseDown;
+backgroundColorSelector.container.onmouseup = onBackgroundColorSelectorMouseUp;
+backgroundColorSelector.container.onmousemove = onBackgroundColorSelectorMouseMove;
+container.appendChild(backgroundColorSelector.container);
+*/
+
 function Palette() {
     var f, e, b, a, q = 0,
         h = 90,

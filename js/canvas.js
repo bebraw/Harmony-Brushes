@@ -1,3 +1,24 @@
+/*
+canvas = document.createElement("canvas");
+canvas.width = SCREEN_WIDTH;
+canvas.height = SCREEN_HEIGHT;
+canvas.style.cursor = "crosshair";
+container.appendChild(canvas);
+
+canvas.onmousedown = onCanvasMouseDown;
+canvas.onmouseup = onCanvasMouseUp;
+canvas.onmousemove = onCanvasMouseMove;
+canvas.ontouchstart = onCanvasTouchStart;
+canvas.ontouchend = onCanvasTouchEnd;
+canvas.ontouchmove = onCanvasTouchMove;
+*/
+
+/*
+flattenCanvas = document.createElement("canvas");
+flattenCanvas.width = SCREEN_WIDTH;
+flattenCanvas.height = SCREEN_HEIGHT;
+*/
+
 function Canvas() {
     this.init();
 }

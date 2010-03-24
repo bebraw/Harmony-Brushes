@@ -27,44 +27,18 @@ var i,
     isMouseDown = false,
     controlKeyIsDown = false,
     mirrorsDown = {'x': false, 'y': false, 'xy': false};
-init();
+//init();
 
 function init() {
-    var hash, palette;
-    document.body.style.backgroundColor = "rgb(" + BACKGROUND_COLOR[0] + ", " + BACKGROUND_COLOR[1] + ", " + BACKGROUND_COLOR[2] + ")";
-    container = document.createElement("div");
-    document.body.appendChild(container);
+    //var hash, palette;
+    //container = document.createElement("div");
+    //document.body.appendChild(container);
 
-    canvas = document.createElement("canvas");
-    canvas.width = SCREEN_WIDTH;
-    canvas.height = SCREEN_HEIGHT;
-    canvas.style.cursor = "crosshair";
-    container.appendChild(canvas);
+    //context = canvas.getContext("2d");
+    //strokeManager = new StrokeManager(canvas, context);
 
-    context = canvas.getContext("2d");
-    strokeManager = new StrokeManager(canvas, context);
-
-    /*
-    flattenCanvas = document.createElement("canvas");
-    flattenCanvas.width = SCREEN_WIDTH;
-    flattenCanvas.height = SCREEN_HEIGHT;
-
-    /*
-    palette = new Palette();
-    foregroundColorSelector = new ColorSelector(palette);
-    foregroundColorSelector.container.onmousedown = onForegroundColorSelectorMouseDown;
-    foregroundColorSelector.container.onmouseup = onForegroundColorSelectorMouseUp;
-    foregroundColorSelector.container.onmousemove = onForegroundColorSelectorMouseMove;
-    container.appendChild(foregroundColorSelector.container);
-    backgroundColorSelector = new ColorSelector(palette);
-    backgroundColorSelector.container.onmousedown = onBackgroundColorSelectorMouseDown;
-    backgroundColorSelector.container.onmouseup = onBackgroundColorSelectorMouseUp;
-    backgroundColorSelector.container.onmousemove = onBackgroundColorSelectorMouseMove;
-    container.appendChild(backgroundColorSelector.container);
-    */
-   
-    menu = new Menu();
-    container.appendChild(menu.container);
+    //menu = new Menu();
+    //container.appendChild(menu.container);
 
     /*
     menu.foregroundColor.addEventListener("click", onMenuForegroundColor, false);
@@ -85,38 +59,13 @@ function init() {
     */
 
     /*
-    manager_set = false;
-    if (window.location.hash) {
-        hash = window.location.hash.substr(1, window.location.hash.length);
-        for (i = 0; i < STYLES.length; i++) {
-            if (hash == STYLES[i]) {
-                strokeManager.setStyle(STYLES[i]);
-                menu.selector.selectedIndex = i;
-                manager_set = true;
-                break
-            }
-        }
-    }
-    if (!manager_set) {
-        strokeManager.setStyle(STYLES[0]);
-    }
-
-    about = new About();
-    container.appendChild(about.container);
-    */
-
     window.onresize = onWindowResize;
     window.onkeydown = onDocumentKeyDown;
     window.onkeyup = onDocumentKeyUp;
     document.onmousedown = onDocumentMouseDown;
     document.onmouseout = onCanvasMouseUp;
-    canvas.onmousedown = onCanvasMouseDown;
-    canvas.onmouseup = onCanvasMouseUp;
-    canvas.onmousemove = onCanvasMouseMove;
-    canvas.ontouchstart = onCanvasTouchStart;
-    canvas.ontouchend = onCanvasTouchEnd;
-    canvas.ontouchmove = onCanvasTouchMove;
     onWindowResize(null)
+    */
 }
 function onWindowResize(a) {
     SCREEN_WIDTH = window.innerWidth;

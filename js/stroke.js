@@ -157,7 +157,7 @@ StrokeManager.prototype = {
     canvas: null,
     context: null,
     //strokes: Strokes(),
-    strokeRecorder: StrokeRecorder(), // TODO: hook up!
+    strokeRecorder: new StrokeRecorder(), // TODO: hook up!
     // strokes (TODO: move to array)
     style: null,
     xMirrorStyle: null,
