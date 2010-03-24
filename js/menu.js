@@ -10,7 +10,7 @@ Menu.prototype = {
             $('#menu').dialog('open');
         });
 
-        // set up menu
+        // set up menu panel
         $("body").append('<div class="panel" id="menu" title="Menu"> \
             <button>New</button> \
             <button>Load</button> \

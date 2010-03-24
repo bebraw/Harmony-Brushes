@@ -1,3 +1,5 @@
+// XXXXXX: merge with Background! -> Canvas
+
 /*
 canvas = document.createElement("canvas");
 canvas.width = SCREEN_WIDTH;

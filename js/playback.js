@@ -9,6 +9,92 @@ Playback.prototype = {
             $(this).hide();
             $('#playback').dialog('open');
         });
+
+        // set up playback panel
+        $("body").append('<div class="panel" id="playback" title="Playback"> \
+            <button id="beginning">go to beginning</button> \
+            <button id="rewind">rewind</button> \
+            <button id="play">play</button> \
+            <button id="stop">stop</button> \
+            <button id="forward">fast forward</button> \
+            <button id="end">go to end</button> \
+            </div>');
+
+        $("#playback button").button();
+
+        $("#playback").dialog({
+           closeOnEscape: false, resizable: false, width: 230, autoOpen: false
+        });
+
+        $("#playback").dialog( "option", "width", 220 );
+        $("#playback").dialog( "option", "height", 60 );
+        $("#playback").dialog( "option", "position", "bottom" );
+        $("#playback").bind( "dialogclose", function(event, ui) { $("#playbackPod").show();} );
+
+        // set up icons
+        $('#beginning').button({
+            text: false,
+            icons: {
+                    primary: 'ui-icon-seek-start'
+            }
+        });
+        $('#rewind').button({
+            text: false,
+            icons: {
+                    primary: 'ui-icon-seek-prev'
+            }
+        });
+        $('#play').button({
+            text: false,
+            icons: {
+                    primary: 'ui-icon-play'
+            }
+        })
+        .click(function() {
+            var options;
+            if ($(this).text() == 'play') {
+                    options = {
+                            label: 'pause',
+                            icons: {
+                                    primary: 'ui-icon-pause'
+                            }
+                    };
+            } else {
+                    options = {
+                            label: 'play',
+                            icons: {
+                                    primary: 'ui-icon-play'
+                            }
+                    };
+            }
+            $(this).button('option', options);
+        });
+        $('#stop').button({
+            text: false,
+            icons: {
+                    primary: 'ui-icon-stop'
+            }
+        })
+        .click(function() {
+            $('#play').button('option', {
+                    label: 'play',
+                    icons: {
+                            primary: 'ui-icon-play'
+                    }
+            });
+        });
+        $('#forward').button({
+            text: false,
+            icons: {
+                    primary: 'ui-icon-seek-next'
+            }
+        });
+        $('#end').button({
+            text: false,
+            icons: {
+                    primary: 'ui-icon-seek-end'
+            }
+        });
     },
     destroy: function () {}
 }

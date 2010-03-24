@@ -35,6 +35,20 @@ Brushes.prototype = {
             $(this).hide();
             $('#brushes').dialog('open');
         });
+
+        // set up brushes panel
+        $("body").append('<div class="panel" id="brushes" title="Brushes"> \
+            brush selector. overflow \
+            </div>');
+
+        $("#brushes button").button();
+
+        $("#brushes").dialog({
+           closeOnEscape: false, resizable: false, width: 230, autoOpen: false
+        });
+
+        $("#brushes").dialog( "option", "position", "left" );
+        $("#brushes").bind( "dialogclose", function(event, ui) { $("#brushesPod").show();} );
     },
     destroy: function () {}
 }

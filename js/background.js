@@ -11,6 +11,20 @@ Background.prototype = {
             $(this).hide();
             $('#background').dialog('open');
         });
+
+        // set up background panel
+        $("body").append('<div class="panel" id="background" title="Background"> \
+            background options \
+            </div>');
+
+        $("#background button").button();
+
+        $("#background").dialog({
+           closeOnEscape: false, resizable: false, width: 230, autoOpen: false
+        });
+
+        $("#background").dialog( "option", "position", ["left", "bottom"] );
+        $("#background").bind( "dialogclose", function(event, ui) { $("#backgroundPod").show();} );
     },
     destroy: function () {}
 }

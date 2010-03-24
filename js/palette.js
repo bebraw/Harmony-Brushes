@@ -9,6 +9,23 @@ Palette.prototype = {
             $(this).hide();
             $('#palette').dialog('open');
         });
+
+        // set up palette panel
+        $("body").append('<div class="panel" id="palette" title="Palette"> \
+            <div id="picker"></div> \
+            <div><input type="text" id="color1" name="color1" class="colorwell" value="#123456" /></div> \
+            <div><input type="text" id="color2" name="color2" class="colorwell" value="#123456" /></div> \
+            <div><label for="color3"></label><input type="text" id="color3" name="color3" class="colorwell" value="#123456" /></div> \
+            </div>');
+
+        $("#palette button").button();
+
+        $("#palette").dialog({
+           closeOnEscape: false, resizable: false, width: 230, autoOpen: false
+        });
+
+        $("#palette").dialog( "option", "position", "right" );
+        $("#palette").bind( "dialogclose", function(event, ui) { $("#palettePod").show();} );
     },
     destroy: function () {}
 }
