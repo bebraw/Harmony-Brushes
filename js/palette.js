@@ -210,3 +210,54 @@ ColorSelector.prototype = {
         return [this.luminosityData[(a + (b * 250)) * 4], this.luminosityData[(a + (b * 250)) * 4 + 1], this.luminosityData[(a + (b * 250)) * 4 + 2]]
     }
 };
+
+function onForegroundColorSelectorMouseDown(a) {
+    isForegroundColorSelectorMouseDown = true
+}
+function onForegroundColorSelectorMouseUp(a) {
+    isForegroundColorSelectorMouseDown = false;
+    foregroundColorSelector.update(a);
+    COLOR = foregroundColorSelector.getColor();
+    menu.setForegroundColor(COLOR)
+}
+function onForegroundColorSelectorMouseMove(a) {
+    if (!isForegroundColorSelectorMouseDown) {
+        return
+    }
+    foregroundColorSelector.update(a);
+    COLOR = foregroundColorSelector.getColor();
+    menu.setForegroundColor(COLOR)
+}
+function onBackgroundColorSelectorMouseDown(a) {
+    isBackgroundColorSelectorMouseDown = true
+}
+function onBackgroundColorSelectorMouseUp(a) {
+    isBackgroundColorSelectorMouseDown = false;
+    backgroundColorSelector.update(a);
+    BACKGROUND_COLOR = backgroundColorSelector.getColor();
+    menu.setBackgroundColor(BACKGROUND_COLOR);
+    document.body.style.backgroundColor = "rgb(" + BACKGROUND_COLOR[0] + ", " + BACKGROUND_COLOR[1] + ", " + BACKGROUND_COLOR[2] + ")"
+}
+function onBackgroundColorSelectorMouseMove(a) {
+    if (!isBackgroundColorSelectorMouseDown) {
+        return
+    }
+    backgroundColorSelector.update(a);
+    BACKGROUND_COLOR = backgroundColorSelector.getColor();
+    menu.setBackgroundColor(BACKGROUND_COLOR);
+    document.body.style.backgroundColor = "rgb(" + BACKGROUND_COLOR[0] + ", " + BACKGROUND_COLOR[1] + ", " + BACKGROUND_COLOR[2] + ")"
+}
+function onMenuForegroundColor(a) {
+    //cleanPopUps();
+    foregroundColorSelector.show();
+    foregroundColorSelector.container.style.left = ((SCREEN_WIDTH - foregroundColorSelector.container.offsetWidth) / 2) + "px";
+    foregroundColorSelector.container.style.top = ((SCREEN_HEIGHT - foregroundColorSelector.container.offsetHeight) / 2) + "px";
+    isForegroundColorSelectorVisible = true
+}
+function onMenuBackgroundColor(a) {
+    //cleanPopUps();
+    backgroundColorSelector.show();
+    backgroundColorSelector.container.style.left = ((SCREEN_WIDTH - backgroundColorSelector.container.offsetWidth) / 2) + "px";
+    backgroundColorSelector.container.style.top = ((SCREEN_HEIGHT - backgroundColorSelector.container.offsetHeight) / 2) + "px";
+    isBackgroundColorSelectorVisible = true
+}
