@@ -1,3 +1,11 @@
+var background = Background(),
+    devices = Devices(),
+    menu = Menu(),
+    palette = Palette(),
+    modifiers = Modifiers(),
+    playback = Playback(),
+    canvas = Canvas();
+
 var i,
     COLOR = [0, 0, 0],
     targetX = 0, targetY = 0,
@@ -5,7 +13,7 @@ var i,
     SCREEN_WIDTH = window.innerWidth,
     SCREEN_HEIGHT = window.innerHeight,
     strokeManager, container, foregroundColorSelector, backgroundColorSelector,
-    menu, about, canvas, flattenCanvas, context,
+    menu, about, flattenCanvas, context,
     initialX, initialY,
     mouseX = 0, mouseY = 0,
     isForegroundColorSelectorVisible = false,
@@ -16,8 +24,7 @@ var i,
     isMenuMouseOver = false,
     isMouseDown = false,
     controlKeyIsDown = false,
-    mirrorsDown = {'x': false, 'y': false, 'xy': false},
-    keysDown = {'a': false, 's': false, 'd': false }; // TODO: use more generic solution
+    mirrorsDown = {'x': false, 'y': false, 'xy': false};
 init();
 
 function init() {
