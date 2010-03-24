@@ -25,16 +25,22 @@ function init() {
     document.body.style.backgroundColor = "rgb(" + BACKGROUND_COLOR[0] + ", " + BACKGROUND_COLOR[1] + ", " + BACKGROUND_COLOR[2] + ")";
     container = document.createElement("div");
     document.body.appendChild(container);
+
     canvas = document.createElement("canvas");
     canvas.width = SCREEN_WIDTH;
     canvas.height = SCREEN_HEIGHT;
     canvas.style.cursor = "crosshair";
+    container.appendChild(canvas);
+
     context = canvas.getContext("2d");
     strokeManager = new StrokeManager(canvas, context);
-    container.appendChild(canvas);
+
+    /*
     flattenCanvas = document.createElement("canvas");
     flattenCanvas.width = SCREEN_WIDTH;
     flattenCanvas.height = SCREEN_HEIGHT;
+
+    /*
     palette = new Palette();
     foregroundColorSelector = new ColorSelector(palette);
     foregroundColorSelector.container.onmousedown = onForegroundColorSelectorMouseDown;
@@ -46,7 +52,12 @@ function init() {
     backgroundColorSelector.container.onmouseup = onBackgroundColorSelectorMouseUp;
     backgroundColorSelector.container.onmousemove = onBackgroundColorSelectorMouseMove;
     container.appendChild(backgroundColorSelector.container);
+    */
+   
     menu = new Menu();
+    container.appendChild(menu.container);
+
+    /*
     menu.foregroundColor.addEventListener("click", onMenuForegroundColor, false);
     menu.backgroundColor.addEventListener("click", onMenuBackgroundColor, false);
     menu.selector.onchange = onMenuSelectorChange;
@@ -62,8 +73,9 @@ function init() {
     menu.about.addEventListener("click", onMenuAbout, false);
     menu.container.onmouseover = onMenuMouseOver;
     menu.container.onmouseout = onMenuMouseOut;
-    container.appendChild(menu.container);
+    */
 
+    /*
     manager_set = false;
     if (window.location.hash) {
         hash = window.location.hash.substr(1, window.location.hash.length);
@@ -82,6 +94,8 @@ function init() {
 
     about = new About();
     container.appendChild(about.container);
+    */
+
     window.onresize = onWindowResize;
     window.onkeydown = onDocumentKeyDown;
     window.onkeyup = onDocumentKeyUp;
@@ -249,24 +263,6 @@ function onMenuStop() {
     stopped = true;
 }
 
-function onMenuSave() {
-    var a = flattenCanvas.getContext("2d");
-    a.fillStyle = "rgb(" + BACKGROUND_COLOR[0] + ", " + BACKGROUND_COLOR[1] +
-        ", " + BACKGROUND_COLOR[2] + ")";
-    a.fillRect(0, 0, canvas.width, canvas.height);
-    a.drawImage(canvas, 0, 0);
-    window.open(flattenCanvas.toDataURL("image/png"), "mywindow")
-}
-function onMenuClear() {
-    context.clearRect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
-    strokeManager.initUndo();
-    strokeManager.setStyle(STYLES[menu.selector.selectedIndex]);
-}
-function onMenuAbout(a) {
-    cleanPopUps();
-    isAboutVisible = true;
-    about.show()
-}
 function onCanvasMouseDown(a) {
     cleanPopUps();
     isMouseDown = true;
