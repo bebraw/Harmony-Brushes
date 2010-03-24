@@ -6,6 +6,8 @@ Menu.prototype = {
         documentContainer = document.createElement("div");
         document.body.appendChild(documentContainer);
 
+        this.handlers = new MenuHandlers();
+
         this.container = document.createElement("div");
         this.container.className = "gui";
         this.container.style.position = "absolute";
@@ -18,8 +20,9 @@ Menu.prototype = {
             this.createButton(options[i]);
         }
 
-        window.onresize = this.onWindowResize;
-        this.onWindowResize(null);
+        // XXX: replace with some CSS trick?
+        //window.onresize = onWindowResize;
+        //onWindowResize(null);
     },
     createButton: function (name) {
         attrName = name.toLowerCase();
@@ -27,34 +30,58 @@ Menu.prototype = {
         this[attrName] = document.createElement("span");
         this[attrName].className = "button";
         this[attrName].innerHTML = name;
+        this[attrName].addEventListener("click", this.handlers["on" + name], false);
+
         this.container.appendChild(this[attrName]);
-    },
-    onWindowResize: function (a) {
-        screenWidth = window.innerWidth;
-        screenHeight = window.innerHeight;
-        this.container.style.left = ((screenWidth - this.container.offsetWidth) / 2) + "px";
-        //about.container.style.left = ((screenWidth - about.container.offsetWidth) / 2) + "px";
-        //about.container.style.top = ((screenHeight - about.container.offsetHeight) / 2) + "px";
     }
 };
 
-/*
-menu.foregroundColor.addEventListener("click", onMenuForegroundColor, false);
-menu.backgroundColor.addEventListener("click", onMenuBackgroundColor, false);
-menu.selector.onchange = onMenuSelectorChange;
-menu.xMirror.addEventListener("click", onMenuXMirror, false);
-menu.yMirror.addEventListener("click", onMenuYMirror, false);
-menu.xyMirror.addEventListener("click", onMenuXYMirror, false);
-menu.undo.addEventListener("click", onMenuUndo, false);
-menu.redo.addEventListener("click", onMenuRedo, false);
-menu.play.addEventListener("click", onMenuPlay, false);
-menu.stop.addEventListener("click", onMenuStop, false);
-menu.save.addEventListener("click", onMenuSave, false);
-menu.clear.addEventListener("click", onMenuClear, false);
-menu.about.addEventListener("click", onMenuAbout, false);
-menu.container.onmouseover = onMenuMouseOver;
-menu.container.onmouseout = onMenuMouseOut;
-*/
+function MenuHandlers() {
+    this.init()
+}
+MenuHandlers.prototype = {
+    init: function () {},
+    onNew: function (a) {
+        console.log('new');
+
+        //context.clearRect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
+        //strokeManager.initUndo();
+        //strokeManager.setStyle(STYLES[menu.selector.selectedIndex]);
+    },
+    onLoad: function (a) {
+        console.log('load');
+    },
+    onSave: function (a) {
+        console.log('save');
+
+        /*
+        var a = flattenCanvas.getContext("2d");
+        a.fillStyle = "rgb(" + BACKGROUND_COLOR[0] + ", " + BACKGROUND_COLOR[1] +
+            ", " + BACKGROUND_COLOR[2] + ")";
+        a.fillRect(0, 0, canvas.width, canvas.height);
+        a.drawImage(canvas, 0, 0);
+        window.open(flattenCanvas.toDataURL("image/png"), "mywindow")
+        */
+    },
+    onExport: function (a) {
+        console.log('export');
+    },
+    onAbout: function (a) {
+        console.log('about');
+
+        //cleanPopUps();
+        //isAboutVisible = true;
+        //about.show()
+    }
+}
+
+function onWindowResize(a) {
+    screenWidth = window.innerWidth;
+    screenHeight = window.innerHeight;
+    menu.container.style.left = ((screenWidth - menu.container.offsetWidth) / 2) + "px";
+    //about.container.style.left = ((screenWidth - about.container.offsetWidth) / 2) + "px";
+    //about.container.style.top = ((screenHeight - about.container.offsetHeight) / 2) + "px";
+}
 
 function About() {
     this.init()
@@ -104,22 +131,3 @@ About.prototype = {
         this.container.style.visibility = "hidden"
     }
 };
-
-function onMenuSave() {
-    var a = flattenCanvas.getContext("2d");
-    a.fillStyle = "rgb(" + BACKGROUND_COLOR[0] + ", " + BACKGROUND_COLOR[1] +
-        ", " + BACKGROUND_COLOR[2] + ")";
-    a.fillRect(0, 0, canvas.width, canvas.height);
-    a.drawImage(canvas, 0, 0);
-    window.open(flattenCanvas.toDataURL("image/png"), "mywindow")
-}
-function onMenuClear() {
-    context.clearRect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
-    strokeManager.initUndo();
-    strokeManager.setStyle(STYLES[menu.selector.selectedIndex]);
-}
-function onMenuAbout(a) {
-    cleanPopUps();
-    isAboutVisible = true;
-    about.show()
-}
