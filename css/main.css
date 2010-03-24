@@ -24,13 +24,17 @@ hr {
 
 .gui {
     color: #ccc;
-    width: 600px;
+    width: 200px;
     background-color: #fff;
     border-bottom: 1px solid #ddd;
     padding: 5px 10px;
     text-align: center;
     text-transform: uppercase;
     cursor: default;
+}
+
+.gui span {
+    padding-right: 1em;
 }
 
 .button {

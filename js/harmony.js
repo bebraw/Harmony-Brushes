@@ -1,13 +1,14 @@
-var background = Background(),
-    devices = Devices(),
-    menu = Menu(),
-    palette = Palette(),
-    modifiers = Modifiers(),
-    playback = Playback(),
-    canvas = Canvas(),
-    brushes = Brushes(),
-    constraints = Constraints();
+var background = new Background(),
+    devices = new Devices(),
+    menu = new Menu(),
+    palette = new Palette(),
+    modifiers = new Modifiers(),
+    playback = new Playback(),
+    canvas = new Canvas(),
+    brushes = new Brushes(),
+    constraints = new Constraints();
 
+/*
 var i,
     COLOR = [0, 0, 0],
     targetX = 0, targetY = 0,
@@ -27,6 +28,7 @@ var i,
     isMouseDown = false,
     controlKeyIsDown = false,
     mirrorsDown = {'x': false, 'y': false, 'xy': false};
+*/
 //init();
 
 function init() {
@@ -36,9 +38,6 @@ function init() {
 
     //context = canvas.getContext("2d");
     //strokeManager = new StrokeManager(canvas, context);
-
-    //menu = new Menu();
-    //container.appendChild(menu.container);
 
     /*
     menu.foregroundColor.addEventListener("click", onMenuForegroundColor, false);
@@ -59,20 +58,12 @@ function init() {
     */
 
     /*
-    window.onresize = onWindowResize;
     window.onkeydown = onDocumentKeyDown;
     window.onkeyup = onDocumentKeyUp;
     document.onmousedown = onDocumentMouseDown;
     document.onmouseout = onCanvasMouseUp;
     onWindowResize(null)
     */
-}
-function onWindowResize(a) {
-    SCREEN_WIDTH = window.innerWidth;
-    SCREEN_HEIGHT = window.innerHeight;
-    menu.container.style.left = ((SCREEN_WIDTH - menu.container.offsetWidth) / 2) + "px";
-    about.container.style.left = ((SCREEN_WIDTH - about.container.offsetWidth) / 2) + "px";
-    about.container.style.top = ((SCREEN_HEIGHT - about.container.offsetHeight) / 2) + "px";
 }
 function onDocumentMouseDown(a) {
     return isMenuMouseOver;

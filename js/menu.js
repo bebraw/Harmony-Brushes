@@ -1,25 +1,25 @@
-/*
- *new
- *load
- *save
- *export
- *about
- **/
-
 function Menu() {
     this.init()
 }
 Menu.prototype = {
     init: function () {
+        documentContainer = document.createElement("div");
+        document.body.appendChild(documentContainer);
+
         this.container = document.createElement("div");
         this.container.className = "gui";
         this.container.style.position = "absolute";
         this.container.style.top = "0px";
 
+        documentContainer.appendChild(this.container);
+
         options = ["New", "Load", "Save", "Export", "About"];
         for (i = 0; i < options.length; i++) {
             this.createButton(options[i]);
         }
+
+        window.onresize = this.onWindowResize;
+        this.onWindowResize(null);
     },
     createButton: function (name) {
         attrName = name.toLowerCase();
@@ -28,8 +28,33 @@ Menu.prototype = {
         this[attrName].className = "button";
         this[attrName].innerHTML = name;
         this.container.appendChild(this[attrName]);
+    },
+    onWindowResize: function (a) {
+        screenWidth = window.innerWidth;
+        screenHeight = window.innerHeight;
+        this.container.style.left = ((screenWidth - this.container.offsetWidth) / 2) + "px";
+        //about.container.style.left = ((screenWidth - about.container.offsetWidth) / 2) + "px";
+        //about.container.style.top = ((screenHeight - about.container.offsetHeight) / 2) + "px";
     }
 };
+
+/*
+menu.foregroundColor.addEventListener("click", onMenuForegroundColor, false);
+menu.backgroundColor.addEventListener("click", onMenuBackgroundColor, false);
+menu.selector.onchange = onMenuSelectorChange;
+menu.xMirror.addEventListener("click", onMenuXMirror, false);
+menu.yMirror.addEventListener("click", onMenuYMirror, false);
+menu.xyMirror.addEventListener("click", onMenuXYMirror, false);
+menu.undo.addEventListener("click", onMenuUndo, false);
+menu.redo.addEventListener("click", onMenuRedo, false);
+menu.play.addEventListener("click", onMenuPlay, false);
+menu.stop.addEventListener("click", onMenuStop, false);
+menu.save.addEventListener("click", onMenuSave, false);
+menu.clear.addEventListener("click", onMenuClear, false);
+menu.about.addEventListener("click", onMenuAbout, false);
+menu.container.onmouseover = onMenuMouseOver;
+menu.container.onmouseout = onMenuMouseOut;
+*/
 
 function About() {
     this.init()
