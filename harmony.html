@@ -10,7 +10,7 @@
     </head>
     <body>
         <script type="text/javascript">
-        function importScript(url){
+        function importScript(url) {
             // http://www.webmaster-talk.com/javascript-forum/87702-import-javascript-in-javascript.html
             var tag = document.createElement("script");
             tag.type="text/javascript";
@@ -18,29 +18,32 @@
             document.body.appendChild(tag);
         }
 
+        function importDirectory(files, dir) {
+            for (var i in files) {
+                var name = files[i];
+
+                if(name) {
+                    importScript("js/" + dir + "/" + name + ".js");
+                }
+            }
+        }
+
         // TODO: see if it's possible to introspect brushes/tools from the dirs
 
         // import brushes (TODO: rename to brushes + break global dependency)
+        // TODO: get rid of ""'s (ui dependency!)
         var STYLES = ["sketchy", "shaded", "chrome", "fur", "longfur", "web",
             "", "simple", "squares", "ribbon", "", "circles", "grid", "",
             "stringy", "curvy"];
-        for (var i in STYLES) {
-            var styleName = STYLES[i];
-
-            if(styleName) {
-                importScript("js/brushes/" + styleName + ".js");
-            }
-        }
+        importDirectory(STYLES, 'brushes');
 
         // import tools
         tools = ["colorselector", "constraints", "palette"];
-        for (var i in tools) {
-            var toolName = tools[i];
+        importDirectory(tools, 'tools');
 
-            if(toolName) {
-                importScript("js/tools/" + toolName + ".js");
-            }
-        }
+        // import brush modifiers
+        modifiers = ["colorselector", "constraints", "palette"];
+        importDirectory(modifiers, 'modifiers');
         </script>
         <script type="text/javascript" src="js/devices.js"></script>
         <script type="text/javascript" src="js/ui.js"></script>
