@@ -5,7 +5,8 @@ var background = Background(),
     modifiers = Modifiers(),
     playback = Playback(),
     canvas = Canvas(),
-    brushes = Brushes();
+    brushes = Brushes(),
+    constraints = Constraints();
 
 var i,
     COLOR = [0, 0, 0],

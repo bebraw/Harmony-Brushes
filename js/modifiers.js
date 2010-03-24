@@ -1,3 +1,7 @@
+// import brush modifiers
+modifiers = ["mirror"]; // "jitter"
+importDirectory(modifiers, "modifiers");
+
 function Modifiers() {
     this.init();
 }

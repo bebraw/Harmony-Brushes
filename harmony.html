@@ -9,41 +9,6 @@
         <link rel="stylesheet" type="text/css" href="css/main.css">
     </head>
     <body>
-        <script type="text/javascript">
-        function importScript(url) {
-            // http://www.webmaster-talk.com/javascript-forum/87702-import-javascript-in-javascript.html
-            var tag = document.createElement("script");
-            tag.type="text/javascript";
-            tag.src = url;
-            document.body.appendChild(tag);
-        }
-
-        function importDirectory(files, dir) {
-            for (var i in files) {
-                var name = files[i];
-
-                if(name) {
-                    importScript("js/" + dir + "/" + name + ".js");
-                }
-            }
-        }
-
-        // TODO: see if it's possible to introspect brushes/tools from the dirs
-
-        // import brushes
-        brushes = ["sketchy", "shaded", "chrome", "fur", "longfur", "web",
-            "simple", "squares", "ribbon", "circles", "grid", "stringy",
-            "curvy"];
-        importDirectory(brushes, "brushes");
-
-        // import constraints
-        constraints = ["horizontal", "perspective", "vertical"];
-        importDirectory(constraints, "constraints");
-
-        // import brush modifiers
-        modifiers = ["mirror"]; // "jitter"
-        importDirectory(modifiers, "modifiers");
-        </script>
         <script type="text/javascript" src="js/utils.js"></script>
         <script type="text/javascript" src="js/devices.js"></script>
         <script type="text/javascript" src="js/menu.js"></script>

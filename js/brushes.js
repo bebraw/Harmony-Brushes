@@ -1,3 +1,8 @@
+brushes = ["sketchy", "shaded", "chrome", "fur", "longfur", "web",
+    "simple", "squares", "ribbon", "circles", "grid", "stringy",
+    "curvy"];
+importDirectory(brushes, "brushes");
+
 function Brushes() {
     this.init();
 }
