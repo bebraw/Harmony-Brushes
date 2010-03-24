@@ -37,17 +37,18 @@
             "stringy", "curvy"];
         importDirectory(STYLES, 'brushes');
 
-        // import tools
-        tools = ["colorselector", "constraints", "palette"];
+        // import tools XXX: rename tools as constraints and separate them?
+        tools = ["constraints"];
         importDirectory(tools, 'tools');
 
         // import brush modifiers
-        modifiers = ["colorselector", "constraints", "palette"];
+        modifiers = ["mirror"]; // "jitter"
         importDirectory(modifiers, 'modifiers');
         </script>
         <script type="text/javascript" src="js/devices.js"></script>
         <script type="text/javascript" src="js/menu.js"></script>
         <script type="text/javascript" src="js/stroke.js"></script>
+        <script type="text/javascript" src="js/palette.js"></script>
         <script type="text/javascript" src="js/harmony.js"></script>
     </body>
 </html>
