@@ -1,10 +1,15 @@
-This version of mrdoob's and rhyolight's Harmony application aims to provide
-some extra functionality including:
+This fork is based on work done by mrdoob and rhyolight. I have restructured
+it heavily to suit my purposes. :)
+
+IMPORTANT! If you want to test the application, please give the tagged versions
+a go! They are considered relatively stable.
 
 - better palette (bounds + slots interpolated between those)
 - faster undo!
+- playback
 - gradient background (x/y/others?)
 - scanfill brush
+- rethought UI (pads+panels)
 
 Currently it provides following extra functionality:
 
