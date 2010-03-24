@@ -5,6 +5,11 @@ Menu.prototype = {
     init: function () {
         setUpPod("Menu");
 
+        $('#menuPod').click(function() {
+            $(this).hide();
+            $('#menu').dialog('open');
+        });
+
         // set up menu
         $("body").append('<div class="panel" id="menu" title="Menu"> \
             <button>New</button> \

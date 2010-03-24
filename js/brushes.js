@@ -30,6 +30,11 @@ function Brushes() {
 Brushes.prototype = {
     init: function () {
         setUpPod("Brushes");
+
+        $('#brushesPod').click(function() {
+            $(this).hide();
+            $('#brushes').dialog('open');
+        });
     },
     destroy: function () {}
 }

@@ -4,6 +4,11 @@ function Playback() {
 Playback.prototype = {
     init: function () {
         setUpPod("Playback");
+
+        $('#playbackPod').click(function() {
+            $(this).hide();
+            $('#playback').dialog('open');
+        });
     },
     destroy: function () {}
 }

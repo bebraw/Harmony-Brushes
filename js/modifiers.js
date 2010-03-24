@@ -8,6 +8,11 @@ function Modifiers() {
 Modifiers.prototype = {
     init: function () {
         setUpPod("Modifiers");
+
+        $('#modifiersPod').click(function() {
+            $(this).hide();
+            $('#modifiers').dialog('open');
+        });
     },
     destroy: function () {}
 }

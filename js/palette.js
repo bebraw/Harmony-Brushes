@@ -4,6 +4,11 @@ function Palette() {
 Palette.prototype = {
     init: function () {
         setUpPod("Palette");
+
+        $('#palettePod').click(function() {
+            $(this).hide();
+            $('#palette').dialog('open');
+        });
     },
     destroy: function () {}
 }

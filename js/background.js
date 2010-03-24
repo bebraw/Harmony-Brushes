@@ -6,6 +6,11 @@ function Background() {
 Background.prototype = {
     init: function () {
         setUpPod("Background");
+
+        $('#backgroundPod').click(function() {
+            $(this).hide();
+            $('#background').dialog('open');
+        });
     },
     destroy: function () {}
 }
