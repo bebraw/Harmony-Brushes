@@ -1,5 +1,12 @@
-// TODO!
-//setUpPod("Palette");
+function Palette() {
+    this.init();
+}
+Palette.prototype = {
+    init: function () {
+        setUpPod("Palette");
+    },
+    destroy: function () {}
+}
 
 /*
 palette = new Palette();
@@ -15,7 +22,7 @@ backgroundColorSelector.container.onmousemove = onBackgroundColorSelectorMouseMo
 container.appendChild(backgroundColorSelector.container);
 */
 
-function Palette() {
+function Palette2() {
     var f, e, b, a, q = 0,
         h = 90,
         o = 1080 / 2,
