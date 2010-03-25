@@ -1,4 +1,8 @@
-// TODO: make it possible to add multiple targets (max 3?) + a way to cycle
+/* Licensed under the MIT license:
+ * http://www.opensource.org/licenses/mit-license.php
+ * Copyright (c) 2010 Mr.doob, rhyolight, bebraw
+ */
+// // TODO: make it possible to add multiple targets (max 3?) + a way to cycle
 // between them
 function PerspectiveTarget() {
     this.init();

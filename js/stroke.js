@@ -1,3 +1,7 @@
+/* Licensed under the MIT license:
+ * http://www.opensource.org/licenses/mit-license.php
+ * Copyright (c) 2010 Mr.doob, rhyolight, bebraw
+ */
 function project_coordinate(x1, y1, x2, y2, x3, y3) {
     dx = x2 - x1;
     dy = y2 - y1;

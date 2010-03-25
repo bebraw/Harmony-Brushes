@@ -1,6 +1,9 @@
 This fork is based on work done by mrdoob and rhyolight. I have restructured
 it heavily to suit my purposes. :)
 
+The application is available under the MIT license. See license.txt for further
+information.
+
 IMPORTANT! If you want to test the application, please give the tagged versions
 a go! They are considered relatively stable.
 
