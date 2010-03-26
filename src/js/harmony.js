@@ -15,12 +15,17 @@ var devices = new Devices(),
     brushes = new Brushes(),
     constraints = new Constraints();
 
-// XXX: just a quick test
-$("#canvas").click(function() {
-    canvas = document.getElementById("canvas");
-    context = canvas.getContext("2d");
-    context.fillRect(50, 25, 150, 100);
-});
+    $("#canvas").mousecapture({
+        "down": function(e, s) {
+            canvas = document.getElementById("canvas");
+            context = canvas.getContext("2d");
+            context.fillRect(50, 25, 150, 100);
+        },
+        "move": function(e, s) {
+        },
+        "up": function(e, s) {
+        }
+    });
 
 /*
 var i,
