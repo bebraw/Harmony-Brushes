@@ -13,6 +13,10 @@ var menu = new Menu(),
 // XXX: move to Palette!
 var COLOR = [0, 0, 0];
 
+// XXX: kill these!
+var SCREEN_WIDTH = window.innerWidth;
+var SCREEN_HEIGHT = window.innerHeight;
+
 // XXX: just pass canvas ie. here
 tmpCanvas = document.getElementById("canvas");
 tmpContext= tmpCanvas.getContext("2d");

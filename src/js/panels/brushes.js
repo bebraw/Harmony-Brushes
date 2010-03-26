@@ -20,10 +20,24 @@ Brushes.prototype = {
                 <div id="brushes" style="height:100px;overflow:scroll;"></div> \
             </div>');
 
-        console.log(BRUSHES);
-
         // TODO: render brushes now!
-        $("#brushes").append('<div class="brush">bar</div>'); // use canvas here
+        for (i = 0; i < BRUSHES.length; i++) {
+            brushName = BRUSHES[i];
+
+            // XXX: should pass brush preview context instead!
+            tmpCanvas = document.getElementById("canvas");
+            tmpContext= tmpCanvas.getContext("2d");
+            //brush = eval("new " + brushName + "(tmpContext)");
+            
+            // XXX: temp hack
+            brush = new shaded(tmpContext);
+
+            // render now!
+
+            // TODO: use canvas here
+            $("#brushes").append('<div class="brush">' + brushName + '</div>');
+        }
+
         $(".brush").css("height", "2em");
 
         $("#brushesPanel button").button();
@@ -33,7 +47,7 @@ Brushes.prototype = {
         });
 
         $("#brushesPanel").dialog( "option", "position", "left" );
-        $("#brushesPanel").bind( "dialogclose", function(event, ui) { $("#brushesPod").show();} );
+        $("#brushesPanel").bind( "dialogclose", function(event, ui) {$("#brushesPod").show();} );
     },
     destroy: function () {}
 }
