@@ -11,6 +11,7 @@ Palette.prototype = {
 
         $('#palettePod').click(function() {
             $(this).hide();
+            $('#paletteCheckbox').attr('checked', false);
             $('#palettePanel').dialog('open');
         });
 

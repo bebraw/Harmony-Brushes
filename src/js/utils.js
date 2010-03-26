@@ -37,7 +37,11 @@ function importDirectory(files, dir) {
 
 function setUpPod(name) {
     id = name.toLowerCase();
-    $("#pods").append('<button id="' + id + 'Pod">' + name + '</button>');
+    podId = id + "Pod";
+    checkboxId = id + "Checkbox";
+    //<input type="checkbox" id="horizontalMirrorModifier" /><label for="horizontalMirrorModifier">Horizontal Mirror</label> \
+    $("#pods").append('<div style="display: inline" id="' + podId + '"><input type="checkbox" id="' +
+        checkboxId + '" /><label for="'+ checkboxId +'">' + name + '</label></div>');
 
-    $("#" + id + "Pod").button();
+    $("#" + checkboxId).button();
 }

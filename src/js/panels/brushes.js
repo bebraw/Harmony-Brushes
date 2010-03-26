@@ -37,6 +37,7 @@ Brushes.prototype = {
 
         $('#brushesPod').click(function() {
             $(this).hide();
+            $('#brushesCheckbox').attr('checked', false);
             $('#brushes').dialog('open');
         });
 

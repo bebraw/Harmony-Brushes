@@ -15,6 +15,7 @@ Modifiers.prototype = {
 
         $('#modifiersPod').click(function() {
             $(this).hide();
+            $('#modifiersCheckbox').attr('checked', false);
             $('#modifiers').dialog('open');
         });
 

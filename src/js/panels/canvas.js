@@ -34,6 +34,7 @@ Canvas.prototype = {
 
         $('#canvasPod').click(function() {
             $(this).hide();
+            $('#canvasCheckbox').attr('checked', false);
             $('#canvasPanel').dialog('open');
         });
 

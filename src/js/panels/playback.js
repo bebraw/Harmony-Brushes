@@ -11,6 +11,7 @@ Playback.prototype = {
 
         $('#playbackPod').click(function() {
             $(this).hide();
+            $('#playbackCheckbox').attr('checked', false);
             $('#playback').dialog('open');
         });
 

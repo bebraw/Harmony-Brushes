@@ -11,6 +11,7 @@ Menu.prototype = {
 
         $('#menuPod').click(function() {
             $(this).hide();
+            $('#menuCheckbox').attr('checked', false);
             $('#menu').dialog('open');
         });
 
