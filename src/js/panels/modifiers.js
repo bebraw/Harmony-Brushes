@@ -18,15 +18,18 @@ Modifiers.prototype = {
             $('#modifiers').dialog('open');
         });
 
+        // <input type="checkbox" id="check" /><label for="check">Toggle</label>
+
         // set up modifiers panel
         $("body").append('<div class="panel" id="modifiers" title="Modifiers"> \
-            <button style="margin-bottom:0.5em; width: 100%">Horizontal Mirror</button> \
-            <button style="margin-bottom:0.5em; width: 100%">Vertical Mirror</button> \
-            <button style="margin-bottom:0.5em; width: 100%">Radial Mirror</button> \
-            <button style="width: 100%">Jitter</button> \
+            <input type="checkbox" id="horizontalMirrorModifier" /><label for="horizontalMirrorModifier">Horizontal Mirror</label> \
+            <input type="checkbox" id="verticalMirrorModifier" /><label for="verticalMirrorModifier">Vertical Mirror</label> \
+            <input type="checkbox" id="radialMirrorModifier" /><label for="radialMirrorModifier">Radial Mirror</label> \
+            <input type="checkbox" id="jitterModifier" /><label for="jitterModifier">Jitter</label> \
             </div>');
 
-        $("#modifiers button").button();
+        $("#modifiers input").button();
+        $("#modifiers label").css("width", "100%").css("margin-bottom", "0.5em");
 
         $("#modifiers").dialog({
            closeOnEscape: false, resizable: false, width: 230, autoOpen: false
