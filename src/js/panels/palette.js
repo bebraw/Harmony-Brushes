@@ -11,44 +11,67 @@ Palette.prototype = {
 
         $('#palettePod').click(function() {
             $(this).hide();
-            $('#palette').dialog('open');
+            $('#palettePanel').dialog('open');
         });
 
         // set up palette panel
-        $("body").append('<div class="panel" id="palette" title="Palette"> \
-            <div id="picker"></div> \
-            <div><input type="text" id="color1" name="color1" class="colorwell" value="#123456" /></div> \
-            <div><input type="text" id="color2" name="color2" class="colorwell" value="#123456" /></div> \
-            <div><label for="color3"></label><input type="text" id="color3" name="color3" class="colorwell" value="#123456" /></div> \
-            </div>');
+        $("body").append('<div class="panel" id="palettePanel" title="Palette"></div>');
 
-        $("#palette button").button();
+            //<canvas style="marginBottom:-3px;cursor:text" \
+            //width="15" height="15" id="colorSwatch"></canvas> \
 
-        $("#palette").dialog({
-           closeOnEscape: false, resizable: false, width: 230, autoOpen: false
+        palette = new SelectorPalette();
+        colorSelector = new ColorSelector(palette);
+
+        palettePanel = document.getElementById("palettePanel");
+        palettePanel.appendChild(colorSelector.container);
+
+        // set initial color to swatch
+        /*
+        colorCanvas = document.getElementById("colorSwatch");
+        context = colorCanvas.getContext("2d");
+        context.fillStyle = "rgb(0, 255, 0)";
+        context.fillRect(0, 0, colorCanvas.width, colorCanvas.height);
+        context.fillStyle = "rgba(0, 0, 0, 0.1)";
+        context.fillRect(0, 0, colorCanvas.width, 1);
+        */
+        $('#colorSwatch').click(function() {
+            cleanPopUps();
+            //foregroundColorSelector.show();
+            //foregroundColorSelector.container.style.left = ((SCREEN_WIDTH - foregroundColorSelector.container.offsetWidth) / 2) + "px";
+            //foregroundColorSelector.container.style.top = ((SCREEN_HEIGHT - foregroundColorSelector.container.offsetHeight) / 2) + "px";
         });
 
-        $("#palette").dialog( "option", "position", "right" );
-        $("#palette").bind( "dialogclose", function(event, ui) { $("#palettePod").show();} );
+        $('#colorSelector').mousedown(function() {
+            
+        });
+
+        $('#colorSelector').mouseup(function() {
+            //foregroundColorSelector.update(a);
+            //COLOR = foregroundColorSelector.getColor();
+            //menu.setForegroundColor(COLOR)
+        });
+
+        $('#colorSelector').mousemove(function() {
+            //foregroundColorSelector.update(a);
+            //COLOR = foregroundColorSelector.getColor();
+            //menu.setForegroundColor(COLOR)
+        });
+
+        $("#palettePanel button").button();
+
+        $("#palettePanel").dialog({
+           closeOnEscape: false, resizable: false, width: 275, height: 320,
+           autoOpen: false
+        });
+
+        $("#palettePanel").dialog( "option", "position", "right" );
+        $("#palettePanel").bind( "dialogclose", function(event, ui) {$("#palettePod").show();} );
     },
     destroy: function () {}
 }
 
-/*
-palette = new Palette();
-foregroundColorSelector = new ColorSelector(palette);
-foregroundColorSelector.container.onmousedown = onForegroundColorSelectorMouseDown;
-foregroundColorSelector.container.onmouseup = onForegroundColorSelectorMouseUp;
-foregroundColorSelector.container.onmousemove = onForegroundColorSelectorMouseMove;
-container.appendChild(foregroundColorSelector.container);
-backgroundColorSelector = new ColorSelector(palette);
-backgroundColorSelector.container.onmousedown = onBackgroundColorSelectorMouseDown;
-backgroundColorSelector.container.onmouseup = onBackgroundColorSelectorMouseUp;
-backgroundColorSelector.container.onmousemove = onBackgroundColorSelectorMouseMove;
-container.appendChild(backgroundColorSelector.container);
-*/
-
-function Palette2() {
+function SelectorPalette() {
     var f, e, b, a, q = 0,
         h = 90,
         o = 1080 / 2,
@@ -116,32 +139,19 @@ function Palette2() {
         g = l / (o / 360) * d;
         for (k = 0; k < n; k++) {
             r = 255 - (k / n) * 255;
-            e.strokeStyle = "rgb(" + Math.floor(p[0] * 255 + r) + "," + Math.floor(p[1] * 255 + r) + "," + Math.floor(p[2] * 255 + r) + ")";
+            e.strokeStyle = "rgb(" + Math.floor(p[0] * 255 + r) + "," +
+                Math.floor(p[1] * 255 + r) + "," +
+                Math.floor(p[2] * 255 + r) + ")";
             e.beginPath();
-            e.moveTo(Math.cos(g) * (m * k + q) + b, Math.sin(g) * (m * k + q) + a);
-            e.lineTo(Math.cos(g) * (m * (k + 1) + q) + b, Math.sin(g) * (m * (k + 1) + q) + a);
+            e.moveTo(Math.cos(g) * (m * k + q) + b,
+                Math.sin(g) * (m * k + q) + a);
+            e.lineTo(Math.cos(g) * (m * (k + 1) + q) + b,
+                Math.sin(g) * (m * (k + 1) + q) + a);
             e.stroke()
         }
     }
     return f
 }
-
-/*
- * TODO!!!
-     case 16: // shift
-        if(controlKeyIsDown) {
-            controlKeyIsDown = false;
-            foregroundColorSelector.container.style.visibility = "hidden";
-        }
-        else {
-            controlKeyIsDown = true;
-            foregroundColorSelector.container.style.left = mouseX - 125 + "px";
-            foregroundColorSelector.container.style.top = mouseY - 125 + "px";
-            foregroundColorSelector.container.style.visibility = "visible";
-        }
-        break
-    }
- **/
 
 function ColorSelector(a) {
     this.init(a)
@@ -161,7 +171,7 @@ ColorSelector.prototype = {
         this.container.style.position = "absolute";
         this.container.style.width = "250px";
         this.container.style.height = "250px";
-        this.container.style.visibility = "hidden";
+        this.container.style.visibility = "visible"; //"hidden"; XXX
         this.container.style.cursor = "pointer";
         this.hue = document.createElement("canvas");
         this.hue.width = b.width;
@@ -260,54 +270,3 @@ ColorSelector.prototype = {
         return [this.luminosityData[(a + (b * 250)) * 4], this.luminosityData[(a + (b * 250)) * 4 + 1], this.luminosityData[(a + (b * 250)) * 4 + 2]]
     }
 };
-
-function onForegroundColorSelectorMouseDown(a) {
-    isForegroundColorSelectorMouseDown = true
-}
-function onForegroundColorSelectorMouseUp(a) {
-    isForegroundColorSelectorMouseDown = false;
-    foregroundColorSelector.update(a);
-    COLOR = foregroundColorSelector.getColor();
-    menu.setForegroundColor(COLOR)
-}
-function onForegroundColorSelectorMouseMove(a) {
-    if (!isForegroundColorSelectorMouseDown) {
-        return
-    }
-    foregroundColorSelector.update(a);
-    COLOR = foregroundColorSelector.getColor();
-    menu.setForegroundColor(COLOR)
-}
-function onBackgroundColorSelectorMouseDown(a) {
-    isBackgroundColorSelectorMouseDown = true
-}
-function onBackgroundColorSelectorMouseUp(a) {
-    isBackgroundColorSelectorMouseDown = false;
-    backgroundColorSelector.update(a);
-    BACKGROUND_COLOR = backgroundColorSelector.getColor();
-    menu.setBackgroundColor(BACKGROUND_COLOR);
-    document.body.style.backgroundColor = "rgb(" + BACKGROUND_COLOR[0] + ", " + BACKGROUND_COLOR[1] + ", " + BACKGROUND_COLOR[2] + ")"
-}
-function onBackgroundColorSelectorMouseMove(a) {
-    if (!isBackgroundColorSelectorMouseDown) {
-        return
-    }
-    backgroundColorSelector.update(a);
-    BACKGROUND_COLOR = backgroundColorSelector.getColor();
-    menu.setBackgroundColor(BACKGROUND_COLOR);
-    document.body.style.backgroundColor = "rgb(" + BACKGROUND_COLOR[0] + ", " + BACKGROUND_COLOR[1] + ", " + BACKGROUND_COLOR[2] + ")"
-}
-function onMenuForegroundColor(a) {
-    //cleanPopUps();
-    foregroundColorSelector.show();
-    foregroundColorSelector.container.style.left = ((SCREEN_WIDTH - foregroundColorSelector.container.offsetWidth) / 2) + "px";
-    foregroundColorSelector.container.style.top = ((SCREEN_HEIGHT - foregroundColorSelector.container.offsetHeight) / 2) + "px";
-    isForegroundColorSelectorVisible = true
-}
-function onMenuBackgroundColor(a) {
-    //cleanPopUps();
-    backgroundColorSelector.show();
-    backgroundColorSelector.container.style.left = ((SCREEN_WIDTH - backgroundColorSelector.container.offsetWidth) / 2) + "px";
-    backgroundColorSelector.container.style.top = ((SCREEN_HEIGHT - backgroundColorSelector.container.offsetHeight) / 2) + "px";
-    isBackgroundColorSelectorVisible = true
-}

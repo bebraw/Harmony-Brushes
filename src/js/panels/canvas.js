@@ -56,7 +56,7 @@ Canvas.prototype = {
         // create actual canvas
         $("body").append('<canvas id="canvas" width="' +
             window.innerWidth + '" height="' + window.innerHeight +
-            '"></canvas>');
+            '" style="cursor:crosshair"></canvas>');
     },
     destroy: function () {}
 }
