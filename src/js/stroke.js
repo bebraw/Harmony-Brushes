@@ -129,8 +129,8 @@ StrokeRecorder.prototype = {
 
         this.style[method](x, y, color);
 
-        mirrorX = this.canvas.width - x;
-        mirrorY = this.canvas.height - y;
+        //mirrorX = this.canvas.width - x;
+        //mirrorY = this.canvas.height - y;
 
         if(mirrorsDown['x']) {
             this.xMirrorStyle[method](mirrorX, y, color);
@@ -166,8 +166,7 @@ StrokeManager.prototype = {
     context: null,
     strokeRecorder: new StrokeRecorder(), // TODO: hook up!
     // strokes (TODO: move to array)
-    init: function (canvas, context) {
-        this.canvas = canvas;
+    init: function (context) {
         this.context = context;
 
         // XXX: just set some dummy brush to test with
@@ -224,9 +223,9 @@ StrokeManager.prototype = {
     },
     undo: function(context, bg_color) {
         // empty canvas
-        context.fillStyle = "rgb(" + bg_color[0] + ", " + bg_color[1] +
-            ", " + bg_color[2] + ")";
-        context.fillRect(0, 0, this.canvas.width, this.canvas.height);
+        //context.fillStyle = "rgb(" + bg_color[0] + ", " + bg_color[1] +
+        //    ", " + bg_color[2] + ")";
+        //context.fillRect(0, 0, this.canvas.width, this.canvas.height);
 
         if(this.currentStrokeIndex > 1) {
             this.currentStrokeIndex--;

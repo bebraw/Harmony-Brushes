@@ -16,7 +16,7 @@ var COLOR = [0, 0, 0];
 // XXX: just pass canvas ie. here
 tmpCanvas = document.getElementById("canvas");
 tmpContext= tmpCanvas.getContext("2d");
-var strokeManager = new StrokeManager(tmpCanvas, tmpContext);
+var strokeManager = new StrokeManager(tmpContext);
 
 $("#canvas").mousecapture({
     "down": function(e, s) {
