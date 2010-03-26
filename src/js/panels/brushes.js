@@ -17,30 +17,38 @@ brushes.prototype = {
 
         // set up brushes panel
         $("body").append('<div class="panel" id="brushesPanel" title="Brushes"> \
-                <div id="brushes" style="height:100px;overflow:scroll;"></div> \
+                <div id="brushes" style="height:100px;overflow:auto;"></div> \
             </div>');
 
-        // TODO: render brushes now!
         for (i = 0; i < BRUSHES.length; i++) {
             brushName = BRUSHES[i];
+            brushId = brushName + 'Brush';
 
-            // XXX: should pass brush preview context instead!
-            tmpCanvas = document.getElementById("canvas");
-            tmpContext= tmpCanvas.getContext("2d");
+            $("#brushes").append('<canvas class="brush" id="' + brushId + '"' +
+                ' style="height:2em;width:170px"' +  '></canvas>');
+
+            brushCanvas = document.getElementById(brushId);
+            brushContext= brushCanvas.getContext("2d");
+            brushContext.fillStyle = 'white';
+            brushContext.fillRect(0, 0, brushCanvas.width, brushCanvas.height);
+
+            // TODO: add actual stroke on the bg
+            brushContext.fillStyle = 'black';
+            brushContext.font = "64px sans-serif";
+            brushContext.fillText(brushName, 10, brushCanvas.height / 2);
             //brush = eval("new " + brushName + "(tmpContext)");
-            
+
             // XXX: temp hack
-            brush = new shaded(tmpContext);
+            //brush = new shaded(brushContext);
+
+            // XXX: rename class! + make it use brush properly!
+            //strokePainter = new StrokeManager(brushContext);
+            //strokePainter.strokeStart(0, 0);
+            //strokePainter.stroke(6, 6);
+            //strokePainter.strokeEnd(15, 15);
 
             // render now!
-
-            // TODO: use canvas here
-            $("#brushes").append('<div class="brush">' + brushName + '</div>');
         }
-
-        $(".brush").css("height", "2em");
-
-        $("#brushesPanel button").button();
 
         $("#brushesPanel").dialog({
            closeOnEscape: false, resizable: false, width: 230, autoOpen: false
