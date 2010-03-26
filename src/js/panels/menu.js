@@ -16,11 +16,11 @@ Menu.prototype = {
 
         // set up menu panel
         $("body").append('<div class="panel" id="menu" title="Menu"> \
-            <button>New</button> \
-            <button>Load</button> \
-            <button>Save</button> \
-            <button>Export</button> \
-            <button>About</button> \
+            <button id="menuNew">New</button> \
+            <button id="menuLoad">Load</button> \
+            <button id="menuSave">Save</button> \
+            <button id="menuExport">Export</button> \
+            <button id="menuAbout">About</button> \
         </div>');
 
         $("#menu button").button();
@@ -37,85 +37,44 @@ Menu.prototype = {
 
         // TODO: hook up events to menu items!
 
-        documentContainer = document.createElement("div");
-        //document.body.appendChild(documentContainer);
+        $('#menuNew').click(function() {
+            console.log('new');
 
-        this.handlers = new MenuHandlers();
+            //context.clearRect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
+            //strokeManager.initUndo();
+            //strokeManager.setStyle(STYLES[menu.selector.selectedIndex]);
+        });
 
-        this.container = document.createElement("div");
-        this.container.className = "gui";
-        this.container.style.position = "absolute";
-        this.container.style.top = "0px";
+        $('#menuLoad').click(function() {
+            console.log('load');
+        });
 
-        //documentContainer.appendChild(this.container);
+        $('#menuSave').click(function() {
+            console.log('save');
 
-        options = ["New", "Load", "Save", "Export", "About"];
-        for (i = 0; i < options.length; i++) {
-            this.createButton(options[i]);
-        }
+            /*
+            var a = flattenCanvas.getContext("2d");
+            a.fillStyle = "rgb(" + BACKGROUND_COLOR[0] + ", " + BACKGROUND_COLOR[1] +
+                ", " + BACKGROUND_COLOR[2] + ")";
+            a.fillRect(0, 0, canvas.width, canvas.height);
+            a.drawImage(canvas, 0, 0);
+            window.open(flattenCanvas.toDataURL("image/png"), "mywindow")
+            */
+        });
 
-        // XXX: replace with some CSS trick?
-        //window.onresize = onWindowResize;
-        //onWindowResize(null);
-    },
-    createButton: function (name) {
-        attrName = name.toLowerCase();
-        
-        this[attrName] = document.createElement("span");
-        this[attrName].className = "button";
-        this[attrName].innerHTML = name;
-        this[attrName].addEventListener("click", this.handlers["on" + name], false);
+        $('#menuExport').click(function() {
+            console.log('export');
+        });
 
-        this.container.appendChild(this[attrName]);
+        $('#menuAbout').click(function() {
+            console.log('about');
+
+            //cleanPopUps();
+            //isAboutVisible = true;
+            //about.show()
+        });
     }
 };
-
-function MenuHandlers() {
-    this.init()
-}
-MenuHandlers.prototype = {
-    init: function () {},
-    onNew: function (a) {
-        console.log('new');
-
-        //context.clearRect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
-        //strokeManager.initUndo();
-        //strokeManager.setStyle(STYLES[menu.selector.selectedIndex]);
-    },
-    onLoad: function (a) {
-        console.log('load');
-    },
-    onSave: function (a) {
-        console.log('save');
-
-        /*
-        var a = flattenCanvas.getContext("2d");
-        a.fillStyle = "rgb(" + BACKGROUND_COLOR[0] + ", " + BACKGROUND_COLOR[1] +
-            ", " + BACKGROUND_COLOR[2] + ")";
-        a.fillRect(0, 0, canvas.width, canvas.height);
-        a.drawImage(canvas, 0, 0);
-        window.open(flattenCanvas.toDataURL("image/png"), "mywindow")
-        */
-    },
-    onExport: function (a) {
-        console.log('export');
-    },
-    onAbout: function (a) {
-        console.log('about');
-
-        //cleanPopUps();
-        //isAboutVisible = true;
-        //about.show()
-    }
-}
-
-function onWindowResize(a) {
-    screenWidth = window.innerWidth;
-    screenHeight = window.innerHeight;
-    menu.container.style.left = ((screenWidth - menu.container.offsetWidth) / 2) + "px";
-    //about.container.style.left = ((screenWidth - about.container.offsetWidth) / 2) + "px";
-    //about.container.style.top = ((screenHeight - about.container.offsetHeight) / 2) + "px";
-}
 
 function About() {
     this.init()
