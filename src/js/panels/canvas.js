@@ -34,22 +34,29 @@ Canvas.prototype = {
 
         $('#canvasPod').click(function() {
             $(this).hide();
-            $('#canvas').dialog('open');
+            $('#canvasPanel').dialog('open');
         });
 
         // set up background panel
-        $("body").append('<div class="panel" id="canvas" title="Canvas"> \
+        $("body").append('<div class="panel" id="canvasPanel" title="Canvas"> \
             canvas options, texture ie. \
             </div>');
 
-        $("#canvas button").button();
+        $("#canvasPanel button").button();
 
-        $("#canvas").dialog({
+        $("#canvasPanel").dialog({
            closeOnEscape: false, resizable: false, width: 230, autoOpen: false
         });
 
-        $("#canvas").dialog( "option", "position", ["left", "bottom"] );
-        $("#canvas").bind( "dialogclose", function(event, ui) { $("#canvasPod").show();} );
+        $("#canvasPanel").dialog( "option", "position", ["left", "bottom"] );
+        $("#canvasPanel").bind( "dialogclose", function(event, ui) {
+            $("#canvasPod").show();
+        });
+
+        // create actual canvas
+        $("body").append('<canvas id="canvas" width="' +
+            window.innerWidth + '" height="' + window.innerHeight +
+            '"></canvas>');
     },
     destroy: function () {}
 }

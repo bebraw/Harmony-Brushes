@@ -2,6 +2,10 @@
  * http://www.opensource.org/licenses/mit-license.php
  * Copyright (c) 2010 Mr.doob, rhyolight, bebraw
  */
+
+
+
+
 var devices = new Devices(),
     menu = new Menu(),
     palette = new Palette(),
@@ -10,6 +14,13 @@ var devices = new Devices(),
     canvas = new Canvas(),
     brushes = new Brushes(),
     constraints = new Constraints();
+
+// XXX: just a quick test
+$("#canvas").click(function() {
+    canvas = document.getElementById("canvas");
+    context = canvas.getContext("2d");
+    context.fillRect(50, 25, 150, 100);
+});
 
 /*
 var i,
