@@ -10,15 +10,27 @@ var menu = new Menu(),
     brushes = new Brushes(),
     constraints = new Constraints();
 
+// XXX: move to palette!
+var COLOR = [0, 0, 0];
+
+// XXX: just pass canvas ie. here
+tmpCanvas = document.getElementById("canvas");
+tmpContext= tmpCanvas.getContext("2d");
+var strokeManager = new StrokeManager(tmpCanvas, tmpContext);
+
 $("#canvas").mousecapture({
     "down": function(e, s) {
-        canvas = document.getElementById("canvas");
-        context = canvas.getContext("2d");
-        context.fillRect(50, 25, 150, 100);
+        strokeManager.strokeStart(e.pageX, e.pageY);
+
+        //canvas = document.getElementById("canvas");
+        //context = canvas.getContext("2d");
+        //context.fillRect(50, 25, 150, 100);
     },
     "move": function(e, s) {
+        strokeManager.stroke(e.pageX, e.pageY);
     },
     "up": function(e, s) {
+        strokeManager.strokeEnd(e.pageX, e.pageY);
     }
 });
 

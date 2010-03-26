@@ -46,16 +46,20 @@ function Strokes() {
     this.init();
 }
 Strokes.prototype = {
-    container: null, // XXX: subclass directly from list instead?
+    container: [], // XXX: subclass directly from list instead?
     init: function () {},
     destroy: function () {},
     removeExtras: function (index) {
-        extraStrokes = this.strokes.length - index;
+        extraStrokes = this.container.length - index;
         console.log('extra strokes ' + extraStrokes);
 
         for(i = 0; i < extraStrokes; i++) {
             this.container.pop();
         }
+
+        return;
+
+        // XXX
 
         // pop extra dabs
         currentStroke = this.getCurrent();
@@ -153,6 +157,37 @@ StrokeRecorder.prototype = {
     }
 }
 
+// XXX: temp hack
+function simple(a) {
+    this.init(a)
+}
+simple.prototype = {
+    context: null,
+    prevMouseX: null,
+    prevMouseY: null,
+    init: function (a) {
+        this.context = a;
+        this.context.globalCompositeOperation = "source-over";
+        this.context.lineWidth = 0.5
+    },
+    destroy: function () {},
+    strokeStart: function (b, a, color) {
+        this.prevMouseX = b;
+        this.prevMouseY = a;
+        this.context.strokeStyle = "rgba(" + color[0] + ", " + color[1] +
+            ", " + color[2] + ", 0.5)"
+    },
+    stroke: function (b, a, color) {
+        this.context.beginPath();
+        this.context.moveTo(this.prevMouseX, this.prevMouseY);
+        this.context.lineTo(b, a);
+        this.context.stroke();
+        this.prevMouseX = b;
+        this.prevMouseY = a
+    },
+    strokeEnd: function (b, a, color) {}
+};
+
 function StrokeManager(canvas, context) {
     this.init(canvas, context);
 }
@@ -160,22 +195,21 @@ StrokeManager.prototype = {
     // general
     canvas: null,
     context: null,
-    //strokes: Strokes(),
     strokeRecorder: new StrokeRecorder(), // TODO: hook up!
     // strokes (TODO: move to array)
-    style: null,
-    xMirrorStyle: null,
-    yMirrorStyle: null,
-    xyMirrorStyle: null,
     init: function (canvas, context) {
         this.canvas = canvas;
         this.context = context;
+
+        // XXX: just set some dummy brush to test with
+        // TODO: rename to brush
+        this.style = new simple(this.context);
 
         this.initUndo();
     },
     destroy: function () {},
     initUndo: function () {
-        this.strokes = Strokes();
+        this.strokes = new Strokes();
         this.currentStroke = [];
         this.currentStrokeIndex = 0;
         this.currentDabIndex = 0;
@@ -187,70 +221,33 @@ StrokeManager.prototype = {
     },
     redoableSetStyle: function(styleClass) {
         this.style = eval("new " + styleClass + "(this.context)");
-        this.xMirrorStyle = eval("new " + styleClass + "(this.context)");
-        this.yMirrorStyle = eval("new " + styleClass + "(this.context)");
-        this.xyMirrorStyle = eval("new " + styleClass + "(this.context)");
     },
-    strokeTemplate: function (mouseX, mouseY, mirrorsDown, keysDown, initialX,
-            initialY, targetX, targetY, method, color, isRealStroke) {
-        x = keysDown['s']? initialX: mouseX;
-        y = keysDown['a']? initialY: mouseY;
-
-        if(keysDown['d']) {
-            projection = project_coordinate(targetX, targetY, initialX,
-                initialY, mouseX, mouseY);
-            x = projection[0];
-            y = projection[1];
-        }
-
-        this.style[method](x, y, color);
-
-        mirrorX = this.canvas.width - x;
-        mirrorY = this.canvas.height - y;
-
-        if(mirrorsDown['x']) {
-            this.xMirrorStyle[method](mirrorX, y, color);
-        }
-
-        if(mirrorsDown['u']) {
-            this.yMirrorStyle[method](x, mirrorY, color);
-        }
-
-        if((mirrorsDown['x'] && mirrorsDown['y']) || mirrorsDown['xy']) {
-            this.xyMirrorStyle[method](mirrorX, mirrorY, color);
-        }
+    strokeTemplate: function (mouseX, mouseY, method, color, isRealStroke) {
+        this.style[method](mouseX, mouseY, color);
 
         if(isRealStroke) {
-            this.currentStroke.push([mouseX, mouseY, mirrorsDown, keysDown,
-                initialX, initialY, targetX, targetY, method,
-                this.strokeTime]);
+            this.currentStroke.push([mouseX, mouseY, method, this.strokeTime]);
         }
     },
-    strokeStart: function (mouseX, mouseY, mirrorsDown, keysDown, initialX,
-            initialY, targetX, targetY) {
+    strokeStart: function (mouseX, mouseY) {
         this.strokeTime = 0
-        this.strokeTemplate(mouseX, mouseY, mirrorsDown, keysDown, initialX,
-            initialY, targetX, targetY, 'strokeStart', COLOR, true);
+        this.strokeTemplate(mouseX, mouseY, 'strokeStart', COLOR, true);
 
         this.strokes.removeExtras(this.currentStrokeIndex);
     },
-    stroke: function (mouseX, mouseY, mirrorsDown, keysDown, initialX,
-            initialY, targetX, targetY) {
+    stroke: function (mouseX, mouseY) {
         currentTime = new Date().getTime();
         this.strokeTime = currentTime - this.strokeTime;
 
-        this.strokeTemplate(mouseX, mouseY, mirrorsDown, keysDown, initialX,
-            initialY, targetX, targetY, 'stroke', COLOR, true);
+        this.strokeTemplate(mouseX, mouseY, 'stroke', COLOR, true);
     },
-    strokeEnd: function (mouseX, mouseY, mirrorsDown, keysDown, initialX,
-            initialY, targetX, targetY) {
+    strokeEnd: function (mouseX, mouseY) {
         currentTime = new Date().getTime();
         this.strokeTime = currentTime - this.strokeTime;
 
-        this.strokeTemplate(mouseX, mouseY,  mirrorsDown, keysDown, initialX,
-            initialY, targetX, targetY, 'strokeEnd', COLOR, true);
+        this.strokeTemplate(mouseX, mouseY, 'strokeEnd', COLOR, true);
 
-        stroke = Stroke(this.strokeStyleClass, COLOR, this.currentStroke)
+        stroke = new Stroke(this.strokeStyleClass, COLOR, this.currentStroke)
         this.strokes.append(stroke);
 
         this.currentStroke = [];

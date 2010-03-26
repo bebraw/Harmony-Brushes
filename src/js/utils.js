@@ -40,7 +40,7 @@ function setUpPod(name) {
     podId = id + "Pod";
     checkboxId = id + "Checkbox";
     //<input type="checkbox" id="horizontalMirrorModifier" /><label for="horizontalMirrorModifier">Horizontal Mirror</label> \
-    $("#pods").append('<div style="display: inline" id="' + podId + '"><input type="checkbox" id="' +
+    $("#pods").append('<div style="display: inline;" id="' + podId + '"><input type="checkbox" id="' +
         checkboxId + '" /><label for="'+ checkboxId +'">' + name + '</label></div>');
 
     $("#" + checkboxId).button();

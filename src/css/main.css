@@ -25,3 +25,7 @@ body .colorwell-selected {
     border: 2px solid #000;
     font-weight: bold;
 }
+
+#pods {
+    position: absolute;
+}
