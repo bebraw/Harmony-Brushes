@@ -18,12 +18,41 @@
     </head>
     <body>
         <div id="pods"></div>
+        <script type="text/javascript">
+        function importScript(url) {
+            // http://www.webmaster-talk.com/javascript-forum/87702-import-javascript-in-javascript.html
+            var tag = document.createElement("script");
+            tag.type="text/javascript";
+            tag.src = url;
+            document.body.appendChild(tag);
+        }
+
+        function importDirectory(files, dir) {
+            for (var i in files) {
+                var name = files[i];
+
+                if(name) {
+                    importScript("js/" + dir + "/" + name + ".js");
+                }
+            }
+        }
+
+        var BRUSHES = ["sketchy", "shaded", "chrome", "fur", "longfur", "web",
+            "simple", "squares", "ribbon", "circles", "grid", "stringy",
+            "curvy"];
+        var CONSTRAINTS = ["horizontal", "perspective", "vertical"];
+        var MODIFIERS = ["mirror"]; // "jitter"
+        var PANELS = ["brushes", "canvas", "menu", "modifiers", "palette",
+            "playback"];
+
+        importDirectory(BRUSHES, "brushes");
+        importDirectory(CONSTRAINTS, "constraints");
+        importDirectory(MODIFIERS, "modifiers");
+        importDirectory(PANELS, "panels");
+        </script>
         <script type="text/javascript" src="js/utils.js"></script>
         <script type="text/javascript" src="js/constraints.js"></script>
-        <script type="text/javascript" src="js/brushes.js"></script>
-        <script type="text/javascript" src="js/modifiers.js"></script>
         <script type="text/javascript" src="js/stroke.js"></script>
-        <script type="text/javascript" src="js/panels.js"></script>
         <script type="text/javascript" src="js/harmony.js"></script>    
     </body>
 </html>

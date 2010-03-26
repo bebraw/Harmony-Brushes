@@ -2,9 +2,6 @@
  * http://www.opensource.org/licenses/mit-license.php
  * Copyright (c) 2010 Mr.doob, rhyolight, bebraw
  */
-constraints = ["horizontal", "perspective", "vertical"];
-importDirectory(constraints, "constraints");
-
 function Constraints() {
     this.init();
 }
