@@ -40,10 +40,28 @@ Canvas.prototype = {
 
         // set up background panel
         $("body").append('<div class="panel" id="canvasPanel" title="Canvas"> \
-            canvas options, texture ie. \
+            <div id="canvasOptions"> \
+            <input type="radio" id="solidCanvas" name="radio" checked="checked" /><label for="solidCanvas">Solid</label> \
+            <input type="radio" id="gradientCanvas" name="radio" /><label for="gradientCanvas">Gradient</label> \
+            <input type="radio" id="textureCanvas" name="radio" /><label for="textureCanvas">Texture</label> \
+            </div> \
+            <div id="solidColorSelector"><div></div></div> \
             </div>');
 
-        $("#canvasPanel button").button();
+        $("#canvasOptions").css("margin-bottom", "0.5em");
+
+        $("#solidColorSelector div").css("backgroundColor", "white");
+        $("#solidColorSelector div").css("width", "2em");
+        $("#solidColorSelector div").css("height", "2em");
+
+        $("#canvasOptions").buttonset();
+
+        $('#solidColorSelector').ColorPicker({
+                color: '#FFFFFF',
+                onChange: function (hsb, hex, rgb) {
+                        $('#solidColorSelector div').css('backgroundColor', '#' + hex);
+                }
+        });
 
         $("#canvasPanel").dialog({
            closeOnEscape: false, resizable: false, width: 230, autoOpen: false
