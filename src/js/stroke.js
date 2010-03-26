@@ -157,37 +157,6 @@ StrokeRecorder.prototype = {
     }
 }
 
-// XXX: temp hack
-function simple(a) {
-    this.init(a)
-}
-simple.prototype = {
-    context: null,
-    prevMouseX: null,
-    prevMouseY: null,
-    init: function (a) {
-        this.context = a;
-        this.context.globalCompositeOperation = "source-over";
-        this.context.lineWidth = 0.5
-    },
-    destroy: function () {},
-    strokeStart: function (b, a, color) {
-        this.prevMouseX = b;
-        this.prevMouseY = a;
-        this.context.strokeStyle = "rgba(" + color[0] + ", " + color[1] +
-            ", " + color[2] + ", 0.5)"
-    },
-    stroke: function (b, a, color) {
-        this.context.beginPath();
-        this.context.moveTo(this.prevMouseX, this.prevMouseY);
-        this.context.lineTo(b, a);
-        this.context.stroke();
-        this.prevMouseX = b;
-        this.prevMouseY = a
-    },
-    strokeEnd: function (b, a, color) {}
-};
-
 function StrokeManager(canvas, context) {
     this.init(canvas, context);
 }
@@ -203,7 +172,7 @@ StrokeManager.prototype = {
 
         // XXX: just set some dummy brush to test with
         // TODO: rename to brush
-        this.style = new simple(this.context);
+        this.style = new shaded(this.context);
 
         this.initUndo();
     },
