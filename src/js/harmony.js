@@ -10,7 +10,7 @@ var menu = new Menu(),
     brushes = new Brushes(),
     constraints = new Constraints();
 
-// XXX: move to palette!
+// XXX: move to Palette!
 var COLOR = [0, 0, 0];
 
 // XXX: just pass canvas ie. here

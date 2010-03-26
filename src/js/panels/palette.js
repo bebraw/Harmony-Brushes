@@ -16,11 +16,14 @@ Palette.prototype = {
         });
 
         // set up palette panel
-        $("body").append('<div class="panel" id="palettePanel" title="Palette"><div id="colorPicker"/></div></div>');
+        $("body").append('<div class="panel" id="palettePanel" title="Palette">' +
+            '<div id="colorPicker"/></div></div>');
 
-        $('#colorPicker').ColorPicker({flat: true});
-
-        //$("#palettePanel button").button();
+        $('#colorPicker').ColorPicker({flat: true,
+            onChange: function (hsb, hex, rgb) {
+                COLOR = [rgb.r, rgb.g, rgb.b];
+            }
+        });
 
         $("#palettePanel").dialog({
            closeOnEscape: false, resizable: false, width: 380, height: 210,
