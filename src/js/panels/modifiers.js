@@ -2,10 +2,6 @@
  * http://www.opensource.org/licenses/mit-license.php
  * Copyright (c) 2010 Mr.doob, rhyolight, bebraw
  */
-// import brush modifiers
-modifiers = ["mirror"]; // "jitter"
-importDirectory(modifiers, "modifiers");
-
 function Modifiers() {
     this.init();
 }
