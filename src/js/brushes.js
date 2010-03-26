@@ -3,7 +3,7 @@
  * Copyright (c) 2010 Mr.doob, rhyolight, bebraw
  */
 
-brushes = ["sketchy", "shaded", "chrome", "fur", "longfur", "web",
+var BRUSHES = ["sketchy", "shaded", "chrome", "fur", "longfur", "web",
     "simple", "squares", "ribbon", "circles", "grid", "stringy",
     "curvy"];
-importDirectory(brushes, "brushes");
+importDirectory(BRUSHES, "brushes");

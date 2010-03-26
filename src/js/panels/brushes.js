@@ -17,8 +17,14 @@ Brushes.prototype = {
 
         // set up brushes panel
         $("body").append('<div class="panel" id="brushesPanel" title="Brushes"> \
-            brush selector. overflow \
+                <div id="brushes" style="height:100px;overflow:scroll;"></div> \
             </div>');
+
+        console.log(BRUSHES);
+
+        // TODO: render brushes now!
+        $("#brushes").append('<div class="brush">bar</div>'); // use canvas here
+        $(".brush").css("height", "2em");
 
         $("#brushesPanel button").button();
 
