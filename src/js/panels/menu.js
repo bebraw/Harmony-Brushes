@@ -33,7 +33,8 @@ Menu.prototype = {
         $("#menu").dialog("option", "width", 325);
         $("#menu").dialog("option", "height", 60);
         $("#menu").bind("dialogclose",
-            function(event, ui) {$("#menuPod").show();});
+            function(event, ui) {$("#menuPod").show();}
+        );
 
         // TODO: hook up events to menu items!
 
@@ -66,61 +67,19 @@ Menu.prototype = {
             console.log('export');
         });
 
-        $('#menuAbout').click(function() {
-            console.log('about');
+        // set up about dialog
+        $("body").append('<div id="aboutDialog" title="About"> \
+            <p>Harmony v. 0.1</p> \
+            <a href="http://mrdoob.com/blog/post/689" target="_blank">More info</a> \
+            <p>Add info about constraint system here!</p> \
+        </div>');
 
-            //cleanPopUps();
-            //isAboutVisible = true;
-            //about.show()
+        $("#aboutDialog").dialog({
+                height: 140, modal: true, autoOpen: false
         });
-    }
-};
 
-function About() {
-    this.init()
-}
-About.prototype = {
-    container: null,
-    init: function () {
-        var b, a;
-        this.container = document.createElement("div");
-        this.container.className = "gui";
-        this.container.style.position = "absolute";
-        this.container.style.top = "0px";
-        this.container.style.visibility = "hidden";
-        a = document.createElement("div");
-        a.style.margin = "20px 20px";
-        a.style.textAlign = "left";
-        this.container.appendChild(a);
-        b = document.createElement("p");
-        b.style.textAlign = "center";
-        b.innerHTML = '<strong>HARMONY</strong> v0.5 by <a href="http://twitter.com/mrdoob" target="_blank">Mr.doob</a>';
-        a.appendChild(b);
-        b = document.createElement("p");
-        b.style.textAlign = "center";
-        b.innerHTML = "Hold &lt;shift&gt; for colour palette";
-        a.appendChild(b);
-        b = document.createElement("p");
-        b.style.textAlign = "center";
-        b.innerHTML = '<a href="http://mrdoob.com/blog/post/689" target="_blank">More info</a>';
-        a.appendChild(b);
-        b = document.createElement("hr");
-        a.appendChild(b);
-        b = document.createElement("p");
-        b.innerHTML = '<em>Sketchy</em>, <em>Shaded</em>, <em>Chrome</em>, <em>Fur</em>, <em>LongFur</em> and <em>Web</em> are all variations of the neighbour points connection concept. First implemented in <a href="http://www.zefrank.com/scribbler/" target="_blank">The Scribbler</a>.';
-        a.appendChild(b);
-        b = document.createElement("p");
-        b.innerHTML = "If you like the tool, you can use this button to share your love ;)";
-        a.appendChild(b);
-        b = document.createElement("p");
-        b.style.textAlign = "center";
-        b.innerHTML = '<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_blank"><input type="hidden" name="cmd" value="_s-xclick"><input type="hidden" name="hosted_button_id" value="VY7767JMMMYM4"><input type="image" src="https://www.paypal.com/en_GB/i/btn/btn_donate_SM.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online."><img alt="" border="0" src="https://www.paypal.com/en_GB/i/scr/pixel.gif" width="1" height="1"></form>';
-        a.appendChild(b)
-    },
-    show: function () {
-        this.container.style.visibility = "visible"
-    },
-    hide: function () {
-        this.container.style.visibility = "hidden"
+        $('#menuAbout').click(function() {
+            $('#aboutDialog').dialog('open');
+        });
     }
 };
