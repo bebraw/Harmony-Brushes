@@ -33,7 +33,7 @@ Modifiers.prototype = {
         $("#modifiersPanel label").css("width", "100%").css("margin-bottom", "0.5em");
 
         $("#modifiersPanel").dialog({
-           closeOnEscape: false, resizable: false, width: 230, autoOpen: false
+           closeOnEscape: false, resizable: false, width: 150, autoOpen: false
         });
 
         $("#modifiersPanel").dialog( "option", "position", ["right", "top"] );
