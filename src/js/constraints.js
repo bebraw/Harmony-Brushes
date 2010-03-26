@@ -13,8 +13,8 @@ Constraints.prototype = {
     destroy: function () {}
 }
 
-window.onkeydown = onDocumentKeyDown;
-window.onkeyup = onDocumentKeyUp;
+//window.onkeydown = onDocumentKeyDown;
+//window.onkeyup = onDocumentKeyUp;
 
 function onDocumentKeyDown(a) {
     console.log('key down: ' + a.keyCode);

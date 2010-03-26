@@ -16,28 +16,28 @@ Modifiers.prototype = {
         $('#modifiersPod').click(function() {
             $(this).hide();
             $('#modifiersCheckbox').attr('checked', false);
-            $('#modifiers').dialog('open');
+            $('#modifiersPanel').dialog('open');
         });
 
         // <input type="checkbox" id="check" /><label for="check">Toggle</label>
 
         // set up modifiers panel
-        $("body").append('<div class="panel" id="modifiers" title="Modifiers"> \
+        $("body").append('<div class="panel" id="modifiersPanel" title="Modifiers"> \
             <input type="checkbox" id="horizontalMirrorModifier" /><label for="horizontalMirrorModifier">Horizontal Mirror</label> \
             <input type="checkbox" id="verticalMirrorModifier" /><label for="verticalMirrorModifier">Vertical Mirror</label> \
             <input type="checkbox" id="radialMirrorModifier" /><label for="radialMirrorModifier">Radial Mirror</label> \
             <input type="checkbox" id="jitterModifier" /><label for="jitterModifier">Jitter</label> \
             </div>');
 
-        $("#modifiers input").button();
-        $("#modifiers label").css("width", "100%").css("margin-bottom", "0.5em");
+        $("#modifiersPanel input").button();
+        $("#modifiersPanel label").css("width", "100%").css("margin-bottom", "0.5em");
 
-        $("#modifiers").dialog({
+        $("#modifiersPanel").dialog({
            closeOnEscape: false, resizable: false, width: 230, autoOpen: false
         });
 
-        $("#modifiers").dialog( "option", "position", ["right", "top"] );
-        $("#modifiers").bind( "dialogclose", function(event, ui) { $("#modifiersPod").show();} );
+        $("#modifiersPanel").dialog( "option", "position", ["right", "top"] );
+        $("#modifiersPanel").bind( "dialogclose", function(event, ui) { $("#modifiersPod").show();} );
     },
     destroy: function () {}
 }

@@ -12,11 +12,11 @@ Playback.prototype = {
         $('#playbackPod').click(function() {
             $(this).hide();
             $('#playbackCheckbox').attr('checked', false);
-            $('#playback').dialog('open');
+            $('#playbackPanel').dialog('open');
         });
 
         // set up playback panel
-        $("body").append('<div class="panel" id="playback" title="Playback"> \
+        $("body").append('<div class="panel" id="playbackPanel" title="Playback"> \
             <button id="beginning">go to beginning</button> \
             <button id="rewind">rewind</button> \
             <button id="play">play</button> \
@@ -25,16 +25,16 @@ Playback.prototype = {
             <button id="end">go to end</button> \
             </div>');
 
-        $("#playback button").button();
+        $("#playbackPanel button").button();
 
-        $("#playback").dialog({
+        $("#playbackPanel").dialog({
            closeOnEscape: false, resizable: false, width: 230, autoOpen: false
         });
 
-        $("#playback").dialog( "option", "width", 220 );
-        $("#playback").dialog( "option", "height", 60 );
-        $("#playback").dialog( "option", "position", "bottom" );
-        $("#playback").bind( "dialogclose", function(event, ui) { $("#playbackPod").show();} );
+        $("#playbackPanel").dialog( "option", "width", 220 );
+        $("#playbackPanel").dialog( "option", "height", 60 );
+        $("#playbackPanel").dialog( "option", "position", "bottom" );
+        $("#playbackPanel").bind( "dialogclose", function(event, ui) { $("#playbackPod").show();} );
 
         // set up icons
         $('#beginning').button({

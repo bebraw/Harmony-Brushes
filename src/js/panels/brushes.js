@@ -38,22 +38,22 @@ Brushes.prototype = {
         $('#brushesPod').click(function() {
             $(this).hide();
             $('#brushesCheckbox').attr('checked', false);
-            $('#brushes').dialog('open');
+            $('#brushesPanel').dialog('open');
         });
 
         // set up brushes panel
-        $("body").append('<div class="panel" id="brushes" title="Brushes"> \
+        $("body").append('<div class="panel" id="brushesPanel" title="Brushes"> \
             brush selector. overflow \
             </div>');
 
-        $("#brushes button").button();
+        $("#brushesPanel button").button();
 
-        $("#brushes").dialog({
+        $("#brushesPanel").dialog({
            closeOnEscape: false, resizable: false, width: 230, autoOpen: false
         });
 
-        $("#brushes").dialog( "option", "position", "left" );
-        $("#brushes").bind( "dialogclose", function(event, ui) { $("#brushesPod").show();} );
+        $("#brushesPanel").dialog( "option", "position", "left" );
+        $("#brushesPanel").bind( "dialogclose", function(event, ui) { $("#brushesPod").show();} );
     },
     destroy: function () {}
 }

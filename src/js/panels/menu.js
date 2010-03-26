@@ -12,11 +12,11 @@ Menu.prototype = {
         $('#menuPod').click(function() {
             $(this).hide();
             $('#menuCheckbox').attr('checked', false);
-            $('#menu').dialog('open');
+            $('#menuPanel').dialog('open');
         });
 
         // set up menu panel
-        $("body").append('<div class="panel" id="menu" title="Menu"> \
+        $("body").append('<div class="panel" id="menuPanel" title="Menu"> \
             <button id="menuNew">New</button> \
             <button id="menuLoad">Load</button> \
             <button id="menuSave">Save</button> \
@@ -24,16 +24,16 @@ Menu.prototype = {
             <button id="menuAbout">About</button> \
         </div>');
 
-        $("#menu button").button();
+        $("#menuPanel button").button();
 
-        $("#menu").dialog({
+        $("#menuPanel").dialog({
            closeOnEscape: false, resizable: false, width: 230, autoOpen: false
         });
 
-        $("#menu").dialog("option", "position", "top");
-        $("#menu").dialog("option", "width", 325);
-        $("#menu").dialog("option", "height", 60);
-        $("#menu").bind("dialogclose",
+        $("#menuPanel").dialog("option", "position", "top");
+        $("#menuPanel").dialog("option", "width", 325);
+        $("#menuPanel").dialog("option", "height", 60);
+        $("#menuPanel").bind("dialogclose",
             function(event, ui) {$("#menuPod").show();}
         );
 
