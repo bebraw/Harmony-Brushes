@@ -25,10 +25,14 @@ flattenCanvas.height = SCREEN_HEIGHT;
 
 //document.body.style.backgroundColor = "rgb(" + BACKGROUND_COLOR[0] + ", " + BACKGROUND_COLOR[1] + ", " + BACKGROUND_COLOR[2] + ")";
 
-function Canvas() {
+//canvas = document.getElementById("canvas");
+//context = canvas.getContext("2d");
+//context.fillRect(50, 25, 150, 100);
+
+function canvas() {
     this.init();
 }
-Canvas.prototype = {
+canvas.prototype = {
     init: function () {
         setUpPod("Canvas");
 
@@ -71,11 +75,6 @@ Canvas.prototype = {
         $("#canvasPanel").bind( "dialogclose", function(event, ui) {
             $("#canvasPod").show();
         });
-
-        // create actual canvas
-        $("body").append('<canvas id="canvas" width="' +
-            window.innerWidth + '" height="' + window.innerHeight +
-            '" style="cursor:crosshair"></canvas>');
     },
     destroy: function () {}
 }

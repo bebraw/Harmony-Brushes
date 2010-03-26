@@ -2,10 +2,10 @@
  * http://www.opensource.org/licenses/mit-license.php
  * Copyright (c) 2010 Mr.doob, rhyolight, bebraw
  */
-function Playback() {
+function playback() {
     this.init();
 }
-Playback.prototype = {
+playback.prototype = {
     init: function () {
         setUpPod("Playback");
 

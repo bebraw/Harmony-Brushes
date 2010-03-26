@@ -2,10 +2,10 @@
  * http://www.opensource.org/licenses/mit-license.php
  * Copyright (c) 2010 Mr.doob, rhyolight, bebraw
  */
-function Modifiers() {
+function modifiers() {
     this.init();
 }
-Modifiers.prototype = {
+modifiers.prototype = {
     init: function () {
         setUpPod("Modifiers");
 

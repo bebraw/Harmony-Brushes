@@ -2,10 +2,10 @@
  * http://www.opensource.org/licenses/mit-license.php
  * Copyright (c) 2010 Mr.doob, rhyolight, bebraw
  */
-function Menu() {
+function menu() {
     this.init()
 }
-Menu.prototype = {
+menu.prototype = {
     init: function () {
         setUpPod("Menu");
 

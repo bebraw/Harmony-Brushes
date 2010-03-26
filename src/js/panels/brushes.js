@@ -2,10 +2,10 @@
  * http://www.opensource.org/licenses/mit-license.php
  * Copyright (c) 2010 Mr.doob, rhyolight, bebraw
  */
-function Brushes() {
+function brushes() {
     this.init();
 }
-Brushes.prototype = {
+brushes.prototype = {
     init: function () {
         setUpPod("Brushes");
 

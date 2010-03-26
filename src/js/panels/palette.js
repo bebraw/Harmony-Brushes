@@ -2,10 +2,10 @@
  * http://www.opensource.org/licenses/mit-license.php
  * Copyright (c) 2010 Mr.doob, rhyolight, bebraw
  */
-function Palette() {
+function palette() {
     this.init();
 }
-Palette.prototype = {
+palette.prototype = {
     init: function () {
         setUpPod("Palette");
 
