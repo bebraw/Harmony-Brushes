@@ -8,19 +8,19 @@ function fur() {
 fur.prototype = {
     init: function () {
         this.points = [];
-        this.count = 0;
     },
     destroy: function () {},
     stroke: function (canvas, cursor, color) {
         var e, b, a, g;
 
         this.points.push(cursor.current);
+        count = this.points.length - 1;
 
         canvas.stroke(cursor.previous, cursor.current, color, 0.1);
 
         for (e = 0; e < this.points.length; e++) {
-            b = this.points[e].x - this.points[this.count].x;
-            a = this.points[e].y - this.points[this.count].y;
+            b = this.points[e].x - this.points[count].x;
+            a = this.points[e].y - this.points[count].y;
             g = b * b + a * a;
 
             if (g < 2000 && Math.random() > g / 2000) {
@@ -31,7 +31,5 @@ fur.prototype = {
                 canvas.stroke(begin, end, color, 0.1);
             }
         }
-        
-        this.count++
     }
 };

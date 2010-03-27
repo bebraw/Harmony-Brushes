@@ -8,7 +8,6 @@ function stringy() {
 stringy.prototype = {
     init: function () {
         this.points = [];
-        this.count = 0
     },
     destroy: function () {},
     stroke: function (canvas, cursor, color) {
@@ -19,9 +18,9 @@ stringy.prototype = {
             c = cursor.current.x + (Math.random() - 0.5) * FACTOR,
             d = cursor.current.y + (Math.random() - 0.5) * FACTOR;
 
-        if (this.count) {
-            this.points.push([c, d]);
+        this.points.push([c, d]);
 
+        if(this.points.length > 1) {
             point = {'x': c, 'y': d};
             canvas.stroke(cursor.previous, point, color, 0.5);
 
@@ -32,7 +31,6 @@ stringy.prototype = {
                 canvas.stroke(point, end, color, 0.15);
             }
         }
-        this.count++;
     }
 };
 

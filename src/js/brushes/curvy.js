@@ -8,7 +8,6 @@ function curvy() {
 curvy.prototype = {
     init: function () {
         this.points = [];
-        this.count = 0;
     },
     destroy: function () {},
     stroke: function (canvas, cursor, color) {
@@ -33,7 +32,5 @@ curvy.prototype = {
         cOne = getPoint(CTL_PNT1_DIST, this.points);
         cTwo = getPoint(CTL_PNT2_DIST, this.points);
         canvas.bezierCurve(start, cOne, cTwo, cursor.current, color, 0.15);
-
-        this.count++;
     }
 };

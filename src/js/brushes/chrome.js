@@ -8,24 +8,24 @@ function chrome() {
 chrome.prototype = {
     init: function () {
         this.points = [];
-        this.count = 0
     },
     destroy: function () {},
     stroke: function (canvas, cursor, color) {
         var e, b, a, g;
         
         this.points.push(cursor.current);
+        count = this.points.length - 1;
 
         canvas.stroke(cursor.previous, cursor.current, color, 0,1);
 
         for (e = 0; e < this.points.length; e++) {
-            b = this.points[e].x - this.points[this.count].x;
-            a = this.points[e].y - this.points[this.count].y;
+            b = this.points[e].x - this.points[count].x;
+            a = this.points[e].y - this.points[count].y;
             g = b * b + a * a;
 
             if (g < 1000) {
-                begin = {'x': this.points[this.count].x + (b * 0.2),
-                    'y': this.points[this.count].y + (a * 0.2)}
+                begin = {'x': this.points[count].x + (b * 0.2),
+                    'y': this.points[count].y + (a * 0.2)}
                 end = {'x': this.points[e].x - (b * 0.2),
                     'y': this.points[e].y - (a * 0.2)};
                 randomRGB = [Math.floor(Math.random() * 255),
@@ -35,7 +35,5 @@ chrome.prototype = {
                 canvas.stroke(begin, end, randomRGB, 0.1);
             }
         }
-        
-        this.count++
     }
 };
