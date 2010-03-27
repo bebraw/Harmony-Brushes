@@ -99,5 +99,14 @@ brushes.prototype = {
 
         brushCanvas.text(brushId, 'black', '48px Segoe UI, Arial, sans-serif', 10,
         brushCanvas.height / 2);
+    },
+    getSelected: function () {
+        return eval("new " + this.selected + '()');
+    },
+    getSize: function () {
+        return BRUSH_SIZE; // XXX: store to this instead!
+    },
+    getMode: function () {
+        return "source-over"; // TODO: implement mode selector!
     }
 }

@@ -49,7 +49,10 @@ canvas.prototype = {
             $("#canvasPod").show();
         });
     },
-    destroy: function () {}
+    destroy: function () {},
+    getProxy: function () {
+        return new ProxyCanvas("canvas");
+    }
 }
 
 function ProxyCanvas(canvasId) {

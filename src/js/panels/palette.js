@@ -36,5 +36,8 @@ palette.prototype = {
         $("#palettePanel").dialog( "option", "position", "right" );
         $("#palettePanel").bind( "dialogclose", function(event, ui) {$("#palettePod").show();} );
     },
-    destroy: function () {}
+    destroy: function () {},
+    getColor: function () {
+        return COLOR; // XXX: store to this instead
+    }
 }
