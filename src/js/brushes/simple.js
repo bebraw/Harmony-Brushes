@@ -2,32 +2,14 @@
  * http://www.opensource.org/licenses/mit-license.php
  * Copyright (c) 2010 Mr.doob, rhyolight, bebraw
  */
-function simple(a) {
-    this.init(a)
+function simple() {
+    this.init()
 }
 simple.prototype = {
-    context: null,
-    prevMouseX: null,
-    prevMouseY: null,
-    init: function (a) {
-        this.context = a;
-        this.context.globalCompositeOperation = "source-over";
-        this.context.lineWidth = 0.5
-    },
+    init: function () {},
     destroy: function () {},
-    strokeStart: function (b, a, color) {
-        this.prevMouseX = b;
-        this.prevMouseY = a;
-        this.context.strokeStyle = "rgba(" + color[0] + ", " + color[1] +
-            ", " + color[2] + ", 0.5)"
-    },
-    stroke: function (b, a, color) {
-        this.context.beginPath();
-        this.context.moveTo(this.prevMouseX, this.prevMouseY);
-        this.context.lineTo(b, a);
-        this.context.stroke();
-        this.prevMouseX = b;
-        this.prevMouseY = a
-    },
-    strokeEnd: function (b, a, color) {}
+    stroke: function (canvas, cursor, color) {
+        // XXX: pass alpha too?
+        canvas.stroke(cursor.previous, cursor.current, color, 0.5);
+    }
 };
