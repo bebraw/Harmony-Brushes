@@ -2,33 +2,6 @@
  * http://www.opensource.org/licenses/mit-license.php
  * Copyright (c) 2010 Mr.doob, rhyolight, bebraw
  */
-/*
-canvas = document.createElement("canvas");
-canvas.width = SCREEN_WIDTH;
-canvas.height = SCREEN_HEIGHT;
-canvas.style.cursor = "crosshair";
-container.appendChild(canvas);
-
-canvas.onmousedown = onCanvasMouseDown;
-canvas.onmouseup = onCanvasMouseUp;
-canvas.onmousemove = onCanvasMouseMove;
-canvas.ontouchstart = onCanvasTouchStart;
-canvas.ontouchend = onCanvasTouchEnd;
-canvas.ontouchmove = onCanvasTouchMove;
-*/
-
-/*
-flattenCanvas = document.createElement("canvas");
-flattenCanvas.width = SCREEN_WIDTH;
-flattenCanvas.height = SCREEN_HEIGHT;
-*/
-
-//document.body.style.backgroundColor = "rgb(" + BACKGROUND_COLOR[0] + ", " + BACKGROUND_COLOR[1] + ", " + BACKGROUND_COLOR[2] + ")";
-
-//canvas = document.getElementById("canvas");
-//context = canvas.getContext("2d");
-//context.fillRect(50, 25, 150, 100);
-
 function canvas() {
     this.init();
 }
@@ -77,4 +50,27 @@ canvas.prototype = {
         });
     },
     destroy: function () {}
+}
+
+function ProxyCanvas(canvasId) {
+    this.init(canvasId);
+}
+ProxyCanvas.prototype = {
+    init: function (canvasId) {
+        this.canvas = document.getElementById(canvasId);
+        this.context = this.canvas.getContext("2d");
+
+        this.width = this.canvas.width;
+        this.height = this.canvas.height;
+    },
+    destroy: function () {},
+    fill: function (colorName) {
+        this.context.fillStyle = colorName;
+        this.context.fillRect(0, 0, this.canvas.width, this.canvas.height);
+    },
+    text: function (label, colorName, font, x, y) {
+        this.context.fillStyle = colorName;
+        this.context.font = font;
+        this.context.fillText(label, x, y);
+    }
 }

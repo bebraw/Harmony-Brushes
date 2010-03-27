@@ -41,10 +41,8 @@ menu.prototype = {
 
         $('#menuNew').click(function() {
             // XXX: force canvas to rerender itself + reset undo
-            canvas = document.getElementById("canvas");
-            context = canvas.getContext("2d");
-            context.fillStyle = 'white';
-            context.fillRect(0, 0, window.innerWidth, window.innerHeight);
+            canvas = new ProxyCanvas("canvas");
+            canvas.fill("white");
 
             //strokeManager.initUndo();
             //strokeManager.setStyle(STYLES[menu.selector.selectedIndex]);

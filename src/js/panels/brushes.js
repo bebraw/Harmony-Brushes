@@ -46,16 +46,29 @@ brushes.prototype = {
     },
     destroy: function () {},
     renderBrushPreview: function (brushId) {
-        brushCanvas = document.getElementById(brushId);
-        brushContext= brushCanvas.getContext("2d");
-        brushContext.fillStyle = 'white';
-        brushContext.fillRect(0, 0, brushCanvas.width, brushCanvas.height);
+        brushCanvas = new ProxyCanvas(brushId);
+        brushCanvas.fill('white');
+
+        brushCanvas.text(brushId, 'black', '64px sans-serif', 10,
+            brushCanvas.height / 2);
+
+        return;
 
         // TODO: add actual stroke on the bg
-        brushContext.fillStyle = 'black';
-        brushContext.font = "64px sans-serif";
-        brushContext.fillText(brushName, 10, brushCanvas.height / 2);
-        //brush = eval("new " + brushName + "(tmpContext)");
+        // draw brush name
+        //brushContext.fillStyle = 'black';
+        //brushContext.font = "64px sans-serif";
+        //brushContext.fillText(brushName, 10, brushCanvas.height / 2);
+
+        brush = eval("new " + brushName + "()");
+
+        color = [1.0, 1.0, 1.0] // XXX: temp hack
+        painter = Painter(brushCanvas, brush, color);
+
+
+        //painter.begin();
+        //painter.paint(); // draw sine wave here! scale to fit x and y with some padding
+        //painter.end();
 
         // XXX: temp hack
         //brush = new shaded(brushContext);
@@ -68,13 +81,6 @@ brushes.prototype = {
 
         // render now!
 
-        return;
-
-        //painter = Painter(canvas, brush);
-
-        //painter.begin();
-        //painter.paint(); // draw sine wave here! scale to fit x and y with some padding
-        //painter.end();
     }
 }
 
