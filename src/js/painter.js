@@ -11,8 +11,6 @@ Painter.prototype = {
         this.brush = brush;
         this.color = color;
         this.cursor = new Cursor();
-
-        console.log(this.canvas.width);
     },
     destroy: function () {},
     paint: function (x, y, lineWidth, compositeOperation) {

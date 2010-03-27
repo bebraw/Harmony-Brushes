@@ -18,7 +18,12 @@ brushes.prototype = {
         // set up brushes panel
         $("body").append('<div class="panel" id="brushesPanel" title="Brushes"> \
                 <div id="brushes" style="height:170px;overflow:auto;"></div> \
-            </div>');
+                <p> \
+                    <label for="brushSize">Brush Size:</label> \
+                    <input type="text" id="brushSize" style="border:0; color:#f6931f; font-weight:bold; width: 2em; background-color: black" /> \
+                </p> \
+                <div id="brushSizeMax"></div> \
+        </div>');
 
         for (i = 0; i < BRUSHES.length; i++) {
             brushName = BRUSHES[i];
@@ -43,6 +48,18 @@ brushes.prototype = {
 
         $("#brushesPanel").dialog( "option", "position", "left" );
         $("#brushesPanel").bind( "dialogclose", function(event, ui) {$("#brushesPod").show();} );
+
+        $("#brushSizeMax").slider({
+            range: "max",
+            min: 1,
+            max: 10,
+            value: 1,
+            slide: function(event, ui) {
+                $("#brushSize").val(ui.value);
+            }
+        });
+        $("#brushSize").val($("#brushSizeMax").slider("value"));
+
     },
     destroy: function () {},
     renderBrushPreview: function (brushId) {

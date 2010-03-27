@@ -46,25 +46,15 @@ $("#canvas").mousecapture({
         x = e.pageX;
         y = e.pageY;
         strokePainter.paint(x, y, 8, "source-over");
-
-        //canvas = document.getElementById("canvas");
-        //context= canvas.getContext("2d");
-
-        // XXX: get rid of the context dep (-> belongs to canvas!)
-        //brush = eval("new " + panels["brushes"].selected + "(context)");
-
-        //strokeManager.strokeStart(e.pageX, e.pageY, COLOR, brush);
     },
     "move": function(e, s) {
         x = e.pageX;
         y = e.pageY;
         strokePainter.paint(x, y, 8, "source-over");
-        //strokeManager.stroke(e.pageX, e.pageY, COLOR);
     },
     "up": function(e, s) {
         x = e.pageX;
         y = e.pageY;
         strokePainter.paint(x, y, 8, "source-over");
-        //strokeManager.strokeEnd(e.pageX, e.pageY, COLOR);
     }
 });
