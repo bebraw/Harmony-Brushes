@@ -30,22 +30,41 @@ for (j = 0; j < PANELS.length; j++) {
     });
 }
 
-var strokeManager = new StrokeManager();
+//var strokeManager = new StrokeManager();
+
+// XXX
+var strokePainter;
 
 $("#canvas").mousecapture({
     "down": function(e, s) {
-        canvas = document.getElementById("canvas");
-        context= canvas.getContext("2d");
+        mainCanvas = new ProxyCanvas("canvas");
+        brush = eval("new " + panels["brushes"].selected + "()");
+        color = COLOR; // XXX
+
+        strokePainter = new Painter(mainCanvas, brush, color);
+
+        x = e.pageX;
+        y = e.pageY;
+        strokePainter.paint(x, y, 8, "source-over");
+
+        //canvas = document.getElementById("canvas");
+        //context= canvas.getContext("2d");
 
         // XXX: get rid of the context dep (-> belongs to canvas!)
-        brush = eval("new " + panels["brushes"].selected + "(context)");
+        //brush = eval("new " + panels["brushes"].selected + "(context)");
 
-        strokeManager.strokeStart(e.pageX, e.pageY, COLOR, brush);
+        //strokeManager.strokeStart(e.pageX, e.pageY, COLOR, brush);
     },
     "move": function(e, s) {
-        strokeManager.stroke(e.pageX, e.pageY, COLOR);
+        x = e.pageX;
+        y = e.pageY;
+        strokePainter.paint(x, y, 8, "source-over");
+        //strokeManager.stroke(e.pageX, e.pageY, COLOR);
     },
     "up": function(e, s) {
-        strokeManager.strokeEnd(e.pageX, e.pageY, COLOR);
+        x = e.pageX;
+        y = e.pageY;
+        strokePainter.paint(x, y, 8, "source-over");
+        //strokeManager.strokeEnd(e.pageX, e.pageY, COLOR);
     }
 });

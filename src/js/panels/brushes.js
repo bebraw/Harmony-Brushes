@@ -52,7 +52,7 @@ brushes.prototype = {
         brush = eval("new " + brushName + "()");
 
         color = [1.0, 1.0, 1.0] // XXX: temp hack
-        painter = new Painter(brushCanvas, brush, color);
+        brushPainter = new Painter(brushCanvas, brush, color);
 
         canvasWidth = brushCanvas.width;
         pad = 10;
@@ -61,7 +61,7 @@ brushes.prototype = {
             y = Math.sin((x - pad) / (canvasWidth - pad) * 2 * Math.PI) *
                 (brushCanvas.height / 2 - pad * 2) + (brushCanvas.height / 2);
 
-            painter.paint(x, y, 8, "source-over");
+            brushPainter.paint(x, y, 8, "source-over");
         }
 
         brushCanvas.text(brushId, 'black', '64px sans-serif', 10,

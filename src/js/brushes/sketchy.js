@@ -6,9 +6,10 @@ function sketchy() {
     this.init()
 }
 sketchy.prototype = {
-    points: [],
-    count: 0,
-    init: function () {},
+    init: function () {
+        this.points = [];
+        this.count = 0;
+    },
     destroy: function () {},
     stroke: function (canvas, cursor, color) {
         this.points.push([cursor.current.x, cursor.current.y]);
