@@ -17,7 +17,7 @@ brushes.prototype = {
 
         // set up brushes panel
         $("body").append('<div class="panel" id="brushesPanel" title="Brushes"> \
-                <div id="brushes" style="height:100px;overflow:auto;"></div> \
+                <div id="brushes" style="height:170px;overflow:auto;"></div> \
             </div>');
 
         for (i = 0; i < BRUSHES.length; i++) {
@@ -25,7 +25,7 @@ brushes.prototype = {
             brushId = brushName; //XXX: use + 'Brush'; to avoid id clashes!
 
             $("#brushes").append('<canvas class="brush" id="' + brushId + '"' +
-                ' style="height:2em;width:170px"' +  '></canvas>');
+                ' style="height:4em;width:188px"' +  '></canvas>');
 
             this.renderBrushPreview(brushId);
 
@@ -37,7 +37,8 @@ brushes.prototype = {
         this.selected = BRUSHES[0];
 
         $("#brushesPanel").dialog({
-           closeOnEscape: false, resizable: false, width: 230, autoOpen: false
+           closeOnEscape: false, resizable: false, width: 230, height: 300,
+           autoOpen: false
         });
 
         $("#brushesPanel").dialog( "option", "position", "left" );
@@ -66,6 +67,14 @@ brushes.prototype = {
         //strokePainter.strokeEnd(15, 15);
 
         // render now!
+
+        return;
+
+        //painter = Painter(canvas, brush);
+
+        //painter.begin();
+        //painter.paint(); // draw sine wave here! scale to fit x and y with some padding
+        //painter.end();
     }
 }
 
