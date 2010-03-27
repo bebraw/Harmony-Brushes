@@ -38,5 +38,19 @@ modifiers.prototype = {
         $("#modifiersPanel").dialog( "option", "position", ["right", "top"] );
         $("#modifiersPanel").bind( "dialogclose", function(event, ui) { $("#modifiersPod").show();} );
     },
-    destroy: function () {}
+    destroy: function () {},
+    getActive: function () {
+        return []; // TODO
+    }
+}
+
+function NullModifier() {
+    this.init();
+}
+NullModifier.prototype = {
+    init: function () {},
+    destroy: function () {},
+    modify: function (x, y) {
+        return {'x': x, 'y': y};
+    }
 }

@@ -20,14 +20,17 @@ StrokeManager.prototype = {
         this.brushSize = this.brushes.getSize();
         this.mode = this.brushes.getMode();
 
-        // check out if any modifiers are active!
-        // it they are, create painters for them
-        // note that each modifier has access to coords that it may transform
-        // before passing on to a painter
-
         this.painters = new Painters();
 
-        this.painters.add(mainCanvas, brush, color);
+        this.painters.add(mainCanvas, brush, color, null);
+
+        activeModifiers = panels['modifiers'].getActive();
+        for (i = 0; i < activeModifiers.length; i++) {
+            modifier = activeModifiers[i];
+
+            this.painters.add(mainCanvas, brush, color, modifier);
+        }
+
         this.painters.paint(x, y, this.brushSize, this.mode);
     },
     paint: function (x, y) {

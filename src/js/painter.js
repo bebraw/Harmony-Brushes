@@ -10,8 +10,8 @@ Painters.prototype = {
         this.container = [];
     },
     destroy: function () {},
-    add: function (canvas, brush, color) {
-        this.container.push(new Painter(canvas, brush, color));
+    add: function (canvas, brush, color, modifier) {
+        this.container.push(new Painter(canvas, brush, color, modifier));
     },
     paint: function (x, y, brushSize, mode) {
         for (var i = 0; i < this.container.length; i++) {
@@ -22,19 +22,28 @@ Painters.prototype = {
     }
 }
 
-function Painter(canvas, brush, color) {
-    this.init(canvas, brush, color);
+function Painter(canvas, brush, color, modifier) {
+    this.init(canvas, brush, color, modifier);
 }
 Painter.prototype = {
-    init: function (canvas, brush, color) {
+    init: function (canvas, brush, color, modifier) {
         this.canvas = canvas;
         this.brush = brush;
         this.color = color;
+
+        if(modifier) {
+            this.modifier = modifier;
+        }
+        else {
+            this.modifier = new NullModifier();
+        }
+
         this.cursor = new Cursor();
     },
     destroy: function () {},
     paint: function (x, y, lineWidth, compositeOperation) {
-        this.cursor.setLocation(x, y);
+        coordinate = this.modifier.modify(x, y);
+        this.cursor.setLocation(coordinate);
 
         if( this.cursor.hasPreviousLocation() ) {
             this.canvas.context.lineWidth = lineWidth;
@@ -54,11 +63,11 @@ Cursor.prototype = {
         this.previous = {'x': null, 'y': null};
     },
     destroy: function () {},
-    setLocation: function (x, y) {
+    setLocation: function (coordinate) {
         this.previous['x'] = this.current['x'];
         this.previous['y'] = this.current['y'];
-        this.current['x'] = x;
-        this.current['y'] = y;
+        this.current['x'] = coordinate.x;
+        this.current['y'] = coordinate.y;
     },
     hasPreviousLocation: function() {
         // XXX: check if this fails at zero/zero case!
