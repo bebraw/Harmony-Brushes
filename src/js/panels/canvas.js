@@ -80,5 +80,18 @@ ProxyCanvas.prototype = {
         this.context.moveTo(startLoc.x, startLoc.y);
         this.context.lineTo(endLoc.x, endLoc.y);
         this.context.stroke();
+    },
+    rect: function (xy1, xy2, xy3, xy4, color, alpha) {
+        this.context.fillStyle = "rgb(255, 255, 255)"; // XXX: replace with fillColor
+        this.context.strokeStyle = "rgba(" + color[0] + ", " + color[1] +
+            ", " + color[2] + ", " + alpha + ")";
+        this.context.beginPath();
+        this.context.moveTo(xy1['x'], xy1['y']);
+        this.context.lineTo(xy2['x'], xy2['y']);
+        this.context.lineTo(xy3['x'], xy3['y']);
+        this.context.lineTo(xy4['x'], xy4['y']);
+        this.context.lineTo(xy1['x'], xy1['y']);
+        this.context.fill();
+        this.context.stroke();
     }
 }
