@@ -13,10 +13,14 @@ Painter.prototype = {
         this.cursor = new Cursor();
     },
     destroy: function () {},
-    paint: function (x, y) {
+    paint: function (x, y, lineWidth, compositeOperation) {
         this.cursor.setLocation(x, y);
 
         if( this.cursor.hasPreviousLocation() ) {
+            // XXX
+            this.canvas.context.lineWidth = lineWidth;
+            this.canvas.context.globalCompositeOperation = compositeOperation;
+
             // XXX: just pass this.canvas and use canvas API!
             this.brush.stroke(this.canvas.context, this.cursor, this.color);
         }

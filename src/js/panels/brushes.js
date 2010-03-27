@@ -61,19 +61,10 @@ brushes.prototype = {
             y = Math.sin((x - pad) / (canvasWidth - pad) * 2 * Math.PI) *
                 (brushCanvas.height / 2 - pad * 2) + (brushCanvas.height / 2);
 
-            painter.paint(x, y);
+            painter.paint(x, y, 8, "source-over");
         }
 
         brushCanvas.text(brushId, 'black', '64px sans-serif', 10,
         brushCanvas.height / 2);
     }
-}
-
-function onMenuSelectorChange(e) {
-    if (STYLES[menu.selector.selectedIndex] == "") {
-        return
-    }
-    strokeManager.destroy(); // XXX: is this needed?
-    strokeManager.setStyle(STYLES[menu.selector.selectedIndex]);
-    window.location.hash = STYLES[menu.selector.selectedIndex]
 }

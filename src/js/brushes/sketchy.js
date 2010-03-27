@@ -13,10 +13,6 @@ sketchy.prototype = {
     stroke: function (context, cursor, color) {
         this.points.push([cursor.current.x, cursor.current.y]);
 
-        // XXX: these should be set outside! -> general options?
-        context.lineWidth = 8; // XXX: change back to 1
-        context.globalCompositeOperation = "source-over";
-
         // XXX: set color outside too?
         context.strokeStyle = "rgba(" + color[0] + ", " + color[1] + ", " +
             color[2] + ", 0.05)";
