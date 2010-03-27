@@ -80,8 +80,7 @@ brushes.prototype = {
 
         brush = eval("new " + brushName + "()");
 
-        color = [1.0, 1.0, 1.0] // XXX: temp hack
-        brushPainter = new Painter(brushCanvas, brush, color);
+        brushPainter = new Painter(brushCanvas, brush, COLOR);
 
         canvasWidth = brushCanvas.width;
         pad = 10;

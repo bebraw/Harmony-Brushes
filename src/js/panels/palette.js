@@ -22,6 +22,9 @@ palette.prototype = {
         $('#colorPicker').ColorPicker({flat: true,
             onChange: function (hsb, hex, rgb) {
                 COLOR = [rgb.r, rgb.g, rgb.b];
+
+                brushesPanel = panels['brushes']
+                brushesPanel.renderBrushPreviews();
             }
         });
 
