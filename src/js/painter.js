@@ -2,6 +2,26 @@
  * http://www.opensource.org/licenses/mit-license.php
  * Copyright (c) 2010 Mr.doob, rhyolight, bebraw
  */
+function Painters() {
+    this.init();
+}
+Painters.prototype = {
+    init: function () {
+        this.container = [];
+    },
+    destroy: function () {},
+    add: function (canvas, brush, color) {
+        this.container.push(new Painter(canvas, brush, color));
+    },
+    paint: function (x, y, brushSize, mode) {
+        for (var i = 0; i < this.container.length; i++) {
+            painter = this.container[i];
+
+            painter.paint(x, y, brushSize, mode);
+        }
+    }
+}
+
 function Painter(canvas, brush, color) {
     this.init(canvas, brush, color);
 }
