@@ -15,20 +15,24 @@ for (j = 0; j < PANELS.length; j++) {
     panel = eval("new " + panelName + "()");
 }
 
-// XXX: just pass canvas ie. here
-tmpCanvas = document.getElementById("canvas");
-tmpContext= tmpCanvas.getContext("2d");
-var strokeManager = new StrokeManager(tmpContext);
+var strokeManager = new StrokeManager();
 
 $("#canvas").mousecapture({
     "down": function(e, s) {
-        strokeManager.strokeStart(e.pageX, e.pageY);
+        // get selected brush and pass it to strokemanager!
+
+        // XXX: temp hack
+        canvas = document.getElementById("canvas");
+        context= canvas.getContext("2d");
+        
+        brush = new shaded(context);
+        strokeManager.strokeStart(e.pageX, e.pageY, COLOR, brush);
     },
     "move": function(e, s) {
-        strokeManager.stroke(e.pageX, e.pageY);
+        strokeManager.stroke(e.pageX, e.pageY, COLOR);
     },
     "up": function(e, s) {
-        strokeManager.strokeEnd(e.pageX, e.pageY);
+        strokeManager.strokeEnd(e.pageX, e.pageY, COLOR);
     }
 });
 

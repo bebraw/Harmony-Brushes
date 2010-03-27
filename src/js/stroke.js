@@ -162,16 +162,9 @@ function StrokeManager(canvas, context) {
 StrokeManager.prototype = {
     // general
     canvas: null,
-    context: null,
     strokeRecorder: new StrokeRecorder(), // TODO: hook up!
     // strokes (TODO: move to array)
     init: function (context) {
-        this.context = context;
-
-        // XXX: just set some dummy brush to test with
-        // TODO: rename to brush
-        this.style = new shaded(this.context);
-
         this.initUndo();
     },
     destroy: function () {},
@@ -186,33 +179,32 @@ StrokeManager.prototype = {
         this.strokeStyleClass = styleClass;
         this.redoableSetStyle(styleClass);
     },
-    redoableSetStyle: function(styleClass) {
-        this.style = eval("new " + styleClass + "(this.context)");
-    },
     strokeTemplate: function (mouseX, mouseY, method, color, isRealStroke) {
-        this.style[method](mouseX, mouseY, color);
+        this.brush[method](mouseX, mouseY, color);
 
         if(isRealStroke) {
             this.currentStroke.push([mouseX, mouseY, method, this.strokeTime]);
         }
     },
-    strokeStart: function (mouseX, mouseY) {
+    strokeStart: function (mouseX, mouseY, color, brush) {
+        this.brush = brush;
+
         this.strokeTime = 0
-        this.strokeTemplate(mouseX, mouseY, 'strokeStart', COLOR, true);
+        this.strokeTemplate(mouseX, mouseY, 'strokeStart', color, true);
 
         this.strokes.removeExtras(this.currentStrokeIndex);
     },
-    stroke: function (mouseX, mouseY) {
+    stroke: function (mouseX, mouseY, color) {
         currentTime = new Date().getTime();
         this.strokeTime = currentTime - this.strokeTime;
 
-        this.strokeTemplate(mouseX, mouseY, 'stroke', COLOR, true);
+        this.strokeTemplate(mouseX, mouseY, 'stroke', color, true);
     },
-    strokeEnd: function (mouseX, mouseY) {
+    strokeEnd: function (mouseX, mouseY, color) {
         currentTime = new Date().getTime();
         this.strokeTime = currentTime - this.strokeTime;
 
-        this.strokeTemplate(mouseX, mouseY, 'strokeEnd', COLOR, true);
+        this.strokeTemplate(mouseX, mouseY, 'strokeEnd', color, true);
 
         stroke = new Stroke(this.strokeStyleClass, COLOR, this.currentStroke)
         this.strokes.append(stroke);
