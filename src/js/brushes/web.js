@@ -2,52 +2,32 @@
  * http://www.opensource.org/licenses/mit-license.php
  * Copyright (c) 2010 Mr.doob, rhyolight, bebraw
  */
-function web(a) {
-    this.init(a)
+function web() {
+    this.init();
 }
 web.prototype = {
-    context: null,
-    prevMouseX: null,
-    prevMouseY: null,
-    points: null,
-    count: null,
-    init: function (a) {
-        this.context = a;
-        this.context.lineWidth = 1;
-        this.context.globalCompositeOperation = "source-over";
-        this.points = new Array();
-        this.count = 0
+    init: function () {
+        this.points = [];
+        this.count = 0;
     },
     destroy: function () {},
-    strokeStart: function (b, a, color) {
-        this.prevMouseX = b;
-        this.prevMouseY = a
-    },
-    stroke: function (f, c, color) {
+    stroke: function (canvas, cursor, color) {
         var e, b, a, g;
-        this.points.push([f, c]);
-        this.context.strokeStyle = "rgba(" + color[0] + ", " + color[1] +
-            ", " + color[2] + ", 0.5)";
-        this.context.beginPath();
-        this.context.moveTo(this.prevMouseX, this.prevMouseY);
-        this.context.lineTo(f, c);
-        this.context.stroke();
-        this.context.strokeStyle = "rgba(" + color[0] + ", " + color[1] +
-            ", " + color[2] + ", 0.1)";
+        
+        this.points.push(cursor.current);
+
+        canvas.stroke(cursor.previous, cursor.current, color, 0.5);
+
         for (e = 0; e < this.points.length; e++) {
-            b = this.points[e][0] - this.points[this.count][0];
-            a = this.points[e][1] - this.points[this.count][1];
+            b = this.points[e].x - this.points[this.count].x;
+            a = this.points[e].y - this.points[this.count].y;
             g = b * b + a * a;
+            
             if (g < 2500 && Math.random() > 0.9) {
-                this.context.beginPath();
-                this.context.moveTo(this.points[this.count][0], this.points[this.count][1]);
-                this.context.lineTo(this.points[e][0], this.points[e][1]);
-                this.context.stroke()
+                canvas.stroke(this.points[this.count], this.points[e], color, 0.1);
             }
         }
-        this.prevMouseX = f;
-        this.prevMouseY = c;
+        
         this.count++
-    },
-    strokeEnd: function (b, a, color) {}
+    }
 };

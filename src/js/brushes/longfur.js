@@ -32,6 +32,5 @@ longfur.prototype = {
         }
 
         this.count++
-    },
-    strokeEnd: function (b, a, color) {}
+    }
 };
