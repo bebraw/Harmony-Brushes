@@ -32,12 +32,12 @@ brushes.prototype = {
             $("#brushes").append('<canvas class="brush" id="' + brushId + '"' +
                 ' style="height:4em;width:188px"' +  '></canvas>');
 
-            this.renderBrushPreview(brushId);
-
             $('#' + brushId).click(function() {
                 panels['brushes'].selected = $(this).attr('id');
             });
         }
+
+        this.renderBrushPreviews();
 
         this.selected = BRUSHES[0];
 
@@ -52,16 +52,28 @@ brushes.prototype = {
         $("#brushSizeMax").slider({
             range: "max",
             min: 1,
-            max: 10,
-            value: 1,
+            max: 30,
+            value: 4,
             slide: function(event, ui) {
                 $("#brushSize").val(ui.value);
+                BRUSH_SIZE = ui.value;
+                
+                brushesPanel = panels['brushes']
+                brushesPanel.renderBrushPreviews();
             }
         });
         $("#brushSize").val($("#brushSizeMax").slider("value"));
 
     },
     destroy: function () {},
+    renderBrushPreviews: function () {
+        for (i = 0; i < BRUSHES.length; i++) {
+            brushName = BRUSHES[i];
+            brushId = brushName; //XXX: use + 'Brush'; to avoid id clashes!
+
+            this.renderBrushPreview(brushId);
+        }
+    },
     renderBrushPreview: function (brushId) {
         brushCanvas = new ProxyCanvas(brushId);
         brushCanvas.fill('white');
@@ -78,7 +90,7 @@ brushes.prototype = {
             y = Math.sin((x - pad) / (canvasWidth - pad) * 2 * Math.PI) *
                 (brushCanvas.height / 2 - pad * 2) + (brushCanvas.height / 2);
 
-            brushPainter.paint(x, y, 8, "source-over");
+            brushPainter.paint(x, y, BRUSH_SIZE, "source-over");
         }
 
         brushCanvas.text(brushId, 'black', '64px sans-serif', 10,

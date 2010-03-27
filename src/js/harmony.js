@@ -4,6 +4,9 @@
  */
 var constraints = new Constraints();
 
+// XXX: get rid of this, this should belong to the brush selector!
+var BRUSH_SIZE = 4;
+
 // create actual canvas
 $("body").append('<canvas id="canvas" width="' +
     window.innerWidth + '" height="' + window.innerHeight +
@@ -30,8 +33,6 @@ for (j = 0; j < PANELS.length; j++) {
     });
 }
 
-//var strokeManager = new StrokeManager();
-
 // XXX
 var strokePainter;
 
@@ -39,22 +40,22 @@ $("#canvas").mousecapture({
     "down": function(e, s) {
         mainCanvas = new ProxyCanvas("canvas");
         brush = eval("new " + panels["brushes"].selected + "()");
-        color = COLOR; // XXX
 
-        strokePainter = new Painter(mainCanvas, brush, color);
+        // XXX: COLOR!
+        strokePainter = new Painter(mainCanvas, brush, COLOR);
 
         x = e.pageX;
         y = e.pageY;
-        strokePainter.paint(x, y, 8, "source-over");
+        strokePainter.paint(x, y, BRUSH_SIZE, "source-over");
     },
     "move": function(e, s) {
         x = e.pageX;
         y = e.pageY;
-        strokePainter.paint(x, y, 8, "source-over");
+        strokePainter.paint(x, y, BRUSH_SIZE, "source-over");
     },
     "up": function(e, s) {
         x = e.pageX;
         y = e.pageY;
-        strokePainter.paint(x, y, 8, "source-over");
+        strokePainter.paint(x, y, BRUSH_SIZE, "source-over");
     }
 });
