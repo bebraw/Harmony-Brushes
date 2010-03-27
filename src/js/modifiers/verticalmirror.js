@@ -7,5 +7,8 @@ function VerticalMirror() {
 }
 VerticalMirror.prototype = {
     init: function () {},
-    destroy: function () {}
+    destroy: function () {},
+    modify: function (x, y) {
+        return {'x': x, 'y': window.innerHeight - y};
+    }
 }

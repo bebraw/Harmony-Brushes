@@ -6,7 +6,10 @@ function modifiers() {
     this.init();
 }
 modifiers.prototype = {
-    init: function () {},
+    init: function () {
+        this.modifierStatus = {}; // true = active, false = passive
+        this.modifiers = {};
+    },
     initUI: function () {
         setUpPod("Modifiers");
 
@@ -19,13 +22,22 @@ modifiers.prototype = {
         // set up modifiers panel
         $("body").append('<div class="panel" id="modifiersPanel" title="Modifiers"></div>');
 
-        for (i = 0; i < MODIFIERS.length; i++) {
+        for (var i = 0; i < MODIFIERS.length; i++) {
             modifierName = MODIFIERS[i];
             modifierId = modifierName + 'Modifier';
+            modifier = eval("new " + modifierName + "()");
+
+            this.modifierStatus[modifierId] = false;
+            this.modifiers[modifierId] = modifier;
 
             $("#modifiersPanel").append('<input type="checkbox" id="' +
                 modifierId + '" /><label for="' + modifierId + '">' +
                 modifierName + '</label>');
+
+            $('#' + modifierId).click(function() {
+                id = $(this).attr('id');
+                panels['modifiers'].modifierStatus[id] = !panels['modifiers'].modifierStatus[id];
+            });
         }
 
         $("#modifiersPanel input").button();
@@ -40,7 +52,19 @@ modifiers.prototype = {
     },
     destroy: function () {},
     getActive: function () {
-        return []; // TODO
+        ret = [];
+
+        for (var modifierId in this.modifierStatus) {
+            modifierActive = this.modifierStatus[modifierId];
+
+            if(modifierActive) {
+                modifier = this.modifiers[modifierId];
+
+                ret.push(modifier);
+            }
+        }
+
+        return ret;
     }
 }
 

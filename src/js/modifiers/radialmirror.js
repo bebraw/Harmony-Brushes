@@ -7,5 +7,8 @@ function RadialMirror() {
 }
 RadialMirror.prototype = {
     init: function () {},
-    destroy: function () {}
+    destroy: function () {},
+    modify: function (x, y) {
+        return {'x': window.innerWidth - x, 'y': window.innerHeight - y};
+    }
 }
