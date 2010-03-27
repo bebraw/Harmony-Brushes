@@ -22,7 +22,7 @@ brushes.prototype = {
 
         for (i = 0; i < BRUSHES.length; i++) {
             brushName = BRUSHES[i];
-            brushId = brushName + 'Brush';
+            brushId = brushName; //XXX: use + 'Brush'; to avoid id clashes!
 
             $("#brushes").append('<canvas class="brush" id="' + brushId + '"' +
                 ' style="height:2em;width:170px"' +  '></canvas>');
@@ -30,10 +30,11 @@ brushes.prototype = {
             this.renderBrushPreview(brushId);
 
             $('#' + brushId).click(function() {
-                console.log('clicked brush');
-                // select brush now!
+                panels['brushes'].selected = $(this).attr('id');
             });
         }
+
+        this.selected = BRUSHES[0];
 
         $("#brushesPanel").dialog({
            closeOnEscape: false, resizable: false, width: 230, autoOpen: false
