@@ -6,7 +6,8 @@ function canvas() {
     this.init();
 }
 canvas.prototype = {
-    init: function () {
+    init: function () {},
+    initUI: function () {
         setUpPod("Canvas");
 
         $('#canvasPod').click(function() {

@@ -7,6 +7,9 @@ function palette() {
 }
 palette.prototype = {
     init: function () {
+        this.color = [0, 0, 0];
+    },
+    initUI: function () {
         setUpPod("Palette");
 
         $('#palettePod').click(function() {
@@ -21,7 +24,7 @@ palette.prototype = {
 
         $('#colorPicker').ColorPicker({flat: true,
             onChange: function (hsb, hex, rgb) {
-                COLOR = [rgb.r, rgb.g, rgb.b];
+                panels['palette'].color = [rgb.r, rgb.g, rgb.b];
 
                 brushesPanel = panels['brushes']
                 brushesPanel.renderBrushPreviews();
@@ -38,6 +41,6 @@ palette.prototype = {
     },
     destroy: function () {},
     getColor: function () {
-        return COLOR; // XXX: store to this instead
+        return this.color;
     }
 }

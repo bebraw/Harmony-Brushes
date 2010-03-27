@@ -4,9 +4,6 @@
  */
 var constraints = new Constraints();
 
-// XXX: get rid of this, this should belong to the brush selector!
-var BRUSH_SIZE = 4;
-
 // create actual canvas
 $("body").append('<canvas id="canvas" width="' +
     window.innerWidth + '" height="' + window.innerHeight +
@@ -31,6 +28,12 @@ for (j = 0; j < PANELS.length; j++) {
             $("#" + panel + "Panel").dialog('close');
         }
     });
+}
+
+// initialize panel UI
+for (panelName in panels) {
+    panel = panels[panelName];
+    panel.initUI();
 }
 
 var strokeManager = new StrokeManager(panels['modifiers'], panels['canvas'],

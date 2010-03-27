@@ -6,7 +6,8 @@ function menu() {
     this.init()
 }
 menu.prototype = {
-    init: function () {
+    init: function () {},
+    initUI: function () {
         setUpPod("Menu");
 
         $('#menuPod').click(function() {

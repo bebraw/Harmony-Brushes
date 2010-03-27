@@ -6,7 +6,8 @@ function modifiers() {
     this.init();
 }
 modifiers.prototype = {
-    init: function () {
+    init: function () {},
+    initUI: function () {
         setUpPod("Modifiers");
 
         $('#modifiersPod').click(function() {

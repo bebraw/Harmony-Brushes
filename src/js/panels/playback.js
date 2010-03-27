@@ -6,7 +6,8 @@ function playback() {
     this.init();
 }
 playback.prototype = {
-    init: function () {
+    init: function () {},
+    initUI: function () {
         setUpPod("Playback");
 
         $('#playbackPod').click(function() {

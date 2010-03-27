@@ -7,6 +7,10 @@ function brushes() {
 }
 brushes.prototype = {
     init: function () {
+        this.brushSize = 4;
+        this.selected = BRUSHES[0];
+    },
+    initUI: function () {
         setUpPod("Brushes");
 
         $('#brushesPod').click(function() {
@@ -44,8 +48,6 @@ brushes.prototype = {
 
         this.renderBrushPreviews();
 
-        this.selected = BRUSHES[0];
-
         $("#brushesPanel").dialog({
            closeOnEscape: false, resizable: false, width: 230, height: 300,
            autoOpen: false
@@ -61,14 +63,13 @@ brushes.prototype = {
             value: 4,
             slide: function(event, ui) {
                 $("#brushSize").val(ui.value);
-                BRUSH_SIZE = ui.value;
+                panels['brushes'].brushSize = ui.value;
                 
                 brushesPanel = panels['brushes']
                 brushesPanel.renderBrushPreviews();
             }
         });
         $("#brushSize").val($("#brushSizeMax").slider("value"));
-
     },
     destroy: function () {},
     renderBrushPreviews: function () {
@@ -85,7 +86,8 @@ brushes.prototype = {
 
         brush = eval("new " + brushName + "()");
 
-        brushPainter = new Painter(brushCanvas, brush, COLOR);
+        brushPainter = new Painter(brushCanvas, brush,
+            panels['palette'].getColor());
 
         canvasWidth = brushCanvas.width;
         pad = 10;
@@ -94,7 +96,7 @@ brushes.prototype = {
             y = Math.sin((x - pad) / (canvasWidth - pad) * 2 * Math.PI) *
                 (brushCanvas.height / 2 - pad * 2) + (brushCanvas.height / 2);
 
-            brushPainter.paint(x, y, BRUSH_SIZE, "source-over");
+            brushPainter.paint(x, y, this.brushSize, "source-over");
         }
 
         brushCanvas.text(brushId, 'black', '48px Segoe UI, Arial, sans-serif', 10,
@@ -104,7 +106,7 @@ brushes.prototype = {
         return eval("new " + this.selected + '()');
     },
     getSize: function () {
-        return BRUSH_SIZE; // XXX: store to this instead!
+        return this.brushSize;
     },
     getMode: function () {
         return "source-over"; // TODO: implement mode selector!
