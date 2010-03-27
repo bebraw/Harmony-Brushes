@@ -16,7 +16,7 @@ curvy.prototype = {
             CTL_PNT1_DIST = 10,
             CTL_PNT2_DIST = 20;
 
-        this.points.push([x, y]);
+        this.points.push(cursor.current);
 
         canvas.stroke(cursor.previous, cursor.current, color, 0.5);
         
@@ -24,7 +24,7 @@ curvy.prototype = {
             var index = pnts.length - xAgo, i;
             for (i=index; i< pnts.length; i++) {
                 if (pnts[i]) {
-                    return {'x': pnts[i][0], 'y': pnts[i][1]};
+                    return pnts[i];
                 }
             }
         }
