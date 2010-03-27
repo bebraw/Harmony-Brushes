@@ -72,5 +72,13 @@ ProxyCanvas.prototype = {
         this.context.fillStyle = colorName;
         this.context.font = font;
         this.context.fillText(label, x, y);
+    },
+    stroke: function (startLoc, endLoc, color, alpha) {
+        this.context.strokeStyle = "rgba(" + color[0] + ", " + color[1] +
+            ", " + color[2] + ", " + alpha + ")";
+        this.context.beginPath();
+        this.context.moveTo(startLoc.x, startLoc.y);
+        this.context.lineTo(endLoc.x, endLoc.y);
+        this.context.stroke();
     }
 }

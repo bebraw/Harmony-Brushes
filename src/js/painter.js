@@ -21,8 +21,7 @@ Painter.prototype = {
             this.canvas.context.lineWidth = lineWidth;
             this.canvas.context.globalCompositeOperation = compositeOperation;
 
-            // XXX: just pass this.canvas and use canvas API!
-            this.brush.stroke(this.canvas.context, this.cursor, this.color);
+            this.brush.stroke(this.canvas, this.cursor, this.color);
         }
     }
 }
