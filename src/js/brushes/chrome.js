@@ -2,53 +2,40 @@
  * http://www.opensource.org/licenses/mit-license.php
  * Copyright (c) 2010 Mr.doob, rhyolight, bebraw
  */
-function chrome(a) {
-    this.init(a)
+function chrome() {
+    this.init()
 }
 chrome.prototype = {
-    context: null,
-    prevMouseX: null,
-    prevMouseY: null,
-    points: null,
-    count: null,
-    init: function (a) {
-        this.context = a;
-        this.context.lineWidth = 1;
-        if (RegExp(" AppleWebKit/").test(navigator.userAgent)) {
-            this.context.globalCompositeOperation = "darker"
-        }
-        this.points = new Array();
+    init: function () {
+        this.points = [];
         this.count = 0
     },
     destroy: function () {},
-    strokeStart: function (b, a, color) {
-        this.prevMouseX = b;
-        this.prevMouseY = a
-    },
-    stroke: function (f, c, color) {
+    stroke: function (canvas, cursor, color) {
         var e, b, a, g;
-        this.points.push([f, c]);
-        this.context.strokeStyle = "rgba(" + color[0] + ", " + color[1] +
-            ", " + color[2] + ", 0.1)";
-        this.context.beginPath();
-        this.context.moveTo(this.prevMouseX, this.prevMouseY);
-        this.context.lineTo(f, c);
-        this.context.stroke();
+        
+        this.points.push(cursor.current);
+
+        canvas.stroke(cursor.previous, cursor.current, color, 0,1);
+
         for (e = 0; e < this.points.length; e++) {
-            b = this.points[e][0] - this.points[this.count][0];
-            a = this.points[e][1] - this.points[this.count][1];
+            b = this.points[e].x - this.points[this.count].x;
+            a = this.points[e].y - this.points[this.count].y;
             g = b * b + a * a;
+
             if (g < 1000) {
-                this.context.strokeStyle = "rgba(" + Math.floor(Math.random() * 255) + ", " + Math.floor(Math.random() * 255) + ", " + Math.floor(Math.random() * 255) + ", 0.1 )";
-                this.context.beginPath();
-                this.context.moveTo(this.points[this.count][0] + (b * 0.2), this.points[this.count][1] + (a * 0.2));
-                this.context.lineTo(this.points[e][0] - (b * 0.2), this.points[e][1] - (a * 0.2));
-                this.context.stroke()
+                begin = {'x': this.points[this.count].x + (b * 0.2),
+                    'y': this.points[this.count].y + (a * 0.2)}
+                end = {'x': this.points[e].x - (b * 0.2),
+                    'y': this.points[e].y - (a * 0.2)};
+                randomRGB = [Math.floor(Math.random() * 255),
+                    Math.floor(Math.random() * 255),
+                    Math.floor(Math.random() * 255)]
+
+                canvas.stroke(begin, end, randomRGB, 0.1);
             }
         }
-        this.prevMouseX = f;
-        this.prevMouseY = c;
+        
         this.count++
-    },
-    strokeEnd: function (b, a, color) {}
+    }
 };
