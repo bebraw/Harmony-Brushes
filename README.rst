@@ -7,10 +7,12 @@ information.
 IMPORTANT! If you want to test the application, please give the tagged versions
 a go! They are considered relatively stable.
 
+Planned features:
+
 - better palette (bounds + slots interpolated between those)
 - faster undo!
 - playback
-- gradient background (x/y/others?)
+- better background (solid/background/texture)
 - scanfill brush
 - rethought UI (pads+panels)
 
