@@ -21,7 +21,7 @@ Painter.prototype = {
             this.canvas.context.lineWidth = lineWidth;
             this.canvas.context.globalCompositeOperation = compositeOperation;
 
-            this.brush.stroke(this.canvas, this.cursor, this.color);
+            this.brush.stroke(this.canvas, this.cursor.getProxy(), this.color);
         }
     }
 }
@@ -44,5 +44,9 @@ Cursor.prototype = {
     hasPreviousLocation: function() {
         // XXX: check if this fails at zero/zero case!
         return this.previous['x'] || this.previous['y'];
+    },
+    getProxy: function () {
+        return {'current': {'x': this.current.x, 'y': this.current.y},
+            'previous': {'x': this.previous.x, 'y': this.previous.y}};
     }
 }
