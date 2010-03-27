@@ -92,7 +92,7 @@ brushes.prototype = {
             brushPainter.paint(x, y, BRUSH_SIZE, "source-over");
         }
 
-        brushCanvas.text(brushId, 'black', '64px sans-serif', 10,
+        brushCanvas.text(brushId, 'black', '48px Segoe UI, Arial, sans-serif', 10,
         brushCanvas.height / 2);
     }
 }
