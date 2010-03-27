@@ -33,32 +33,17 @@ for (j = 0; j < PANELS.length; j++) {
     });
 }
 
-// XXX
-var strokePainter;
+var strokeManager = new StrokeManager(panels['modifiers'], panels['canvas'],
+    panels['brushes'], panels['palette']);
 
 $("#canvas").mousecapture({
     "down": function(e, s) {
-        mainCanvas = new ProxyCanvas("canvas");
-        brush = eval("new " + panels["brushes"].selected + "()");
-
-        // get modifiers + construct painter for each!
-        // -> strokeManager (handles only Painters for now)
-
-        // XXX: COLOR!
-        strokePainter = new Painter(mainCanvas, brush, COLOR);
-
-        x = e.pageX;
-        y = e.pageY;
-        strokePainter.paint(x, y, BRUSH_SIZE, "source-over");
+        strokeManager.start(e.pageX, e.pageY);
     },
     "move": function(e, s) {
-        x = e.pageX;
-        y = e.pageY;
-        strokePainter.paint(x, y, BRUSH_SIZE, "source-over");
+        strokeManager.paint(e.pageX, e.pageY);
     },
     "up": function(e, s) {
-        x = e.pageX;
-        y = e.pageY;
-        strokePainter.paint(x, y, BRUSH_SIZE, "source-over");
+        strokeManager.paint(e.pageX, e.pageY);
     }
 });
