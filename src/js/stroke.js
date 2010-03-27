@@ -25,8 +25,16 @@ StrokeManager.prototype = {
     },
     paint: function (x, y) {
         this.painter.paint(x, y, this.brushSize, this.mode);
+
+        // XXX: just a hack to test eraser as it needs some point data to
+        // work with
+        panels['canvas'].points.push({'x': x, 'y': y});
     },
     end: function (x, y) {
         this.painter.paint(x, y, this.brushSize, this.mode);
+
+        // XXX: just a hack to test eraser as it needs some point data to
+        // work with
+        panels['canvas'].points.push({'x': x, 'y': y});
     }
 }

@@ -17,7 +17,6 @@ Painter.prototype = {
         this.cursor.setLocation(x, y);
 
         if( this.cursor.hasPreviousLocation() ) {
-            // XXX
             this.canvas.context.lineWidth = lineWidth;
             this.canvas.context.globalCompositeOperation = compositeOperation;
 

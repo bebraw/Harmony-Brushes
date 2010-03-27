@@ -6,7 +6,10 @@ function canvas() {
     this.init();
 }
 canvas.prototype = {
-    init: function () {},
+    init: function () {
+        // XXX: hack for eraser
+        this.points = [];
+    },
     initUI: function () {
         setUpPod("Canvas");
 
@@ -120,5 +123,21 @@ ProxyCanvas.prototype = {
         this.context.beginPath();
         this.context.arc(center.x, center.y, radius, 0, Math.PI * 2, true);
         this.context.stroke()
+    },
+    getPointsInside: function (radius, location) {
+        points = panels['canvas'].points;
+        ret = [];
+
+        for (var i = 0; i < points.length; i++) {
+            point = points[i];
+
+            if( Math.pow((location.x - point.x), 2) +
+                    Math.pow((location.y - point.y), 2) <
+                    Math.pow(radius, 2) ) {
+                ret.push(point);
+            }
+        }
+
+        return ret;
     }
 }
