@@ -15,6 +15,19 @@ for (j = 0; j < PANELS.length; j++) {
     panelName = PANELS[j];
     panel = eval("new " + panelName + "()");
     panels[panelName] = panel;
+
+    shortcut.add((j+1).toString(), function(e) {
+        keyChar = $.charcode(e);
+        keyNum = parseInt(keyChar) - 1;
+        panel = PANELS[keyNum];
+
+        if($("#" + panel + "Pod").is(':visible')) {
+            $("#" + panel + "Pod").click();
+        }
+        else {
+            $("#" + panel + "Panel").dialog('close');
+        }
+    });
 }
 
 var strokeManager = new StrokeManager();
@@ -34,63 +47,5 @@ $("#canvas").mousecapture({
     },
     "up": function(e, s) {
         strokeManager.strokeEnd(e.pageX, e.pageY, COLOR);
-    }
-});
-
-// XXX: abstract
-$(window).keydown(function(e) {
-    if($.isKey(e,'1')) {
-        // menu
-        if($('#menuPod').is(':visible')) {
-            $('#menuPod').click();
-        }
-        else {
-            $('#menuPanel').dialog('close');
-        }
-    }
-    if($.isKey(e,'2')) {
-        // menu
-        if($('#palettePod').is(':visible')) {
-            $('#palettePod').click();
-        }
-        else {
-            $('#palettePanel').dialog('close');
-        }
-    }
-    if($.isKey(e,'3')) {
-        // menu
-        if($('#modifiersPod').is(':visible')) {
-            $('#modifiersPod').click();
-        }
-        else {
-            $('#modifiersPanel').dialog('close');
-        }
-    }
-    if($.isKey(e,'4')) {
-        // menu
-        if($('#playbackPod').is(':visible')) {
-            $('#playbackPod').click();
-        }
-        else {
-            $('#playbackPanel').dialog('close');
-        }
-    }
-    if($.isKey(e,'5')) {
-        // menu
-        if($('#canvasPod').is(':visible')) {
-            $('#canvasPod').click();
-        }
-        else {
-            $('#canvasPanel').dialog('close');
-        }
-    }
-    if($.isKey(e,'6')) {
-        // menu
-        if($('#brushesPod').is(':visible')) {
-            $('#brushesPod').click();
-        }
-        else {
-            $('#brushesPanel').dialog('close');
-        }
     }
 });
