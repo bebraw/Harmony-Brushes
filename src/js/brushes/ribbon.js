@@ -12,66 +12,64 @@ function bargs(c) {
     }
 }
 
-function ribbon(a) {
-    this.init(a)
+function ribbon() {
+    this.init();
 }
 ribbon.prototype = {
-    context: null,
-    mouseX: null,
-    mouseY: null,
-    painters: null,
-    interval: null,
-    init: function (b) {
-        this.context = b;
-        this.context.lineWidth = 1;
-        this.context.globalCompositeOperation = "source-over";
-        this.mouseX = SCREEN_WIDTH / 2;
-        this.mouseY = SCREEN_HEIGHT / 2;
-        this.painters = new Array();
-        for (var a = 0; a < 50; a++) {
-            this.painters.push({
-                dx: SCREEN_WIDTH / 2,
-                dy: SCREEN_HEIGHT / 2,
-                ax: 0,
-                ay: 0,
-                div: 0.1,
-                ease: Math.random() * 0.2 + 0.6
-            })
-        }
-        this.isDrawing = false;
-        this.interval = setInterval(bargs(function (c) {
-            c.update();
-            return false
-        }, this), 1000 / 60)
+    init: function () {
+        this.canvas = null;
+        this.mouseX = null;
+        this.mouseY = null;
+        this.painterInitDone = false;
     },
     destroy: function () {
         clearInterval(this.interval)
     },
-    strokeStart: function (c, a, color) {
-        this.mouseX = c;
-        this.mouseY = a;
-        this.context.strokeStyle = "rgba(" + color[0] + ", " +
-            color[1] + ", " + color[2] + ", 0.05 )";
-        for (var b = 0; b < this.painters.length; b++) {
-            this.painters[b].dx = c;
-            this.painters[b].dy = a
+    stroke: function (canvas, cursor, color) {
+        this.canvas = canvas;
+        this.mouseX = cursor.current.x;
+        this.mouseY = cursor.current.y;
+        this.color = color;
+
+        if(!this.painterInitDone) {
+            this.painterInitDone = true;
+
+            this.painters = [];
+
+            for (var a = 0; a < 50; a++) {
+                this.painters.push({
+                    dx: this.mouseX,
+                    dy: this.mouseY,
+                    ax: 0,
+                    ay: 0,
+                    div: 0.1,
+                    ease: Math.random() * 0.2 + 0.6
+                })
+            }
+            
+            this.interval = setInterval(bargs(function (c) {
+                c.update();
+                return false;
+            }, this), 1000 / 60)
+
+            for (var b = 0; b < this.painters.length; b++) {
+                this.painters[b].dx = this.mouseX;
+                this.painters[b].dy = this.mouseY;
+            }
         }
-        this.shouldDraw = true
     },
-    stroke: function (b, a, color) {
-        this.mouseX = b;
-        this.mouseY = a
-    },
-    strokeEnd: function (b, a, color) {},
     update: function () {
-        var a;
-        for (a = 0; a < this.painters.length; a++) {
-            this.context.beginPath();
-            this.context.moveTo(this.painters[a].dx, this.painters[a].dy);
-            this.painters[a].dx -= this.painters[a].ax = (this.painters[a].ax + (this.painters[a].dx - this.mouseX) * this.painters[a].div) * this.painters[a].ease;
-            this.painters[a].dy -= this.painters[a].ay = (this.painters[a].ay + (this.painters[a].dy - this.mouseY) * this.painters[a].div) * this.painters[a].ease;
-            this.context.lineTo(this.painters[a].dx, this.painters[a].dy);
-            this.context.stroke()
+        if(this.canvas) {
+            for (var a = 0; a < this.painters.length; a++) {
+                begin = {'x': this.painters[a].dx, 'y': this.painters[a].dy};
+
+                this.painters[a].dx -= this.painters[a].ax = (this.painters[a].ax + (this.painters[a].dx - this.mouseX) * this.painters[a].div) * this.painters[a].ease;
+                this.painters[a].dy -= this.painters[a].ay = (this.painters[a].ay + (this.painters[a].dy - this.mouseY) * this.painters[a].div) * this.painters[a].ease;
+
+                end = {'x': this.painters[a].dx, 'y': this.painters[a].dy};
+
+                this.canvas.stroke(begin, end, this.color, 0.05);
+            }
         }
     }
 };
