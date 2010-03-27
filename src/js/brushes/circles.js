@@ -6,14 +6,10 @@ function circles() {
     this.init();
 }
 circles.prototype = {
-    init: function () {
-        this.points = [];
-        this.count = 0;
-    },
+    init: function () {},
     destroy: function () {},
     stroke: function (canvas, cursor, color) {
         var g, l, k, h, f, c, j, a;
-        this.points.push([cursor.current.x, cursor.current.y]);
 
         l = cursor.current.x - cursor.previous.x;
         k = cursor.current.y - cursor.previous.y;
