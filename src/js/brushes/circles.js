@@ -2,45 +2,31 @@
  * http://www.opensource.org/licenses/mit-license.php
  * Copyright (c) 2010 Mr.doob, rhyolight, bebraw
  */
-function circles(a) {
-    this.init(a)
+function circles() {
+    this.init();
 }
 circles.prototype = {
-    context: null,
-    prevMouseX: null,
-    prevMouseY: null,
-    points: null,
-    count: null,
-    init: function (a) {
-        this.context = a;
-        this.context.lineWidth = 1;
-        this.context.globalCompositeOperation = "source-over";
-        this.points = new Array()
+    init: function () {
+        this.points = [];
+        this.count = 0;
     },
     destroy: function () {},
-    strokeStart: function (b, a, color) {
-        this.prevMouseX = b;
-        this.prevMouseY = a;
-        this.context.strokeStyle = "rgba(" + color[0] + ", " + color[1] +
-            ", " + color[2] + ", 0.1)"
-    },
-    stroke: function (e, b, color) {
+    stroke: function (canvas, cursor, color) {
         var g, l, k, h, f, c, j, a;
-        this.points.push([e, b]);
-        l = e - this.prevMouseX;
-        k = b - this.prevMouseY;
+        this.points.push([cursor.current.x, cursor.current.y]);
+
+        l = cursor.current.x - cursor.previous.x;
+        k = cursor.current.y - cursor.previous.y;
         h = Math.sqrt(l * l + k * k) * 2;
-        f = Math.floor(e / 100) * 100 + 50;
-        c = Math.floor(b / 100) * 100 + 50;
+        f = Math.floor(cursor.current.x / 100) * 100 + 50;
+        c = Math.floor(cursor.current.y / 100) * 100 + 50;
+        center = {'x': f, 'y': c};
+
         j = Math.floor(Math.random() * 10);
         a = h / j;
         for (g = 0; g < j; g++) {
-            this.context.beginPath();
-            this.context.arc(f, c, (j - g) * a, 0, Math.PI * 2, true);
-            this.context.stroke()
+            radius = (j - g) * a
+            canvas.circle(center, radius, color, 0.1);
         }
-        this.prevMouseX = e;
-        this.prevMouseY = b
-    },
-    strokeEnd: function (b, a, color) {}
+    }
 };

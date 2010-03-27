@@ -109,5 +109,12 @@ ProxyCanvas.prototype = {
         this.context.moveTo(begin.x, begin.y);
         this.context.quadraticCurveTo(cp.x, cp.y, end.x, end.y);
         this.context.stroke();
+    },
+    circle: function (center, radius, color, alpha) {
+        this.context.strokeStyle = "rgba(" + color[0] + ", " + color[1] +
+            ", " + color[2] + ", " + alpha + ")";
+        this.context.beginPath();
+        this.context.arc(center.x, center.y, radius, 0, Math.PI * 2, true);
+        this.context.stroke()
     }
 }

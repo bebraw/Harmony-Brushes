@@ -8,7 +8,7 @@ function curvy() {
 curvy.prototype = {
     init: function () {
         this.points = [];
-        this.count = 0
+        this.count = 0;
     },
     destroy: function () {},
     stroke: function (canvas, cursor, color) {
