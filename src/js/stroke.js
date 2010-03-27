@@ -51,7 +51,6 @@ Strokes.prototype = {
     destroy: function () {},
     removeExtras: function (index) {
         extraStrokes = this.container.length - index;
-        console.log('extra strokes ' + extraStrokes);
 
         for(i = 0; i < extraStrokes; i++) {
             this.container.pop();
