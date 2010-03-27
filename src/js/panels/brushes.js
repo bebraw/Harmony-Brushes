@@ -30,10 +30,15 @@ brushes.prototype = {
             brushId = brushName; //XXX: use + 'Brush'; to avoid id clashes!
 
             $("#brushes").append('<canvas class="brush" id="' + brushId + '"' +
-                ' style="height:4em;width:188px"' +  '></canvas>');
+                ' style="height:4em;width:184px"' +  '></canvas>');
+            $('.brush:first').css('border', '2px solid red');
 
             $('#' + brushId).click(function() {
                 panels['brushes'].selected = $(this).attr('id');
+
+                // XXX: render bg as gray instead?
+                $('.brush').css('border', '');
+                $(this).css('border', '2px solid red');
             });
         }
 
