@@ -15,15 +15,17 @@ modifiers.prototype = {
             $('#modifiersPanel').dialog('open');
         });
 
-        // <input type="checkbox" id="check" /><label for="check">Toggle</label>
-
         // set up modifiers panel
-        $("body").append('<div class="panel" id="modifiersPanel" title="Modifiers"> \
-            <input type="checkbox" id="horizontalMirrorModifier" /><label for="horizontalMirrorModifier">Horizontal Mirror</label> \
-            <input type="checkbox" id="verticalMirrorModifier" /><label for="verticalMirrorModifier">Vertical Mirror</label> \
-            <input type="checkbox" id="radialMirrorModifier" /><label for="radialMirrorModifier">Radial Mirror</label> \
-            <input type="checkbox" id="jitterModifier" /><label for="jitterModifier">Jitter</label> \
-            </div>');
+        $("body").append('<div class="panel" id="modifiersPanel" title="Modifiers"></div>');
+
+        for (i = 0; i < MODIFIERS.length; i++) {
+            modifierName = MODIFIERS[i];
+            modifierId = modifierName + 'Modifier';
+
+            $("#modifiersPanel").append('<input type="checkbox" id="' +
+                modifierId + '" /><label for="' + modifierId + '">' +
+                modifierName + '</label>');
+        }
 
         $("#modifiersPanel input").button();
         $("#modifiersPanel label").css("width", "100%").css("margin-bottom", "0.5em");
