@@ -2,66 +2,38 @@
  * http://www.opensource.org/licenses/mit-license.php
  * Copyright (c) 2010 Mr.doob, rhyolight, bebraw
  */
-function curvy(a) {
-    this.init(a)
+function curvy() {
+    this.init();
 }
 curvy.prototype = {
-    context: null,
-    prevMouseX: null,
-    prevMouseY: null,
-    points: null,
-    count: null,
-    init: function (a) {
-        this.context = a;
-        this.context.lineWidth = 1;
-        this.points = new Array();
+    init: function () {
+        this.points = [];
         this.count = 0
     },
     destroy: function () {},
-    strokeStart: function (b, a, color) {
-        this.prevMouseX = b;
-        this.prevMouseY = a;
-        this.points = new Array();
-        this.context.strokeStyle = "rgba(" + color[0] + ", " + color[1] +
-            ", " + color[2] + ", 0.5)";
-    },
-    stroke: function (x, y, color) {
-        var CTL_PNT1_DIST = 10, 
-            CTL_PNT2_DIST = 20,
-            START = 30,
-            e, start, cOne, cTwo, oldStroke,
-            sliced;
-        
+    stroke: function (canvas, cursor, color) {
+        var START = 30,
+            CTL_PNT1_DIST = 10,
+            CTL_PNT2_DIST = 20;
+
         this.points.push([x, y]);
-        this.context.beginPath();
-        this.context.moveTo(this.prevMouseX, this.prevMouseY);
-        this.context.lineTo(x, y);
-        this.context.stroke();
+
+        canvas.stroke(cursor.previous, cursor.current, color, 0.5);
         
         function getPoint(xAgo, pnts) {
             var index = pnts.length - xAgo, i;
             for (i=index; i< pnts.length; i++) {
                 if (pnts[i]) {
-                    return pnts[i];
+                    return {'x': pnts[i][0], 'y': pnts[i][1]};
                 }
             }
         }
-        
-        oldStroke = this.context.strokeStyle;
-        this.context.strokeStyle = "rgba(" + COLOR[0] + ", " + COLOR[1] + ", " + COLOR[2] + ", 0.15)";
-        this.context.beginPath();
+
         start = getPoint(START, this.points);
         cOne = getPoint(CTL_PNT1_DIST, this.points);
         cTwo = getPoint(CTL_PNT2_DIST, this.points);
-        this.context.moveTo(start[0],start[1]);
-        this.context.bezierCurveTo(cOne[0], cOne[1], cTwo[0], cTwo[1], x, y);
-        this.context.stroke();
-        this.context.strokeStyle = oldStroke;
-        
-        this.prevMouseX = x;
-        this.prevMouseY = y;
-        this.count++;
-    },
-    strokeEnd: function (b, a, color) {}
-};
+        canvas.bezierCurve(start, cOne, cTwo, cursor.current, color, 0.15);
 
+        this.count++;
+    }
+};

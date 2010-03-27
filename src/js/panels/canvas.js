@@ -94,6 +94,14 @@ ProxyCanvas.prototype = {
         this.context.fill();
         this.context.stroke();
     },
+    bezierCurve: function (begin, cp1, cp2, end, color, alpha) {
+        this.context.strokeStyle = "rgba(" + color[0] + ", " + color[1] +
+            ", " + color[2] + ", " + alpha + ")";
+        this.context.beginPath();
+        this.context.moveTo(begin.x, begin.y);
+        this.context.bezierCurveTo(cp1.x, cp1.y, cp2.x, cp2.y, end.x, end.y);
+        this.context.stroke();
+    },
     quadraticCurve: function (begin, cp, end, color, alpha) {
         this.context.strokeStyle = "rgba(" + color[0] + ", " + color[1] +
             ", " + color[2] + ", " + alpha + ")";
