@@ -41,6 +41,9 @@ $("#canvas").mousecapture({
         mainCanvas = new ProxyCanvas("canvas");
         brush = eval("new " + panels["brushes"].selected + "()");
 
+        // get modifiers + construct painter for each!
+        // -> strokeManager (handles only Painters for now)
+
         // XXX: COLOR!
         strokePainter = new Painter(mainCanvas, brush, COLOR);
 
