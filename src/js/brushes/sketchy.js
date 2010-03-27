@@ -14,7 +14,7 @@ sketchy.prototype = {
         this.points.push([cursor.current.x, cursor.current.y]);
 
         // XXX: these should be set outside! -> general options?
-        context.lineWidth = 1;
+        context.lineWidth = 8; // XXX: change back to 1
         context.globalCompositeOperation = "source-over";
 
         // XXX: set color outside too?

@@ -49,9 +49,6 @@ brushes.prototype = {
         brushCanvas = new ProxyCanvas(brushId);
         brushCanvas.fill('white');
 
-        brushCanvas.text(brushId, 'black', '64px sans-serif', 10,
-            brushCanvas.height / 2);
-
         brush = eval("new " + brushName + "()");
 
         color = [1.0, 1.0, 1.0] // XXX: temp hack
@@ -59,11 +56,16 @@ brushes.prototype = {
 
         canvasWidth = brushCanvas.width;
         pad = 10;
-        y = brushCanvas.height / 2; // XXX: get this via sine + scale to fit + pad
 
         for (x = pad; x < canvasWidth - pad; x+=10) {
+            y = Math.sin((x - pad) / (canvasWidth - pad) * 2 * Math.PI) *
+                (brushCanvas.height / 2 - pad * 2) + (brushCanvas.height / 2);
+
             painter.paint(x, y);
         }
+
+        brushCanvas.text(brushId, 'black', '64px sans-serif', 10,
+        brushCanvas.height / 2);
     }
 }
 
