@@ -40,9 +40,12 @@ menu.prototype = {
         // TODO: hook up events to menu items!
 
         $('#menuNew').click(function() {
-            console.log('new');
+            // XXX: force canvas to rerender itself + reset undo
+            canvas = document.getElementById("canvas");
+            context = canvas.getContext("2d");
+            context.fillStyle = 'white';
+            context.fillRect(0, 0, window.innerWidth, window.innerHeight);
 
-            //context.clearRect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
             //strokeManager.initUndo();
             //strokeManager.setStyle(STYLES[menu.selector.selectedIndex]);
         });
