@@ -2,35 +2,24 @@
  * http://www.opensource.org/licenses/mit-license.php
  * Copyright (c) 2010 Mr.doob, rhyolight, bebraw
  */
-function grid(a) {
-    this.init(a)
+function grid() {
+    this.init();
 }
 grid.prototype = {
-    context: null,
-    init: function (a) {
-        this.context = a;
-        this.context.lineWidth = 1;
-        if (RegExp(" AppleWebKit/").test(navigator.userAgent)) {
-            this.context.globalCompositeOperation = "darker"
-        }
-    },
+    init: function () {},
     destroy: function () {},
-    strokeStart: function (b, a, color) {
-        this.context.strokeStyle = "rgba(" + color[0] + ", " + color[1] +
-            ", " + color[2] + ", 0.01)"
-    },
-    stroke: function (f, d, color) {
+    stroke: function (canvas, cursor, color) {
         var e, a, g, c, b;
-        a = Math.round(f / 100) * 100;
-        g = Math.round(d / 100) * 100;
-        c = (a - f) * 10;
-        b = (g - d) * 10;
+        a = Math.round(cursor.current.x / 100) * 100;
+        g = Math.round(cursor.current.y / 100) * 100;
+        c = (a - cursor.current.x) * 10;
+        b = (g - cursor.current.y) * 10;
+
         for (e = 0; e < 50; e++) {
-            this.context.beginPath();
-            this.context.moveTo(a, g);
-            this.context.quadraticCurveTo(f + Math.random() * c, d + Math.random() * b, a, g);
-            this.context.stroke()
+            begin = {'x': a, 'y': g};
+            cp = {'x': cursor.current.x + Math.random() * c , 'y': cursor.current.y + Math.random() * b};
+            end = {'x': a, 'y': g};
+            canvas.quadraticCurve(begin, cp, end, color, 0.01);
         }
-    },
-    strokeEnd: function (b, a, color) {}
+    }
 };

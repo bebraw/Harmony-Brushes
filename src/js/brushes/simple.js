@@ -3,7 +3,7 @@
  * Copyright (c) 2010 Mr.doob, rhyolight, bebraw
  */
 function simple() {
-    this.init()
+    this.init();
 }
 simple.prototype = {
     init: function () {},
