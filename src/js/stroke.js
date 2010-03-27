@@ -156,151 +156,36 @@ StrokeRecorder.prototype = {
     }
 }
 
-function StrokeManager(canvas, context) {
-    this.init(canvas, context);
+function StrokeManager() {
+    this.init();
 }
 StrokeManager.prototype = {
-    // general
-    canvas: null,
-    strokeRecorder: new StrokeRecorder(), // TODO: hook up!
-    // strokes (TODO: move to array)
-    init: function (context) {
-        this.initUndo();
-    },
+    strokes: new Strokes(),
+    currentStroke: [],
+    currentStrokeIndex: 0,
+    init: function () {},
     destroy: function () {},
-    initUndo: function () {
-        this.strokes = new Strokes();
-        this.currentStroke = [];
-        this.currentStrokeIndex = 0;
-        this.currentDabIndex = 0;
-        this.strokeStyleClass = null;
-    },
-    setStyle: function(styleClass) {
-        this.strokeStyleClass = styleClass;
-        this.redoableSetStyle(styleClass);
-    },
-    strokeTemplate: function (mouseX, mouseY, method, color, isRealStroke) {
+    strokeTemplate: function (mouseX, mouseY, method, color) {
         this.brush[method](mouseX, mouseY, color);
-
-        if(isRealStroke) {
-            this.currentStroke.push([mouseX, mouseY, method, this.strokeTime]);
-        }
+        this.currentStroke.push([mouseX, mouseY, method]);
     },
     strokeStart: function (mouseX, mouseY, color, brush) {
         this.brush = brush;
 
-        this.strokeTime = 0
-        this.strokeTemplate(mouseX, mouseY, 'strokeStart', color, true);
+        this.strokeTemplate(mouseX, mouseY, 'strokeStart', color);
 
-        this.strokes.removeExtras(this.currentStrokeIndex);
+        //this.strokes.removeExtras(this.currentStrokeIndex);
     },
     stroke: function (mouseX, mouseY, color) {
-        currentTime = new Date().getTime();
-        this.strokeTime = currentTime - this.strokeTime;
-
-        this.strokeTemplate(mouseX, mouseY, 'stroke', color, true);
+        this.strokeTemplate(mouseX, mouseY, 'stroke', color);
     },
     strokeEnd: function (mouseX, mouseY, color) {
-        currentTime = new Date().getTime();
-        this.strokeTime = currentTime - this.strokeTime;
-
-        this.strokeTemplate(mouseX, mouseY, 'strokeEnd', color, true);
+        this.strokeTemplate(mouseX, mouseY, 'strokeEnd', color);
 
         stroke = new Stroke(this.strokeStyleClass, COLOR, this.currentStroke)
         this.strokes.append(stroke);
 
         this.currentStroke = [];
         this.currentStrokeIndex++;
-    },
-    undo: function(context, bg_color) {
-        // empty canvas
-        //context.fillStyle = "rgb(" + bg_color[0] + ", " + bg_color[1] +
-        //    ", " + bg_color[2] + ")";
-        //context.fillRect(0, 0, this.canvas.width, this.canvas.height);
-
-        if(this.currentStrokeIndex > 1) {
-            this.currentStrokeIndex--;
-        }
-        for(i = 0; i < this.currentStrokeIndex; i++) {
-            stroke = this.strokes.get(i);
-
-            this.render(stroke);
-        }
-    },
-    redo: function() {
-        if(this.strokes.getLength() > this.currentStrokeIndex) {
-            stroke = this.strokes.getCurrent();
-            this.render(stroke);
-            this.currentStrokeIndex++;
-        }
-    },
-    playbackLeft: function() {
-        if(this.strokes.getLength() == this.currentStrokeIndex) {
-            stroke = this.strokes.getCurrent();
-
-            if(!stroke) {
-                return false;
-            }
-
-            if(this.currentDabIndex == stroke[2].length) {
-                return false;
-            }
-        }
-
-        return true;
-    },
-    playbackDab: function() {
-        stroke = this.strokes.getCurrent();
-
-        if(this.currentDabIndex == 0) {
-            this.redoableSetStyle(stroke.style);
-        }
-
-        this.renderDab();
-        this.currentDabIndex++;
-
-        stroke = this.strokes.getCurrent();
-        dabs = stroke.dabs;
-        if(this.currentDabIndex == dabs.length + 1) {
-            // advance to the next stroke
-            this.currentStrokeIndex++;
-            this.currentDabIndex = 0;
-        }
-    },
-    render: function(stroke) {
-        if(stroke) {
-            this.redoableSetStyle(stroke.style);
-
-            dabs = stroke.dabs;
-            // TODO!
-            for(j = 0; j < dabs.length; j++) {
-                dab = dabs[j];
-                this.strokeTemplate(dab[0], dab[1], dab[2],
-                    dab[3], dab[4], dab[5], dab[6],
-                    dab[7], dab[8], stroke.color, false);
-            }
-        }
-    },
-    renderDab: function() {
-        stroke = this.strokes.getCurrent();
-
-        if(stroke) {
-            dab = this.getCurrentDab();
-
-            this.strokeTemplate(dab[0], dab[1], dab[2], dab[3], dab[4], dab[5],
-                dab[6], dab[7], dab[8], stroke.color, false);
-        }
-    },
-    getDabTimeDelta: function() {
-        dab = this.getCurrentDab();
-
-        time = dab[9];
-
-        return time;
-    },
-    getCurrentDab: function() {
-        stroke = this.strokes.getCurrent();
-        
-        return stroke.dabs[this.currentDabIndex];
     }
 };
