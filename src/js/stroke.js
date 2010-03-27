@@ -22,11 +22,19 @@ StrokeManager.prototype = {
 
         this.painters = new Painters();
 
-        this.painters.add(mainCanvas, brush, color, null);
+        // get all modifiers that modify current strokes
+        strokeModifiers = panels['modifiers'].getActiveStrokeModifiers();
 
-        activeModifiers = panels['modifiers'].getActive();
-        for (i = 0; i < activeModifiers.length; i++) {
-            modifier = activeModifiers[i];
+        this.painters.add(mainCanvas, brush, color, null, strokeModifiers);
+
+        // add all instance modifiers (note that it does not make sense to use
+        // stroke modifiers with mirror at least (perhaps array?). add flag
+        // for this?)
+        // XXX: it's not enough to transform coord. mirror should be directly
+        // relative to the original stroke!
+        instanceModifiers = panels['modifiers'].getActiveInstanceModifiers();
+        for (i = 0; i < instanceModifiers.length; i++) {
+            modifier = instanceModifiers[i];
 
             this.painters.add(mainCanvas, brush, color, modifier);
         }

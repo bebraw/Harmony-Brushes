@@ -10,8 +10,9 @@ Painters.prototype = {
         this.container = [];
     },
     destroy: function () {},
-    add: function (canvas, brush, color, modifier) {
-        this.container.push(new Painter(canvas, brush, color, modifier));
+    add: function (canvas, brush, color, instanceModifier, strokeModifiers) {
+        this.container.push(new Painter(canvas, brush, color,
+            instanceModifier, strokeModifiers));
     },
     paint: function (x, y, brushSize, mode) {
         for (var i = 0; i < this.container.length; i++) {
@@ -22,27 +23,44 @@ Painters.prototype = {
     }
 }
 
-function Painter(canvas, brush, color, modifier) {
-    this.init(canvas, brush, color, modifier);
+function Painter(canvas, brush, color, instanceModifier, strokeModifiers) {
+    this.init(canvas, brush, color, instanceModifier, strokeModifiers);
 }
 Painter.prototype = {
-    init: function (canvas, brush, color, modifier) {
+    init: function (canvas, brush, color, instanceModifier, strokeModifiers) {
         this.canvas = canvas;
         this.brush = brush;
         this.color = color;
 
-        if(modifier) {
-            this.modifier = modifier;
+        if(instanceModifier) {
+            this.instanceModifier = instanceModifier;
         }
         else {
-            this.modifier = new NullModifier();
+            this.instanceModifier = new NullInstanceModifier();
+        }
+
+        if(strokeModifiers) {
+            this.strokeModifiers = strokeModifiers;
+        }
+        else {
+            this.strokeModifiers = new NullStrokeModifiers();
         }
 
         this.cursor = new Cursor();
     },
     destroy: function () {},
     paint: function (x, y, lineWidth, compositeOperation) {
-        coordinate = this.modifier.modify(x, y);
+        coordinate = this.instanceModifier.modify(x, y);
+
+        for (var i = 0; i < this.strokeModifiers.length; i++) {
+            strokeModifier = this.strokeModifiers[i];
+
+            // XXX: tidy up! (implement Coordinate helper class)
+            coordinate = strokeModifier.modify(x, y);
+            x = coordinate.x;
+            y = coordinate.y;
+        }
+
         this.cursor.setLocation(coordinate);
 
         if( this.cursor.hasPreviousLocation() ) {

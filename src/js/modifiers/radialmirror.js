@@ -6,6 +6,7 @@ function RadialMirror() {
     this.init();
 }
 RadialMirror.prototype = {
+    type: 'instance',
     init: function () {},
     destroy: function () {},
     modify: function (x, y) {

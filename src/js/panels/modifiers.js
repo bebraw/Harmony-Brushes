@@ -51,7 +51,7 @@ modifiers.prototype = {
         $("#modifiersPanel").bind( "dialogclose", function(event, ui) { $("#modifiersPod").show();} );
     },
     destroy: function () {},
-    getActive: function () {
+    getActiveInstanceModifiers: function () { // XXX: templatify
         ret = [];
 
         for (var modifierId in this.modifierStatus) {
@@ -60,7 +60,26 @@ modifiers.prototype = {
             if(modifierActive) {
                 modifier = this.modifiers[modifierId];
 
-                ret.push(modifier);
+                if(modifier.type == 'instance') {
+                    ret.push(modifier);
+                }
+            }
+        }
+
+        return ret;
+    },
+    getActiveStrokeModifiers: function () { // XXX: templatify
+        ret = [];
+
+        for (var modifierId in this.modifierStatus) {
+            modifierActive = this.modifierStatus[modifierId];
+
+            if(modifierActive) {
+                modifier = this.modifiers[modifierId];
+
+                if(modifier.type == 'stroke') {
+                    ret.push(modifier);
+                }
             }
         }
 
@@ -68,10 +87,21 @@ modifiers.prototype = {
     }
 }
 
-function NullModifier() {
+function NullInstanceModifier() {
     this.init();
 }
-NullModifier.prototype = {
+NullInstanceModifier.prototype = {
+    init: function () {},
+    destroy: function () {},
+    modify: function (x, y) {
+        return {'x': x, 'y': y};
+    }
+}
+
+function NullStrokeModifiers() {
+    this.init();
+}
+NullStrokeModifiers.prototype = {
     init: function () {},
     destroy: function () {},
     modify: function (x, y) {
