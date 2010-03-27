@@ -10,8 +10,8 @@ sketchy.prototype = {
     count: 0,
     init: function () {},
     destroy: function () {},
-    stroke: function (context, mouse, color) {
-        this.points.push([mouse.current.x, mouse.current.y]);
+    stroke: function (context, cursor, color) {
+        this.points.push([cursor.current.x, cursor.current.y]);
 
         // XXX: these should be set outside! -> general options?
         context.lineWidth = 1;
@@ -21,8 +21,8 @@ sketchy.prototype = {
         context.strokeStyle = "rgba(" + color[0] + ", " + color[1] + ", " +
             color[2] + ", 0.05)";
         context.beginPath();
-        context.moveTo(mouse.previous.x, mouse.previous.y);
-        context.lineTo(mouse.current.x, mouse.current.y);
+        context.moveTo(cursor.previous.x, cursor.previous.y);
+        context.lineTo(cursor.current.x, cursor.current.y);
         context.stroke();
 
         // XXX: set color outside too?

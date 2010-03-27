@@ -52,35 +52,18 @@ brushes.prototype = {
         brushCanvas.text(brushId, 'black', '64px sans-serif', 10,
             brushCanvas.height / 2);
 
-        return;
-
-        // TODO: add actual stroke on the bg
-        // draw brush name
-        //brushContext.fillStyle = 'black';
-        //brushContext.font = "64px sans-serif";
-        //brushContext.fillText(brushName, 10, brushCanvas.height / 2);
-
         brush = eval("new " + brushName + "()");
 
         color = [1.0, 1.0, 1.0] // XXX: temp hack
-        painter = Painter(brushCanvas, brush, color);
+        painter = new Painter(brushCanvas, brush, color);
 
+        canvasWidth = brushCanvas.width;
+        pad = 10;
+        y = brushCanvas.height / 2; // XXX: get this via sine + scale to fit + pad
 
-        //painter.begin();
-        //painter.paint(); // draw sine wave here! scale to fit x and y with some padding
-        //painter.end();
-
-        // XXX: temp hack
-        //brush = new shaded(brushContext);
-
-        // XXX: rename class! + make it use brush properly!
-        //strokePainter = new StrokeManager(brushContext);
-        //strokePainter.strokeStart(0, 0);
-        //strokePainter.stroke(6, 6);
-        //strokePainter.strokeEnd(15, 15);
-
-        // render now!
-
+        for (x = pad; x < canvasWidth - pad; x+=10) {
+            painter.paint(x, y);
+        }
     }
 }
 
