@@ -96,7 +96,8 @@ brushes.prototype = {
             y = Math.sin((x - pad) / (canvasWidth - pad) * 2 * Math.PI) *
                 (brushCanvas.height / 2 - pad * 2) + (brushCanvas.height / 2);
 
-            brushPainter.paint(x, y, this.brushSize, "source-over");
+            coordinate = {'x': x, 'y': y};
+            brushPainter.paint(coordinate, this.brushSize, "source-over");
         }
 
         brushCanvas.text(brushId, 'black', '48px Segoe UI, Arial, sans-serif', 10,

@@ -15,10 +15,18 @@ Painters.prototype = {
             instanceModifier, strokeModifiers));
     },
     paint: function (x, y, brushSize, mode) {
-        for (var i = 0; i < this.container.length; i++) {
-            painter = this.container[i];
+        userPainter = this.container[0];
+        coordinate = userPainter.applyModifiers(x, y);
+        userPainter.paint(coordinate, brushSize, mode);
 
-            painter.paint(x, y, brushSize, mode);
+        // XXX: tidy up!
+        realX = coordinate.x;
+        realY = coordinate.y;
+
+        for (var i = 1; i < this.container.length; i++) {
+            painter = this.container[i];
+            coordinate = painter.applyModifiers(realX, realY);
+            painter.paint(coordinate, brushSize, mode);
         }
     }
 }
@@ -49,7 +57,7 @@ Painter.prototype = {
         this.cursor = new Cursor();
     },
     destroy: function () {},
-    paint: function (x, y, lineWidth, compositeOperation) {
+    applyModifiers: function (x, y) {
         coordinate = this.instanceModifier.modify(x, y);
 
         for (var i = 0; i < this.strokeModifiers.length; i++) {
@@ -61,6 +69,9 @@ Painter.prototype = {
             y = coordinate.y;
         }
 
+        return coordinate;
+    },
+    paint: function (coordinate, lineWidth, compositeOperation) {
         this.cursor.setLocation(coordinate);
 
         if( this.cursor.hasPreviousLocation() ) {

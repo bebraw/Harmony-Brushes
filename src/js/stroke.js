@@ -30,8 +30,6 @@ StrokeManager.prototype = {
         // add all instance modifiers (note that it does not make sense to use
         // stroke modifiers with mirror at least (perhaps array?). add flag
         // for this?)
-        // XXX: it's not enough to transform coord. mirror should be directly
-        // relative to the original stroke!
         instanceModifiers = panels['modifiers'].getActiveInstanceModifiers();
         for (i = 0; i < instanceModifiers.length; i++) {
             modifier = instanceModifiers[i];
