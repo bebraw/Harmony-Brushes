@@ -38,12 +38,12 @@ modifiers.prototype = {
             this.modifiers[modifierId] = modifier;
 
             $("#" + modifier.type + "Modifiers").append('<div id="' +
-                modifierId +'"><input type="checkbox" id="' +
+                modifierId +'" class="modifier"><input type="checkbox" id="' +
                 modifierLabel + '" /><label for="' + modifierLabel + '">' +
                 modifierName + '</label><div class="attributes"></div></div>');
 
             $('#' + modifierId + " input").click(function() {
-                id = $(this).attr('id');
+                id = $(this).parent(".modifier").attr('id');
                 panels['modifiers'].modifierStatus[id] = !panels['modifiers'].modifierStatus[id];
             });
 
