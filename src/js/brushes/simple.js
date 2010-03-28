@@ -8,8 +8,7 @@ function simple() {
 simple.prototype = {
     init: function () {},
     destroy: function () {},
-    stroke: function (canvas, cursor, color) {
-        // XXX: pass alpha too?
-        canvas.stroke(cursor.previous, cursor.current, color, 0.5);
+    stroke: function (canvas, cursor, color, opacity) {
+        canvas.stroke(cursor.previous, cursor.current, color, opacity);
     }
 };

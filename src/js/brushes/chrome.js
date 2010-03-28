@@ -10,13 +10,13 @@ chrome.prototype = {
         this.points = [];
     },
     destroy: function () {},
-    stroke: function (canvas, cursor, color) {
+    stroke: function (canvas, cursor, color, opacity) {
         var e, b, a, g;
         
         this.points.push(cursor.current);
         count = this.points.length - 1;
 
-        canvas.stroke(cursor.previous, cursor.current, color, 0,1);
+        canvas.stroke(cursor.previous, cursor.current, color, opacity);
 
         for (e = 0; e < this.points.length; e++) {
             b = this.points[e].x - this.points[count].x;

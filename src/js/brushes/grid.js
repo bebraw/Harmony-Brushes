@@ -8,7 +8,7 @@ function grid() {
 grid.prototype = {
     init: function () {},
     destroy: function () {},
-    stroke: function (canvas, cursor, color) {
+    stroke: function (canvas, cursor, color, opacity) {
         var e, a, g, c, b;
         a = Math.round(cursor.current.x / 100) * 100;
         g = Math.round(cursor.current.y / 100) * 100;
@@ -19,7 +19,7 @@ grid.prototype = {
             begin = {'x': a, 'y': g};
             cp = {'x': cursor.current.x + Math.random() * c , 'y': cursor.current.y + Math.random() * b};
             end = {'x': a, 'y': g};
-            canvas.quadraticCurve(begin, cp, end, color, 0.01);
+            canvas.quadraticCurve(begin, cp, end, color, opacity);
         }
     }
 };

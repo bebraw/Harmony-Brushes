@@ -18,10 +18,10 @@ Painters.prototype = {
         this.container.push(new InstancePainter(amount, canvas, brush, color,
             instanceModifier));
     },
-    paint: function (x, y, brushSize, mode) {
+    paint: function (x, y, brushSize, brushOpacity, mode) {
         userPainter = this.container[0];
         coordinate = userPainter.applyModifiers(x, y);
-        userPainter.paint(coordinate, brushSize, mode);
+        userPainter.paint(coordinate, brushSize, brushOpacity, mode);
 
         // XXX: tidy up!
         realX = coordinate.x;
@@ -30,7 +30,7 @@ Painters.prototype = {
         for (var i = 1; i < this.container.length; i++) {
             painter = this.container[i];
             coordinate = painter.applyModifiers(realX, realY);
-            painter.paint(coordinate, brushSize, mode);
+            painter.paint(coordinate, brushSize, brushOpacity, mode);
         }
     }
 }
@@ -53,7 +53,7 @@ InstancePainter.prototype = {
     applyModifiers: function (x, y) {
         return {'x': x, 'y': y};
     },
-    paint: function (coordinate, lineWidth, compositeOperation) {
+    paint: function (coordinate, lineWidth, opacity, compositeOperation) {
         for (var i = 0; i < this.painters.length; i++) {
             // XXX: tidy up
             x = coordinate.x;
@@ -62,7 +62,7 @@ InstancePainter.prototype = {
             painter = this.painters[i];
 
             coordinate = this.instanceModifier.modify(x, y);
-            painter.paint(coordinate, lineWidth, compositeOperation);
+            painter.paint(coordinate, lineWidth, opacity, compositeOperation);
         }
     }
 }
@@ -107,14 +107,15 @@ Painter.prototype = {
 
         return coordinate;
     },
-    paint: function (coordinate, lineWidth, compositeOperation) {
+    paint: function (coordinate, lineWidth, opacity, compositeOperation) {
         this.cursor.setLocation(coordinate);
 
         if( this.cursor.hasPreviousLocation() ) {
             this.canvas.context.lineWidth = lineWidth;
             this.canvas.context.globalCompositeOperation = compositeOperation;
 
-            this.brush.stroke(this.canvas, this.cursor.getProxy(), this.color);
+            this.brush.stroke(this.canvas, this.cursor.getProxy(), this.color,
+                opacity / 100);
         }
     }
 }

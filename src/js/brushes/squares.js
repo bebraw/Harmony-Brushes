@@ -8,7 +8,7 @@ function squares() {
 squares.prototype = {
     init: function () {},
     destroy: function () {},
-    stroke: function (canvas, cursor, color)  {
+    stroke: function (canvas, cursor, color, opacity)  {
         var b, a, g, e, c;
         b = cursor.current.x - cursor.previous.x;
         a = cursor.current.y - cursor.previous.y;
@@ -22,6 +22,6 @@ squares.prototype = {
         fourthCorner = {'x': cursor.current.x - e, 'y': cursor.current.y - c};
 
         canvas.rect(firstCorner, secondCorner, thirdCorner, fourthCorner,
-            color, 1.0);
+            color, opacity);
     }
 };

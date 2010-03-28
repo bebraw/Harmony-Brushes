@@ -10,11 +10,11 @@ sketchy.prototype = {
         this.points = [];
     },
     destroy: function () {},
-    stroke: function (canvas, cursor, color) {
+    stroke: function (canvas, cursor, color, opacity) {
         this.points.push(cursor.current);
         count = this.points.length - 1
 
-        canvas.stroke(cursor.previous, cursor.current, color, 0.05);
+        canvas.stroke(cursor.previous, cursor.current, color, opacity); // a 0.05!
 
         for (e = 0; e < this.points.length; e++) {
             b = this.points[e].x - this.points[count].x;
@@ -27,7 +27,7 @@ sketchy.prototype = {
                 end = {'x': this.points[e].x - (b * 0.3),
                     'y': this.points[e].y - (a * 0.3)};
 
-                canvas.stroke(begin, end, color, 0.05);
+                canvas.stroke(begin, end, color, opacity); // a 0.05!
             }
         }
     }

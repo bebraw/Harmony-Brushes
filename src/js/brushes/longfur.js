@@ -10,7 +10,7 @@ longfur.prototype = {
         this.points = [];
     },
     destroy: function () {},
-    stroke: function (canvas, cursor, color) {
+    stroke: function (canvas, cursor, color, opacity) {
         var f, e, b, a, h;
         
         this.points.push(cursor.current);
@@ -27,7 +27,7 @@ longfur.prototype = {
                     'y': this.points[count].y + (a * e)};
                 end = {'x': this.points[f].x - (b * e) + Math.random() * 2,
                     'y': this.points[f].y - (a * e) + Math.random() * 2};
-                canvas.stroke(begin, end, color, 0.05);
+                canvas.stroke(begin, end, color, opacity); // 0.05 -> opacity/2 ?
             }
         }
     }

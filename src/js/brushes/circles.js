@@ -8,7 +8,7 @@ function circles() {
 circles.prototype = {
     init: function () {},
     destroy: function () {},
-    stroke: function (canvas, cursor, color) {
+    stroke: function (canvas, cursor, color, opacity) {
         var g, l, k, h, f, c, j, a;
 
         l = cursor.current.x - cursor.previous.x;
@@ -22,7 +22,7 @@ circles.prototype = {
         a = h / j;
         for (g = 0; g < j; g++) {
             radius = (j - g) * a
-            canvas.circle(center, radius, color, 0.1);
+            canvas.circle(center, radius, color, opacity);
         }
     }
 };

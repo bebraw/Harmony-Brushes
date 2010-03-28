@@ -10,7 +10,7 @@ shaded.prototype = {
         this.points = [];
     },
     destroy: function () {},
-    stroke: function (canvas, cursor, color) {
+    stroke: function (canvas, cursor, color, opacity) {
         var e, b, a, g;
 
         this.points.push(cursor.current);

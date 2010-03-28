@@ -10,14 +10,14 @@ curvy.prototype = {
         this.points = [];
     },
     destroy: function () {},
-    stroke: function (canvas, cursor, color) {
+    stroke: function (canvas, cursor, color, opacity) {
         var START = 30,
             CTL_PNT1_DIST = 10,
             CTL_PNT2_DIST = 20;
 
         this.points.push(cursor.current);
 
-        canvas.stroke(cursor.previous, cursor.current, color, 0.5);
+        canvas.stroke(cursor.previous, cursor.current, color, opacity);
         
         function getPoint(xAgo, pnts) {
             var index = pnts.length - xAgo, i;

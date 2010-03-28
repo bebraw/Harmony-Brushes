@@ -8,6 +8,7 @@ function brushes() {
 brushes.prototype = {
     init: function () {
         this.brushSize = 1;
+        this.brushOpacity = 50;
         this.selected = BRUSHES[0];
     },
     initUI: function () {
@@ -27,6 +28,11 @@ brushes.prototype = {
                     <input type="text" id="brushSize" style="border:0; color:#f6931f; font-weight:bold; width: 2em; background-color: black" /> \
                 </p> \
                 <div id="brushSizeMax"></div> \
+                <p> \
+                    <label for="brushOpacity">Brush Opacity:</label> \
+                    <input type="text" id="brushOpacity" style="border:0; color:#f6931f; font-weight:bold; width: 2em; background-color: black" /> \
+                </p> \
+                <div id="brushOpacityMax"></div> \
         </div>');
 
         for (i = 0; i < BRUSHES.length; i++) {
@@ -49,7 +55,7 @@ brushes.prototype = {
         this.renderBrushPreviews();
 
         $("#brushesPanel").dialog({
-           closeOnEscape: false, resizable: false, width: 230, height: 300,
+           closeOnEscape: false, resizable: false, width: 230, height: 350,
            autoOpen: false
         });
 
@@ -65,13 +71,28 @@ brushes.prototype = {
             value: panels['brushes'].brushSize,
             slide: function(event, ui) {
                 $("#brushSize").val(ui.value);
-                panels['brushes'].brushSize = ui.value;
-                
                 brushesPanel = panels['brushes'];
+
+                brushesPanel.brushSize = ui.value;
                 brushesPanel.renderBrushPreviews();
             }
         });
         $("#brushSize").val($("#brushSizeMax").slider("value"));
+
+        $("#brushOpacityMax").slider({
+            range: "max",
+            min: 0,
+            max: 100,
+            value: panels['brushes'].brushOpacity,
+            slide: function(event, ui) {
+                $("#brushOpacity").val(ui.value);
+                brushesPanel = panels['brushes'];
+
+                brushesPanel.brushOpacity = ui.value;
+                brushesPanel.renderBrushPreviews();
+            }
+        });
+        $("#brushOpacity").val($("#brushOpacityMax").slider("value"));
     },
     destroy: function () {},
     renderBrushPreviews: function () {
@@ -99,7 +120,8 @@ brushes.prototype = {
                 (brushCanvas.height / 2 - pad * 2) + (brushCanvas.height / 2);
 
             coordinate = {'x': x, 'y': y};
-            brushPainter.paint(coordinate, this.brushSize, "source-over");
+            brushPainter.paint(coordinate, this.brushSize, this.brushOpacity,
+                "source-over");
         }
 
         brushCanvas.text(brushId, 'black', '48px Segoe UI, Arial, sans-serif', 10,
@@ -110,6 +132,9 @@ brushes.prototype = {
     },
     getSize: function () {
         return this.brushSize;
+    },
+    getOpacity: function () {
+        return this.brushOpacity;
     },
     getMode: function () {
         return "source-over"; // TODO: implement mode selector!

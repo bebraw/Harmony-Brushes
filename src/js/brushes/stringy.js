@@ -10,7 +10,7 @@ stringy.prototype = {
         this.points = [];
     },
     destroy: function () {},
-    stroke: function (canvas, cursor, color) {
+    stroke: function (canvas, cursor, color, opacity) {
         var FACTOR = 10, 
             HISTORY = 15,
             sliced,
@@ -22,13 +22,13 @@ stringy.prototype = {
 
         if(this.points.length > 1) {
             point = {'x': c, 'y': d};
-            canvas.stroke(cursor.previous, point, color, 0.5);
+            canvas.stroke(cursor.previous, point, color, opacity);
 
             sliced = this.points.slice(this.points.length - HISTORY,
                 this.points.length);
             for (e=0; e < sliced.length; e++) {
                 end = {'x': sliced[e][0], 'y': sliced[e][1]};
-                canvas.stroke(point, end, color, 0.15);
+                canvas.stroke(point, end, color, 0.15); // XXX: derive based on opacity? (orig. 0.5)
             }
         }
     }

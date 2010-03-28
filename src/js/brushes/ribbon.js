@@ -25,11 +25,12 @@ ribbon.prototype = {
     destroy: function () {
         clearInterval(this.interval)
     },
-    stroke: function (canvas, cursor, color) {
+    stroke: function (canvas, cursor, color, opacity) {
         this.canvas = canvas;
         this.mouseX = cursor.current.x;
         this.mouseY = cursor.current.y;
         this.color = color;
+        this.opacity = opacity;
 
         if(!this.painterInitDone) {
             this.painterInitDone = true;
@@ -68,7 +69,7 @@ ribbon.prototype = {
 
                 end = {'x': this.painters[a].dx, 'y': this.painters[a].dy};
 
-                this.canvas.stroke(begin, end, this.color, 0.05);
+                this.canvas.stroke(begin, end, this.color, this.opacity); // a=0.05 -> opacity / 2?
             }
         }
     }
