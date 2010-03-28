@@ -2,10 +2,10 @@
  * http://www.opensource.org/licenses/mit-license.php
  * Copyright (c) 2010 Mr.doob, rhyolight, bebraw
  */
-function VerticalMirror() {
+function verticalmirror() {
     this.init();
 }
-VerticalMirror.prototype = {
+verticalmirror.prototype = {
     type: 'instance',
     init: function () {},
     destroy: function () {},

@@ -2,10 +2,10 @@
  * http://www.opensource.org/licenses/mit-license.php
  * Copyright (c) 2010 Mr.doob, rhyolight, bebraw
  */
-function RadialMirror() {
+function radialmirror() {
     this.init();
 }
-RadialMirror.prototype = {
+radialmirror.prototype = {
     type: 'instance',
     attributes: {'amount': {'type': 'int', 'min': 1, 'max': 16, 'value': 1}},
     init: function () {},

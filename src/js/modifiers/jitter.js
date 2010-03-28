@@ -2,10 +2,10 @@
  * http://www.opensource.org/licenses/mit-license.php
  * Copyright (c) 2010 Mr.doob, rhyolight, bebraw
  */
-function Jitter() {
+function jitter() {
     this.init();
 }
-Jitter.prototype = {
+jitter.prototype = {
     type: 'stroke',
     attributes: {'amount': {'type': 'int', 'min': 1, 'max': 64, 'value': 8}},
     init: function () {},
