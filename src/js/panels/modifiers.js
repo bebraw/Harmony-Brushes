@@ -33,6 +33,11 @@ modifiers.prototype = {
             this.modifierStatus[modifierId] = false;
             this.modifiers[modifierId] = modifier;
 
+            containerId = 'instanceModifiers';
+            if(modifier.type == 'stroke') {
+                containerId = 'stroke'
+            }
+
             $("#" + modifier.type + "Modifiers").append('<input type="checkbox" id="' +
                 modifierId + '" /><label for="' + modifierId + '">' +
                 modifierName + '</label>');
@@ -43,8 +48,10 @@ modifiers.prototype = {
             });
         }
 
+        $("#instanceModifiers").sortable();
+        $("#strokeModifiers").sortable();
         $("#modifiersPanel input").button();
-        $("#modifiersPanel label").css("width", "100%").css("margin-bottom", "0.5em");
+        $("#modifiersPanel label").css("width", "130px").css("margin-bottom", "0.5em");
 
         $("#modifiersPanel").dialog({
            closeOnEscape: false, resizable: false, width: 150, autoOpen: false
