@@ -9,9 +9,6 @@ modifiers.prototype = {
     init: function () {
         this.modifierStatus = {}; // true = active, false = passive
         this.modifiers = {};
-
-        // XXX: hack (it should be better to store the actual value at a modifier itself)
-        this.radialValue = 1;
     },
     initUI: function () {
         setUpPod("Modifiers");
@@ -54,9 +51,12 @@ modifiers.prototype = {
                     attributeValues = attributes[attributeName];
 
                     if(attributeValues['type'] == 'int') {
+                        modifier[attributeName] = attributeValues['value'];
                         attributeId = modifierId + attributeName;
 
-                        $("#" + modifierId + " .attributes").append('<div id="' + attributeId + '"></div>'); //.hide();
+                        $("#" + modifierId + " .attributes").append('<div id="' +
+                            attributeId + '"><div class="attributeName" id="' +
+                            attributeName + '"></div></div>'); //.hide();
 
                         $("#" + attributeId).slider({
                             range: "max",
@@ -64,8 +64,8 @@ modifiers.prototype = {
                             max: attributeValues['max'],
                             value: attributeValues['value'],
                             slide: function(event, ui) {
-                                // XXX: hack. figure out how to get the parent id (get parent with modifier class and fetch its id?)
-                                panels['modifiers'].radialValue = ui.value;
+                                modifierId = $(this).parents(".modifier").attr('id');
+                                panels['modifiers'].modifiers[modifierId][$(this).children('.attributeName').attr('id')] = ui.value;
                             }
                         });
 
