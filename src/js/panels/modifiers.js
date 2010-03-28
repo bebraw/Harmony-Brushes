@@ -9,6 +9,9 @@ modifiers.prototype = {
     init: function () {
         this.modifierStatus = {}; // true = active, false = passive
         this.modifiers = {};
+
+        // XXX: hack (it should be better to store the actual value at a modifier itself)
+        this.radialValue = 1;
     },
     initUI: function () {
         setUpPod("Modifiers");
@@ -28,19 +31,55 @@ modifiers.prototype = {
         for (var i = 0; i < MODIFIERS.length; i++) {
             modifierName = MODIFIERS[i];
             modifierId = modifierName + 'Modifier';
+            modifierLabel = modifierId + 'Label';
             modifier = eval("new " + modifierName + "()");
 
             this.modifierStatus[modifierId] = false;
             this.modifiers[modifierId] = modifier;
 
-            $("#" + modifier.type + "Modifiers").append('<input type="checkbox" id="' +
-                modifierId + '" /><label for="' + modifierId + '">' +
-                modifierName + '</label>');
+            $("#" + modifier.type + "Modifiers").append('<div id="' +
+                modifierId +'"><input type="checkbox" id="' +
+                modifierLabel + '" /><label for="' + modifierLabel + '">' +
+                modifierName + '</label><div class="attributes"></div></div>');
 
-            $('#' + modifierId).click(function() {
+            $('#' + modifierId + " input").click(function() {
                 id = $(this).attr('id');
                 panels['modifiers'].modifierStatus[id] = !panels['modifiers'].modifierStatus[id];
             });
+
+            if('attributes' in modifier) {
+                attributes = modifier['attributes'];
+
+                for(var attributeName in attributes) {
+                    attributeValues = attributes[attributeName];
+
+                    if(attributeValues['type'] == 'int') {
+                        attributeId = modifierId + attributeName;
+
+                        $("#" + modifierId + " .attributes").append('<div id="' + attributeId + '"></div>').hide();
+
+                        $("#" + attributeId).slider({
+                            range: "max",
+                            min: attributeValues['min'],
+                            max: attributeValues['max'],
+                            value: attributeValues['value'],
+                            slide: function(event, ui) {
+                                // XXX: hack. figure out how to get the parent id (get parent with modifier class and fetch its id?)
+                                panels['modifiers'].radialValue = ui.value;
+                            }
+                        });
+
+                        $("#" + modifierId).toggle(
+                            function () {
+                                $(this).children('.attributes').show();
+                            },
+                            function () {
+                                $(this).children('.attributes').hide();
+                            }
+                        );
+                    }
+                }
+            }
         }
 
         //$("#instanceModifiers").sortable();

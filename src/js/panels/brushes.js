@@ -7,7 +7,7 @@ function brushes() {
 }
 brushes.prototype = {
     init: function () {
-        this.brushSize = 4;
+        this.brushSize = 1;
         this.selected = BRUSHES[0];
     },
     initUI: function () {
