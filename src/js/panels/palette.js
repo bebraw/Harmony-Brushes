@@ -13,7 +13,7 @@ palette.prototype = {
         setUpPod("Palette");
 
         $('#palettePod').click(function() {
-            $(this).hide();
+            $(this).css("visibility", "hidden");
             $('#paletteCheckbox').attr('checked', false);
             $('#palettePanel').dialog('open');
         });
@@ -26,7 +26,7 @@ palette.prototype = {
             onChange: function (hsb, hex, rgb) {
                 panels['palette'].color = [rgb.r, rgb.g, rgb.b];
 
-                brushesPanel = panels['brushes']
+                brushesPanel = panels['brushes'];
                 brushesPanel.renderBrushPreviews();
             }
         });
@@ -37,7 +37,9 @@ palette.prototype = {
         });
 
         $("#palettePanel").dialog( "option", "position", "right" );
-        $("#palettePanel").bind( "dialogclose", function(event, ui) {$("#palettePod").show();} );
+        $("#palettePanel").bind( "dialogclose", function(event, ui) {
+            $("#palettePod").css("visibility", "visible");}
+        );
     },
     destroy: function () {},
     getColor: function () {

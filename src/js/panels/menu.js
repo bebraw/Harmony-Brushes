@@ -11,7 +11,7 @@ menu.prototype = {
         setUpPod("Menu");
 
         $('#menuPod').click(function() {
-            $(this).hide();
+            $(this).css("visibility", "hidden");
             $('#menuCheckbox').attr('checked', false);
             $('#menuPanel').dialog('open');
         });
@@ -35,7 +35,7 @@ menu.prototype = {
         $("#menuPanel").dialog("option", "width", 325);
         $("#menuPanel").dialog("option", "height", 60);
         $("#menuPanel").bind("dialogclose",
-            function(event, ui) {$("#menuPod").show();}
+            function(event, ui) {$("#menuPod").css("visibility", "visible");}
         );
 
         // TODO: hook up events to menu items!

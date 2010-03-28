@@ -11,7 +11,7 @@ playback.prototype = {
         setUpPod("Playback");
 
         $('#playbackPod').click(function() {
-            $(this).hide();
+            $(this).css("visibility", "hidden");
             $('#playbackCheckbox').attr('checked', false);
             $('#playbackPanel').dialog('open');
         });
@@ -35,7 +35,9 @@ playback.prototype = {
         $("#playbackPanel").dialog( "option", "width", 220 );
         $("#playbackPanel").dialog( "option", "height", 60 );
         $("#playbackPanel").dialog( "option", "position", "bottom" );
-        $("#playbackPanel").bind( "dialogclose", function(event, ui) { $("#playbackPod").show();} );
+        $("#playbackPanel").bind( "dialogclose", function(event, ui) {
+            $("#playbackPod").css("visibility", "visible");}
+        );
 
         // set up icons
         $('#beginning').button({

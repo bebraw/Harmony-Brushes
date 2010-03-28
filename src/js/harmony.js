@@ -21,7 +21,8 @@ for (j = 0; j < PANELS.length; j++) {
         keyNum = parseInt(keyChar) - 1;
         panel = PANELS[keyNum];
 
-        if($("#" + panel + "Pod").is(':visible')) {
+        // TODO: check visible status
+        if($("#" + panel + "Pod").css('visibility') == 'visible') {
             $("#" + panel + "Pod").click();
         }
         else {

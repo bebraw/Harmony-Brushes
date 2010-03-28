@@ -14,7 +14,7 @@ canvas.prototype = {
         setUpPod("Canvas");
 
         $('#canvasPod').click(function() {
-            $(this).hide();
+            $(this).css("visibility", "hidden");
             $('#canvasCheckbox').attr('checked', false);
             $('#canvasPanel').dialog('open');
         });
@@ -50,7 +50,7 @@ canvas.prototype = {
 
         $("#canvasPanel").dialog( "option", "position", ["left", "bottom"] );
         $("#canvasPanel").bind( "dialogclose", function(event, ui) {
-            $("#canvasPod").show();
+            $("#canvasPod").css("visibility", "visible");
         });
     },
     destroy: function () {},

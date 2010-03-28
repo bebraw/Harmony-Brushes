@@ -14,7 +14,7 @@ modifiers.prototype = {
         setUpPod("Modifiers");
 
         $('#modifiersPod').click(function() {
-            $(this).hide();
+            $(this).css("visibility", "hidden");
             $('#modifiersCheckbox').attr('checked', false);
             $('#modifiersPanel').dialog('open');
         });
@@ -48,7 +48,9 @@ modifiers.prototype = {
         });
 
         $("#modifiersPanel").dialog( "option", "position", ["right", "top"] );
-        $("#modifiersPanel").bind( "dialogclose", function(event, ui) { $("#modifiersPod").show();} );
+        $("#modifiersPanel").bind( "dialogclose", function(event, ui) {
+            $("#modifiersPod").css("visibility", "visible");}
+        );
     },
     destroy: function () {},
     getActiveInstanceModifiers: function () { // XXX: templatify

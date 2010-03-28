@@ -14,7 +14,7 @@ brushes.prototype = {
         setUpPod("Brushes");
 
         $('#brushesPod').click(function() {
-            $(this).hide();
+            $(this).css('visibility', 'hidden'); //hide();
             $('#brushesCheckbox').attr('checked', false);
             $('#brushesPanel').dialog('open');
         });
@@ -54,7 +54,9 @@ brushes.prototype = {
         });
 
         $("#brushesPanel").dialog( "option", "position", "left" );
-        $("#brushesPanel").bind( "dialogclose", function(event, ui) {$("#brushesPod").show();} );
+        $("#brushesPanel").bind( "dialogclose", function(event, ui) {
+            $("#brushesPod").css("visibility", "visible");}
+        );
 
         $("#brushSizeMax").slider({
             range: "max",
