@@ -33,11 +33,6 @@ modifiers.prototype = {
             this.modifierStatus[modifierId] = false;
             this.modifiers[modifierId] = modifier;
 
-            containerId = 'instanceModifiers';
-            if(modifier.type == 'stroke') {
-                containerId = 'stroke'
-            }
-
             $("#" + modifier.type + "Modifiers").append('<input type="checkbox" id="' +
                 modifierId + '" /><label for="' + modifierId + '">' +
                 modifierName + '</label>');

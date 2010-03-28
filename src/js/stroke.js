@@ -34,6 +34,9 @@ StrokeManager.prototype = {
         for (i = 0; i < instanceModifiers.length; i++) {
             modifier = instanceModifiers[i];
 
+            // check modifier attr (radial!) for amount! note that in this case
+            // the derived coord should be passed to each!
+
             this.painters.add(mainCanvas, brush, color, modifier);
         }
 
