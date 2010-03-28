@@ -20,7 +20,10 @@ modifiers.prototype = {
         });
 
         // set up modifiers panel
-        $("body").append('<div class="panel" id="modifiersPanel" title="Modifiers"></div>');
+        $("body").append('<div class="panel" id="modifiersPanel" title="Modifiers">\
+            <div id="instanceModifiers">Instance modifiers</div>\
+            <div id="strokeModifiers">Stroke modifiers</div>\
+            </div>');
 
         for (var i = 0; i < MODIFIERS.length; i++) {
             modifierName = MODIFIERS[i];
@@ -30,7 +33,7 @@ modifiers.prototype = {
             this.modifierStatus[modifierId] = false;
             this.modifiers[modifierId] = modifier;
 
-            $("#modifiersPanel").append('<input type="checkbox" id="' +
+            $("#" + modifier.type + "Modifiers").append('<input type="checkbox" id="' +
                 modifierId + '" /><label for="' + modifierId + '">' +
                 modifierName + '</label>');
 
