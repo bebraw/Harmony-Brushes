@@ -55,8 +55,9 @@ modifiers.prototype = {
                         attributeId = modifierId + attributeName;
 
                         $("#" + modifierId + " .attributes").append('<div id="' +
-                            attributeId + '"><div class="attributeName" id="' +
-                            attributeName + '"></div></div>'); //.hide();
+                            attributeId + '"></div>'); //.hide();
+
+                        $("#" + attributeId).data(attributeId, attributeName);
 
                         $("#" + attributeId).slider({
                             range: "max",
@@ -65,7 +66,8 @@ modifiers.prototype = {
                             value: attributeValues['value'],
                             slide: function(event, ui) {
                                 modifierId = $(this).parents(".modifier").attr('id');
-                                panels['modifiers'].modifiers[modifierId][$(this).children('.attributeName').attr('id')] = ui.value;
+
+                                panels['modifiers'].modifiers[modifierId][$(this).data($(this).attr('id'))] = ui.value;
                             }
                         });
 
