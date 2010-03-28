@@ -37,7 +37,17 @@ StrokeManager.prototype = {
             // check modifier attr (radial!) for amount! note that in this case
             // the derived coord should be passed to each!
 
-            this.painters.add(mainCanvas, brush, color, modifier);
+            // XXX: hack for radial amount
+            if('attributes' in modifier) {
+                if('amount' in modifier.attributes) {
+                    amount = panels['modifiers'].radialValue; // XXX: should fetch this directly from the modifier
+
+                    this.painters.addInstance(amount, mainCanvas, brush, color, modifier);
+                }
+            }
+            else { // XXX: handle this via addInstance too???
+                this.painters.add(mainCanvas, brush, color, modifier);
+            }
         }
 
         this.painters.paint(x, y, this.brushSize, this.mode);

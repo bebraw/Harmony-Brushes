@@ -7,16 +7,13 @@ function RadialMirror() {
 }
 RadialMirror.prototype = {
     type: 'instance',
-    attributes: {'amount': {'type': 'int', 'min': 1, 'max': 4, 'value': 1}},
+    attributes: {'amount': {'type': 'int', 'min': 1, 'max': 64, 'value': 1}},
     init: function () {},
     destroy: function () {},
-    modify: function (x, y) {
-        // x' = x cos f - y sin f
-        // y' = y cos f + x sin f
-        // f angle (1 -> 360 / 2, 2 -> 360 / 3, n -> 360 / (n+1)
-        amount = 1;
+    modify: function (x, y) { // XXX: this should modify x, y of the previous radial
+        amount = panels['modifiers'].radialValue; // XXX: stash this at the instance itself!
 
-        // XXX: replace with nice math lib
+        // XXX: replace with a nice math lib
         angle = 2 * Math.PI / (amount + 1);
         cosine = Math.cos(angle);
         sine = Math.sin(angle);

@@ -56,7 +56,7 @@ modifiers.prototype = {
                     if(attributeValues['type'] == 'int') {
                         attributeId = modifierId + attributeName;
 
-                        $("#" + modifierId + " .attributes").append('<div id="' + attributeId + '"></div>').hide();
+                        $("#" + modifierId + " .attributes").append('<div id="' + attributeId + '"></div>'); //.hide();
 
                         $("#" + attributeId).slider({
                             range: "max",
@@ -69,14 +69,14 @@ modifiers.prototype = {
                             }
                         });
 
-                        $("#" + modifierId).toggle(
+                        /*$("#" + modifierId).toggle(
                             function () {
                                 $(this).children('.attributes').show();
                             },
                             function () {
                                 $(this).children('.attributes').hide();
                             }
-                        );
+                        );*/
                     }
                 }
             }

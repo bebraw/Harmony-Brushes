@@ -14,6 +14,10 @@ Painters.prototype = {
         this.container.push(new Painter(canvas, brush, color,
             instanceModifier, strokeModifiers));
     },
+    addInstance: function (amount, canvas, brush, color, instanceModifier) {
+        this.container.push(new InstancePainter(amount, canvas, brush, color,
+            instanceModifier));
+    },
     paint: function (x, y, brushSize, mode) {
         userPainter = this.container[0];
         coordinate = userPainter.applyModifiers(x, y);
@@ -27,6 +31,38 @@ Painters.prototype = {
             painter = this.container[i];
             coordinate = painter.applyModifiers(realX, realY);
             painter.paint(coordinate, brushSize, mode);
+        }
+    }
+}
+
+function InstancePainter(amount, canvas, brush, color, instanceModifier) {
+    this.init(amount, canvas, brush, color, instanceModifier);
+}
+InstancePainter.prototype = {
+    init: function (amount, canvas, brush, color, instanceModifier) {
+        this.amount = amount;
+        this.instanceModifier = instanceModifier;
+
+        this.painters = [];
+
+        for (var i = 0; i < amount; i++) {
+            this.painters.push(new Painter(canvas, brush, color));
+        }
+    },
+    destroy: function () {},
+    applyModifiers: function (x, y) {
+        return {'x': x, 'y': y};
+    },
+    paint: function (coordinate, lineWidth, compositeOperation) {
+        for (var i = 0; i < this.painters.length; i++) {
+            // XXX: tidy up
+            x = coordinate.x;
+            y = coordinate.y;
+
+            painter = this.painters[i];
+
+            coordinate = this.instanceModifier.modify(x, y);
+            painter.paint(coordinate, lineWidth, compositeOperation);
         }
     }
 }
