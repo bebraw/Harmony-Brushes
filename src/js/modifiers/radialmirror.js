@@ -11,6 +11,23 @@ RadialMirror.prototype = {
     init: function () {},
     destroy: function () {},
     modify: function (x, y) {
-        return {'x': window.innerWidth - x, 'y': window.innerHeight - y};
+        // x' = x cos f - y sin f
+        // y' = y cos f + x sin f
+        // f angle (1 -> 360 / 2, 2 -> 360 / 3, n -> 360 / (n+1)
+        amount = 1;
+
+        // XXX: replace with nice math lib
+        angle = 2 * Math.PI / (amount + 1);
+        cosine = Math.cos(angle);
+        sine = Math.sin(angle);
+
+        centerX = window.innerWidth / 2;
+        centerY = window.innerHeight / 2;
+
+        originX = x - centerX;
+        originY = y - centerY;
+
+        return {'x': originX * cosine - originY * sine + centerX,
+                'y': originY * cosine + originX * sine + centerY};
     }
 }
