@@ -48,8 +48,8 @@ modifiers.prototype = {
             });
         }
 
-        $("#instanceModifiers").sortable();
-        $("#strokeModifiers").sortable();
+        //$("#instanceModifiers").sortable();
+        //$("#strokeModifiers").sortable();
         $("#modifiersPanel input").button();
         $("#modifiersPanel label").css("width", "130px").css("margin-bottom", "0.5em");
 
