@@ -62,12 +62,12 @@ brushes.prototype = {
             range: "max",
             min: 1,
             max: 30,
-            value: 4,
+            value: panels['brushes'].brushSize,
             slide: function(event, ui) {
                 $("#brushSize").val(ui.value);
                 panels['brushes'].brushSize = ui.value;
                 
-                brushesPanel = panels['brushes']
+                brushesPanel = panels['brushes'];
                 brushesPanel.renderBrushPreviews();
             }
         });
