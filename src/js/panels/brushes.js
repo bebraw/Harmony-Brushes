@@ -56,15 +56,14 @@ brushes.prototype = {
 
                 $("#" + optionId).slider({
                     range: "max",
-                    min: 0,
-                    max: 100,
-                    value: 0,
+                    min: brushOptionValue.min,
+                    max: brushOptionValue.max,
+                    value: brushOptionValue.value,
                     slide: function(event, ui) {
-                        // TODO!
-                        //brushesPanel = panels['brushes'];
-
-                        //brushesPanel.brushOpacity = ui.value;
-                        //brushesPanel.renderBrushPreviews();
+                        // XXX: hack! figure out a nicer way to pass option name!
+                        option = $(this).attr('id').replace('brush', '');
+                        panels['brushes'].brushOptions[option].value = ui.value;
+                        panels['brushes'].renderBrushPreviews();
                     }
                 });
             }
@@ -176,10 +175,10 @@ brushes.prototype = {
         return eval("new " + this.selected + '()');
     },
     getSize: function () {
-        return this.brushOptions['size']['value'];
+        return this.brushOptions.size.value;
     },
     getOpacity: function () {
-        return this.brushOptions['opacity']['value'];
+        return this.brushOptions.opacity.value;
     },
     getMode: function () {
         return "source-over"; // TODO: implement mode selector!
