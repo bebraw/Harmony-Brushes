@@ -21,6 +21,7 @@ StrokeManager.prototype = {
 
         this.painters = new Painters();
 
+        brush = $.extend(true, {}, brush); // clone brush!
         this.painters.add(mainCanvas, brush, color);
 
         // add all instance modifiers (note that it does not make sense to use

@@ -44,6 +44,7 @@ InstancePainter.prototype = {
         this.painters = [];
 
         for (var i = 0; i < amount; i++) {
+            brush = $.extend(true, {}, brush); // clone brush!
             this.painters.push(new Painter(canvas, brush, color));
         }
     },
@@ -105,7 +106,8 @@ Cursor.prototype = {
     },
     destroy: function () {},
     setLocation: function (point) {
-        this.previous = this.current.clone();
+        clone = $.extend(true, {}, this.current);
+        this.previous = clone;
         this.current = point;
     },
     hasPreviousLocation: function() {

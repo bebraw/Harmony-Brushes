@@ -41,7 +41,4 @@ Point.prototype = {
         this.y = y;
     },
     destroy: function() {},
-    clone: function() {
-        return new Point(this.x, this.y);
-    }
 }
