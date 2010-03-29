@@ -170,8 +170,8 @@ brushes.prototype = {
         canvasWidth = brushCanvas.width;
         pad = 10;
 
-        for (x = pad; x < canvasWidth - pad; x+=10) {
-            y = Math.sin((x - pad) / (canvasWidth - pad) * 2 * Math.PI) *
+        for (x = pad; x < canvasWidth - pad; x += 5) {
+            y = Math.sin(5 * (x - pad) / (canvasWidth - pad) * 2 * Math.PI) *
                 (brushCanvas.height / 2 - pad * 2) + (brushCanvas.height / 2);
 
             point = new Point(x, y);
