@@ -9,7 +9,7 @@ horizontalmirror.prototype = {
     type: 'instance',
     init: function () {},
     destroy: function () {},
-    modify: function (x, y) {
-        return {'x': window.innerWidth - x, 'y': y};
+    modify: function (point) {
+        return new Point(window.innerWidth - point.x, point.y);
     }
 }

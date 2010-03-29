@@ -42,12 +42,12 @@ var strokeManager = new StrokeManager(panels['modifiers'], panels['canvas'],
 
 $("#canvas").mousecapture({
     "down": function(e, s) {
-        strokeManager.start(e.pageX, e.pageY);
+        strokeManager.start(new Point(e.pageX, e.pageY));
     },
     "move": function(e, s) {
-        strokeManager.paint(e.pageX, e.pageY);
+        strokeManager.paint(new Point(e.pageX, e.pageY));
     },
     "up": function(e, s) {
-        strokeManager.paint(e.pageX, e.pageY);
+        strokeManager.paint(new Point(e.pageX, e.pageY));
     }
 });

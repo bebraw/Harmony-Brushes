@@ -10,8 +10,8 @@ radialmirror.prototype = {
     attributes: {'amount': {'type': 'int', 'min': 1, 'max': 16, 'value': 1}},
     init: function () {},
     destroy: function () {},
-    modify: function (x, y) { // XXX: this should modify x, y of the previous radial
-        // XXX: replace with a nice math lib
+    modify: function (point) {
+        // TODO: use some nice math lib for rot?
         angle = 2 * Math.PI / (this.amount + 1);
         cosine = Math.cos(angle);
         sine = Math.sin(angle);
@@ -19,10 +19,10 @@ radialmirror.prototype = {
         centerX = window.innerWidth / 2;
         centerY = window.innerHeight / 2;
 
-        originX = x - centerX;
-        originY = y - centerY;
+        originX = point.x - centerX;
+        originY = point.y - centerY;
 
-        return {'x': originX * cosine - originY * sine + centerX,
-                'y': originY * cosine + originX * sine + centerY};
+        return new Point(originX * cosine - originY * sine + centerX,
+            originY * cosine + originX * sine + centerY);
     }
 }

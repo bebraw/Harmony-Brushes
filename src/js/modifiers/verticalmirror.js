@@ -9,7 +9,7 @@ verticalmirror.prototype = {
     type: 'instance',
     init: function () {},
     destroy: function () {},
-    modify: function (x, y) {
-        return {'x': x, 'y': window.innerHeight - y};
+    modify: function (point) {
+        return new Point(point.x, window.innerHeight - point.y);
     }
 }

@@ -172,8 +172,8 @@ brushes.prototype = {
             y = Math.sin((x - pad) / (canvasWidth - pad) * 2 * Math.PI) *
                 (brushCanvas.height / 2 - pad * 2) + (brushCanvas.height / 2);
 
-            coordinate = {'x': x, 'y': y};
-            brushPainter.paint(coordinate, this.getSize(), this.getOpacity(),
+            point = new Point(x, y);
+            brushPainter.paint(point, this.getSize(), this.getOpacity(),
                 "source-over");
         }
 

@@ -31,3 +31,17 @@ function setUpPod(name) {
 function capitalizeFirstLetter(string) {
     return string.charAt(0).toUpperCase() + string.slice(1);
 }
+
+function Point(x, y) {
+    this.init(x, y);
+}
+Point.prototype = {
+    init: function(x, y) {
+        this.x = x;
+        this.y = y;
+    },
+    destroy: function() {},
+    clone: function() {
+        return new Point(this.x, this.y);
+    }
+}

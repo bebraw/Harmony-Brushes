@@ -141,8 +141,8 @@ function NullInstanceModifier() {
 NullInstanceModifier.prototype = {
     init: function () {},
     destroy: function () {},
-    modify: function (x, y) {
-        return {'x': x, 'y': y};
+    modify: function (point) {
+        return point;
     }
 }
 
@@ -152,7 +152,7 @@ function NullStrokeModifiers() {
 NullStrokeModifiers.prototype = {
     init: function () {},
     destroy: function () {},
-    modify: function (x, y) {
-        return {'x': x, 'y': y};
+    modify: function (point) {
+        return point;
     }
 }
