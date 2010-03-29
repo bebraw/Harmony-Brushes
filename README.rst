@@ -10,21 +10,19 @@ a go! They are considered relatively stable.
 Planned features:
 
 - better palette (bounds + slots interpolated between those)
-- faster undo!
+- undo (branching?)
 - playback
 - better background (solid/background/texture)
 - scanfill brush
-- rethought UI (pads+panels)
+- constraints (restrict stroke path during painting)
+- flipbook (branch current image to a new copy)
 
 Currently it provides following extra functionality:
 
-- mirroring (x, y, radial)
-- "sticky" palette (shift). Note that it's not possible to paint under the
-  palette!
-- vertical constraint (hit s while painting)
-- horizontal constraint (hit a while painting)
-- perspective constraint (hit d while painting, set target with f)
-- undo/redo (undo is slow as it redraws everything!)
+- improved UI (pods and panels, shortcut: keys 1-6 map to given pod/panel)
+- mirroring (horizontal, vertical, radial)
+- additional brush options (size, alpha, jitter)
+- brush preview
 
 You can find more information about Harmony at http://mrdoob.com/blog/post/689.
 
