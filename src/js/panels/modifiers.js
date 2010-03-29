@@ -21,8 +21,6 @@ modifiers.prototype = {
 
         // set up modifiers panel
         $("body").append('<div class="panel" id="modifiersPanel" title="Modifiers">\
-            <div id="instanceModifiers">Instance modifiers</div>\
-            <div id="strokeModifiers">Stroke modifiers</div>\
             </div>');
 
         for (var i = 0; i < MODIFIERS.length; i++) {
@@ -34,7 +32,7 @@ modifiers.prototype = {
             this.modifierStatus[modifierId] = false;
             this.modifiers[modifierId] = modifier;
 
-            $("#" + modifier.type + "Modifiers").append('<div id="' +
+            $("#modifiersPanel").append('<div id="' +
                 modifierId +'" class="modifier"><input type="checkbox" id="' +
                 modifierLabel + '" /><label for="' + modifierLabel + '">' +
                 modifierName + '</label><div class="attributes"></div></div>');
@@ -84,8 +82,6 @@ modifiers.prototype = {
             }
         }
 
-        //$("#instanceModifiers").sortable();
-        //$("#strokeModifiers").sortable();
         $("#modifiersPanel input").button();
         $("#modifiersPanel label").css("width", "130px").css("margin-bottom", "0.5em");
 
@@ -99,7 +95,7 @@ modifiers.prototype = {
         );
     },
     destroy: function () {},
-    getActiveInstanceModifiers: function () { // XXX: templatify
+    getActiveModifiers: function () {
         ret = [];
 
         for (var modifierId in this.modifierStatus) {
@@ -108,26 +104,7 @@ modifiers.prototype = {
             if(modifierActive) {
                 modifier = this.modifiers[modifierId];
 
-                if(modifier.type == 'instance') {
-                    ret.push(modifier);
-                }
-            }
-        }
-
-        return ret;
-    },
-    getActiveStrokeModifiers: function () { // XXX: templatify
-        ret = [];
-
-        for (var modifierId in this.modifierStatus) {
-            modifierActive = this.modifierStatus[modifierId];
-
-            if(modifierActive) {
-                modifier = this.modifiers[modifierId];
-
-                if(modifier.type == 'stroke') {
-                    ret.push(modifier);
-                }
+                ret.push(modifier);
             }
         }
 
@@ -135,21 +112,10 @@ modifiers.prototype = {
     }
 }
 
-function NullInstanceModifier() {
+function NullModifier() {
     this.init();
 }
-NullInstanceModifier.prototype = {
-    init: function () {},
-    destroy: function () {},
-    modify: function (point) {
-        return point;
-    }
-}
-
-function NullStrokeModifiers() {
-    this.init();
-}
-NullStrokeModifiers.prototype = {
+NullModifier.prototype = {
     init: function () {},
     destroy: function () {},
     modify: function (point) {

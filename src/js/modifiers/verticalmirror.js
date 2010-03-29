@@ -6,7 +6,6 @@ function verticalmirror() {
     this.init();
 }
 verticalmirror.prototype = {
-    type: 'instance',
     init: function () {},
     destroy: function () {},
     modify: function (point) {

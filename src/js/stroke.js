@@ -21,25 +21,19 @@ StrokeManager.prototype = {
 
         this.painters = new Painters();
 
-        // get all modifiers that modify current strokes
-        strokeModifiers = panels['modifiers'].getActiveStrokeModifiers();
-
-        this.painters.add(mainCanvas, brush, color, null, strokeModifiers);
+        this.painters.add(mainCanvas, brush, color);
 
         // add all instance modifiers (note that it does not make sense to use
         // stroke modifiers with mirror at least (perhaps array?). add flag
         // for this?)
-        instanceModifiers = panels['modifiers'].getActiveInstanceModifiers();
-        for (i = 0; i < instanceModifiers.length; i++) {
-            modifier = instanceModifiers[i];
-
-            // check modifier attr (radial!) for amount! note that in this case
-            // the derived coord should be passed to each!
+        modifiers = panels['modifiers'].getActiveModifiers();
+        for (i = 0; i < modifiers.length; i++) {
+            modifier = modifiers[i];
 
             // XXX: hack for amount
             if('attributes' in modifier) {
                 if('amount' in modifier.attributes) {
-                    this.painters.addInstance(modifier.amount, mainCanvas, brush, color, modifier);
+                    this.painters.add(mainCanvas, brush, color, modifier, modifier.amount);
                 }
             }
             else { // XXX: handle this via addInstance too???

@@ -10,13 +10,15 @@ Painters.prototype = {
         this.container = [];
     },
     destroy: function () {},
-    add: function (canvas, brush, color, instanceModifier, strokeModifiers) {
-        this.container.push(new Painter(canvas, brush, color,
-            instanceModifier, strokeModifiers));
-    },
-    addInstance: function (amount, canvas, brush, color, instanceModifier) {
-        this.container.push(new InstancePainter(amount, canvas, brush, color,
-            instanceModifier));
+    add: function (canvas, brush, color, modifier, amount) {
+        if(amount) {
+            this.container.push(new InstancePainter(amount, canvas, brush,
+                color, modifier));
+        }
+        else {
+            this.container.push(new Painter(canvas, brush, color,
+                modifier));
+        }
     },
     paint: function (point, brushSize, brushOpacity, mode) {
         userPainter = this.container[0];
@@ -31,13 +33,13 @@ Painters.prototype = {
     }
 }
 
-function InstancePainter(amount, canvas, brush, color, instanceModifier) {
-    this.init(amount, canvas, brush, color, instanceModifier);
+function InstancePainter(amount, canvas, brush, color, modifier) {
+    this.init(amount, canvas, brush, color, modifier);
 }
 InstancePainter.prototype = {
-    init: function (amount, canvas, brush, color, instanceModifier) {
+    init: function (amount, canvas, brush, color, modifier) {
         this.amount = amount;
-        this.instanceModifier = instanceModifier;
+        this.modifier = modifier;
 
         this.painters = [];
 
@@ -52,48 +54,33 @@ InstancePainter.prototype = {
     paint: function (point, lineWidth, opacity, compositeOperation) {
         for (var i = 0; i < this.painters.length; i++) {
             painter = this.painters[i];
-            point = this.instanceModifier.modify(point);
+            point = this.modifier.modify(point);
             painter.paint(point, lineWidth, opacity, compositeOperation);
         }
     }
 }
 
-function Painter(canvas, brush, color, instanceModifier, strokeModifiers) {
-    this.init(canvas, brush, color, instanceModifier, strokeModifiers);
+function Painter(canvas, brush, color, modifier) {
+    this.init(canvas, brush, color, modifier);
 }
 Painter.prototype = {
-    init: function (canvas, brush, color, instanceModifier, strokeModifiers) {
+    init: function (canvas, brush, color, modifier) {
         this.canvas = canvas;
         this.brush = brush;
         this.color = color;
 
-        if(instanceModifier) {
-            this.instanceModifier = instanceModifier;
+        if(modifier) {
+            this.modifier = modifier;
         }
         else {
-            this.instanceModifier = new NullInstanceModifier();
-        }
-
-        if(strokeModifiers) {
-            this.strokeModifiers = strokeModifiers;
-        }
-        else {
-            this.strokeModifiers = new NullStrokeModifiers();
+            this.modifier = new NullModifier();
         }
 
         this.cursor = new Cursor();
     },
     destroy: function () {},
     applyModifiers: function (point) {
-        point = this.instanceModifier.modify(point);
-
-        for (var i = 0; i < this.strokeModifiers.length; i++) {
-            strokeModifier = this.strokeModifiers[i];
-
-            point = strokeModifier.modify(point);
-        }
-
-        return point;
+        return this.modifier.modify(point);
     },
     paint: function (point, lineWidth, opacity, compositeOperation) {
         this.cursor.setLocation(point);

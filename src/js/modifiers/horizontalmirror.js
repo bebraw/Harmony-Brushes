@@ -6,7 +6,6 @@ function horizontalmirror() {
     this.init();
 }
 horizontalmirror.prototype = {
-    type: 'instance',
     init: function () {},
     destroy: function () {},
     modify: function (point) {
