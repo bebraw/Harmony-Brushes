@@ -173,12 +173,26 @@ brushes.prototype = {
                 (brushCanvas.height / 2 - pad * 2) + (brushCanvas.height / 2);
 
             point = new Point(x, y);
+            point = this.applyJitter(point);
             brushPainter.paint(point, this.getSize(), this.getOpacity(),
                 "source-over");
         }
 
         brushCanvas.text(brushId, 'black', '48px Segoe UI, Arial, sans-serif', 10,
         brushCanvas.height / 2);
+    },
+    applyJitter: function ( point ) {
+        if(this.brushOptions.location.jitter.enabled) {
+            direction = 2 * Math.PI * Math.random();
+            distance = this.brushOptions.location.jitter.value * Math.random();
+
+            xOffset = Math.sin(direction) * distance;
+            yOffset = Math.cos(direction) * distance;
+
+            return new Point(point.x + xOffset, point.y + yOffset);
+        }
+        
+        return point;
     },
     getSelected: function () {
         return eval("new " + this.selected + '()');

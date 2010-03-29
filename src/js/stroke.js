@@ -50,7 +50,7 @@ StrokeManager.prototype = {
         this.paintTemplate(point);
     },
     paintTemplate: function (point) {
-        // XXX: modify point with jitter now
+        point = this.brushes.applyJitter(point);
         this.painters.paint(point, this.brushes.getSize(),
             this.brushes.getOpacity(), this.mode);
 
