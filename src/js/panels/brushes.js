@@ -8,7 +8,7 @@ function brushes() {
 brushes.prototype = {
     brushOptions: {'size': {'min': 1, 'max': 30, 'value': 1},
         'opacity': {'min': 0, 'max': 100, 'value': 50},
-        'location': null},
+        'location': {}},
     init: function () {
         this.selected = BRUSHES[0];
     },
@@ -83,6 +83,9 @@ brushes.prototype = {
                 '
             );
 
+            this.brushOptions[brushOptionName]['jitter'] = {'enabled': false,
+                'value': 0};
+
             $("#brushOptions").append('</div>');
 
             this.setUpJitter(jitterToggleId, jitterAmountId);
@@ -96,13 +99,20 @@ brushes.prototype = {
             function () {
                 $(this).parent('.jitter').children('div').css('visibility',
                     'visible');
+                // XXX: hack! figure out a nicer way to pass option name!
+                option = $(this).attr('id').replace('JitterToggle', '').replace('brush', '');
+                panels['brushes'].brushOptions[option].jitter.enabled = true;
+                panels['brushes'].renderBrushPreviews();
             },
             function () {
                 $(this).parent('.jitter').children('div').css('visibility',
                     'hidden');
+                // XXX: hack! figure out a nicer way to pass option name!
+                option = $(this).attr('id').replace('JitterToggle', '').replace('brush', '');
+                panels['brushes'].brushOptions[option].jitter.enabled = false;
+                panels['brushes'].renderBrushPreviews();
             }
         );
-
 
         $("#" + jitterAmountId).slider({
             range: "max",
@@ -110,11 +120,10 @@ brushes.prototype = {
             max: 100,
             value: 0,
             slide: function(event, ui) {
-                // TODO!
-                //brushesPanel = panels['brushes'];
-
-                //brushesPanel.brushOpacity = ui.value;
-                //brushesPanel.renderBrushPreviews();
+                // XXX: hack! figure out a nicer way to pass option name!
+                option = $(this).attr('id').replace('JitterAmount', '').replace('brush', '');
+                panels['brushes'].brushOptions[option].jitter.value = ui.value;
+                panels['brushes'].renderBrushPreviews();
             }
         }).css('visibility', 'hidden');
     },
@@ -175,10 +184,25 @@ brushes.prototype = {
         return eval("new " + this.selected + '()');
     },
     getSize: function () {
-        return this.brushOptions.size.value;
+        return this.getValueTemplate('size');
     },
     getOpacity: function () {
-        return this.brushOptions.opacity.value;
+        return this.getValueTemplate('opacity');
+    },
+    getValueTemplate: function (valueName) {
+        value = this.brushOptions[valueName].value;
+
+        if(this.brushOptions[valueName].jitter.enabled) {
+            jitterValue = this.brushOptions[valueName].jitter.value / 100;
+            valueMax = this.brushOptions[valueName].max;
+            valueMin = this.brushOptions[valueName].min;
+            randomValue = Math.random() * ((value - valueMin) / (valueMax - valueMin));
+            jitterNeg = value * jitterValue * randomValue;
+
+            return value - jitterNeg;
+        }
+
+        return value;
     },
     getMode: function () {
         return "source-over"; // TODO: implement mode selector!

@@ -17,8 +17,6 @@ StrokeManager.prototype = {
         mainCanvas = this.canvas.getProxy();
         brush = this.brushes.getSelected();
         color = this.palette.getColor();
-        this.brushSize = this.brushes.getSize();
-        this.brushOpacity = this.brushes.getOpacity();
         this.mode = this.brushes.getMode();
 
         this.painters = new Painters();
@@ -49,17 +47,20 @@ StrokeManager.prototype = {
             }
         }
 
-        this.painters.paint(x, y, this.brushSize, this.brushOpacity, this.mode);
+        this.painters.paint(x, y, this.brushes.getSize(),
+            this.brushes.getOpacity(), this.mode);
     },
     paint: function (x, y) {
-        this.painters.paint(x, y, this.brushSize, this.brushOpacity, this.mode);
+        this.painters.paint(x, y, this.brushes.getSize(),
+            this.brushes.getOpacity(), this.mode);
 
         // XXX: just a hack to test eraser as it needs some point data to
         // work with
         panels['canvas'].points.push({'x': x, 'y': y});
     },
     end: function (x, y) {
-        this.painters.paint(x, y, this.brushSize, this.brushOpacity, this.mode);
+        this.painters.paint(x, y, this.brushes.getSize(),
+            this.brushes.getOpacity(), this.mode);
 
         // XXX: just a hack to test eraser as it needs some point data to
         // work with
