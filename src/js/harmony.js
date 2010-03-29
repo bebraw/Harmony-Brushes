@@ -13,6 +13,7 @@ var panels = {}
 // note that due JS namespaces i is visible at instance init! -> better use j
 for (j = 0; j < PANELS.length; j++) {
     panelName = PANELS[j];
+
     panel = eval("new " + panelName + "()");
     panels[panelName] = panel;
 

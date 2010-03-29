@@ -16,28 +16,41 @@
         <script type="text/javascript" src="js/lib/jquery-mousecapture.js"></script>
         <script type="text/javascript" src="js/lib/colorpicker.js"></script>
         <script type="text/javascript" src="js/lib/shortcut.js"></script>
-    </head>
-    <body>
-        <div id="pods"></div>
+
+        <script type="text/javascript" src="js/panels/brushes.js"></script>
+        <script type="text/javascript" src="js/panels/canvas.js"></script>
+        <script type="text/javascript" src="js/panels/menu.js"></script>
+        <script type="text/javascript" src="js/panels/modifiers.js"></script>
+        <script type="text/javascript" src="js/panels/palette.js"></script>
+        <script type="text/javascript" src="js/panels/playback.js"></script>
+
+        <script type="text/javascript" src="js/brushes/sketchy.js"></script>
+        <script type="text/javascript" src="js/brushes/shaded.js"></script>
+        <script type="text/javascript" src="js/brushes/chrome.js"></script>
+        <script type="text/javascript" src="js/brushes/fur.js"></script>
+        <script type="text/javascript" src="js/brushes/longfur.js"></script>
+        <script type="text/javascript" src="js/brushes/web.js"></script>
+        <script type="text/javascript" src="js/brushes/simple.js"></script>
+        <script type="text/javascript" src="js/brushes/square.js"></script>
+        <script type="text/javascript" src="js/brushes/ribbon.js"></script>
+        <script type="text/javascript" src="js/brushes/circles.js"></script>
+        <script type="text/javascript" src="js/brushes/squares.js"></script>
+        <script type="text/javascript" src="js/brushes/grid.js"></script>
+        <script type="text/javascript" src="js/brushes/stringy.js"></script>
+        <script type="text/javascript" src="js/brushes/curvy.js"></script>
+        <script type="text/javascript" src="js/brushes/eraser.js"></script>
+
+        <script type="text/javascript" src="js/constraints/horizontal.js"></script>
+        <script type="text/javascript" src="js/constraints/perspective.js"></script>
+        <script type="text/javascript" src="js/constraints/vertical.js"></script>
+
+        <script type="text/javascript" src="js/modifiers/horizontalmirror.js"></script>
+        <script type="text/javascript" src="js/modifiers/radialmirror.js"></script>
+        <script type="text/javascript" src="js/modifiers/verticalmirror.js"></script>
+
+<script type="text/javascript" src="js/brushes/sketchy.js"></script>
+
         <script type="text/javascript">
-        function importScript(url) {
-            // http://www.webmaster-talk.com/javascript-forum/87702-import-javascript-in-javascript.html
-            var tag = document.createElement("script");
-            tag.type="text/javascript";
-            tag.src = url;
-            document.body.appendChild(tag);
-        }
-
-        function importDirectory(files, dir) {
-            for (var i in files) {
-                var name = files[i];
-
-                if(name) {
-                    importScript("js/" + dir + "/" + name + ".js");
-                }
-            }
-        }
-
         var BRUSHES = ["sketchy", "shaded", "chrome", "fur", "longfur", "web",
             "simple", "squares", "ribbon", "circles", "grid", "stringy",
             "curvy", "eraser"];
@@ -45,12 +58,10 @@
         var MODIFIERS = ["horizontalmirror", "verticalmirror", "radialmirror"];
         var PANELS = ["brushes", "canvas", "menu", "modifiers", "palette",
             "playback"];
-
-        importDirectory(BRUSHES, "brushes");
-        importDirectory(CONSTRAINTS, "constraints");
-        importDirectory(MODIFIERS, "modifiers");
-        importDirectory(PANELS, "panels");
         </script>
+    </head>
+    <body>
+        <div id="pods"></div>
         <script type="text/javascript" src="js/utils.js"></script>
         <script type="text/javascript" src="js/constraints.js"></script>
         <script type="text/javascript" src="js/stroke.js"></script>
