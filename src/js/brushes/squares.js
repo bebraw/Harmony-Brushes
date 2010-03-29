@@ -12,7 +12,7 @@ squares.prototype = {
         var b, a, g, e, c;
         b = cursor.current.x - cursor.previous.x;
         a = cursor.current.y - cursor.previous.y;
-        g = 1.57079633;
+        g = Math.PI / 2;
         e = Math.cos(g) * b - Math.sin(g) * a;
         c = Math.sin(g) * b + Math.cos(g) * a;
 
