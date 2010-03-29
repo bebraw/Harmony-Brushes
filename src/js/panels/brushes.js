@@ -131,17 +131,19 @@ brushes.prototype = {
         for (i = 0; i < BRUSHES.length; i++) {
             brushName = BRUSHES[i];
             brushId = brushName; //XXX: use + 'Brush'; to avoid id clashes!
+            brushHeight = 40;
 
             $("#brushes").append('<canvas class="brush" id="' + brushId + '"' +
-                ' style="height:4em;width:' + brushWidth + 'px"' +  '></canvas>');
-            //$('.brush:first').css('border', '2px solid red');
+                ' style="height:' + brushHeight + 'px;width:' + brushWidth +
+                'px"' +  '></canvas>');
+            $('.brush:first').css('border', '1px dashed');
 
             $('#' + brushId).click(function() {
                 panels['brushes'].selected = $(this).attr('id');
 
                 // XXX: render bg as gray instead?
-                //$('.brush').css('border', '');
-                //$(this).css('border', '2px solid red');
+                $('.brush').css('border', '');
+                $(this).css('border', '1px dashed');
                 // XXX: render border in the canvas itself!
             });
         }
