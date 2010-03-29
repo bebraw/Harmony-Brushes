@@ -16,10 +16,10 @@ squares.prototype = {
         e = Math.cos(g) * b - Math.sin(g) * a;
         c = Math.sin(g) * b + Math.cos(g) * a;
 
-        firstCorner = {'x': cursor.previous.x - e, 'y': cursor.previous.y - c};
-        secondCorner = {'x': cursor.previous.x + e, 'y': cursor.previous.y + c};
-        thirdCorner = {'x': cursor.current.x + e, 'y': cursor.current.y + c};
-        fourthCorner = {'x': cursor.current.x - e, 'y': cursor.current.y - c};
+        firstCorner = new Point(cursor.previous.x - e, cursor.previous.y - c);
+        secondCorner = new Point(cursor.previous.x + e, cursor.previous.y + c);
+        thirdCorner = new Point(cursor.current.x + e, cursor.current.y + c);
+        fourthCorner = new Point(cursor.current.x - e, cursor.current.y - c);
 
         canvas.rect(firstCorner, secondCorner, thirdCorner, fourthCorner,
             color, opacity);
