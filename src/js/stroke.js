@@ -33,10 +33,12 @@ StrokeManager.prototype = {
             // XXX: hack for amount
             if('attributes' in modifier) {
                 if('amount' in modifier.attributes) {
+                    brush = $.extend(true, {}, brush); // clone brush!
                     this.painters.add(mainCanvas, brush, color, modifier, modifier.amount);
                 }
             }
             else { // XXX: handle this via addInstance too???
+                brush = $.extend(true, {}, brush); // clone brush!
                 this.painters.add(mainCanvas, brush, color, modifier);
             }
         }
