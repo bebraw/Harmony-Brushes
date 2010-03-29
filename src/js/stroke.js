@@ -41,18 +41,16 @@ StrokeManager.prototype = {
             }
         }
 
-        this.painters.paint(point, this.brushes.getSize(),
-            this.brushes.getOpacity(), this.mode);
+        this.paintTemplate(point);
     },
     paint: function (point) {
-        this.painters.paint(point, this.brushes.getSize(),
-            this.brushes.getOpacity(), this.mode);
-
-        // XXX: just a hack to test eraser as it needs some point data to
-        // work with
-        panels['canvas'].points.push(point);
+        this.paintTemplate(point);
     },
     end: function (point) {
+        this.paintTemplate(point);
+    },
+    paintTemplate: function (point) {
+        // XXX: modify point with jitter now
         this.painters.paint(point, this.brushes.getSize(),
             this.brushes.getOpacity(), this.mode);
 
