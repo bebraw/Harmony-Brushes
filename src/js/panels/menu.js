@@ -17,6 +17,7 @@ menu.prototype = {
         });
 
         // set up menu panel
+        // XXX: figure out how to come up with a nice layout (no extra space)
         $("body").append('<div class="panel" id="menuPanel" title="Menu"> \
             <button id="menuNew">New</button> \
             <button id="menuLoad">Load</button> \
@@ -28,12 +29,10 @@ menu.prototype = {
         $("#menuPanel button").button();
 
         $("#menuPanel").dialog({
-           closeOnEscape: false, resizable: false, width: 230, autoOpen: false
+           closeOnEscape: false, resizable: false, width: 365, height: 60,
+           position: "top", autoOpen: false
         });
 
-        $("#menuPanel").dialog("option", "position", "top");
-        $("#menuPanel").dialog("option", "width", 325);
-        $("#menuPanel").dialog("option", "height", 60);
         $("#menuPanel").bind("dialogclose",
             function(event, ui) {$("#menuPod").css("visibility", "visible");}
         );
