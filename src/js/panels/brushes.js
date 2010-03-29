@@ -51,7 +51,7 @@ brushes.prototype = {
             $("#brushOptions").append('<div style="float:left;">' + optionTitle + ':</div>');
 
             optionId = 'brush' + brushOptionName;
-            if(brushOptionValue) {
+            if('value' in brushOptionValue) {
                 $("#brushOptions").append('<div style="float:right; width: 48%" id="' + optionId + '"></div>');
 
                 $("#" + optionId).slider({
