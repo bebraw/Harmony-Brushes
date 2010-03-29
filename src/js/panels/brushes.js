@@ -7,7 +7,8 @@ function brushes() {
 }
 brushes.prototype = {
     brushOptions: {'size': {'min': 1, 'max': 30, 'value': 1},
-        'opacity': {'min': 0, 'max': 100, 'value': 50}},
+        'opacity': {'min': 0, 'max': 100, 'value': 50},
+        'location': null},
     init: function () {
         this.selected = BRUSHES[0];
     },
@@ -42,78 +43,51 @@ brushes.prototype = {
         );
 
         for (var brushOptionName in this.brushOptions) {
+            brushOptionValue = this.brushOptions[brushOptionName];
+
+            $("#brushOptions").append('<div style="width:100%; margin-top:1em;">');
+
             optionTitle = capitalizeFirstLetter(brushOptionName);
+            $("#brushOptions").append('<div style="float:left;">' + optionTitle + ':</div>');
+
             optionId = 'brush' + brushOptionName;
+            if(brushOptionValue) {
+                $("#brushOptions").append('<div style="float:right; width: 48%" id="' + optionId + '"></div>');
+
+                $("#" + optionId).slider({
+                    range: "max",
+                    min: 0,
+                    max: 100,
+                    value: 0,
+                    slide: function(event, ui) {
+                        // TODO!
+                        //brushesPanel = panels['brushes'];
+
+                        //brushesPanel.brushOpacity = ui.value;
+                        //brushesPanel.renderBrushPreviews();
+                    }
+                });
+            }
+
+            $("#brushOptions").append('<div style="clear:both;"></div>');
+
             jitterToggleId = optionId + 'JitterToggle';
             jitterAmountId = optionId + 'JitterAmount';
-
             $("#brushOptions").append(
-                '<div style="width:100%; margin-top:1em;"> \
-                <div style="float:left;">' + optionTitle + ':' + '</div> \
-                <div style="float:right; width: 48%" id="' + optionId + '"></div> \
-                <div style="clear:both;"></div> \
-                <div class="jitter"> \
+                '<div class="jitter"> \
                     <input type="checkbox" style="float:left;" id="' +
                         jitterToggleId + '" /><label for="' + jitterToggleId +
                         '">Jitter</label> \
                     <div style="float:right; width: 48%; margin-top: 0.5em;" id="' + jitterAmountId + '"></div> \
                 </div> \
                 <div style="clear:both;"></div> \
-                </div> \
                 '
             );
 
-            // TODO
-            brushOptionValues = this.brushOptions[brushOptionName]; // min, max, value
-            /*
-            $("#brushSize").slider({
-                range: "max",
-                min: 1,
-                max: 30,
-                value: panels['brushes'].brushSize,
-                slide: function(event, ui) {
-                    brushesPanel = panels['brushes'];
-
-                    brushesPanel.brushSize = ui.value;
-                    brushesPanel.renderBrushPreviews();
-                }
-            });
-            */
-            $("#" + optionId).slider({
-                range: "max",
-                min: 0,
-                max: 100,
-                value: 0,
-                slide: function(event, ui) {
-                    // TODO!
-                    //brushesPanel = panels['brushes'];
-
-                    //brushesPanel.brushOpacity = ui.value;
-                    //brushesPanel.renderBrushPreviews();
-                }
-            });
+            $("#brushOptions").append('</div>');
 
             this.setUpJitter(jitterToggleId, jitterAmountId);
         }
-
-        // TODO: remove jitter from modifiers!
-
-        // XXX: combine with above
-        $("#brushOptions").append(
-            '<div style="width:100%; margin-top:1em;"> \
-            <div style="float:left">Location:</div> \
-            <div style="clear:both;"></div> \
-            <div class="jitter"> \
-                <input type="checkbox" style="float:left;" id="brushLocationJitterToggle" /> \
-                <label for="brushLocationJitterToggle">Jitter</label> \
-                <div style="float:right; width: 48%; margin-top: 0.5em;" id="brushLocationJitterAmount"></div> \
-            </div> \
-            <div style="clear:both;"></div> \
-            </div> \
-            '
-        );
-        
-        this.setUpJitter("brushLocationJitterToggle", "brushLocationJitterAmount");
 
         this.createBrushes(panelWidth - 45);
     },
