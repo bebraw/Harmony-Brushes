@@ -16,7 +16,7 @@
         <script type="text/javascript" src="js/lib/jquery.js"></script>
         <script type="text/javascript" src="js/lib/jquery-ui.js"></script>
         <script type="text/javascript" src="js/lib/jquery-keycodes.js"></script>
-        <script type="text/javascript" src="js/lib/jquery-mousecapture.js"></script>
+        <script type="text/javascript" src="js/lib/jquery-drag.js"></script>
         <script type="text/javascript" src="js/lib/colorpicker.js"></script>
         <script type="text/javascript" src="js/lib/shortcut.js"></script>
         <script type="text/javascript" src="js/lib/base64.js"></script>
@@ -73,16 +73,18 @@
 
         <script type="text/javascript">
         $(function() {
+            var strokeManager = new StrokeManager();
             var $pageNameInput = $('#pageName');
             var tabCounter = 2;
             
-            // tabs init with a custom tab template and an "add" callback filling in the content
             var $tabs = $('#pages').tabs({
                     tabTemplate: '<li><span class="ui-icon ui-icon-wrench modifyPage">Tools</span><a href="#{href}">#{label}</a><span class="ui-icon ui-icon-close removePage">Remove Page</span></li>',
-                    //add: function(event, ui) {
-                        //var tab_content = $tab_content_input.val() || 'Tab '+tab_counter+' content.';
-                        //$(ui.panel).append('<p>'+tab_content+'</p>');
-                    //}
+                    add: function(event, ui) {
+                        createCanvas(ui.panel.id);
+                    },
+                    select: function(event, ui) {
+                        strokeManager.setActiveCanvas(ui.panel.id + 'Canvas');
+                    }
             });
 
             // modal dialog init: custom buttons and a "close" callback reseting the form inside
@@ -182,35 +184,43 @@
                 $('#exportDialog').dialog('close');
             });
 
-            // create actual canvas
-            $("#page1").append('<div style="overflow:auto;width:' +
-                (window.innerWidth - 40) + 'px;height:' +
-                (window.innerHeight - 110) + 'px;">' +
-                '<canvas id="canvas" width="' +
-                (window.innerWidth - 40) + '" height="' + (window.innerHeight - 115) +
-                '" style="cursor:crosshair"></canvas></div>');
+            createCanvas("page1");
 
-            // initialize canvas as white (XXX: fetch this from canvas settings!)
-            mainCanvas = new ProxyCanvas("canvas");
-            mainCanvas.fill("white");
-            
-            var strokeManager = new StrokeManager();
+            function createCanvas(pageName) {
+                var canvasId = pageName + "Canvas";
+
+                $("#" + pageName).append('<div style="overflow:auto;width:' +
+                    (window.innerWidth - 40) + 'px;height:' +
+                    (window.innerHeight - 110) + 'px;">' +
+                    '<canvas id="' + canvasId + '" width="' +
+                    (window.innerWidth - 40) + '" height="' +
+                    (window.innerHeight - 115) +
+                    '" style="cursor:crosshair"' +
+                    ' class="pageCanvas"></canvas></div>'
+                );
+
+                // initialize canvas as white (XXX: fetch this from canvas settings!)
+                mainCanvas = new ProxyCanvas(canvasId);
+                mainCanvas.fill("white");
+
+                strokeManager.setActiveCanvas(canvasId);
+            }
+
+            $('.pageCanvas').live('dragstart', function(e) {
+                strokeManager.start(getMouseLocationOnCanvas(e));
+            });
+
+            $('.pageCanvas').live('drag', function(e) {
+                strokeManager.paint(getMouseLocationOnCanvas(e));
+            });
+
+            $('.pageCanvas').live('dragend', function(e) {
+                strokeManager.end(getMouseLocationOnCanvas(e));
+            });
 
             function getMouseLocationOnCanvas(e) {
                 return new Point(e.layerX, e.layerY);
             }
-
-            $("#canvas").mousecapture({
-                "down": function(e, s) {
-                    strokeManager.start(getMouseLocationOnCanvas(e));
-                },
-                "move": function(e, s) {
-                    strokeManager.paint(getMouseLocationOnCanvas(e));
-                },
-                "up": function(e, s) {
-                    strokeManager.paint(getMouseLocationOnCanvas(e));
-                }
-            });
         });
         </script>
     </head>

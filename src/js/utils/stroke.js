@@ -9,7 +9,7 @@ StrokeManager.prototype = {
     init: function () {},
     destroy: function () {},
     start: function (point) {
-        mainCanvas = panels['canvas'].getProxy();
+        mainCanvas = new ProxyCanvas(this.activeCanvasId);
         brush = panels['brushes'].getSelected();
         color = panels['palette'].getColor();
         this.mode = panels['brushes'].getMode();
@@ -55,5 +55,8 @@ StrokeManager.prototype = {
         // XXX: just a hack to test eraser as it needs some point data to
         // work with
         panels['canvas'].points.push(point);
+    },
+    setActiveCanvas: function (canvasId) {
+        this.activeCanvasId = canvasId;
     }
 }

@@ -55,8 +55,5 @@ canvas.prototype = {
             $("#canvasPod").css("visibility", "visible");
         });
     },
-    destroy: function () {},
-    getProxy: function () {
-        return new ProxyCanvas("canvas");
-    }
+    destroy: function () {}
 }
