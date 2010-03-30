@@ -32,11 +32,11 @@ body {
     width: 95%;
 }
 
-#documents {
+#pages {
     margin-top: 1em;
 }
 
-#documents li .ui-icon-close, #documents li .ui-icon-wrench {
+.modifyPage, .removePage {
     float: left;
     margin: 0.4em 0.2em 0 0;
 }

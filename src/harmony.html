@@ -65,8 +65,8 @@
             var tabCounter = 2;
             
             // tabs init with a custom tab template and an "add" callback filling in the content
-            var $tabs = $('#documents').tabs({
-                    tabTemplate: '<li><span class="ui-icon ui-icon-wrench modifyDocument">Modify Document</span><a href="#{href}">#{label}</a><span class="ui-icon ui-icon-close removeDocument">Remove Document</span></li>',
+            var $tabs = $('#pages').tabs({
+                    tabTemplate: '<li><span class="ui-icon ui-icon-wrench modifyPage">Modify Page</span><a href="#{href}">#{label}</a><span class="ui-icon ui-icon-close removePage">Remove Page</span></li>',
                     //add: function(event, ui) {
                         //var tab_content = $tab_content_input.val() || 'Tab '+tab_counter+' content.';
                         //$(ui.panel).append('<p>'+tab_content+'</p>');
@@ -104,7 +104,7 @@
             // actual addTab function: adds new tab using the title input from the form above
             function newTab() {
                     var tab_title = $tab_title_input.val() || 'Tab ' + tabCounter;
-                    $tabs.tabs('add', '#documents-' + tabCounter, tab_title);
+                    $tabs.tabs('add', '#pages-' + tabCounter, tab_title);
                     tabCounter++;
             }
 
@@ -121,7 +121,7 @@
             });
 
             // close icon: gives confirmation and removes tab on accept
-            $('.removeDocument').live('click', function() {
+            $('.removePage').live('click', function() {
                 // XXX: give dialog -> get answer -> if yes, remove
                 //var index = $('li',$tabs).index($(this).parent());
                 //$tabs.tabs('remove', index);
@@ -158,15 +158,15 @@
             
             <span class="ui-icon ui-icon-help" id="about">About</span>
         </div>
-        <div id="documents">
+        <div id="pages">
             <ul>
                 <li>
-                    <span class="ui-icon ui-icon-wrench modifyDocument">Modify Document</span>
-                    <a href="#document1">Document</a>
-                    <span class="ui-icon ui-icon-close removeDocument">Remove Document</span>
+                    <span class="ui-icon ui-icon-wrench modifyPage">Modify Page</span>
+                    <a href="#page1">Page</a>
+                    <span class="ui-icon ui-icon-close removePage">Remove Page</span>
                 </li>
             </ul>
-            <div id="document1"></div>
+            <div id="page1"></div>
         </div>
 
         <div id="newTabDialog" title="New Sketch">

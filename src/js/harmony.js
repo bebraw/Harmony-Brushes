@@ -5,7 +5,7 @@
 var constraints = new Constraints();
 
 // create actual canvas
-$("#document1").append('<div style="overflow:auto;width:' +
+$("#page1").append('<div style="overflow:auto;width:' +
         (window.innerWidth - 40) + 'px;height:' +
         (window.innerHeight - 110) + 'px;">' +
     '<canvas id="canvas" width="' +
