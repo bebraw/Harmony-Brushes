@@ -132,13 +132,13 @@
                 height: 140, modal: true, autoOpen: false
             });
 
+            // TODO: make it possible to modify name, bg color etc. as well
             $('.modifyPage').live('click', function() {
-                console.log('modify page');
                 $('#modifyPageDialog').dialog('open');
             });
 
             $("#modifyPageDialog").dialog({
-                height: 150, modal: true, autoOpen: false
+                height: 120, modal: true, autoOpen: false
             });
 
             var index = null;
@@ -243,16 +243,8 @@
 	</div>
 
         <div id="modifyPageDialog" title="Tools">
-            <div class="options">
-                <form>
-                    <fieldset class="ui-helper-reset">
-                        <label for="pageName">Name</label>
-                        <input type="text" name="pageName" id="pageName" value="" class="ui-widget-content ui-corner-all" />
-                    </fieldset>
-                </form>
-            </div>
             <div id="export">
-                <div id="exportFormats" style="margin-bottom:1em">
+                <div id="exportFormats">
                     <input type="radio" id="jpgFormat" name="radio" checked="checked" value="jpg" /><label for="jpgFormat">JPG</label>
                     <input type="radio" id="pngFormat" name="radio" value="png" /><label for="pngFormat">PNG</label>
                     <input type="radio" id="bmpFormat" name="radio" value="bmp" /><label for="bmpFormat">BMP</label>

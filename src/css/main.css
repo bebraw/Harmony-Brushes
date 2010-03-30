@@ -51,6 +51,6 @@ body {
     margin-right: 1em;
 }
 
-#modifyPageDialog div {
+#modifyPageDialog div, #exportFormats {
     margin-bottom: 1em;
 }
