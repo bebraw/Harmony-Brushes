@@ -73,12 +73,12 @@
 
         <script type="text/javascript">
         $(function() {
-            var $tab_title_input = $('#tabName');
+            var $pageNameInput = $('#pageName');
             var tabCounter = 2;
             
             // tabs init with a custom tab template and an "add" callback filling in the content
             var $tabs = $('#pages').tabs({
-                    tabTemplate: '<li><span class="ui-icon ui-icon-wrench modifyPage">Modify Page</span><a href="#{href}">#{label}</a><span class="ui-icon ui-icon-close removePage">Remove Page</span></li>',
+                    tabTemplate: '<li><span class="ui-icon ui-icon-wrench modifyPage">Tools</span><a href="#{href}">#{label}</a><span class="ui-icon ui-icon-close removePage">Remove Page</span></li>',
                     //add: function(event, ui) {
                         //var tab_content = $tab_content_input.val() || 'Tab '+tab_counter+' content.';
                         //$(ui.panel).append('<p>'+tab_content+'</p>');
@@ -86,7 +86,7 @@
             });
 
             // modal dialog init: custom buttons and a "close" callback reseting the form inside
-            var $newTabDialog = $('#newTabDialog').dialog({
+            var $newPageDialog = $('#newPageDialog').dialog({
                 autoOpen: false,
                 modal: true,
                 buttons: {
@@ -99,7 +99,7 @@
                         }
                 },
                 open: function() {
-                        $tab_title_input.focus();
+                        $pageNameInput.focus();
                 },
                 close: function() {
                         $form[0].reset();
@@ -107,21 +107,21 @@
             });
 
             // addTab form: calls addTab function on submit and closes the dialog
-            var $form = $('form', $newTabDialog).submit(function() {
+            var $form = $('form', $newPageDialog).submit(function() {
                     newTab();
-                    $newTabDialog.dialog('close');
+                    $newPageDialog.dialog('close');
                     return false;
             });
 
             // actual addTab function: adds new tab using the title input from the form above
             function newTab() {
-                    var tab_title = $tab_title_input.val() || 'Tab ' + tabCounter;
+                    var tab_title = $pageNameInput.val() || 'Tab ' + tabCounter;
                     $tabs.tabs('add', '#pages-' + tabCounter, tab_title);
                     tabCounter++;
             }
 
             $('#addNew').click(function() {
-                $newTabDialog.dialog('open');
+                $newPageDialog.dialog('open');
             });
 
             $('#about').click(function() {
@@ -134,6 +134,11 @@
 
             $('.modifyPage').live('click', function() {
                 console.log('modify page');
+                $('#modifyPageDialog').dialog('open');
+            });
+
+            $("#modifyPageDialog").dialog({
+                height: 150, modal: true, autoOpen: false
             });
 
             var index = null;
@@ -157,6 +162,23 @@
                         $(this).dialog('close');
                     }
                 }
+            });
+
+            // export logic
+            $('#exportImage').click(function() {
+                $('#exportDialog').dialog('open');
+            });
+
+            $("#exportFormats").buttonset();
+            $("#exportButton").button();
+
+            $('#exportButton').click(function() {
+                selectedFormat = $('#exportFormats input:checked').val();
+
+                canvas = panels['canvas'].getProxy();
+                canvas.saveAs(selectedFormat);
+
+                $('#exportDialog').dialog('close');
             });
 
             // create actual canvas
@@ -203,7 +225,7 @@
         <div id="pages">
             <ul>
                 <li>
-                    <span class="ui-icon ui-icon-wrench modifyPage">Modify Page</span>
+                    <span class="ui-icon ui-icon-wrench modifyPage">Tools</span>
                     <a href="#page1">Page</a>
                     <span class="ui-icon ui-icon-close removePage">Remove Page</span>
                 </li>
@@ -211,13 +233,32 @@
             <div id="page1"></div>
         </div>
 
-        <div id="newTabDialog" title="New Sketch">
+        <div id="newPageDialog" title="New Page">
             <form>
                 <fieldset class="ui-helper-reset">
-                    <label for="tabName">Name</label>
-                    <input type="text" name="tabName" id="tabName" value="" class="ui-widget-content ui-corner-all" />
+                    <label for="pageName">Name</label>
+                    <input type="text" name="pageName" id="pageName" value="" class="ui-widget-content ui-corner-all" />
                 </fieldset>
             </form>
+	</div>
+
+        <div id="modifyPageDialog" title="Tools">
+            <div class="options">
+                <form>
+                    <fieldset class="ui-helper-reset">
+                        <label for="pageName">Name</label>
+                        <input type="text" name="pageName" id="pageName" value="" class="ui-widget-content ui-corner-all" />
+                    </fieldset>
+                </form>
+            </div>
+            <div id="export">
+                <div id="exportFormats" style="margin-bottom:1em">
+                    <input type="radio" id="jpgFormat" name="radio" checked="checked" value="jpg" /><label for="jpgFormat">JPG</label>
+                    <input type="radio" id="pngFormat" name="radio" value="png" /><label for="pngFormat">PNG</label>
+                    <input type="radio" id="bmpFormat" name="radio" value="bmp" /><label for="bmpFormat">BMP</label>
+                </div>
+                <button id="exportButton">Export</button>
+            </div>
 	</div>
 
         <div id="aboutDialog" title="About">

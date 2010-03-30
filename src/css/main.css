@@ -50,3 +50,7 @@ body {
     float: right;
     margin-right: 1em;
 }
+
+#modifyPageDialog div {
+    margin-bottom: 1em;
+}
