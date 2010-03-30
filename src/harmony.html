@@ -113,8 +113,11 @@
             });
 
             $('#about').click(function() {
-                console.log('about');
-                //$dialog.dialog('open');
+                $('#aboutDialog').dialog('open');
+            });
+
+            $("#aboutDialog").dialog({
+                height: 140, modal: true, autoOpen: false
             });
 
             // close icon: gives confirmation and removes tab on accept
@@ -153,6 +156,16 @@
                 </fieldset>
             </form>
 	</div>
+
+        <div id="aboutDialog" title="About">
+            <p>Harmony v. 0.3</p>
+            <p>
+                <a href="http://mrdoob.com/blog/post/689" target="_blank">The original system</a>
+            </p>
+            <p>
+                <a href="http://github.com/bebraw/Harmony-Brushes" target="_blank">Source</a>
+            </p>
+        </div>
 
         <script type="text/javascript" src="js/utils.js"></script>
         <script type="text/javascript" src="js/constraints.js"></script>
