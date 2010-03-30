@@ -61,6 +61,9 @@
         var PANELS = ["brushes", "canvas", "modifiers", "palette", "playback"];
 
         $(function() {
+            var $tab_title_input = $('#tabName');
+            var tabCounter = 2;
+            
             // tabs init with a custom tab template and an "add" callback filling in the content
             var $tabs = $('#documents').tabs({
                     tabTemplate: '<li><a href="#{href}">#{label}</a> <span class="ui-icon ui-icon-close">Remove</span></li>',
@@ -70,10 +73,44 @@
                     //}
             });
 
+            // modal dialog init: custom buttons and a "close" callback reseting the form inside
+            var $newTabDialog = $('#newTabDialog').dialog({
+                autoOpen: false,
+                modal: true,
+                buttons: {
+                        'New': function() {
+                                newTab();
+                                $(this).dialog('close');
+                        },
+                        'Cancel': function() {
+                                $(this).dialog('close');
+                        }
+                },
+                open: function() {
+                        $tab_title_input.focus();
+                },
+                close: function() {
+                        $form[0].reset();
+                }
+            });
+
+            // addTab form: calls addTab function on submit and closes the dialog
+            var $form = $('form', $newTabDialog).submit(function() {
+                    newTab();
+                    $newTabDialog.dialog('close');
+                    return false;
+            });
+
+            // actual addTab function: adds new tab using the title input from the form above
+            function newTab() {
+                    var tab_title = $tab_title_input.val() || 'Tab ' + tabCounter;
+                    $tabs.tabs('add', '#documents-' + tabCounter, tab_title);
+                    tabCounter++;
+            }
 
             $('#addNew').click(function() {
                 console.log('add new');
-                //$dialog.dialog('open');
+                $newTabDialog.dialog('open');
             });
 
             $('#about').click(function() {
@@ -81,9 +118,9 @@
                 //$dialog.dialog('open');
             });
 
-            // close icon: removing the tab on click
-            // note: closable tabs gonna be an option in the future - see http://dev.jqueryui.com/ticket/3924
+            // close icon: gives confirmation and removes tab on accept
             $('#documents span.ui-icon-close').live('click', function() {
+                // XXX: give dialog -> get answer -> if yes, remove
                 var index = $('li',$tabs).index($(this).parent());
                 $tabs.tabs('remove', index);
             });
@@ -92,20 +129,26 @@
     </head>
     <body>
         <div id="header" style="height:2em">
-            <div id="pods"></div>
+            <div id="pods"><span class="ui-icon ui-icon-plusthick" id="addNew">New</span></div>
+            
             <span class="ui-icon ui-icon-help" id="about">About</span>
         </div>
         <div id="documents">
             <ul>
                 <li><span class="ui-icon ui-icon-wrench">Modify Document</span><a href="#document1">Wizard</a><span class="ui-icon ui-icon-close">Remove Document</span></li>
-                <li><span class="ui-icon ui-icon-wrench">Modify Document</span><a href="#document2">Orc</a><span class="ui-icon ui-icon-close">Remove Document</span></li>
-                <li><span class="ui-icon ui-icon-wrench">Modify Document</span><a href="#document3">Goblin</a><span class="ui-icon ui-icon-close">Remove Document</span></li>
-                <li><span class="ui-icon ui-icon-plusthick" id="addNew">New</span></li>
             </ul>
             <div id="document1"></div>
-            <div id="document2"></div>
-            <div id="document3"></div>
         </div>
+
+        <div id="newTabDialog" title="New Sketch">
+            <form>
+                <fieldset class="ui-helper-reset">
+                    <label for="tabName">Name</label>
+                    <input type="text" name="tabName" id="tabName" value="" class="ui-widget-content ui-corner-all" />
+                </fieldset>
+            </form>
+	</div>
+
         <script type="text/javascript" src="js/utils.js"></script>
         <script type="text/javascript" src="js/constraints.js"></script>
         <script type="text/javascript" src="js/stroke.js"></script>

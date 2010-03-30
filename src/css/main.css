@@ -41,7 +41,12 @@ body {
     margin: 0.4em 0.2em 0 0;
 }
 
+#addNew {
+    float: right;
+    margin-right: 1em;
+}
+
 #about {
-    float:right;
-    margin-right:1em;
+    float: right;
+    margin-right: 1em;
 }

@@ -12,13 +12,6 @@ $("#document1").append('<div style="overflow:auto;width:' +
     (window.innerWidth - 40) + '" height="' + (window.innerHeight - 115) +
     '" style="cursor:crosshair"></canvas></div>');
 
-$("#document2").append('<div style="overflow:auto;width:' +
-        (window.innerWidth - 40) + 'px;height:' +
-        (window.innerHeight - 110) + 'px;">' +
-    '<canvas id="canvas" width="' +
-    (window.innerWidth - 40) + '" height="' + (window.innerHeight - 115) +
-    '" style="cursor:crosshair"></canvas></div>');
-
 // initialize canvas as white (XXX: fetch this from canvas settings!)
 mainCanvas = new ProxyCanvas("canvas");
 mainCanvas.fill("white");
