@@ -2,22 +2,17 @@
  * http://www.opensource.org/licenses/mit-license.php
  * Copyright (c) 2010 Mr.doob, rhyolight, bebraw
  */
-function StrokeManager(modifiers, canvas, brushes, palette) {
-    this.init(modifiers, canvas, brushes, palette);
+function StrokeManager() {
+    this.init();
 }
 StrokeManager.prototype = {
-    init: function (modifiers, canvas, brushes, palette) {
-        this.modifiers = modifiers;
-        this.canvas = canvas;
-        this.brushes = brushes;
-        this.palette = palette;
-    },
+    init: function () {},
     destroy: function () {},
     start: function (point) {
-        mainCanvas = this.canvas.getProxy();
-        brush = this.brushes.getSelected();
-        color = this.palette.getColor();
-        this.mode = this.brushes.getMode();
+        mainCanvas = panels['canvas'].getProxy();
+        brush = panels['brushes'].getSelected();
+        color = panels['palette'].getColor();
+        this.mode = panels['brushes'].getMode();
 
         this.painters = new Painters();
 
@@ -53,9 +48,9 @@ StrokeManager.prototype = {
         this.paintTemplate(point);
     },
     paintTemplate: function (point) {
-        point = this.brushes.applyJitter(point);
-        this.painters.paint(point, this.brushes.getSize(),
-            this.brushes.getOpacity(), this.mode);
+        point = panels['brushes'].applyJitter(point);
+        this.painters.paint(point, panels['brushes'].getSize(),
+            panels['brushes'].getOpacity(), this.mode);
 
         // XXX: just a hack to test eraser as it needs some point data to
         // work with

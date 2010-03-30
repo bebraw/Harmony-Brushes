@@ -54,6 +54,8 @@
         <script type="text/javascript" src="js/utils/math.js"></script>
         <script type="text/javascript" src="js/utils/string.js"></script>
 
+        <script type="text/javascript" src="js/stroke.js"></script>
+
         <script type="text/javascript">
         var BRUSHES = ["sketchy", "shaded", "chrome", "fur", "longfur", "web",
             "simple", "squares", "ribbon", "circles", "grid", "stringy",
@@ -149,6 +151,35 @@
                 }
             });
 
+            // create actual canvas
+            $("#page1").append('<div style="overflow:auto;width:' +
+                (window.innerWidth - 40) + 'px;height:' +
+                (window.innerHeight - 110) + 'px;">' +
+                '<canvas id="canvas" width="' +
+                (window.innerWidth - 40) + '" height="' + (window.innerHeight - 115) +
+                '" style="cursor:crosshair"></canvas></div>');
+
+            // initialize canvas as white (XXX: fetch this from canvas settings!)
+            mainCanvas = new ProxyCanvas("canvas");
+            mainCanvas.fill("white");
+            
+            var strokeManager = new StrokeManager();
+
+            function getMouseLocationOnCanvas(e) {
+                return new Point(e.layerX, e.layerY);
+            }
+
+            $("#canvas").mousecapture({
+                "down": function(e, s) {
+                    strokeManager.start(getMouseLocationOnCanvas(e));
+                },
+                "move": function(e, s) {
+                    strokeManager.paint(getMouseLocationOnCanvas(e));
+                },
+                "up": function(e, s) {
+                    strokeManager.paint(getMouseLocationOnCanvas(e));
+                }
+            });
         });
         </script>
     </head>
@@ -199,7 +230,6 @@
 
         <script type="text/javascript" src="js/utils/ui.js"></script>
         <script type="text/javascript" src="js/constraints.js"></script>
-        <script type="text/javascript" src="js/stroke.js"></script>
         <script type="text/javascript" src="js/painter.js"></script>
         <script type="text/javascript" src="js/harmony.js"></script>    
     </body>
