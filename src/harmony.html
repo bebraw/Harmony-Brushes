@@ -66,7 +66,7 @@
             
             // tabs init with a custom tab template and an "add" callback filling in the content
             var $tabs = $('#documents').tabs({
-                    tabTemplate: '<li><a href="#{href}">#{label}</a> <span class="ui-icon ui-icon-close">Remove</span></li>',
+                    tabTemplate: '<li><span class="ui-icon ui-icon-wrench">Modify Document</span><a href="#{href}">#{label}</a><span class="ui-icon ui-icon-close">Remove Document</span></li>',
                     //add: function(event, ui) {
                         //var tab_content = $tab_content_input.val() || 'Tab '+tab_counter+' content.';
                         //$(ui.panel).append('<p>'+tab_content+'</p>');
@@ -109,7 +109,6 @@
             }
 
             $('#addNew').click(function() {
-                console.log('add new');
                 $newTabDialog.dialog('open');
             });
 
@@ -135,7 +134,7 @@
         </div>
         <div id="documents">
             <ul>
-                <li><span class="ui-icon ui-icon-wrench">Modify Document</span><a href="#document1">Wizard</a><span class="ui-icon ui-icon-close">Remove Document</span></li>
+                <li><span class="ui-icon ui-icon-wrench">Modify Document</span><a href="#document1">Document</a><span class="ui-icon ui-icon-close">Remove Document</span></li>
             </ul>
             <div id="document1"></div>
         </div>
