@@ -23,6 +23,7 @@ Currently it provides following extra functionality:
 - mirroring (horizontal, vertical, radial)
 - additional brush options (size, alpha, jitter)
 - brush preview
+- support for multiple pages
 
 You can find more information about Harmony at http://mrdoob.com/blog/post/689.
 
