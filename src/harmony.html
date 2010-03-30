@@ -120,12 +120,9 @@
                 height: 140, modal: true, autoOpen: false
             });
 
-            // close icon: gives confirmation and removes tab on accept
+            var index = null;
             $('.removePage').live('click', function() {
-                // XXX: give dialog -> get answer -> if yes, remove
-                //var index = $('li',$tabs).index($(this).parent());
-                //$tabs.tabs('remove', index);
-                console.log('remove doc');
+                index = $('li',$tabs).index($(this).parent());
 
                 $('#deleteConfirmDialog').dialog('open');
             });
@@ -137,8 +134,7 @@
                 modal: true,
                 buttons: {
                     'Delete page': function() {
-                        //var index = $('li', $tabs).index($(this).parent()); // XXX: figure out how to pass index here
-                        //$tabs.tabs('remove', index);
+                        $tabs.tabs('remove', index);
                         $(this).dialog('close');
                     },
                     Cancel: function() {
