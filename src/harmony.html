@@ -5,11 +5,14 @@
 <html lang="en">
     <head>
         <title>Harmony</title>
+        
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
+
         <link rel="stylesheet" type="text/css" href="css/ui-darkness/jquery-ui-1.8.custom.css" />
         <link rel="stylesheet" type="text/css" href="css/main.css">
         <link rel="stylesheet" type="text/css" href="css/colorpicker.css">
+
         <script type="text/javascript" src="js/lib/jquery.js"></script>
         <script type="text/javascript" src="js/lib/jquery-ui.js"></script>
         <script type="text/javascript" src="js/lib/jquery-keycodes.js"></script>
@@ -66,7 +69,9 @@
         var CONSTRAINTS = ["horizontal", "perspective", "vertical"];
         var MODIFIERS = ["horizontalmirror", "verticalmirror", "radialmirror"];
         var PANELS = ["brushes", "canvas", "modifiers", "palette", "playback"];
+        </script>
 
+        <script type="text/javascript">
         $(function() {
             var $tab_title_input = $('#tabName');
             var tabCounter = 2;
@@ -194,6 +199,7 @@
             
             <span class="ui-icon ui-icon-help" id="about">About</span>
         </div>
+        
         <div id="pages">
             <ul>
                 <li>
