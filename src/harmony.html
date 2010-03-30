@@ -66,7 +66,7 @@
             
             // tabs init with a custom tab template and an "add" callback filling in the content
             var $tabs = $('#documents').tabs({
-                    tabTemplate: '<li><span class="ui-icon ui-icon-wrench">Modify Document</span><a href="#{href}">#{label}</a><span class="ui-icon ui-icon-close">Remove Document</span></li>',
+                    tabTemplate: '<li><span class="ui-icon ui-icon-wrench modifyDocument">Modify Document</span><a href="#{href}">#{label}</a><span class="ui-icon ui-icon-close removeDocument">Remove Document</span></li>',
                     //add: function(event, ui) {
                         //var tab_content = $tab_content_input.val() || 'Tab '+tab_counter+' content.';
                         //$(ui.panel).append('<p>'+tab_content+'</p>');
@@ -121,11 +121,32 @@
             });
 
             // close icon: gives confirmation and removes tab on accept
-            $('#documents span.ui-icon-close').live('click', function() {
+            $('.removeDocument').live('click', function() {
                 // XXX: give dialog -> get answer -> if yes, remove
-                var index = $('li',$tabs).index($(this).parent());
-                $tabs.tabs('remove', index);
+                //var index = $('li',$tabs).index($(this).parent());
+                //$tabs.tabs('remove', index);
+                console.log('remove doc');
+
+                $('#deleteConfirmDialog').dialog('open');
             });
+
+            $("#deleteConfirmDialog").dialog({
+                autoOpen: false,
+                resizable: false,
+                height:150,
+                modal: true,
+                buttons: {
+                    'Delete page': function() {
+                        //var index = $('li', $tabs).index($(this).parent()); // XXX: figure out how to pass index here
+                        //$tabs.tabs('remove', index);
+                        $(this).dialog('close');
+                    },
+                    Cancel: function() {
+                        $(this).dialog('close');
+                    }
+                }
+            });
+
         });
         </script>
     </head>
@@ -140,9 +161,9 @@
         <div id="documents">
             <ul>
                 <li>
-                    <span class="ui-icon ui-icon-wrench">Modify Document</span>
+                    <span class="ui-icon ui-icon-wrench modifyDocument">Modify Document</span>
                     <a href="#document1">Document</a>
-                    <span class="ui-icon ui-icon-close">Remove Document</span>
+                    <span class="ui-icon ui-icon-close removeDocument">Remove Document</span>
                 </li>
             </ul>
             <div id="document1"></div>
@@ -166,6 +187,14 @@
                 <a href="http://github.com/bebraw/Harmony-Brushes" target="_blank">Source</a>
             </p>
         </div>
+
+        <div id="deleteConfirmDialog" title="Delete page?">
+            <p>
+                <span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>
+                    The page will be deleted permanently and cannot be recovered. Are you sure?
+            </p>
+        </div>
+
 
         <script type="text/javascript" src="js/utils.js"></script>
         <script type="text/javascript" src="js/constraints.js"></script>
