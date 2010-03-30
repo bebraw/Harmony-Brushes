@@ -5,9 +5,19 @@
 var constraints = new Constraints();
 
 // create actual canvas
-$("body").append('<canvas id="canvas" width="' +
-    window.innerWidth + '" height="' + window.innerHeight +
-    '" style="cursor:crosshair"></canvas>');
+$("#document1").append('<div style="overflow:auto;width:' +
+        (window.innerWidth - 40) + 'px;height:' +
+        (window.innerHeight - 110) + 'px;">' +
+    '<canvas id="canvas" width="' +
+    (window.innerWidth - 40) + '" height="' + (window.innerHeight - 115) +
+    '" style="cursor:crosshair"></canvas></div>');
+
+$("#document2").append('<div style="overflow:auto;width:' +
+        (window.innerWidth - 40) + 'px;height:' +
+        (window.innerHeight - 110) + 'px;">' +
+    '<canvas id="canvas" width="' +
+    (window.innerWidth - 40) + '" height="' + (window.innerHeight - 115) +
+    '" style="cursor:crosshair"></canvas></div>');
 
 // initialize canvas as white (XXX: fetch this from canvas settings!)
 mainCanvas = new ProxyCanvas("canvas");
@@ -45,14 +55,18 @@ for (panelName in panels) {
 var strokeManager = new StrokeManager(panels['modifiers'], panels['canvas'],
     panels['brushes'], panels['palette']);
 
+function getMouseLocationOnCanvas(e) {
+    return new Point(e.layerX, e.layerY);
+}
+
 $("#canvas").mousecapture({
     "down": function(e, s) {
-        strokeManager.start(new Point(e.pageX, e.pageY));
+        strokeManager.start(getMouseLocationOnCanvas(e));
     },
     "move": function(e, s) {
-        strokeManager.paint(new Point(e.pageX, e.pageY));
+        strokeManager.paint(getMouseLocationOnCanvas(e));
     },
     "up": function(e, s) {
-        strokeManager.paint(new Point(e.pageX, e.pageY));
+        strokeManager.paint(getMouseLocationOnCanvas(e));
     }
 });

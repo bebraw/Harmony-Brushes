@@ -58,12 +58,54 @@
             "curvy", "eraser"];
         var CONSTRAINTS = ["horizontal", "perspective", "vertical"];
         var MODIFIERS = ["horizontalmirror", "verticalmirror", "radialmirror"];
-        var PANELS = ["brushes", "canvas", "menu", "modifiers", "palette",
-            "playback"];
+        var PANELS = ["brushes", "canvas", "modifiers", "palette", "playback"];
+
+        $(function() {
+            // tabs init with a custom tab template and an "add" callback filling in the content
+            var $tabs = $('#documents').tabs({
+                    tabTemplate: '<li><a href="#{href}">#{label}</a> <span class="ui-icon ui-icon-close">Remove</span></li>',
+                    //add: function(event, ui) {
+                        //var tab_content = $tab_content_input.val() || 'Tab '+tab_counter+' content.';
+                        //$(ui.panel).append('<p>'+tab_content+'</p>');
+                    //}
+            });
+
+
+            $('#addNew').click(function() {
+                console.log('add new');
+                //$dialog.dialog('open');
+            });
+
+            $('#about').click(function() {
+                console.log('about');
+                //$dialog.dialog('open');
+            });
+
+            // close icon: removing the tab on click
+            // note: closable tabs gonna be an option in the future - see http://dev.jqueryui.com/ticket/3924
+            $('#documents span.ui-icon-close').live('click', function() {
+                var index = $('li',$tabs).index($(this).parent());
+                $tabs.tabs('remove', index);
+            });
+        });
         </script>
     </head>
     <body>
-        <div id="pods"></div>
+        <div id="header" style="height:2em">
+            <div id="pods"></div>
+            <span class="ui-icon ui-icon-help" id="about">About</span>
+        </div>
+        <div id="documents">
+            <ul>
+                <li><span class="ui-icon ui-icon-wrench">Modify Document</span><a href="#document1">Wizard</a><span class="ui-icon ui-icon-close">Remove Document</span></li>
+                <li><span class="ui-icon ui-icon-wrench">Modify Document</span><a href="#document2">Orc</a><span class="ui-icon ui-icon-close">Remove Document</span></li>
+                <li><span class="ui-icon ui-icon-wrench">Modify Document</span><a href="#document3">Goblin</a><span class="ui-icon ui-icon-close">Remove Document</span></li>
+                <li><span class="ui-icon ui-icon-plusthick" id="addNew">New</span></li>
+            </ul>
+            <div id="document1"></div>
+            <div id="document2"></div>
+            <div id="document3"></div>
+        </div>
         <script type="text/javascript" src="js/utils.js"></script>
         <script type="text/javascript" src="js/constraints.js"></script>
         <script type="text/javascript" src="js/stroke.js"></script>

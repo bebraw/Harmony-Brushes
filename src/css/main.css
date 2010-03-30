@@ -13,19 +13,35 @@ button {
 body {
     margin: 0px;
     overflow: hidden;
-}
-
-.colorwell {
-    border: 2px solid #fff;
-    width: 6em;
-    text-align: center;
-    cursor: pointer;
-}
-body .colorwell-selected {
-    border: 2px solid #000;
-    font-weight: bold;
+    background: black;
 }
 
 #pods {
     position: absolute;
+}
+
+#dialog label, #dialog input {
+    display:block;
+}
+
+#dialog label {
+    margin-top: 0.5em;
+}
+
+#dialog input, #dialog textarea {
+    width: 95%;
+}
+
+#documents {
+    margin-top: 1em;
+}
+
+#documents li .ui-icon-close, #documents li .ui-icon-wrench {
+    float: left;
+    margin: 0.4em 0.2em 0 0;
+}
+
+#about {
+    float:right;
+    margin-right:1em;
 }
