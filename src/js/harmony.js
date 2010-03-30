@@ -9,6 +9,10 @@ $("body").append('<canvas id="canvas" width="' +
     window.innerWidth + '" height="' + window.innerHeight +
     '" style="cursor:crosshair"></canvas>');
 
+// initialize canvas as white (XXX: fetch this from canvas settings!)
+mainCanvas = new ProxyCanvas("canvas");
+mainCanvas.fill("white");
+
 var panels = {}
 // note that due JS namespaces i is visible at instance init! -> better use j
 for (j = 0; j < PANELS.length; j++) {

@@ -21,12 +21,14 @@ canvas.prototype = {
 
         // set up background panel
         $("body").append('<div class="panel" id="canvasPanel" title="Canvas"> \
-            <div id="canvasOptions"> \
-            <input type="radio" id="solidCanvas" name="radio" checked="checked" /><label for="solidCanvas">Solid</label> \
-            <input type="radio" id="gradientCanvas" name="radio" /><label for="gradientCanvas">Gradient</label> \
-            <input type="radio" id="textureCanvas" name="radio" /><label for="textureCanvas">Texture</label> \
-            </div> \
-            <div id="solidColorSelector"><div></div></div> \
+                <div id="canvasOptions"> \
+                    <input type="radio" id="solidCanvas" name="radio" checked="checked" /><label for="solidCanvas">Solid</label> \
+                    <input type="radio" id="gradientCanvas" name="radio" /><label for="gradientCanvas">Gradient</label> \
+                    <input type="radio" id="textureCanvas" name="radio" /><label for="textureCanvas">Texture</label> \
+                </div> \
+                <div id="solidColorSelector">\
+                    <div></div>\
+                </div> \
             </div>');
 
         $("#canvasOptions").css("margin-bottom", "0.5em");
@@ -71,6 +73,21 @@ ProxyCanvas.prototype = {
         this.height = this.canvas.height;
     },
     destroy: function () {},
+    saveAs: function (format) {
+        // note that this spawns a save dialog!
+
+        if(format == 'png') {
+            Canvas2Image.saveAsPNG(this.canvas);
+        }
+
+        if(format == 'jpeg' || format == 'jpg') {
+            Canvas2Image.saveAsJPEG(this.canvas);
+        }
+
+        if(format == 'bmp') {
+            Canvas2Image.saveAsBMP(this.canvas);
+        }
+    },
     fill: function (colorName) {
         this.context.fillStyle = colorName;
         this.context.fillRect(0, 0, this.canvas.width, this.canvas.height);

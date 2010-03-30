@@ -6,6 +6,7 @@ function menu() {
     this.init()
 }
 menu.prototype = {
+    menuItems: ['New', 'Load', 'Save', 'Export', 'About'],
     init: function () {},
     initUI: function () {
         setUpPod("Menu");
@@ -18,27 +19,33 @@ menu.prototype = {
 
         // set up menu panel
         // XXX: figure out how to come up with a nice layout (no extra space)
-        $("body").append('<div class="panel" id="menuPanel" title="Menu"> \
-            <button id="menuNew">New</button> \
-            <button id="menuLoad">Load</button> \
-            <button id="menuSave">Save</button> \
-            <button id="menuExport">Export</button> \
-            <button id="menuAbout">About</button> \
-        </div>');
+        $("body").append('<div class="panel" id="menuPanel" title="Menu"></div>');
+
+        for (var i = 0; i < this.menuItems.length; i++) {
+            menuItem = this.menuItems[i];
+
+            $("#menuPanel").append('<button id="menu' + menuItem + '">' +
+                menuItem + '</button>');
+
+            this['setUp' + menuItem]();
+        }
 
         $("#menuPanel button").button();
 
         $("#menuPanel").dialog({
-           closeOnEscape: false, resizable: false, width: 365, height: 60,
-           position: "top", autoOpen: false
+           closeOnEscape: false,
+           resizable: false,
+           width: 365,
+           height: 60,
+           position: "top",
+           autoOpen: false
         });
 
         $("#menuPanel").bind("dialogclose",
             function(event, ui) {$("#menuPod").css("visibility", "visible");}
         );
-
-        // TODO: hook up events to menu items!
-
+    },
+    setUpNew: function () {
         $('#menuNew').click(function() {
             // XXX: force canvas to rerender itself + reset undo
             canvas = new ProxyCanvas("canvas");
@@ -47,29 +54,48 @@ menu.prototype = {
             //strokeManager.initUndo();
             //strokeManager.setStyle(STYLES[menu.selector.selectedIndex]);
         });
-
+    },
+    setUpLoad: function () {
         $('#menuLoad').click(function() {
             console.log('load');
         });
-
+    },
+    setUpSave: function () {
         $('#menuSave').click(function() {
             console.log('save');
+        });
+    },
+    setUpExport: function () {
+        $("body").append('<div id="exportDialog" title="Export"> \
+            <div id="exportFormats" style="margin-bottom:1em"> \
+                <input type="radio" id="jpgFormat" name="radio" checked="checked" value="jpg" /><label for="jpgFormat">JPG</label> \
+                <input type="radio" id="pngFormat" name="radio" value="png" /><label for="pngFormat">PNG</label> \
+                <input type="radio" id="bmpFormat" name="radio" value="bmp" /><label for="bmpFormat">BMP</label> \
+            </div> \
+            <button id="exportButton">Export</button> \
+        </div>');
 
-            /*
-            var a = flattenCanvas.getContext("2d");
-            a.fillStyle = "rgb(" + BACKGROUND_COLOR[0] + ", " + BACKGROUND_COLOR[1] +
-                ", " + BACKGROUND_COLOR[2] + ")";
-            a.fillRect(0, 0, canvas.width, canvas.height);
-            a.drawImage(canvas, 0, 0);
-            window.open(flattenCanvas.toDataURL("image/png"), "mywindow")
-            */
+        $("#exportFormats").buttonset();
+        $("#exportButton").button();
+
+        $("#exportDialog").dialog({
+                height: 100, width: 190, modal: true, autoOpen: false
         });
 
         $('#menuExport').click(function() {
-            console.log('export');
+            $('#exportDialog').dialog('open');
         });
 
-        // set up about dialog
+        $('#exportButton').click(function() {
+            selectedFormat = $('#exportFormats input:checked').val();
+
+            canvas = panels['canvas'].getProxy();
+            canvas.saveAs(selectedFormat);
+
+            $('#exportDialog').dialog('close');
+        });
+    },
+    setUpAbout: function () {
         $("body").append('<div id="aboutDialog" title="About"> \
             <p>Harmony v. 0.1</p> \
             <a href="http://mrdoob.com/blog/post/689" target="_blank">More info</a> \
