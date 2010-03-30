@@ -2,21 +2,6 @@
  * http://www.opensource.org/licenses/mit-license.php
  * Copyright (c) 2010 Mr.doob, rhyolight, bebraw
  */
-function cleanPopUps() {
-    if (isForegroundColorSelectorVisible) {
-        foregroundColorSelector.hide();
-        isForegroundColorSelectorVisible = false
-    }
-    if (isBackgroundColorSelectorVisible) {
-        backgroundColorSelector.hide();
-        isBackgroundColorSelectorVisible = false
-    }
-    if (isAboutVisible) {
-        about.hide();
-        isAboutVisible = false
-    }
-};
-
 function setUpPod(name) {
     id = name.toLowerCase();
     podId = id + "Pod";
