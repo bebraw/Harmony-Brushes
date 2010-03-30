@@ -92,6 +92,7 @@
                 buttons: {
                         'New': function() {
                                 newTab();
+                                $tabs.tabs('select', $tabs.tabs('length') - 1);
                                 $(this).dialog('close');
                         },
                         'Cancel': function() {
@@ -116,7 +117,7 @@
             // actual addTab function: adds new tab using the title input from the form above
             function newTab() {
                     var tab_title = $pageNameInput.val() || 'Tab ' + tabCounter;
-                    $tabs.tabs('add', '#pages-' + tabCounter, tab_title);
+                    $tabs.tabs('add', '#page' + tabCounter, tab_title);
                     tabCounter++;
             }
 
