@@ -120,6 +120,10 @@
                 height: 140, modal: true, autoOpen: false
             });
 
+            $('.modifyPage').live('click', function() {
+                console.log('modify page');
+            });
+
             var index = null;
             $('.removePage').live('click', function() {
                 index = $('li',$tabs).index($(this).parent());
