@@ -18,22 +18,31 @@ palette.prototype = {
             $('#palettePanel').dialog('open');
         });
 
+        colorSelectorFactory = new ColorSelectorFactory();
+
         // set up palette panel
         $("body").append('<div class="panel" id="palettePanel" title="Palette">' +
-            '<div id="colorPicker"/></div></div>');
+            '<div id="colorPicker" /></div></div>');
 
-        $('#colorPicker').ColorPicker({flat: true,
-            onChange: function (hsb, hex, rgb) {
-                panels['palette'].color = [rgb.r, rgb.g, rgb.b];
+        var foregroundColorSelector = colorSelectorFactory.produce(200);
+        foregroundColorSelector.addEventListener('change',
+            onForegroundColorSelectorChange, false);
+        foregroundColorSelector.container.style.visibility = 'visible';
 
-                brushesPanel = panels['brushes'];
-                brushesPanel.renderBrushPreviews();
-            }
-        });
+        $("#colorPicker").append(foregroundColorSelector.container);
+
+        function onForegroundColorSelectorChange( event )
+        {
+            panels['palette'].color = foregroundColorSelector.getColor();
+            panels['brushes'].renderBrushPreviews();
+        }
 
         $("#palettePanel").dialog({
-           closeOnEscape: false, resizable: false, width: 380, height: 210,
-           autoOpen: false
+            closeOnEscape: false,
+            resizable: false,
+            width: 230,
+            height: 230,
+            autoOpen: false
         });
 
         $("#palettePanel").dialog( "option", "position", "right" );

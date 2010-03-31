@@ -39,13 +39,6 @@ canvas.prototype = {
 
         $("#canvasOptions").buttonset();
 
-        $('#solidColorSelector').ColorPicker({
-                color: '#FFFFFF',
-                onChange: function (hsb, hex, rgb) {
-                        $('#solidColorSelector div').css('backgroundColor', '#' + hex);
-                }
-        });
-
         $("#canvasPanel").dialog({
            closeOnEscape: false, resizable: false, width: 230, autoOpen: false
         });
