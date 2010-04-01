@@ -11,12 +11,8 @@ group.prototype = {
     init: function () {},
     destroy: function () {},
     modify: function (point) {
-        function getRandom(n, m) {
-            return Math.random() * (m - n) + n;
-        }
+        randomDirection = getRandomDirection(this.distance);
 
-        dist = this.distance;
-        return new Point(point.x + getRandom(-dist, dist),
-            point.y + getRandom(-dist, dist));
+        return point.add(randomDirection);
     }
 }

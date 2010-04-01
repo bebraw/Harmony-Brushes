@@ -185,13 +185,9 @@ brushes.prototype = {
     },
     applyJitter: function ( point ) {
         if(this.brushOptions.location.jitter.enabled) {
-            direction = 2 * Math.PI * Math.random();
-            distance = this.brushOptions.location.jitter.value * Math.random();
+            randomDirection = getRandomDirection(this.brushOptions.location.jitter.value);
 
-            xOffset = Math.sin(direction) * distance;
-            yOffset = Math.cos(direction) * distance;
-
-            return new Point(point.x + xOffset, point.y + yOffset);
+            return point.add(randomDirection);
         }
         
         return point;
