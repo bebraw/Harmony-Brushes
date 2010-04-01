@@ -7,7 +7,7 @@ function modifiers() {
 }
 modifiers.prototype = {
     init: function () {
-        this.modifierStatus = {}; // true = active, false = passive
+        this.modifierStatus = {};
         this.modifiers = {};
     },
     initUI: function () {
@@ -53,7 +53,7 @@ modifiers.prototype = {
                         attributeId = modifierId + attributeName;
 
                         $("#" + modifierId + " .attributes").append('<div id="' +
-                            attributeId + '"></div>'); //.hide();
+                            attributeId + '"></div>');
 
                         $("#" + attributeId).data(attributeId, attributeName);
 
@@ -68,15 +68,6 @@ modifiers.prototype = {
                                 panels['modifiers'].modifiers[modifierId][$(this).data($(this).attr('id'))] = ui.value;
                             }
                         });
-
-                        /*$("#" + modifierId).toggle(
-                            function () {
-                                $(this).children('.attributes').show();
-                            },
-                            function () {
-                                $(this).children('.attributes').hide();
-                            }
-                        );*/
                     }
                 }
             }
