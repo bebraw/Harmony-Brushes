@@ -52,7 +52,7 @@ StrokeManager.prototype = {
             point = panels['brushes'].applyJitter(point);
             size = panels['brushes'].getSize();
             opacity = panels['brushes'].getOpacity();
-            
+
             this.painters.paint(point, size, opacity, this.mode);
 
             // XXX: just a hack to test eraser as it needs some point data to

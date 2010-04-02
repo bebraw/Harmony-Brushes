@@ -6,17 +6,13 @@ function fur() {
     this.init();
 }
 fur.prototype = {
-    init: function () {
-        this.points = [];
-    },
+    init: function () {},
     destroy: function () {},
-    stroke: function (canvas, cursor, color, opacity) {
-        this.points.push(cursor.current);
-
+    stroke: function (canvas, cursor, color, opacity, points) {
         canvas.stroke(cursor.previous, cursor.current, color, opacity);
 
-        for (e = 0; e < this.points.length; e++) {
-            sub = this.points[e].sub(cursor.current);
+        for (e = 0; e < points.length; e++) {
+            sub = points[e].sub(cursor.current);
             g = sub.toDist();
 
             if (g < 2000 && Math.random() > g / 2000) {

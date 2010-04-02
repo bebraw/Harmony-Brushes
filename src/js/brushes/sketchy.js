@@ -6,23 +6,19 @@ function sketchy() {
     this.init()
 }
 sketchy.prototype = {
-    init: function () {
-        this.points = [];
-    },
+    init: function () {},
     destroy: function () {},
-    stroke: function (canvas, cursor, color, opacity) {
-        this.points.push(cursor.current);
-
+    stroke: function (canvas, cursor, color, opacity, points) {
         canvas.stroke(cursor.previous, cursor.current, color, opacity);
 
-        for (e = 0; e < this.points.length; e++) {
-            sub = this.points[e].sub(cursor.current);
+        for (var i = 0; i < points.length; i++) {
+            sub = points[i].sub(cursor.current);
             g = sub.toDist();
 
             if (g < 4000 && Math.random() > g / 2000) {
                 fac = 0.3;
                 begin = cursor.current.add(sub.mul(fac));
-                end = this.points[e].sub(sub.mul(fac));
+                end = points[i].sub(sub.mul(fac));
 
                 canvas.stroke(begin, end, color, opacity);
             }

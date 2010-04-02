@@ -6,18 +6,14 @@ function stringy() {
     this.init();
 }
 stringy.prototype = {
-    init: function () {
-        this.points = [];
-    },
+    init: function () {},
     destroy: function () {},
-    stroke: function (canvas, cursor, color, opacity) {
-        this.points.push(cursor.current);
-
+    stroke: function (canvas, cursor, color, opacity, points) {
         canvas.stroke(cursor.previous, cursor.current, color, opacity);
 
-        pointsMin = Math.max(this.points.length - 15, 0);
-        for (var i=this.points.length - 1; i >= pointsMin; i--) {
-            end = this.points[i];
+        pointsMin = Math.max(points.length - 15, 0);
+        for (var i=points.length - 1; i >= pointsMin; i--) {
+            end = points[i];
             canvas.stroke(cursor.current, end, color, opacity / 2);
         }
     }

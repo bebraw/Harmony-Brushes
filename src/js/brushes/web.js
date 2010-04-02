@@ -6,21 +6,16 @@ function web() {
     this.init();
 }
 web.prototype = {
-    init: function () {
-        this.points = [];
-    },
+    init: function () {},
     destroy: function () {},
-    stroke: function (canvas, cursor, color, opacity) {
-        this.points.push(cursor.current);
-
+    stroke: function (canvas, cursor, color, opacity, points) {
         canvas.stroke(cursor.previous, cursor.current, color, opacity);
 
-        for (var e = 0; e < this.points.length; e++) {
-            g = this.points[e].sub(cursor.current).toDist();
+        for (var i = 0; i < points.length; i++) {
+            g = points[i].sub(cursor.current).toDist();
             
             if (g < 2500 && Math.random() > 0.9) {
-                canvas.stroke(cursor.current, this.points[e], color,
-                    opacity / 2);
+                canvas.stroke(cursor.current, points[i], color, opacity / 2);
             }
         }
     }

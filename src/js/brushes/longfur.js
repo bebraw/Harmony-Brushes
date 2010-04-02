@@ -6,22 +6,18 @@ function longfur() {
     this.init();
 }
 longfur.prototype = {
-    init: function () {
-        this.points = [];
-    },
+    init: function () {},
     destroy: function () {},
-    stroke: function (canvas, cursor, color, opacity) {
-        this.points.push(cursor.current);
-
-        for (e = 0; e < this.points.length; e++) {
+    stroke: function (canvas, cursor, color, opacity, points) {
+        for (var i = 0; i < points.length; i++) {
             r = -Math.random();
-            sub = this.points[e].sub(cursor.current);
+            sub = points[i].sub(cursor.current);
             g = sub.toDist();
 
             if (g < 4000 && Math.random() > g / 4000) {
                 randomPoint = getRandomPoint(2);
                 begin = cursor.current.add(sub.mul(r));
-                end = this.points[e].sub(sub.mul(r)).add(randomPoint);
+                end = points[i].sub(sub.mul(r)).add(randomPoint);
 
                 canvas.stroke(begin, end, color, opacity);
             }

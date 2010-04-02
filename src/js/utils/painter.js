@@ -78,6 +78,7 @@ Painter.prototype = {
         }
 
         this.cursor = new Cursor();
+        this.points = []; // points of current stroke
     },
     destroy: function () {},
     applyModifiers: function (point) {
@@ -90,8 +91,10 @@ Painter.prototype = {
             this.canvas.context.lineWidth = lineWidth;
             this.canvas.context.globalCompositeOperation = compositeOperation;
 
+            this.points.push(point);
+
             this.brush.stroke(this.canvas, this.cursor.getProxy(), this.color,
-                opacity / 100);
+                opacity / 100, this.points);
         }
     }
 }
