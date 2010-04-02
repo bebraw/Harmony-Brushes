@@ -23,11 +23,18 @@ Point.prototype = {
     div: function(other) {
         return this.operationTemplate(other, function(a, b) {return a / b});
     },
+    floor: function() {
+        return this.operationTemplate(null, function(a) {return Math.floor(a)});
+    },
     operationTemplate: function(other, op) {
         if(isNumber(other)) {
             return new Point(op(this.x, other), op(this.y, other));
         }
-        
+
+        if(other == null) {
+            return new Point(op(this.x), op(this.y));
+        }
+
         return new Point(op(this.x, other.x), op(this.y, other.y));
     },
     toDist: function() {
