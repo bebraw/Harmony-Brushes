@@ -11,25 +11,14 @@ stringy.prototype = {
     },
     destroy: function () {},
     stroke: function (canvas, cursor, color, opacity) {
-        var FACTOR = 10, 
-            HISTORY = 15,
-            sliced,
-            e,
-            c = cursor.current.x + (Math.random() - 0.5) * FACTOR,
-            d = cursor.current.y + (Math.random() - 0.5) * FACTOR;
+        this.points.push(cursor.current);
 
-        this.points.push([c, d]);
+        canvas.stroke(cursor.previous, cursor.current, color, opacity);
 
-        if(this.points.length > 1) {
-            point = {'x': c, 'y': d};
-            canvas.stroke(cursor.previous, point, color, opacity);
-
-            sliced = this.points.slice(this.points.length - HISTORY,
-                this.points.length);
-            for (e=0; e < sliced.length; e++) {
-                end = {'x': sliced[e][0], 'y': sliced[e][1]};
-                canvas.stroke(point, end, color, 0.15); // XXX: derive based on opacity? (orig. 0.5)
-            }
+        pointsMin = Math.max(this.points.length - 15, 0);
+        for (var i=this.points.length - 1; i >= pointsMin; i--) {
+            end = this.points[i];
+            canvas.stroke(cursor.current, end, color, opacity / 2);
         }
     }
 };
