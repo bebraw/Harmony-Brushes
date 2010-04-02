@@ -48,10 +48,6 @@ StrokeManager.prototype = {
             opacity = panels['brushes'].getOpacity();
 
             this.painters.paint(point, size, opacity, this.mode);
-
-            // XXX: just a hack to test eraser as it needs some point data to
-            // work with. XXX: make this work ok with multiple canvasii
-            panels['canvas'].points.push(point);
         }
     },
     getActiveCanvas: function () {

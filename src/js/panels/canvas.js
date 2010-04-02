@@ -6,10 +6,7 @@ function canvas() {
     this.init();
 }
 canvas.prototype = {
-    init: function () {
-        // XXX: hack for eraser
-        this.points = [];
-    },
+    init: function () {},
     initUI: function () {
         setUpPod("Canvas");
 

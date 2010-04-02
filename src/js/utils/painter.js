@@ -88,22 +88,3 @@ Painter.prototype = {
         }
     }
 }
-
-function Points() {
-    this.init();
-}
-Points.prototype = {
-    init: function () {
-        this.current = null;
-        this.previous = null;
-        this.length = 0;
-    },
-    destroy: function () {},
-    push: function (item) {
-        this[this.length] = item;
-        this.length++;
-
-        this.previous = this.current;
-        this.current = item;
-    }
-}

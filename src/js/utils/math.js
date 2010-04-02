@@ -2,6 +2,25 @@
  * http://www.opensource.org/licenses/mit-license.php
  * Copyright (c) 2010 Mr.doob, rhyolight, bebraw
  */
+function Points() {
+    this.init();
+}
+Points.prototype = {
+    init: function () {
+        this.current = null;
+        this.previous = null;
+        this.length = 0;
+    },
+    destroy: function () {},
+    push: function (item) {
+        this[this.length] = item;
+        this.length++;
+
+        this.previous = this.current;
+        this.current = item;
+    }
+}
+
 function Point(x, y) {
     this.init(x, y);
 }

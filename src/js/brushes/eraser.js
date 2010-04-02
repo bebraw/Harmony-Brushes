@@ -10,9 +10,11 @@ eraser.prototype = {
     destroy: function () {},
     stroke: function (canvas, points, color, opacity) {
         radius = 1; // XXX: use brush size for radius! note that painter uses it context init! -> add flag for this case?
-        pointsInsideRadius = canvas.getPointsInside(radius, points.current);
 
-        if(pointsInsideRadius.length > 0) {
+        // XXX: use points instead!
+        //pointsInsideRadius = canvas.getPointsInside(radius, points.current);
+
+        //if(pointsInsideRadius.length > 0) {
             //console.log(pointsInsideRadius);
             
             // TODO!
@@ -23,6 +25,6 @@ eraser.prototype = {
             // 2. calculate bbox
             // 3. get rid of removable points
             // 4. redraw all points remaining in the bbox and their neighbors outside
-        }
+        //}
     }
 };
