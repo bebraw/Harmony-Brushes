@@ -6,10 +6,16 @@ function brushes() {
     this.init();
 }
 brushes.prototype = {
-    brushOptions: {'size': {'min': 1, 'max': 30, 'value': 1},
-        'opacity': {'min': 0, 'max': 100, 'value': 50},
+    brushOptions: {'size': {'min': 1, 'max': 30, 'value': 1, 'pressure': false},
+        'opacity': {'min': 0, 'max': 100, 'value': 50, 'pressure': true},
         'location': {}},
     init: function () {
+        this.wacom = document.embeds["wacomPlugin"];
+
+        if(!this.wacom.isWacom) {
+            this.wacom = {'pressure': 1.0}; // proxy
+        }
+
         this.selected = BRUSHES[0];
     },
     initUI: function () {
@@ -33,7 +39,7 @@ brushes.prototype = {
         $("#brushesPanel").dialog({
             closeOnEscape: false, resizable: true,
             width: panelWidth, minWidth: panelWidth, maxWidth: 360,
-            height: 370, minHeight: 410,
+            height: 500, minHeight: 500,
             autoOpen: false
         });
 
@@ -48,11 +54,38 @@ brushes.prototype = {
             $("#brushOptions").append('<div style="width:100%; margin-top:1em;">');
 
             optionTitle = capitalizeFirstLetter(brushOptionName);
-            $("#brushOptions").append('<div style="float:left;">' + optionTitle + ':</div>');
+            $("#brushOptions").append('<div style="float:left;">' +
+                optionTitle + ':</div>');
 
             optionId = 'brush' + brushOptionName;
+            if('pressure' in brushOptionValue) {
+                pressureId = optionId + 'pressure';
+
+                $("#brushOptions").append('<input type="checkbox" id="' +
+                    pressureId + '" /><label for="' + pressureId +
+                    '" style="float:right;">P</label>');
+
+                pressureValue = brushOptionValue.pressure;
+
+                if(pressureValue) {
+                    $('#' + pressureId).attr('checked', 'checked');
+                }
+
+                $('#' + pressureId).button().click(
+                    function () {
+                        // XXX: hack! figure out a nicer way to pass option name!
+                        option = $(this).attr('id').replace('JitterToggle', '').replace('brush', '').replace('pressure', '');
+                        pressure = panels['brushes'].brushOptions[option].pressure;
+                        panels['brushes'].brushOptions[option].pressure = !pressure;
+                    }
+                );
+            }
+
+            $("#brushOptions").append('<div style="clear:both;"></div>');
+
             if('value' in brushOptionValue) {
-                $("#brushOptions").append('<div style="float:right; width: 48%" id="' + optionId + '"></div>');
+                $("#brushOptions").append('<div style="width:100%; margin-bottom:1em; margin-top:1em;" id="' +
+                    optionId + '"></div>');
 
                 $("#" + optionId).slider({
                     range: "max",
@@ -117,7 +150,7 @@ brushes.prototype = {
         $("#" + jitterAmountId).slider({
             range: "max",
             min: 0,
-            max: 100,
+            max: 50, // XXX: 100 for totally random, not really useful though
             value: 0,
             slide: function(event, ui) {
                 // XXX: hack! figure out a nicer way to pass option name!
@@ -211,7 +244,11 @@ brushes.prototype = {
             randomValue = Math.random() * ((value - valueMin) / (valueMax - valueMin));
             jitterNeg = value * jitterValue * randomValue;
 
-            return value - jitterNeg;
+            value = value - jitterNeg;
+        }
+
+        if(this.brushOptions[valueName].pressure) {
+            return value * this.wacom.pressure;
         }
 
         return value;

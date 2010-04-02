@@ -49,14 +49,9 @@ StrokeManager.prototype = {
     },
     paintTemplate: function (point) {
         if('painters' in this) {
-            wacom = document.embeds["wacomPlugin"];
-
             point = panels['brushes'].applyJitter(point);
-            
             size = panels['brushes'].getSize();
-
-            pressure = wacom.isWacom ? wacom.pressure : 1.0;
-            opacity = panels['brushes'].getOpacity() * pressure;
+            opacity = panels['brushes'].getOpacity();
             
             this.painters.paint(point, size, opacity, this.mode);
 
