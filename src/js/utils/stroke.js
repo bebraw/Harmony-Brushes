@@ -49,12 +49,19 @@ StrokeManager.prototype = {
     },
     paintTemplate: function (point) {
         if('painters' in this) {
+            wacom = document.embeds["wacomPlugin"];
+
             point = panels['brushes'].applyJitter(point);
-            this.painters.paint(point, panels['brushes'].getSize(),
-                panels['brushes'].getOpacity(), this.mode);
+            
+            size = panels['brushes'].getSize();
+
+            pressure = wacom.isWacom ? wacom.pressure : 1.0;
+            opacity = panels['brushes'].getOpacity() * pressure;
+            
+            this.painters.paint(point, size, opacity, this.mode);
 
             // XXX: just a hack to test eraser as it needs some point data to
-            // work with
+            // work with. XXX: make this work ok with multiple canvasii
             panels['canvas'].points.push(point);
         }
     },
