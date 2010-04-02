@@ -26,6 +26,9 @@ Point.prototype = {
     floor: function() {
         return this.operationTemplate(null, function(a) {return Math.floor(a)});
     },
+    round: function() {
+        return this.operationTemplate(null, function(a) {return Math.round(a)});
+    },
     operationTemplate: function(other, op) {
         if(isNumber(other)) {
             return new Point(op(this.x, other), op(this.y, other));
@@ -40,6 +43,10 @@ Point.prototype = {
     toDist: function() {
         return this.x * this.x + this.y * this.y;
     }
+}
+
+function getRandomPoint() {
+    return new Point(Math.random(), Math.random());
 }
 
 function getRandomDirection(maxDist) {
