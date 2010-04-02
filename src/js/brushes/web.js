@@ -11,20 +11,16 @@ web.prototype = {
     },
     destroy: function () {},
     stroke: function (canvas, cursor, color, opacity) {
-        var e, b, a, g;
-        
         this.points.push(cursor.current);
-        count = this.points.length - 1;
 
         canvas.stroke(cursor.previous, cursor.current, color, opacity);
 
-        for (e = 0; e < this.points.length; e++) {
-            b = this.points[e].x - this.points[count].x;
-            a = this.points[e].y - this.points[count].y;
-            g = b * b + a * a;
+        for (var e = 0; e < this.points.length; e++) {
+            g = this.points[e].sub(cursor.current).toDist();
             
             if (g < 2500 && Math.random() > 0.9) {
-                canvas.stroke(this.points[count], this.points[e], color, 0.1); // XXX: derive based on opacity? (orig. 0.5)
+                canvas.stroke(cursor.current, this.points[e], color,
+                    opacity / 2);
             }
         }
     }
