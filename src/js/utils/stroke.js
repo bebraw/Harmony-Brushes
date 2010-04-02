@@ -16,12 +16,8 @@ StrokeManager.prototype = {
 
         this.painters = new Painters();
 
-        brush = $.extend(true, {}, brush); // clone brush!
-        this.painters.add(mainCanvas, brush, color);
+        this.painters.add(mainCanvas, clone(brush), color);
 
-        // add all instance modifiers (note that it does not make sense to use
-        // stroke modifiers with mirror at least (perhaps array?). add flag
-        // for this?)
         modifiers = panels['modifiers'].getActiveModifiers();
         for (i = 0; i < modifiers.length; i++) {
             modifier = modifiers[i];
@@ -29,13 +25,11 @@ StrokeManager.prototype = {
             // XXX: hack for amount
             if('attributes' in modifier) {
                 if('amount' in modifier.attributes) {
-                    brush = $.extend(true, {}, brush); // clone brush!
-                    this.painters.add(mainCanvas, brush, color, modifier, modifier.amount);
+                    this.painters.add(mainCanvas, clone(brush), color, modifier, modifier.amount);
                 }
             }
             else {
-                brush = $.extend(true, {}, brush); // clone brush!
-                this.painters.add(mainCanvas, brush, color, modifier);
+                this.painters.add(mainCanvas, clone(brush), color, modifier);
             }
         }
 
