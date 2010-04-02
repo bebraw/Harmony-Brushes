@@ -18,6 +18,13 @@ Points.prototype = {
 
         this.previous = this.current;
         this.current = item;
+    },
+    get: function (index) {
+        if( index >= 0 ) {
+            return this[index];
+        }
+
+        return this[this.length + index];
     }
 }
 

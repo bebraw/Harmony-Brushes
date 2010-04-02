@@ -7,6 +7,7 @@ function canvas() {
 }
 canvas.prototype = {
     init: function () {},
+    destroy: function () {},
     initUI: function () {
         setUpPod("Canvas");
 
@@ -44,6 +45,5 @@ canvas.prototype = {
         $("#canvasPanel").bind( "dialogclose", function(event, ui) {
             $("#canvasPod").css("visibility", "visible");
         });
-    },
-    destroy: function () {}
+    }
 }
