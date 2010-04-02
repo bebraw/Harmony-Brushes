@@ -13,15 +13,15 @@ longfur.prototype = {
     stroke: function (canvas, cursor, color, opacity) {
         this.points.push(cursor.current);
 
-        for (f = 0; f < this.points.length; f++) {
-            e = -Math.random();
-            sub = this.points[f].sub(cursor.current);
-            h = sub.toDist();
+        for (e = 0; e < this.points.length; e++) {
+            r = -Math.random();
+            sub = this.points[e].sub(cursor.current);
+            g = sub.toDist();
 
-            if (h < 4000 && Math.random() > h / 4000) {
+            if (g < 4000 && Math.random() > g / 4000) {
                 randomPoint = getRandomPoint(2);
-                begin = cursor.current.add(sub.mul(e));
-                end = this.points[f].sub(sub.mul(e)).add(randomPoint);
+                begin = cursor.current.add(sub.mul(r));
+                end = this.points[e].sub(sub.mul(r)).add(randomPoint);
 
                 canvas.stroke(begin, end, color, opacity);
             }
