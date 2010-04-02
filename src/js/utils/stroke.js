@@ -60,6 +60,9 @@ StrokeManager.prototype = {
             panels['canvas'].points.push(point);
         }
     },
+    getActiveCanvas: function () {
+        return new ProxyCanvas(this.activeCanvasId);
+    },
     setActiveCanvas: function (canvasId) {
         this.activeCanvasId = canvasId;
     }

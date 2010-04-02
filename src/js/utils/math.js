@@ -7,8 +7,8 @@ function Point(x, y) {
 }
 Point.prototype = {
     init: function(x, y) {
-        this.x = x;
-        this.y = y;
+        this.x = x?x:0;
+        this.y = y?y:0;
     },
     destroy: function() {},
     add: function(other) {

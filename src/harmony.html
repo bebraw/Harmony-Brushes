@@ -183,7 +183,7 @@
             $('#exportButton').click(function() {
                 selectedFormat = $('#exportFormats input:checked').val();
 
-                canvas = panels['canvas'].getProxy();
+                canvas = strokeManager.getActiveCanvas();
                 canvas.saveAs(selectedFormat);
 
                 $('#exportDialog').dialog('close');
