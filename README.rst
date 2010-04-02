@@ -26,6 +26,7 @@ Currently it provides following extra functionality:
 
 You can find more information about Harmony at http://mrdoob.com/blog/post/689.
 
-See also http://rhyolight.posterous.com/new-brushes-for-harmony-canvas-app.
+See also http://rhyolight.posterous.com/new-brushes-for-harmony-canvas-app and
+the development gallery at http://picasaweb.google.fi/bebraw/Harmony .
 
 To run, just open harmony.html in a canvas-enabled web browser.
