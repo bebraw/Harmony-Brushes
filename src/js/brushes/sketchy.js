@@ -12,22 +12,19 @@ sketchy.prototype = {
     destroy: function () {},
     stroke: function (canvas, cursor, color, opacity) {
         this.points.push(cursor.current);
-        count = this.points.length - 1
 
-        canvas.stroke(cursor.previous, cursor.current, color, opacity); // a 0.05!
+        canvas.stroke(cursor.previous, cursor.current, color, opacity);
 
         for (e = 0; e < this.points.length; e++) {
-            b = this.points[e].x - this.points[count].x;
-            a = this.points[e].y - this.points[count].y;
-            g = b * b + a * a;
-            
-            if (g < 4000 && Math.random() > g / 2000) {
-                begin = {'x': this.points[count].x + (b * 0.3),
-                    'y': this.points[count].y + (a * 0.3)};
-                end = {'x': this.points[e].x - (b * 0.3),
-                    'y': this.points[e].y - (a * 0.3)};
+            sub = this.points[e].sub(cursor.current);
+            g = sub.toDist();
 
-                canvas.stroke(begin, end, color, opacity); // a 0.05!
+            if (g < 4000 && Math.random() > g / 2000) {
+                fac = 0.3;
+                begin = cursor.current.add(sub.mul(fac));
+                end = this.points[e].sub(sub.mul(fac));
+
+                canvas.stroke(begin, end, color, opacity);
             }
         }
     }

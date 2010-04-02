@@ -12,7 +12,26 @@ Point.prototype = {
     },
     destroy: function() {},
     add: function(other) {
-        return new Point(this.x + other.x, this.y + other.y);
+        return this.operationTemplate(other, function(a, b) {return a + b});
+    },
+    sub: function(other) {
+        return this.operationTemplate(other, function(a, b) {return a - b});
+    },
+    mul: function(other) {
+        return this.operationTemplate(other, function(a, b) {return a * b});
+    },
+    div: function(other) {
+        return this.operationTemplate(other, function(a, b) {return a / b});
+    },
+    operationTemplate: function(other, op) {
+        if(isNumber(other)) {
+            return new Point(op(this.x, other), op(this.y, other));
+        }
+        
+        return new Point(op(this.x, other.x), op(this.y, other.y));
+    },
+    toDist: function() {
+        return this.x * this.x + this.y * this.y;
     }
 }
 
@@ -24,4 +43,8 @@ function getRandomDirection(maxDist) {
             yOffset = Math.cos(direction) * distance;
 
             return new Point(xOffset, yOffset);
+}
+
+function isNumber(n) {
+    return !isNaN(parseFloat(n)) && isFinite(n);
 }

@@ -33,7 +33,7 @@ StrokeManager.prototype = {
                     this.painters.add(mainCanvas, brush, color, modifier, modifier.amount);
                 }
             }
-            else { // XXX: handle this via addInstance too???
+            else {
                 brush = $.extend(true, {}, brush); // clone brush!
                 this.painters.add(mainCanvas, brush, color, modifier);
             }
