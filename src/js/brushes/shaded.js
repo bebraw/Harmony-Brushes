@@ -13,9 +13,8 @@ shaded.prototype = {
     stroke: function (canvas, cursor, color, opacity) {
         this.points.push(cursor.current);
 
-        for (e = 0; e < this.points.length; e++) {
-            sub = this.points[e].sub(cursor.current);
-            g = sub.toDist();
+        for (var e = 0; e < this.points.length; e++) {
+            g = this.points[e].sub(cursor.current).toDist();
 
             if (g < 1000) {
                 alpha = ((1 - (g / 1000)) * opacity);
