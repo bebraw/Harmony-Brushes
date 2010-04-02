@@ -29,6 +29,12 @@ ProxyCanvas.prototype = {
             Canvas2Image.saveAsBMP(this.canvas);
         }
     },
+    getData: function () {
+        return this.context.getImageData(0, 0, this.width, this.height);
+    },
+    setData: function (data) {
+        this.context.putImageData(data, 0, 0);
+    },
     fill: function (colorName) {
         this.context.fillStyle = colorName;
         this.context.fillRect(0, 0, this.canvas.width, this.canvas.height);

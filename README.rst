@@ -15,7 +15,6 @@ Planned features:
 - better background (solid/background/texture)
 - scanfill brush
 - constraints (restrict stroke path during painting)
-- flipbook (branch current image to a new copy)
 
 Currently it provides following extra functionality:
 

@@ -85,7 +85,21 @@
             var $tabs = $('#pages').tabs({
                     tabTemplate: '<li><span class="ui-icon ui-icon-wrench modifyPage">Tools</span><a href="#{href}">#{label}</a><span class="ui-icon ui-icon-close removePage">Remove Page</span></li>',
                     add: function(event, ui) {
-                        createCanvas(ui.panel.id);
+                        if($("#copyPage").attr('checked')) {
+                            oldCanvas = strokeManager.getActiveCanvas();
+
+                            oldCanvasData = oldCanvas.getData();
+
+                            canvasId = createCanvas(ui.panel.id);
+                            strokeManager.setActiveCanvas(canvasId);
+
+                            newCanvas = strokeManager.getActiveCanvas();
+                            newCanvas.setData(oldCanvasData);
+                        }
+                        else {
+                            canvasId = createCanvas(ui.panel.id);
+                            strokeManager.setActiveCanvas(canvasId);
+                        }
                     },
                     select: function(event, ui) {
                         strokeManager.setActiveCanvas(ui.panel.id + 'Canvas');
@@ -97,14 +111,14 @@
                 autoOpen: false,
                 modal: true,
                 buttons: {
-                        'New': function() {
-                                newTab();
-                                $tabs.tabs('select', $tabs.tabs('length') - 1);
-                                $(this).dialog('close');
-                        },
-                        'Cancel': function() {
-                                $(this).dialog('close');
-                        }
+                    'New': function() {
+                        newTab();
+                        $tabs.tabs('select', $tabs.tabs('length') - 1);
+                        $(this).dialog('close');
+                    },
+                    'Cancel': function() {
+                        $(this).dialog('close');
+                    }
                 },
                 open: function() {
                         $pageNameInput.focus();
@@ -113,6 +127,7 @@
                         $form[0].reset();
                 }
             });
+            $("#copyPage").button();
 
             // addTab form: calls addTab function on submit and closes the dialog
             var $form = $('form', $newPageDialog).submit(function() {
@@ -189,7 +204,8 @@
                 $('#exportDialog').dialog('close');
             });
 
-            createCanvas("page1");
+            canvasId = createCanvas("page1");
+            strokeManager.setActiveCanvas(canvasId);
 
             function createCanvas(pageName) {
                 var canvasId = pageName + "Canvas";
@@ -208,7 +224,7 @@
                 mainCanvas = new ProxyCanvas(canvasId);
                 mainCanvas.fill("white");
 
-                strokeManager.setActiveCanvas(canvasId);
+                return canvasId;
             }
 
             $('.pageCanvas').live('dragstart', function(e) {
@@ -254,6 +270,7 @@
                 <fieldset class="ui-helper-reset">
                     <label for="pageName">Name</label>
                     <input type="text" name="pageName" id="pageName" value="" class="ui-widget-content ui-corner-all" />
+                    <input type="checkbox" id="copyPage" value="copy" /><label for="copyPage">Copy</label>
                 </fieldset>
             </form>
 	</div>
@@ -261,9 +278,9 @@
         <div id="modifyPageDialog" title="Tools">
             <div id="export">
                 <div id="exportFormats">
-                    <input type="radio" id="jpgFormat" name="radio" checked="checked" value="jpg" /><label for="jpgFormat">JPG</label>
-                    <input type="radio" id="pngFormat" name="radio" value="png" /><label for="pngFormat">PNG</label>
-                    <input type="radio" id="bmpFormat" name="radio" value="bmp" /><label for="bmpFormat">BMP</label>
+                    <input type="radio" id="jpgFormat" name="format" checked="checked" value="jpg" /><label for="jpgFormat">JPG</label>
+                    <input type="radio" id="pngFormat" name="format" value="png" /><label for="pngFormat">PNG</label>
+                    <input type="radio" id="bmpFormat" name="format" value="bmp" /><label for="bmpFormat">BMP</label>
                 </div>
                 <button id="exportButton">Export</button>
             </div>
