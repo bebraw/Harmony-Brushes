@@ -8,7 +8,7 @@ function simple() {
 simple.prototype = {
     init: function () {},
     destroy: function () {},
-    stroke: function (canvas, cursor, color, opacity) {
-        canvas.stroke(cursor.previous, cursor.current, color, opacity);
+    stroke: function (canvas, points, color, opacity) {
+        canvas.stroke(points.previous, points.current, color, opacity);
     }
 };

@@ -8,14 +8,14 @@ function web() {
 web.prototype = {
     init: function () {},
     destroy: function () {},
-    stroke: function (canvas, cursor, color, opacity, points) {
-        canvas.stroke(cursor.previous, cursor.current, color, opacity);
+    stroke: function (canvas, points, color, opacity) {
+        canvas.stroke(points.previous, points.current, color, opacity);
 
         for (var i = 0; i < points.length; i++) {
-            g = points[i].sub(cursor.current).toDist();
+            g = points[i].sub(points.current).toDist();
             
             if (g < 2500 && Math.random() > 0.9) {
-                canvas.stroke(cursor.current, points[i], color, opacity / 2);
+                canvas.stroke(points.current, points[i], color, opacity / 2);
             }
         }
     }

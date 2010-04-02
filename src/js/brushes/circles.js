@@ -8,9 +8,9 @@ function circles() {
 circles.prototype = {
     init: function () {},
     destroy: function () {},
-    stroke: function (canvas, cursor, color, opacity) {
-        center = cursor.current.div(100).floor().mul(100).add(50);
-        sub = cursor.current.sub(cursor.previous);
+    stroke: function (canvas, points, color, opacity) {
+        center = points.current.div(100).floor().mul(100).add(50);
+        sub = points.current.sub(points.previous);
         j = Math.floor(Math.random() * 10);
         a = sub.toDist() * 2 / j;
         

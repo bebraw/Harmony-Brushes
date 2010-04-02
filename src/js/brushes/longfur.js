@@ -8,15 +8,15 @@ function longfur() {
 longfur.prototype = {
     init: function () {},
     destroy: function () {},
-    stroke: function (canvas, cursor, color, opacity, points) {
+    stroke: function (canvas, points, color, opacity) {
         for (var i = 0; i < points.length; i++) {
             r = -Math.random();
-            sub = points[i].sub(cursor.current);
+            sub = points[i].sub(points.current);
             g = sub.toDist();
 
             if (g < 4000 && Math.random() > g / 4000) {
                 randomPoint = getRandomPoint(2);
-                begin = cursor.current.add(sub.mul(r));
+                begin = points.current.add(sub.mul(r));
                 end = points[i].sub(sub.mul(r)).add(randomPoint);
 
                 canvas.stroke(begin, end, color, opacity);

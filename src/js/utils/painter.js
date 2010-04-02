@@ -69,54 +69,41 @@ Painter.prototype = {
         this.canvas = canvas;
         this.brush = brush;
         this.color = color;
-
-        if(modifier) {
-            this.modifier = modifier;
-        }
-        else {
-            this.modifier = new NullModifier();
-        }
-
-        this.cursor = new Cursor();
-        this.points = []; // points of current stroke
+        this.modifier = modifier?modifier:new NullModifier();
+        this.points = new Points();
     },
     destroy: function () {},
     applyModifiers: function (point) {
         return this.modifier.modify(point);
     },
     paint: function (point, lineWidth, opacity, compositeOperation) {
-        this.cursor.setLocation(point);
+        this.points.push(point);
 
-        if( this.cursor.hasPreviousLocation() ) {
+        if( this.points.previous ) {
             this.canvas.context.lineWidth = lineWidth;
             this.canvas.context.globalCompositeOperation = compositeOperation;
 
-            this.points.push(point);
-
-            this.brush.stroke(this.canvas, this.cursor.getProxy(), this.color,
-                opacity / 100, this.points);
+            this.brush.stroke(this.canvas, this.points, this.color,
+                opacity / 100);
         }
     }
 }
 
-function Cursor() {
+function Points() {
     this.init();
 }
-Cursor.prototype = {
+Points.prototype = {
     init: function () {
-        this.current = new Point();
-        this.previous = new Point();
+        this.current = null;
+        this.previous = null;
+        this.length = 0;
     },
     destroy: function () {},
-    setLocation: function (point) {
-        this.previous = clone(this.current);
-        this.current = point;
-    },
-    hasPreviousLocation: function() {
-        // XXX: check if this fails at zero/zero case!
-        return this.previous.x || this.previous.y;
-    },
-    getProxy: function () {
-        return {'current': this.current, 'previous': this.previous};
+    push: function (item) {
+        this[this.length] = item;
+        this.length++;
+
+        this.previous = this.current;
+        this.current = item;
     }
 }

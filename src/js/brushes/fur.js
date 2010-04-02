@@ -8,17 +8,17 @@ function fur() {
 fur.prototype = {
     init: function () {},
     destroy: function () {},
-    stroke: function (canvas, cursor, color, opacity, points) {
-        canvas.stroke(cursor.previous, cursor.current, color, opacity);
+    stroke: function (canvas, points, color, opacity) {
+        canvas.stroke(points.previous, points.current, color, opacity);
 
         for (e = 0; e < points.length; e++) {
-            sub = points[e].sub(cursor.current);
+            sub = points[e].sub(points.current);
             g = sub.toDist();
 
             if (g < 2000 && Math.random() > g / 2000) {
                 fac = 0.5;
-                begin = cursor.current.add(sub.mul(fac));
-                end = cursor.current.sub(sub.mul(fac));
+                begin = points.current.add(sub.mul(fac));
+                end = points.current.sub(sub.mul(fac));
 
                 canvas.stroke(begin, end, color, 0.1);
             }

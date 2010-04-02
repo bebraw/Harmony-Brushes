@@ -8,18 +8,18 @@ function squares() {
 squares.prototype = {
     init: function () {},
     destroy: function () {},
-    stroke: function (canvas, cursor, color, opacity)  {
+    stroke: function (canvas, points, color, opacity)  {
         var b, a, g, e, c;
-        b = cursor.current.x - cursor.previous.x;
-        a = cursor.current.y - cursor.previous.y;
+        b = points.current.x - points.previous.x;
+        a = points.current.y - points.previous.y;
         g = Math.PI / 2;
         e = Math.cos(g) * b - Math.sin(g) * a;
         c = Math.sin(g) * b + Math.cos(g) * a;
 
-        firstCorner = new Point(cursor.previous.x - e, cursor.previous.y - c);
-        secondCorner = new Point(cursor.previous.x + e, cursor.previous.y + c);
-        thirdCorner = new Point(cursor.current.x + e, cursor.current.y + c);
-        fourthCorner = new Point(cursor.current.x - e, cursor.current.y - c);
+        firstCorner = new Point(points.previous.x - e, points.previous.y - c);
+        secondCorner = new Point(points.previous.x + e, points.previous.y + c);
+        thirdCorner = new Point(points.current.x + e, points.current.y + c);
+        fourthCorner = new Point(points.current.x - e, points.current.y - c);
 
         canvas.rect(firstCorner, secondCorner, thirdCorner, fourthCorner,
             color, opacity);

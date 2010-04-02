@@ -8,16 +8,16 @@ function chrome() {
 chrome.prototype = {
     init: function () {},
     destroy: function () {},
-    stroke: function (canvas, cursor, color, opacity, points) {
-        canvas.stroke(cursor.previous, cursor.current, color, opacity);
+    stroke: function (canvas, points, color, opacity) {
+        canvas.stroke(points.previous, points.current, color, opacity);
 
         for (var i = 0; i < points.length; i++) {
-            sub = points[i].sub(cursor.current);
+            sub = points[i].sub(points.current);
             g = sub.toDist();
 
             if (g < 1000) {
                 fac = 0.2;
-                begin = cursor.current.add(sub.mul(fac));
+                begin = points.current.add(sub.mul(fac));
                 end = points[i].sub(sub.mul(fac));
 
                 randomRGB = [Math.floor(Math.random() * 255),

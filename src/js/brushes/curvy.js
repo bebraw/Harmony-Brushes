@@ -8,12 +8,12 @@ function curvy() {
 curvy.prototype = {
     init: function () {},
     destroy: function () {},
-    stroke: function (canvas, cursor, color, opacity, points) {
+    stroke: function (canvas, points, color, opacity) {
         var START = 30,
             CTL_PNT1_DIST = 10,
             CTL_PNT2_DIST = 20;
 
-        canvas.stroke(cursor.previous, cursor.current, color, opacity);
+        canvas.stroke(points.previous, points.current, color, opacity);
         
         function getPoint(xAgo, pnts) {
             var index = pnts.length - xAgo, i;
@@ -27,6 +27,6 @@ curvy.prototype = {
         start = getPoint(START, points);
         cOne = getPoint(CTL_PNT1_DIST, points);
         cTwo = getPoint(CTL_PNT2_DIST, points);
-        canvas.bezierCurve(start, cOne, cTwo, cursor.current, color, 0.15);
+        canvas.bezierCurve(start, cOne, cTwo, points.current, color, 0.15);
     }
 };

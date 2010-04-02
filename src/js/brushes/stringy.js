@@ -8,13 +8,13 @@ function stringy() {
 stringy.prototype = {
     init: function () {},
     destroy: function () {},
-    stroke: function (canvas, cursor, color, opacity, points) {
-        canvas.stroke(cursor.previous, cursor.current, color, opacity);
+    stroke: function (canvas, points, color, opacity) {
+        canvas.stroke(points.previous, points.current, color, opacity);
 
         pointsMin = Math.max(points.length - 15, 0);
         for (var i=points.length - 1; i >= pointsMin; i--) {
             end = points[i];
-            canvas.stroke(cursor.current, end, color, opacity / 2);
+            canvas.stroke(points.current, end, color, opacity / 2);
         }
     }
 };

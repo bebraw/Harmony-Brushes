@@ -25,10 +25,10 @@ ribbon.prototype = {
     destroy: function () {
         clearInterval(this.interval)
     },
-    stroke: function (canvas, cursor, color, opacity) {
+    stroke: function (canvas, points, color, opacity) {
         this.canvas = canvas;
-        this.mouseX = cursor.current.x;
-        this.mouseY = cursor.current.y;
+        this.mouseX = points.current.x;
+        this.mouseY = points.current.y;
         this.color = color;
         this.opacity = opacity;
 
