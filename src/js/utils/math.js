@@ -45,8 +45,10 @@ Point.prototype = {
     }
 }
 
-function getRandomPoint() {
-    return new Point(Math.random(), Math.random());
+function getRandomPoint(n) {
+    n = 1 ? n == null: n;
+
+    return new Point(Math.random() * n, Math.random() * n);
 }
 
 function getRandomDirection(maxDist) {
