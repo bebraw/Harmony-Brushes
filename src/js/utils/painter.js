@@ -7,25 +7,25 @@ function Painters() {
 }
 Painters.prototype = {
     init: function () {
-        this.container = [];
+        this.length = 0;
     },
     destroy: function () {},
     add: function (canvas, brush, color, modifier, amount) {
         if(amount) {
-            this.container.push(new InstancePainter(amount, canvas, brush,
+            this.push(new InstancePainter(amount, canvas, brush,
                 color, modifier));
         }
         else {
-            this.container.push(new Painter(canvas, brush, color,
-                modifier));
+            this.push(new Painter(canvas, brush, color, modifier));
         }
     },
+    push: function (item) {
+        this[this.length] = item;
+        this.length++;
+    },
     paint: function (point, brushSize, brushOpacity, mode) {
-        userPainter = this.container[0];
-        userPainter.paint(point, brushSize, brushOpacity, mode);
-
-        for (var i = 1; i < this.container.length; i++) {
-            painter = this.container[i];
+        for (var i = 0; i < this.length; i++) {
+            painter = this[i];
             painter.paint(point, brushSize, brushOpacity, mode);
         }
     }

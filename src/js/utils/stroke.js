@@ -18,6 +18,7 @@ StrokeManager.prototype = {
 
         this.painters.add(mainCanvas, clone(brush), color);
 
+        // TODO: stackify this!
         modifiers = panels['modifiers'].getActiveModifiers();
         for (i = 0; i < modifiers.length; i++) {
             modifier = modifiers[i];
@@ -33,9 +34,8 @@ StrokeManager.prototype = {
             }
         }
 
-        this.points = new Points();
-        this.pointsAccumulated = 0;
-
+        this.strokePoints = new Points();
+        this.strokePointsAccumulated = 0;
         this.paintTemplate(point);
     },
     paint: function (point) {
@@ -43,6 +43,8 @@ StrokeManager.prototype = {
     },
     end: function (point) {
         this.paintTemplate(point);
+
+        // XXX: get Points from each painter and add them to a common point structure
     },
     paintTemplate: function (point) {
         if('painters' in this) {
@@ -50,31 +52,32 @@ StrokeManager.prototype = {
             size = panels['brushes'].getSize();
             opacity = panels['brushes'].getOpacity();
 
-            this.points.push(point);
-            this.pointsAccumulated++;
+            this.strokePoints.push(point);
+            this.strokePointsAccumulated++;
 
-            if( this.pointsAccumulated >= 3 ) {
-                dist = this.points.current.sub(this.points.previous).toDist();
+            if( this.strokePointsAccumulated >= 3 ) {
+                dist = this.strokePoints.current.sub(this.strokePoints.previous).toDist();
 
                 // XXX: check if it's possible to implement [-3] for js easily!
-                thirdLast = this.points.get(-3);
+                thirdLast = this.strokePoints.get(-3);
                 this.painters.paint(thirdLast, size, opacity, this.mode);
 
                 if(dist > 500) {
                     // de Casteljau
-                    firstMid = thirdLast.add(this.points.previous).div(2);
-                    secondMid = this.points.previous.add(this.points.current).div(2);
+                    firstMid = thirdLast.add(this.strokePoints.previous).div(2);
+                    secondMid = this.strokePoints.previous.add(this.points.current).div(2);
 
                     realFirstMid = thirdLast.add(firstMid).div(2);
                     realSecondMid = firstMid.add(secondMid).div(2);
-                    realThirdMid = secondMid.add(this.points.current).div(2);
+                    realThirdMid = secondMid.add(this.strokePoints.current).div(2);
 
                     this.painters.paint(realFirstMid, size, opacity, this.mode);
                     this.painters.paint(realSecondMid, size, opacity, this.mode);
                     this.painters.paint(realThirdMid, size, opacity, this.mode);
-                    this.painters.paint(this.points.current, size, opacity, this.mode);
+                    this.painters.paint(this.strokePoints.current, size,
+                        opacity, this.mode);
 
-                    this.pointsAccumulated = 0;
+                    this.strokePointsAccumulated = 0;
                 }
             }
         }
