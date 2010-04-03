@@ -11,21 +11,25 @@ chrome.prototype = {
     stroke: function (canvas, points, color, opacity) {
         canvas.stroke(points.previous, points.current, color, opacity);
 
-        for (var i = 0; i < points.length; i++) {
-            sub = points[i].sub(points.current);
-            g = sub.toDist();
-
-            if (g < 1000) {
-                fac = 0.2;
-                begin = points.current.add(sub.mul(fac));
-                end = points[i].sub(sub.mul(fac));
-
-                randomRGB = [Math.floor(Math.random() * 255),
-                    Math.floor(Math.random() * 255),
-                    Math.floor(Math.random() * 255)];
-
-                canvas.stroke(begin, end, randomRGB, 0.1);
+        adjacentPoints = points.getWithinRange(points.current,
+            function (dist) {
+                return dist < 1000;
             }
+        );
+
+        fac = 0.2;
+        for (var i = 0; i < adjacentPoints.length; i++) {
+            currentPoint = adjacentPoints[i];
+            offset = currentPoint.sub(points.current).mul(fac);
+
+            begin = points.current.add(offset);
+            end = currentPoint.sub(offset);
+
+            randomRGB = [Math.floor(Math.random() * 255),
+                Math.floor(Math.random() * 255),
+                Math.floor(Math.random() * 255)];
+
+            canvas.stroke(begin, end, randomRGB, 0.1);
         }
     }
 };

@@ -20,7 +20,6 @@ sketchy.prototype = {
         fac = 0.3;
         for (var i = 0; i < adjacentPoints.length; i++) {
             currentPoint = adjacentPoints[i];
-
             offset = currentPoint.sub(points.current).mul(fac);
 
             begin = points.current.add(offset);
