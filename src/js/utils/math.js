@@ -34,7 +34,7 @@ Points.prototype = {
             dist = currentPoint.sub(point).toDist();
 
             if( range(dist) ) {
-                ret.push(currentPoint);
+                ret.push({'point': currentPoint, 'dist': dist});
             }
         }
         

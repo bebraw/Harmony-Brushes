@@ -17,7 +17,7 @@ longfur.prototype = {
 
         for (var i = 0; i < adjacentPoints.length; i++) {
             fac = -Math.random();
-            currentPoint = adjacentPoints[i];
+            currentPoint = adjacentPoints[i].point;
             offset = currentPoint.sub(points.current).mul(fac);
 
             randomPoint = getRandomPoint(2);

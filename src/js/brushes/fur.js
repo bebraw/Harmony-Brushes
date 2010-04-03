@@ -19,7 +19,7 @@ fur.prototype = {
 
         fac = 0.5;
         for (var i = 0; i < adjacentPoints.length; i++) {
-            currentPoint = adjacentPoints[i];
+            currentPoint = adjacentPoints[i].point;
             offset = currentPoint.sub(points.current).mul(fac);
 
             begin = points.current.add(offset);
