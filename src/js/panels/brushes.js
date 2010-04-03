@@ -232,7 +232,7 @@ brushes.prototype = {
         return this.getValueTemplate('size');
     },
     getOpacity: function () {
-        return this.getValueTemplate('opacity');
+        return this.getValueTemplate('opacity') / 100;
     },
     getValueTemplate: function (valueName) {
         value = this.brushOptions[valueName].value;

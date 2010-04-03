@@ -77,8 +77,7 @@ Painter.prototype = {
             this.canvas.context.lineWidth = lineWidth;
             this.canvas.context.globalCompositeOperation = compositeOperation;
 
-            this.brush.stroke(this.canvas, this.points, this.color,
-                opacity / 100);
+            this.brush.stroke(this.canvas, this.points, this.color, opacity);
         }
     }
 }
