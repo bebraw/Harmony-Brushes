@@ -22,12 +22,10 @@ Painters.prototype = {
     },
     paint: function (point, brushSize, brushOpacity, mode) {
         userPainter = this.container[0];
-        point = userPainter.applyModifiers(point);
         userPainter.paint(point, brushSize, brushOpacity, mode);
 
         for (var i = 1; i < this.container.length; i++) {
             painter = this.container[i];
-            point = painter.applyModifiers(point);
             painter.paint(point, brushSize, brushOpacity, mode);
         }
     }
@@ -49,9 +47,6 @@ InstancePainter.prototype = {
         }
     },
     destroy: function () {},
-    applyModifiers: function (point) {
-        return point;
-    },
     paint: function (point, lineWidth, opacity, compositeOperation) {
         for (var i = 0; i < this.painters.length; i++) {
             painter = this.painters[i];
@@ -73,10 +68,9 @@ Painter.prototype = {
         this.points = new Points();
     },
     destroy: function () {},
-    applyModifiers: function (point) {
-        return this.modifier.modify(point);
-    },
     paint: function (point, lineWidth, opacity, compositeOperation) {
+        point = this.modifier.modify(point);
+
         this.points.push(point);
 
         if( this.points.previous ) {
