@@ -27,8 +27,7 @@ ribbon.prototype = {
     },
     stroke: function (canvas, points, color, opacity) {
         this.canvas = canvas;
-        this.mouseX = points.current.x;
-        this.mouseY = points.current.y;
+        this.currentLocation = points.current;
         this.color = color;
         this.opacity = opacity;
 
@@ -39,10 +38,8 @@ ribbon.prototype = {
 
             for (var a = 0; a < 50; a++) {
                 this.painters.push({
-                    dx: this.mouseX,
-                    dy: this.mouseY,
-                    ax: 0,
-                    ay: 0,
+                    dp: this.currentLocation,
+                    ap: new Point(),
                     div: 0.1,
                     ease: Math.random() * 0.2 + 0.6
                 })
@@ -54,22 +51,26 @@ ribbon.prototype = {
             }, this), 1000 / 60)
 
             for (var b = 0; b < this.painters.length; b++) {
-                this.painters[b].dx = this.mouseX;
-                this.painters[b].dy = this.mouseY;
+                this.painters[b].dp = this.currentLocation;
             }
         }
     },
     update: function () {
         if(this.canvas) {
             for (var a = 0; a < this.painters.length; a++) {
-                begin = {'x': this.painters[a].dx, 'y': this.painters[a].dy};
+                begin = this.painters[a].dp;
 
-                this.painters[a].dx -= this.painters[a].ax = (this.painters[a].ax + (this.painters[a].dx - this.mouseX) * this.painters[a].div) * this.painters[a].ease;
-                this.painters[a].dy -= this.painters[a].ay = (this.painters[a].ay + (this.painters[a].dy - this.mouseY) * this.painters[a].div) * this.painters[a].ease;
+                this.painters[a].ap = this.painters[a].ap.
+                    add(this.painters[a].dp.
+                        sub(this.currentLocation).
+                        mul(this.painters[a].div)).
+                    mul(this.painters[a].ease);
+                this.painters[a].dp = this.painters[a].dp.
+                    sub(this.painters[a].ap);
 
-                end = {'x': this.painters[a].dx, 'y': this.painters[a].dy};
+                end = this.painters[a].dp;
 
-                this.canvas.stroke(begin, end, this.color, this.opacity); // a=0.05 -> opacity / 2?
+                this.canvas.stroke(begin, end, this.color, this.opacity);
             }
         }
     }
