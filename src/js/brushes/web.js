@@ -11,12 +11,16 @@ web.prototype = {
     stroke: function (canvas, points, color, opacity) {
         canvas.stroke(points.previous, points.current, color, opacity);
 
-        for (var i = 0; i < points.length; i++) {
-            g = points[i].sub(points.current).toDist();
-            
-            if (g < 2500 && Math.random() > 0.9) {
-                canvas.stroke(points.current, points[i], color, opacity / 2);
+        adjacentPoints = points.getWithinRange(points.current,
+            function (dist) {
+                return dist < 2500 && Math.random() > 0.9;
             }
+        );
+
+        for (var i = 0; i < adjacentPoints.length; i++) {
+            currentPoint = adjacentPoints[i].point;
+
+            canvas.stroke(points.current, currentPoint, color, opacity / 2);
         }
     }
 };
