@@ -15,7 +15,7 @@ circles.prototype = {
         a = sub.toDist() * 2 / j;
         
         for (g = 0; g < j; g++) {
-            radius = (j - g) * a
+            radius = (j - g) * a;
             canvas.circle(center, radius, color, opacity);
         }
     }

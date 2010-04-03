@@ -11,17 +11,21 @@ fur.prototype = {
     stroke: function (canvas, points, color, opacity) {
         canvas.stroke(points.previous, points.current, color, opacity);
 
-        for (e = 0; e < points.length; e++) {
-            sub = points[e].sub(points.current);
-            g = sub.toDist();
-
-            if (g < 2000 && Math.random() > g / 2000) {
-                fac = 0.5;
-                begin = points.current.add(sub.mul(fac));
-                end = points.current.sub(sub.mul(fac));
-
-                canvas.stroke(begin, end, color, 0.1);
+        adjacentPoints = points.getWithinRange(points.current,
+            function (dist) {
+                return dist < 2000 && Math.random() > dist / 2000;
             }
+        );
+
+        fac = 0.5;
+        for (var i = 0; i < adjacentPoints.length; i++) {
+            currentPoint = adjacentPoints[i];
+            offset = currentPoint.sub(points.current).mul(fac);
+
+            begin = points.current.add(offset);
+            end = points.current.sub(offset);
+
+            canvas.stroke(begin, end, color, 0.1);
         }
     }
 };
