@@ -11,17 +11,22 @@ sketchy.prototype = {
     stroke: function (canvas, points, color, opacity) {
         canvas.stroke(points.previous, points.current, color, opacity);
 
-        for (var i = 0; i < points.length; i++) {
-            sub = points[i].sub(points.current);
-            g = sub.toDist();
-
-            if (g < 4000 && Math.random() > g / 2000) {
-                fac = 0.3;
-                begin = points.current.add(sub.mul(fac));
-                end = points[i].sub(sub.mul(fac));
-
-                canvas.stroke(begin, end, color, opacity);
+        adjacentPoints = points.getWithinRange(points.current,
+            function (dist) {
+                return dist < 4000 && Math.random() > dist / 2000;
             }
+        );
+
+        fac = 0.3;
+        for (var i = 0; i < adjacentPoints.length; i++) {
+            currentPoint = adjacentPoints[i];
+
+            offset = currentPoint.sub(points.current).mul(fac);
+
+            begin = points.current.add(offset);
+            end = currentPoint.sub(offset);
+
+            canvas.stroke(begin, end, color, opacity);
         }
     }
 };

@@ -25,6 +25,20 @@ Points.prototype = {
         }
 
         return this[this.length + index];
+    },
+    getWithinRange: function (point, range) {
+        var ret = [];
+
+        for (var i = 0; i < this.length; i++) {
+            currentPoint = this[i];
+            dist = currentPoint.sub(point).toDist();
+
+            if( range(dist) ) {
+                ret.push(currentPoint);
+            }
+        }
+        
+        return ret;
     }
 }
 
