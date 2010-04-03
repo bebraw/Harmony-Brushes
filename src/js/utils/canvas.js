@@ -15,18 +15,25 @@ ProxyCanvas.prototype = {
     },
     destroy: function () {},
     saveAs: function (format) {
-        // note that this spawns a save dialog!
+        var isChrome =  navigator.userAgent.toLowerCase().indexOf('chrome')  > -1;
 
-        if(format == 'png') {
-            Canvas2Image.saveAsPNG(this.canvas);
+        if( isChrome ) {
+            // apparently this work just with png?
+            window.open(this.canvas.toDataURL('image/png'), 'mywindow');
         }
+        else {
+            // note that this spawns a save dialog! doesn't work in chrome!
+            if(format == 'png') {
+                Canvas2Image.saveAsPNG(this.canvas);
+            }
 
-        if(format == 'jpeg' || format == 'jpg') {
-            Canvas2Image.saveAsJPEG(this.canvas);
-        }
+            if(format == 'jpeg' || format == 'jpg') {
+                Canvas2Image.saveAsJPEG(this.canvas);
+            }
 
-        if(format == 'bmp') {
-            Canvas2Image.saveAsBMP(this.canvas);
+            if(format == 'bmp') {
+                Canvas2Image.saveAsBMP(this.canvas);
+            }
         }
     },
     getData: function () {
