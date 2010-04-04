@@ -35,7 +35,7 @@ Painters.prototype = {
         for (var i = 0; i < this.length; i++) {
             painter = this[i];
 
-            ret.push(painter.points);
+            ret.push(painter.getPoints());
         }
 
         return ret;
@@ -54,17 +54,30 @@ InstancePainter.prototype = {
 
         for (var i = 0; i < amount; i++) {
             brush = clone(brush);
+
             this.painters.push(new Painter(canvas, brush, color));
         }
     },
     destroy: function () {},
     paint: function (point, lineWidth, opacity, compositeOperation, points) {
         for (var i = 0; i < this.painters.length; i++) {
-            painter = this.painters[i];
+            var painter = this.painters[i];
             point = this.modifier.modify(point);
+
             painter.paint(point, lineWidth, opacity, compositeOperation,
                 points);
         }
+    },
+    getPoints: function () {
+        var ret = new Points();
+
+        for (var i = 0; i < this.painters.length; i++) {
+            var painter = this.painters[i];
+
+            ret.extend(painter.getPoints());
+        }
+
+        return ret;
     }
 }
 
@@ -97,5 +110,8 @@ Painter.prototype = {
 
             this.brush.stroke(this.canvas, brushPoints, this.color, opacity);
         }
+    },
+    getPoints: function () {
+        return this.points;
     }
 }

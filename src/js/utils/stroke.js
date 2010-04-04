@@ -24,8 +24,6 @@ StrokeManager.prototype = {
 
         // TODO: stackify this!
         modifiers = panels['modifiers'].getActiveModifiers();
-        this.modifiersInUse = modifiers.length > 0;
-
         for (i = 0; i < modifiers.length; i++) {
             modifier = modifiers[i];
 
@@ -63,16 +61,14 @@ StrokeManager.prototype = {
             point = panels['brushes'].applyJitter(point);
 
             var points = null;
-            if(!this.modifiersInUse) {
-                shadingType = panels['brushes'].getShadingType();
+            shadingType = panels['brushes'].getShadingType();
 
-                if(shadingType == 'same') {
-                    points = this.activeCanvas.getPointsOfType(panels['brushes'].selected);
-                }
+            if(shadingType == 'same') {
+                points = this.activeCanvas.getPointsOfType(panels['brushes'].selected);
+            }
 
-                if(shadingType == 'all') {
-                    points = this.activeCanvas.getAllPoints();
-                }
+            if(shadingType == 'all') {
+                points = this.activeCanvas.getAllPoints();
             }
 
             this.painters.paint(this.cursorPoints[0], size, opacity, this.mode,
