@@ -126,8 +126,10 @@ ProxyCanvas.prototype = {
         var ret = new Points();
         var brushStrokes = this.strokes[brushName];
 
-        for( var i = 0; i < brushStrokes.length; i++ ) {
-            ret.extend(brushStrokes[i]);
+        if( brushStrokes ) {
+            for( var i = 0; i < brushStrokes.length; i++ ) {
+                ret.extend(brushStrokes[i]);
+            }
         }
 
         return ret;
