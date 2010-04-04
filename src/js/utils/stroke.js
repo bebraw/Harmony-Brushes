@@ -7,7 +7,10 @@ function StrokeManager() {
 }
 StrokeManager.prototype = {
     init: function () {
-        this.points = new Points(); // XXX: this should be per canvas!!!
+        this.canvasii = {};
+
+        // XXX: this should be per canvas!!!
+        this.points = new Points();
 
         this.filterDistance = 500;
         this.filterLength = 3;
@@ -101,13 +104,17 @@ StrokeManager.prototype = {
         this.cursorPoints = new Queue(this.filterLength);
     },
     addCanvas: function (canvasId) {
+        this.canvasii[canvasId] = new ProxyCanvas(canvasId);
         this.setActiveCanvas(canvasId);
 
         var canvas = this.getActiveCanvas();
         canvas.fill('white'); // XXX: fetch this from canvas settings
     },
+    removeCanvas: function (canvasId) {
+        delete this.canvasii[canvasId];
+    },
     getActiveCanvas: function () {
-        return new ProxyCanvas(this.activeCanvasId);
+        return this.canvasii[this.activeCanvasId];
     },
     setActiveCanvas: function (canvasId) {
         this.activeCanvasId = canvasId;

@@ -99,6 +99,9 @@
                             createCanvas(ui.panel.id);
                         }
                     },
+                    remove: function(event, ui) {
+                        strokeManager.removeCanvas(ui.panel.id + 'Canvas');
+                    },
                     select: function(event, ui) {
                         strokeManager.setActiveCanvas(ui.panel.id + 'Canvas');
                     }
