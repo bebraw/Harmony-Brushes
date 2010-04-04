@@ -20,9 +20,9 @@ canvas.prototype = {
         // set up background panel
         $("body").append('<div class="panel" id="canvasPanel" title="Canvas"> \
                 <div id="canvasOptions"> \
-                    <input type="radio" id="solidCanvas" name="radio" checked="checked" /><label for="solidCanvas">Solid</label> \
-                    <input type="radio" id="gradientCanvas" name="radio" /><label for="gradientCanvas">Gradient</label> \
-                    <input type="radio" id="textureCanvas" name="radio" /><label for="textureCanvas">Texture</label> \
+                    <input type="radio" id="solidCanvas" name="canvasOptions" checked="checked" value="solid" /><label for="solidCanvas">Solid</label> \
+                    <input type="radio" id="gradientCanvas" name="canvasOptions" value="gradient" /><label for="gradientCanvas">Gradient</label> \
+                    <input type="radio" id="textureCanvas" name="canvasOptions" value="texture" /><label for="textureCanvas">Texture</label> \
                 </div> \
                 <div id="solidColorSelector">\
                     <div></div>\

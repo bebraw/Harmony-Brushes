@@ -28,7 +28,6 @@ brushes.prototype = {
         });
 
         // set up brushes panel
-        panelWidth = 150;
         $("body").append(
             '<div class="panel" id="brushesPanel" title="Brushes"> \
                 <div id="brushes" style="height:170px;overflow:auto;"></div> \
@@ -36,10 +35,11 @@ brushes.prototype = {
             </div>'
         );
 
+        var panelWidth = 250, panelHeight = 550;
         $("#brushesPanel").dialog({
-            closeOnEscape: false, resizable: true,
-            width: panelWidth, minWidth: panelWidth, maxWidth: 360,
-            height: 500, minHeight: 500,
+            closeOnEscape: false, resizable: false,
+            width: panelWidth, minWidth: panelWidth, maxWidth: panelWidth,
+            height: panelHeight, minHeight: panelHeight, maxHeight: panelHeight,
             autoOpen: false
         });
 
@@ -47,6 +47,27 @@ brushes.prototype = {
         $("#brushesPanel").bind("dialogclose", function(event, ui) {
             $("#brushesPod").css("visibility", "visible");}
         );
+
+        $("#brushOptions").append('<div id="brushMode"> \
+                <input type="radio" id="normalMode" name="brushMode" value="source-over" checked="checked" /><label for="normalMode">Normal</label> \
+                <input type="radio" id="lightenMode" name="brushMode" value="lighter" /><label for="lightenMode">Lighten</label> \
+                <input type="radio" id="darkenMode" name="brushMode" value="darker" /><label for="darkenMode">Darken</label> \
+            </div> \
+        ');
+
+        // TODO: figure out a neat way to visualize different modes
+        //$("#brushMode").buttonset().click( function() {
+        //    panels['brushes'].renderBrushPreviews();
+        //});
+
+        $("#brushOptions").append('<div id="brushShading" style="margin-top:1em;"> \
+                <input type="radio" id="currentShading" name="brushShading" value="current" checked="checked" /><label for="currentShading">Current</label> \
+                <input type="radio" id="sameShading" name="brushShading" value="same" /><label for="sameShading">Same</label> \
+                <input type="radio" id="allShading" name="brushShading" value="all" /><label for="allShading">All</label> \
+            </div> \
+        ');
+
+        $("#brushShading").buttonset();
 
         for (var brushOptionName in this.brushOptions) {
             brushOptionValue = this.brushOptions[brushOptionName];
@@ -124,7 +145,8 @@ brushes.prototype = {
             this.setUpJitter(jitterToggleId, jitterAmountId);
         }
 
-        this.createBrushes(panelWidth - 45);
+        // XXX: figure out the width in a nicer way
+        this.createBrushes(panelWidth / 3 + 10);
     },
     destroy: function () {},
     setUpJitter: function ( jitterToggleId, jitterAmountId ) {
@@ -210,11 +232,11 @@ brushes.prototype = {
             point = new Point(x, y);
             point = this.applyJitter(point);
             brushPainter.paint(point, this.getSize(), this.getOpacity(),
-                "source-over");
+                this.getMode());
         }
 
-        brushCanvas.text(brushId, 'black', '48px Segoe UI, Arial, sans-serif', 10,
-        brushCanvas.height / 2);
+        brushCanvas.text(brushId, 'black', '48px Segoe UI, Arial, sans-serif',
+            10, brushCanvas.height / 2);
     },
     applyJitter: function ( point ) {
         if(this.brushOptions.location.jitter.enabled) {
@@ -254,6 +276,6 @@ brushes.prototype = {
         return value;
     },
     getMode: function () {
-        return "source-over"; // TODO: implement mode selector!
+        return $('#brushMode input:checked').val();
     }
 }
