@@ -247,12 +247,7 @@
 
             <span class="ui-icon ui-icon-help" id="about">About</span>
 
-            <div id="colors">
-                <div>
-                    <input style="width: 1em; height: 1em;" class="color {valueElement:'selectedColor'}" />
-                    <input type="hidden" id="selectedColor" value="000000" />
-                </div>
-            </div>
+            <ul id="colors"></ul>
         </div>
         
         <div id="pages">
@@ -309,12 +304,58 @@
         <script type="text/javascript">
             var constraints = new Constraints(); // XXX: needed?
             var COLOR = 'black';
+            var amountOfColors = 23;
 
-            // TODO: set up on color change!
-            // panels['palette'].color = $('#selectedColor').val();
-            // panels['brushes'].renderBrushPreviews();
-            $('#selectedColor').change(function(e) {
-                hexColor = $('#selectedColor').val();
+            var leftBoundColor = "000000";
+            var rightBoundColor = "ffffff";
+            $('#colors').append('<li> \
+                    <input style="width: 1em; height: 1em;" class="color {valueElement:' +
+                    "'leftBoundColor'" + '}" /> \
+                    <input type="hidden" class="boundColor" id="leftBoundColor" value="' +
+                    leftBoundColor + '" /> \
+                </li>');
+            
+            for( var i = 0; i < amountOfColors; i++ ) {
+                $('#colors').append('<li> \
+                        <input style="width: 1em; height: 1em;" class="clickableColor" /> \
+                    </li>');
+            }
+
+            interpolateColors(leftBoundColor, rightBoundColor, amountOfColors);
+
+            // right bound
+            $('#colors').append('<li> \
+                    <input style="width: 1em; height: 1em;" class="color {valueElement:' +
+                    "'rightBoundColor'" + '}" /> \
+                    <input type="hidden" class="boundColor" id="rightBoundColor" value="' +
+                    rightBoundColor + '" /> \
+                </li>');
+
+            $('.boundColor').change(function(e) {
+                var hexColor = $(this).val();
+
+                COLOR = hexToRGB(hexColor);
+                panels['brushes'].renderBrushPreviews();
+
+                leftBoundColor = $('#leftBoundColor').val();
+                rightBoundColor = $('#rightBoundColor').val();
+
+                interpolateColors(leftBoundColor, rightBoundColor, amountOfColors);
+            });
+
+            function interpolateColors(leftBoundColor, rightBoundColor, amountOfColors) {
+                $('.clickableColor').each(function(k, v) {
+                    var fac = (k + 1) / (amountOfColors + 2);
+                    var color = '#' + colorLerp(leftBoundColor, rightBoundColor, fac);
+
+                    $(this).css('background-color', color);
+                });
+            }
+
+            $('.clickableColor').focus(function(e) {
+                var color = $(this).css('background-color');
+                var hexColor = colorToHex(color);
+
                 COLOR = hexToRGB(hexColor);
                 panels['brushes'].renderBrushPreviews();
             });
