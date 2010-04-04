@@ -14,7 +14,8 @@ chrome.prototype = {
         adjacentPoints = points.getWithinRange(points.current,
             function (dist) {
                 return dist < 1000;
-            }
+            },
+            1000
         );
 
         fac = 0.2;

@@ -16,17 +16,18 @@ curvy.prototype = {
         canvas.stroke(points.previous, points.current, color, opacity);
         
         function getPoint(xAgo, pnts) {
-            var index = pnts.length - xAgo, i;
-            for (i=index; i< pnts.length; i++) {
+            var index = pnts.length - xAgo;
+            for (var i = index; i < pnts.length; i++) {
                 if (pnts[i]) {
                     return pnts[i];
                 }
             }
         }
 
-        start = getPoint(START, points);
-        cOne = getPoint(CTL_PNT1_DIST, points);
-        cTwo = getPoint(CTL_PNT2_DIST, points);
-        canvas.bezierCurve(start, cOne, cTwo, points.current, color, 0.15);
+        start = getPoint(START, points.content);
+        cOne = getPoint(CTL_PNT1_DIST, points.content);
+        cTwo = getPoint(CTL_PNT2_DIST, points.content);
+        canvas.bezierCurve(start, cOne, cTwo, points.current, color,
+            0.15);
     }
 };

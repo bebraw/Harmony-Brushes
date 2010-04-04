@@ -219,21 +219,23 @@ brushes.prototype = {
         brushCanvas = new ProxyCanvas(brushId);
         brushCanvas.fill([255, 255, 255]);
 
-        brush = eval("new " + brushName + "()");
+        if( SHOWPREVIEWIMAGES ) {
+            brush = eval("new " + brushName + "()");
 
-        brushPainter = new Painter(brushCanvas, brush, getColor());
+            brushPainter = new Painter(brushCanvas, brush, getColor());
 
-        canvasWidth = brushCanvas.width;
-        pad = 10;
+            canvasWidth = brushCanvas.width;
+            pad = 10;
 
-        for (x = pad; x < canvasWidth - pad; x += 5) {
-            y = Math.sin(5 * (x - pad) / (canvasWidth - pad) * 2 * Math.PI) *
-                (brushCanvas.height / 2 - pad * 2) + (brushCanvas.height / 2);
+            for (x = pad; x < canvasWidth - pad; x += 5) {
+                y = Math.sin(5 * (x - pad) / (canvasWidth - pad) * 2 * Math.PI) *
+                    (brushCanvas.height / 2 - pad * 2) + (brushCanvas.height / 2);
 
-            point = new Point(x, y);
-            point = this.applyJitter(point);
-            brushPainter.paint(point, this.getSize(), this.getOpacity(),
-                this.getMode());
+                point = new Point(x, y);
+                point = this.applyJitter(point);
+                brushPainter.paint(point, this.getSize(), this.getOpacity(),
+                    this.getMode());
+            }
         }
 
         brushCanvas.text(brushId, 'black', '48px Segoe UI, Arial, sans-serif',

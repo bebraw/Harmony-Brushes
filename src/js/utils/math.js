@@ -9,42 +9,90 @@ Points.prototype = {
     init: function () {
         this.current = null;
         this.previous = null;
-        this.length = 0;
+
+        this.content = [];
     },
     destroy: function () {},
     push: function (item) {
-        this[this.length] = item;
-        this.length++;
-
+        this.content.push(item);
         this.previous = this.current;
         this.current = item;
     },
     extend: function (points) {
         if(points) {
-            for( var i = 0; i < points.length; i++ ) {
-                point = points[i];
-                this.push(point);
-            }
+            this.content = points.content.concat(this.content);
+            this.current = points.current;
+            this.previous = points.previous;
         }
     },
-    getWithinRange: function (point, range) {
-        // 1. check x
-        var candidates = [];
-        for (var i = 0; i < this.length; i++) {
-            currentPoint = this[i];
+    getWithinRange: function (point, range, maxRange) {
+        var content = this.content;
 
-            if( range(Math.abs(point.x - currentPoint.x))) {
-                candidates.push(currentPoint);
+        // 1. check x
+        // sort based on x
+        function sortBasedOnX(a, b) {
+            if( a.x < b.x ) {
+                return 1;
+            }
+
+            if( a.x == b.x ) {
+                return 0;
+            }
+
+            return -1;
+        }
+        content.sort(sortBasedOnX);
+
+        var candidates = [];
+        var minX = point.x - maxRange;
+        var maxX = point.x + maxRange;
+
+        // XXX: take canvas width in count -> iteration direction
+        for (var i = 0; i < content.length; i++) {
+            var currentPoint = content[i];
+            var currentX = currentPoint.x;
+
+            if( currentX >= minX ) {
+                if( currentX <= maxX ) {
+                    candidates.push(currentPoint);
+                }
+                else {
+                    break;
+                }
             }
         }
 
         // 2. check y
+        // sort based on y
+        function sortBasedOnY(a, b) {
+            if( a.y < b.y ) {
+                return 1;
+            }
+
+            if( a.y == b.y ) {
+                return 0;
+            }
+
+            return -1;
+        }
+
+        candidates.sort(sortBasedOnY);
         var finalCandidates = [];
+        var minY = point.y - maxRange;
+        var maxY = point.y + maxRange;
+
+        // XXX: figure out iteration direction based on height delta
         for (i = 0; i < candidates.length; i++) {
             currentPoint = candidates[i];
-
-            if( range(Math.abs(point.y - currentPoint.y)) ) {
-                finalCandidates.push(currentPoint);
+            var currentY = currentPoint.y;
+            
+            if( currentY >= minY ) {
+                if( currentY <= maxY ) {
+                    finalCandidates.push(currentPoint);
+                }
+                else {
+                    break;
+                }
             }
         }
 

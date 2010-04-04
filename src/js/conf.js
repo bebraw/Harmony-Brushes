@@ -19,3 +19,5 @@ var BACKGROUNDCOLOR = [255, 255, 255];
 // stroke filtering options
 var FILTERDISTANCE = 500;
 var FILTERLENGTH = 3;
+
+var SHOWPREVIEWIMAGES = false;

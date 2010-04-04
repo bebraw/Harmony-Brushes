@@ -12,7 +12,8 @@ longfur.prototype = {
         adjacentPoints = points.getWithinRange(points.current,
             function (dist) {
                 return dist < 4000 && Math.random() > dist / 4000;
-            }
+            },
+            4000
         );
 
         for (var i = 0; i < adjacentPoints.length; i++) {

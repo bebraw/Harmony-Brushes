@@ -12,7 +12,8 @@ shaded.prototype = {
         adjacentPoints = points.getWithinRange(points.current,
             function (dist) {
                 return dist < 1000;
-            }
+            },
+            1000
         );
 
         for (var i = 0; i < adjacentPoints.length; i++) {

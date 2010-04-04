@@ -14,7 +14,8 @@ web.prototype = {
         adjacentPoints = points.getWithinRange(points.current,
             function (dist) {
                 return dist < 2500 && Math.random() > 0.9;
-            }
+            },
+            2500
         );
 
         for (var i = 0; i < adjacentPoints.length; i++) {

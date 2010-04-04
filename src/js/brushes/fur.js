@@ -14,7 +14,8 @@ fur.prototype = {
         adjacentPoints = points.getWithinRange(points.current,
             function (dist) {
                 return dist < 2000 && Math.random() > dist / 2000;
-            }
+            },
+            2000
         );
 
         fac = 0.5;

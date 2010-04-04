@@ -14,7 +14,8 @@ sketchy.prototype = {
         adjacentPoints = points.getWithinRange(points.current,
             function (dist) {
                 return dist < 4000 && Math.random() > dist / 2000;
-            }
+            },
+            4000
         );
 
         fac = 0.3;
