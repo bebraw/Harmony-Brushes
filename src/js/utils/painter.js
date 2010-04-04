@@ -53,8 +53,6 @@ InstancePainter.prototype = {
         this.painters = [];
 
         for (var i = 0; i < amount; i++) {
-            brush = clone(brush);
-
             this.painters.push(new Painter(canvas, brush, color));
         }
     },

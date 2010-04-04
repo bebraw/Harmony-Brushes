@@ -17,7 +17,7 @@ StrokeManager.prototype = {
 
         this.painters = new Painters();
 
-        this.painters.add(this.activeCanvas, clone(brush), color);
+        this.painters.add(this.activeCanvas, brush, color);
 
         // TODO: stackify this!
         modifiers = panels['modifiers'].getActiveModifiers();
@@ -27,12 +27,12 @@ StrokeManager.prototype = {
             // XXX: hack for amount
             if('attributes' in modifier) {
                 if('amount' in modifier.attributes) {
-                    this.painters.add(this.activeCanvas, clone(brush), color,
+                    this.painters.add(this.activeCanvas, brush, color,
                         modifier, modifier.amount);
                 }
             }
             else {
-                this.painters.add(this.activeCanvas, clone(brush), color, modifier);
+                this.painters.add(this.activeCanvas, brush, color, modifier);
             }
         }
 
