@@ -19,12 +19,13 @@ Points.prototype = {
         this.previous = this.current;
         this.current = item;
     },
-    get: function (index) {
-        if( index >= 0 ) {
-            return this[index];
+    extend: function (points) {
+        if(points) {
+            for( var i = 0; i < points.length; i++ ) {
+                point = points[i];
+                this.push(point);
+            }
         }
-
-        return this[this.length + index];
     },
     getWithinRange: function (point, range) {
         var ret = [];
@@ -103,4 +104,26 @@ function getRandomDirection(maxDist) {
 
 function isNumber(n) {
     return !isNaN(parseFloat(n)) && isFinite(n);
+}
+
+function deCasteljau(points, recursions) {
+    function recursion(recursionPoints) {
+        var ret = [points[0], ];
+
+        for( var i = 0; i < recursionPoints.length - 1; i++ ) {
+            ret.push(recursionPoints[i].add(recursionPoints[i+1]).div(2));
+        }
+
+        ret.push(points[points.length -1]);
+
+        if(recursions == 1) {
+            return ret;
+        }
+
+        recursions--;
+
+        return recursion(ret);
+    }
+
+    return recursion(points);
 }

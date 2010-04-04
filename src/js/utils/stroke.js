@@ -6,7 +6,12 @@ function StrokeManager() {
     this.init();
 }
 StrokeManager.prototype = {
-    init: function () {},
+    init: function () {
+        this.points = new Points(); // XXX: this should be per canvas!!!
+
+        this.filterDistance = 500;
+        this.filterLength = 3;
+    },
     destroy: function () {},
     start: function (point) {
         mainCanvas = new ProxyCanvas(this.activeCanvasId);
@@ -34,8 +39,7 @@ StrokeManager.prototype = {
             }
         }
 
-        this.strokePoints = new Points();
-        this.strokePointsAccumulated = 0;
+        this.initCursor();
         this.paintTemplate(point);
     },
     paint: function (point) {
@@ -44,48 +48,73 @@ StrokeManager.prototype = {
     end: function (point) {
         this.paintTemplate(point);
 
-        // XXX: get Points from each painter and add them to a common point structure
+        allStrokePoints = this.painters.getPoints();
+        this.points.extend(allStrokePoints);
     },
     paintTemplate: function (point) {
-        if('painters' in this) {
+        this.cursorPoints.push(point);
+
+        if( this.cursorPoints.length == this.filterLength ) {
+            var size = panels['brushes'].getSize();
+            var opacity = panels['brushes'].getOpacity();
+            var dist = this.cursorPoints[2].sub(this.cursorPoints[1]).toDist();
             point = panels['brushes'].applyJitter(point);
-            size = panels['brushes'].getSize();
-            opacity = panels['brushes'].getOpacity();
 
-            this.strokePoints.push(point);
-            this.strokePointsAccumulated++;
+            // XXX: add ui for this (points should be null if local shading is in use.
+            // note that if there are modifiers, local shading should be used in any case!)
+            // TODO
+            var points = null; //this.points;
 
-            if( this.strokePointsAccumulated >= 3 ) {
-                dist = this.strokePoints.current.sub(this.strokePoints.previous).toDist();
+            this.painters.paint(this.cursorPoints[0], size, opacity, this.mode,
+                points);
 
-                // XXX: check if it's possible to implement [-3] for js easily!
-                thirdLast = this.strokePoints.get(-3);
-                this.painters.paint(thirdLast, size, opacity, this.mode);
+            if(dist > this.filterDistance) {
+                midPoints = deCasteljau(this.cursorPoints,
+                    this.filterLength - 1);
+                midPoints = midPoints.slice(1, midPoints.length - 1);
 
-                if(dist > 500) {
-                    // de Casteljau
-                    firstMid = thirdLast.add(this.strokePoints.previous).div(2);
-                    secondMid = this.strokePoints.previous.add(this.points.current).div(2);
-
-                    realFirstMid = thirdLast.add(firstMid).div(2);
-                    realSecondMid = firstMid.add(secondMid).div(2);
-                    realThirdMid = secondMid.add(this.strokePoints.current).div(2);
-
-                    this.painters.paint(realFirstMid, size, opacity, this.mode);
-                    this.painters.paint(realSecondMid, size, opacity, this.mode);
-                    this.painters.paint(realThirdMid, size, opacity, this.mode);
-                    this.painters.paint(this.strokePoints.current, size,
-                        opacity, this.mode);
-
-                    this.strokePointsAccumulated = 0;
+                for( var i = 0; i < midPoints.length; i++ ) {
+                    this.painters.paint(midPoints[i], size, opacity, this.mode,
+                        points);
                 }
+
+                this.painters.paint(this.cursorPoints[this.filterLength - 1],
+                    size, opacity, this.mode, points);
+
+                this.initCursor();
             }
         }
+    },
+    initCursor: function () {
+        this.cursorPoints = new CursorQueue(this.filterLength);
     },
     getActiveCanvas: function () {
         return new ProxyCanvas(this.activeCanvasId);
     },
     setActiveCanvas: function (canvasId) {
         this.activeCanvasId = canvasId;
+    }
+}
+
+function CursorQueue( maxLength ) {
+    this.init(maxLength);
+}
+CursorQueue.prototype = {
+    init: function ( maxLength ) {
+        this.maxLength =  maxLength;
+        this.length = 0;
+    },
+    destroy: function () {},
+    push: function (item) {
+        if( this.length == this.maxLength ) {
+            for( var i = 0; i < this.maxLength - 1; i++ ) {
+                this[i] = this[i+1];
+            }
+            this[this.length - 1] = item;
+        }
+        else {
+            this[this.length] = item;
+            this.length++;
+        }
     }
 }

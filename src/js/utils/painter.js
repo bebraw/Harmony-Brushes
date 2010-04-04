@@ -23,11 +23,26 @@ Painters.prototype = {
         this[this.length] = item;
         this.length++;
     },
-    paint: function (point, brushSize, brushOpacity, mode) {
+    paint: function (point, brushSize, brushOpacity, mode, points) {
         for (var i = 0; i < this.length; i++) {
             painter = this[i];
-            painter.paint(point, brushSize, brushOpacity, mode);
+            painter.paint(point, brushSize, brushOpacity, mode, points);
         }
+    },
+    getPoints: function () {
+        var ret = [];
+
+        for (var i = 0; i < this.length; i++) {
+            painter = this[i];
+
+            for (var j = 0; j < painter.points.length; j++) {
+                point = painter.points[j];
+
+                ret.push(point);
+            }
+        }
+
+        return ret;
     }
 }
 
@@ -47,11 +62,12 @@ InstancePainter.prototype = {
         }
     },
     destroy: function () {},
-    paint: function (point, lineWidth, opacity, compositeOperation) {
+    paint: function (point, lineWidth, opacity, compositeOperation, points) {
         for (var i = 0; i < this.painters.length; i++) {
             painter = this.painters[i];
             point = this.modifier.modify(point);
-            painter.paint(point, lineWidth, opacity, compositeOperation);
+            painter.paint(point, lineWidth, opacity, compositeOperation,
+                points);
         }
     }
 }
@@ -68,7 +84,7 @@ Painter.prototype = {
         this.points = new Points();
     },
     destroy: function () {},
-    paint: function (point, lineWidth, opacity, compositeOperation) {
+    paint: function (point, lineWidth, opacity, compositeOperation, points) {
         point = this.modifier.modify(point);
 
         this.points.push(point);
@@ -77,7 +93,13 @@ Painter.prototype = {
             this.canvas.context.lineWidth = lineWidth;
             this.canvas.context.globalCompositeOperation = compositeOperation;
 
-            this.brush.stroke(this.canvas, this.points, this.color, opacity);
+            brushPoints = this.points;
+            if(points) {
+                brushPoints = clone(points);
+                brushPoints.extend(this.points);
+            }
+
+            this.brush.stroke(this.canvas, brushPoints, this.color, opacity);
         }
     }
 }
