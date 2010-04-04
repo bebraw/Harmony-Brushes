@@ -15,7 +15,7 @@ StrokeManager.prototype = {
     destroy: function () {},
     start: function (point) {
         brush = panels['brushes'].getSelected();
-        color = panels['palette'].getColor();
+        color = getColor();
         this.mode = panels['brushes'].getMode();
 
         this.painters = new Painters();

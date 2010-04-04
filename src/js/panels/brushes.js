@@ -221,8 +221,7 @@ brushes.prototype = {
 
         brush = eval("new " + brushName + "()");
 
-        brushPainter = new Painter(brushCanvas, brush,
-            panels['palette'].getColor());
+        brushPainter = new Painter(brushCanvas, brush, getColor());
 
         canvasWidth = brushCanvas.width;
         pad = 10;

@@ -20,9 +20,7 @@
         <script type="text/javascript" src="js/lib/shortcut.js"></script>
         <script type="text/javascript" src="js/lib/base64.js"></script>
         <script type="text/javascript" src="js/lib/canvas2image.js"></script>
-        <script type="text/javascript" src="js/lib/colorselector.js"></script>
-        <script type="text/javascript" src="js/lib/colorutils.js"></script>
-        <script type="text/javascript" src="js/lib/palette.js"></script>
+        <script type="text/javascript" src="js/lib/jscolor/jscolor.js"></script>
 
         <script type="text/javascript" src="js/panels/brushes.js"></script>
         <script type="text/javascript" src="js/panels/canvas.js"></script>
@@ -58,6 +56,7 @@
         <script type="text/javascript" src="js/modifiers/verticalmirror.js"></script>
 
         <script type="text/javascript" src="js/utils/canvas.js"></script>
+        <script type="text/javascript" src="js/utils/color.js"></script>
         <script type="text/javascript" src="js/utils/math.js"></script>
         <script type="text/javascript" src="js/utils/string.js"></script>
         <script type="text/javascript" src="js/utils/object.js"></script>
@@ -73,7 +72,7 @@
         var CONSTRAINTS = ["horizontal", "perspective", "vertical"];
         var MODIFIERS = ["array", "group", "horizontalmirror",
             "verticalmirror", "radialmirror"];
-        var PANELS = ["brushes", "canvas", "modifiers", "palette", "playback"];
+        var PANELS = ["brushes", "canvas", "modifiers", "playback"];
         </script>
 
         <script type="text/javascript">
@@ -220,19 +219,19 @@
                 );
 
                 strokeManager.addCanvas(canvasId);
+
+                $("#" + canvasId).bind('dragstart', function(e) {
+                    strokeManager.start(getMouseLocationOnCanvas(e));
+                });
+
+                $("#" + canvasId).bind('drag', function(e) {
+                    strokeManager.paint(getMouseLocationOnCanvas(e));
+                });
+
+                $("#" + canvasId).bind('dragend', function(e) {
+                    strokeManager.end(getMouseLocationOnCanvas(e));
+                });
             }
-
-            $('.pageCanvas').live('dragstart', function(e) {
-                strokeManager.start(getMouseLocationOnCanvas(e));
-            });
-
-            $('.pageCanvas').live('drag', function(e) {
-                strokeManager.paint(getMouseLocationOnCanvas(e));
-            });
-
-            $('.pageCanvas').live('dragend', function(e) {
-                strokeManager.end(getMouseLocationOnCanvas(e));
-            });
 
             function getMouseLocationOnCanvas(e) {
                 return new Point(e.layerX, e.layerY);
@@ -245,8 +244,15 @@
             <div id="pods">
                 <span class="ui-icon ui-icon-plusthick" id="addNew">New</span>
             </div>
-            
+
             <span class="ui-icon ui-icon-help" id="about">About</span>
+
+            <div id="colors">
+                <div>
+                    <input style="width: 1em; height: 1em;" class="color {valueElement:'selectedColor'}" />
+                    <input type="hidden" id="selectedColor" value="000000" />
+                </div>
+            </div>
         </div>
         
         <div id="pages">
@@ -302,6 +308,20 @@
 
         <script type="text/javascript">
             var constraints = new Constraints(); // XXX: needed?
+            var COLOR = 'black';
+
+            // TODO: set up on color change!
+            // panels['palette'].color = $('#selectedColor').val();
+            // panels['brushes'].renderBrushPreviews();
+            $('#selectedColor').change(function(e) {
+                hexColor = $('#selectedColor').val();
+                COLOR = hexToRGB(hexColor);
+                panels['brushes'].renderBrushPreviews();
+            });
+
+            function getColor() {
+                return COLOR;
+            }
 
             var panels = {}
             for (var i = 0; i < PANELS.length; i++) {

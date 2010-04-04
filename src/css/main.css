@@ -51,6 +51,11 @@ body {
     margin-right: 1em;
 }
 
+#colors {
+    float: right;
+    margin-right: 1em;
+}
+
 #modifyPageDialog div, #exportFormats {
     margin-bottom: 1em;
 }

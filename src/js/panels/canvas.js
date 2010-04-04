@@ -24,8 +24,9 @@ canvas.prototype = {
                     <input type="radio" id="gradientCanvas" name="canvasOptions" value="gradient" /><label for="gradientCanvas">Gradient</label> \
                     <input type="radio" id="textureCanvas" name="canvasOptions" value="texture" /><label for="textureCanvas">Texture</label> \
                 </div> \
-                <div id="solidColorSelector">\
-                    <div></div>\
+                <div id="solidColorSelector"> \
+                    <input style="width: 1em; height: 1em;" class="color {valueElement:' + "'backgroundColor'" + '}" /> \
+                    <input type="hidden" class="backgroundColor" /> \
                 </div> \
             </div>');
 
