@@ -86,35 +86,12 @@ StrokeManager.prototype = {
         }
     },
     initCursor: function () {
-        this.cursorPoints = new CursorQueue(this.filterLength);
+        this.cursorPoints = new Queue(this.filterLength);
     },
     getActiveCanvas: function () {
         return new ProxyCanvas(this.activeCanvasId);
     },
     setActiveCanvas: function (canvasId) {
         this.activeCanvasId = canvasId;
-    }
-}
-
-function CursorQueue( maxLength ) {
-    this.init(maxLength);
-}
-CursorQueue.prototype = {
-    init: function ( maxLength ) {
-        this.maxLength =  maxLength;
-        this.length = 0;
-    },
-    destroy: function () {},
-    push: function (item) {
-        if( this.length == this.maxLength ) {
-            for( var i = 0; i < this.maxLength - 1; i++ ) {
-                this[i] = this[i+1];
-            }
-            this[this.length - 1] = item;
-        }
-        else {
-            this[this.length] = item;
-            this.length++;
-        }
     }
 }
