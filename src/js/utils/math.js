@@ -28,7 +28,7 @@ Points.prototype = {
         }
     },
     getWithinRange: function (point, range) {
-        // 1. check y
+        // 1. check x
         var candidates = [];
         for (var i = 0; i < this.length; i++) {
             currentPoint = this[i];
@@ -38,7 +38,7 @@ Points.prototype = {
             }
         }
 
-        // 2. check x
+        // 2. check y
         var finalCandidates = [];
         for (i = 0; i < candidates.length; i++) {
             currentPoint = candidates[i];
