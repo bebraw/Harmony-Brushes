@@ -9,9 +9,6 @@ StrokeManager.prototype = {
     init: function () {
         this.canvasii = {};
 
-        // XXX: this should be per canvas!!!
-        this.points = new Points();
-
         this.filterDistance = 500;
         this.filterLength = 3;
     },
@@ -53,7 +50,7 @@ StrokeManager.prototype = {
         this.paintTemplate(point);
 
         allStrokePoints = this.painters.getPoints();
-        this.points.extend(allStrokePoints);
+        this.activeCanvas.points.extend(allStrokePoints);
     },
     paintTemplate: function (point) {
         this.cursorPoints.push(point);
@@ -71,11 +68,11 @@ StrokeManager.prototype = {
                 if(shadingType == 'same') {
                     // TODO
                     //brush = panels['brushes'].getSelected();
-                    //points = this.points.getPointsOfType(brush);
+                    //points = this.activeCanvas.points.getPointsOfType(brush);
                 }
 
                 if(shadingType == 'all') {
-                    points = this.points;
+                    points = this.activeCanvas.points;
                 }
             }
 

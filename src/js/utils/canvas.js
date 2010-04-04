@@ -12,6 +12,8 @@ ProxyCanvas.prototype = {
 
         this.width = this.canvas.width;
         this.height = this.canvas.height;
+        
+        this.points = new Points();
     },
     destroy: function () {},
     saveAs: function (format) {
