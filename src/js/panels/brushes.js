@@ -55,6 +55,8 @@ brushes.prototype = {
             </div> \
         ');
 
+        $("#brushMode").buttonset();
+
         // TODO: figure out a neat way to visualize different modes
         //$("#brushMode").buttonset().click( function() {
         //    panels['brushes'].renderBrushPreviews();
@@ -277,5 +279,8 @@ brushes.prototype = {
     },
     getMode: function () {
         return $('#brushMode input:checked').val();
+    },
+    getShadingType: function () {
+        return $('#brushShading input:checked').val();
     }
 }

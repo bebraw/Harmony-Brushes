@@ -25,6 +25,8 @@ StrokeManager.prototype = {
 
         // TODO: stackify this!
         modifiers = panels['modifiers'].getActiveModifiers();
+        this.modifiersInUse = modifiers.length > 0;
+
         for (i = 0; i < modifiers.length; i++) {
             modifier = modifiers[i];
 
@@ -60,10 +62,20 @@ StrokeManager.prototype = {
             var dist = this.cursorPoints[2].sub(this.cursorPoints[1]).toDist();
             point = panels['brushes'].applyJitter(point);
 
-            // XXX: add ui for this (points should be null if local shading is in use.
-            // note that if there are modifiers, local shading should be used in any case!)
-            // TODO
-            var points = null; //this.points;
+            var points = null;
+            if(!this.modifiersInUse) {
+                shadingType = panels['brushes'].getShadingType();
+
+                if(shadingType == 'same') {
+                    // TODO
+                    //brush = panels['brushes'].getSelected();
+                    //points = this.points.getPointsOfType(brush);
+                }
+
+                if(shadingType == 'all') {
+                    points = this.points;
+                }
+            }
 
             this.painters.paint(this.cursorPoints[0], size, opacity, this.mode,
                 points);
