@@ -9,7 +9,6 @@ a go! They are considered relatively stable.
 
 Planned features:
 
-- better palette (bounds + slots interpolated between those)
 - undo (branching?)
 - playback
 - better background (solid/background/texture)
@@ -20,9 +19,10 @@ Currently it provides following extra functionality:
 
 - improved UI (pods and panels, shortcut: keys 1-6 map to given pod/panel)
 - mirroring (horizontal, vertical, radial)
-- additional brush options (size, alpha, jitter)
+- additional brush options (size, alpha, jitter, mode, shading)
 - brush preview
 - support for multiple pages
+- better palette (bounds + slots interpolated between those)
 
 You can find more information about Harmony at http://mrdoob.com/blog/post/689.
 
