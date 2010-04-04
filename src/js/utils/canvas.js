@@ -124,16 +124,9 @@ ProxyCanvas.prototype = {
         return ret;
     },
     getPointsOfType: function ( brushName ) {
-        var ret = new Points();
-        var brushStrokes = this.strokes[brushName];
-
-        if( brushStrokes ) {
-            for( var i = 0; i < brushStrokes.length; i++ ) {
-                ret.extend(brushStrokes[i]);
-            }
+        if( brushName in this.strokes ) {
+            return this.strokes[brushName].points;
         }
-
-        return ret;
     },
 }
 
@@ -144,13 +137,21 @@ function Strokes() {
 Strokes.prototype = {
     init: function () {},
     destroy: function () {},
-    push: function (brushName, strokes) {
+    push: function (brushName, points) {
         if( !this[brushName] ) {
-            this[brushName] = [];
+            this[brushName] = new BrushStroke();
         }
 
-        for( var i = 0; i < strokes.length; i++ ) {
-            this[brushName].push(strokes[i]);
-        }
+        this[brushName].points.extend(points);
     }
+}
+
+function BrushStroke() {
+    this.init();
+}
+BrushStroke.prototype = {
+    init: function () {
+        this.points = new Points();
+    },
+    destroy: function () {},
 }

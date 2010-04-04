@@ -45,8 +45,8 @@ StrokeManager.prototype = {
     end: function (point) {
         this.paintTemplate(point);
 
-        var strokes = this.painters.getStrokes();
-        this.activeCanvas.strokes.push(panels['brushes'].selected, strokes);
+        var points = this.painters.getStrokePoints();
+        this.activeCanvas.strokes.push(panels['brushes'].selected, points);
     },
     paintTemplate: function (point) {
         this.cursorPoints.push(point);
