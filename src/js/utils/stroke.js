@@ -14,7 +14,7 @@ StrokeManager.prototype = {
     },
     destroy: function () {},
     start: function (point) {
-        mainCanvas = new ProxyCanvas(this.activeCanvasId);
+        mainCanvas = this.getActiveCanvas();
         brush = panels['brushes'].getSelected();
         color = panels['palette'].getColor();
         this.mode = panels['brushes'].getMode();
@@ -99,6 +99,12 @@ StrokeManager.prototype = {
     },
     initCursor: function () {
         this.cursorPoints = new Queue(this.filterLength);
+    },
+    addCanvas: function (canvasId) {
+        this.setActiveCanvas(canvasId);
+
+        var canvas = this.getActiveCanvas();
+        canvas.fill('white'); // XXX: fetch this from canvas settings
     },
     getActiveCanvas: function () {
         return new ProxyCanvas(this.activeCanvasId);

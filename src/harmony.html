@@ -90,15 +90,13 @@
 
                             oldCanvasData = oldCanvas.getData();
 
-                            canvasId = createCanvas(ui.panel.id);
-                            strokeManager.setActiveCanvas(canvasId);
+                            createCanvas(ui.panel.id);
 
                             newCanvas = strokeManager.getActiveCanvas();
                             newCanvas.setData(oldCanvasData);
                         }
                         else {
-                            canvasId = createCanvas(ui.panel.id);
-                            strokeManager.setActiveCanvas(canvasId);
+                            createCanvas(ui.panel.id);
                         }
                     },
                     select: function(event, ui) {
@@ -204,8 +202,7 @@
                 $('#exportDialog').dialog('close');
             });
 
-            canvasId = createCanvas("page1");
-            strokeManager.setActiveCanvas(canvasId);
+            createCanvas("page1");
 
             function createCanvas(pageName) {
                 var canvasId = pageName + "Canvas";
@@ -220,11 +217,7 @@
                     ' class="pageCanvas"></canvas></div>'
                 );
 
-                // initialize canvas as white (XXX: fetch this from canvas settings!)
-                mainCanvas = new ProxyCanvas(canvasId);
-                mainCanvas.fill("white");
-
-                return canvasId;
+                strokeManager.addCanvas(canvasId);
             }
 
             $('.pageCanvas').live('dragstart', function(e) {
