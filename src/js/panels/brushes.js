@@ -217,7 +217,7 @@ brushes.prototype = {
     },
     renderBrushPreview: function (brushId) {
         brushCanvas = new ProxyCanvas(brushId);
-        brushCanvas.fill('white');
+        brushCanvas.fill([255, 255, 255]);
 
         brush = eval("new " + brushName + "()");
 
