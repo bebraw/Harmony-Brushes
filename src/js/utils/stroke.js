@@ -17,14 +17,13 @@ StrokeManager.prototype = {
     },
     destroy: function () {},
     start: function (point) {
-        mainCanvas = this.getActiveCanvas();
         brush = panels['brushes'].getSelected();
         color = panels['palette'].getColor();
         this.mode = panels['brushes'].getMode();
 
         this.painters = new Painters();
 
-        this.painters.add(mainCanvas, clone(brush), color);
+        this.painters.add(this.activeCanvas, clone(brush), color);
 
         // TODO: stackify this!
         modifiers = panels['modifiers'].getActiveModifiers();
@@ -36,11 +35,11 @@ StrokeManager.prototype = {
             // XXX: hack for amount
             if('attributes' in modifier) {
                 if('amount' in modifier.attributes) {
-                    this.painters.add(mainCanvas, clone(brush), color, modifier, modifier.amount);
+                    this.painters.add(this.activeCanvas, clone(brush), color, modifier, modifier.amount);
                 }
             }
             else {
-                this.painters.add(mainCanvas, clone(brush), color, modifier);
+                this.painters.add(this.activeCanvas, clone(brush), color, modifier);
             }
         }
 
@@ -107,16 +106,12 @@ StrokeManager.prototype = {
         this.canvasii[canvasId] = new ProxyCanvas(canvasId);
         this.setActiveCanvas(canvasId);
 
-        var canvas = this.getActiveCanvas();
-        canvas.fill('white'); // XXX: fetch this from canvas settings
+        this.activeCanvas.fill('white'); // XXX: fetch this from canvas settings
     },
     removeCanvas: function (canvasId) {
         delete this.canvasii[canvasId];
     },
-    getActiveCanvas: function () {
-        return this.canvasii[this.activeCanvasId];
-    },
     setActiveCanvas: function (canvasId) {
-        this.activeCanvasId = canvasId;
+        this.activeCanvas = this.canvasii[canvasId];
     }
 }

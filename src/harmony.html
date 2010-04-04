@@ -86,13 +86,13 @@
                     tabTemplate: '<li><span class="ui-icon ui-icon-wrench modifyPage">Tools</span><a href="#{href}">#{label}</a><span class="ui-icon ui-icon-close removePage">Remove Page</span></li>',
                     add: function(event, ui) {
                         if($("#copyPage").attr('checked')) {
-                            oldCanvas = strokeManager.getActiveCanvas();
+                            oldCanvas = strokeManager.activeCanvas;
 
                             oldCanvasData = oldCanvas.getData();
 
                             createCanvas(ui.panel.id);
 
-                            newCanvas = strokeManager.getActiveCanvas();
+                            newCanvas = strokeManager.activeCanvas;
                             newCanvas.setData(oldCanvasData);
                         }
                         else {
@@ -199,8 +199,7 @@
             $('#exportButton').click(function() {
                 selectedFormat = $('#exportFormats input:checked').val();
 
-                canvas = strokeManager.getActiveCanvas();
-                canvas.saveAs(selectedFormat);
+                strokeManager.activeCanvas.saveAs(selectedFormat);
 
                 $('#exportDialog').dialog('close');
             });
