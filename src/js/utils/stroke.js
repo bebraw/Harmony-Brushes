@@ -36,6 +36,7 @@ StrokeManager.prototype = {
             }
         }
 
+        this.initPoints();
         this.initCursor();
         this.paintTemplate(point);
     },
@@ -57,19 +58,8 @@ StrokeManager.prototype = {
             var dist = this.cursorPoints[2].sub(this.cursorPoints[1]).toDist();
             point = panels['brushes'].applyJitter(point);
 
-            var points = null;
-            shadingType = panels['brushes'].getShadingType();
-
-            if(shadingType == 'same') {
-                points = this.activeCanvas.getPointsOfType(panels['brushes'].selected);
-            }
-
-            if(shadingType == 'all') {
-                points = this.activeCanvas.getAllPoints();
-            }
-
             this.painters.paint(this.cursorPoints[0], size, opacity, this.mode,
-                points);
+                this.points);
 
             if(dist > FILTERDISTANCE) {
                 midPoints = deCasteljau(this.cursorPoints, FILTERLENGTH - 1);
@@ -77,14 +67,26 @@ StrokeManager.prototype = {
 
                 for( var i = 0; i < midPoints.length; i++ ) {
                     this.painters.paint(midPoints[i], size, opacity, this.mode,
-                        points);
+                        this.points);
                 }
 
                 this.painters.paint(this.cursorPoints[FILTERLENGTH - 1],
-                    size, opacity, this.mode, points);
+                    size, opacity, this.mode, this.points);
 
                 this.initCursor();
             }
+        }
+    },
+    initPoints: function () {
+        this.points = null;
+        shadingType = panels['brushes'].getShadingType();
+
+        if(shadingType == 'same') {
+            this.points = this.activeCanvas.getPointsOfType(panels['brushes'].selected);
+        }
+
+        if(shadingType == 'all') {
+            this.points = this.activeCanvas.getAllPoints();
         }
     },
     initCursor: function () {
