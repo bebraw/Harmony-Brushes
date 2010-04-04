@@ -65,15 +65,7 @@
         <script type="text/javascript" src="js/utils/constraints.js"></script>
         <script type="text/javascript" src="js/utils/painter.js"></script>
 
-        <script type="text/javascript">
-        var BRUSHES = ["sketchy", "shaded", "chrome", "fur", "longfur", "web",
-            "simple", "squares", "ribbon", "circles", "grid", "stringy",
-            "curvy", "eraser"];
-        var CONSTRAINTS = ["horizontal", "perspective", "vertical"];
-        var MODIFIERS = ["array", "group", "horizontalmirror",
-            "verticalmirror", "radialmirror"];
-        var PANELS = ["brushes", "canvas", "modifiers", "playback"];
-        </script>
+        <script type="text/javascript" src="js/conf.js"></script>
 
         <script type="text/javascript">
         $(function() {
@@ -303,9 +295,7 @@
 
         <script type="text/javascript">
             var constraints = new Constraints(); // XXX: needed?
-            var COLOR = [0, 0, 0];
-            var amountOfColors = 23;
-
+            
             var leftBoundColor = "000000";
             var rightBoundColor = "ffffff";
             $('#colors').append('<li> \
@@ -315,13 +305,13 @@
                     leftBoundColor + '" /> \
                 </li>');
             
-            for( var i = 0; i < amountOfColors; i++ ) {
+            for( var i = 0; i < AMOUNTOFCOLORS; i++ ) {
                 $('#colors').append('<li> \
                         <input style="width: 1em; height: 1em;" class="clickableColor" /> \
                     </li>');
             }
 
-            interpolateColors(leftBoundColor, rightBoundColor, amountOfColors);
+            interpolateColors(leftBoundColor, rightBoundColor, AMOUNTOFCOLORS);
 
             // right bound
             $('#colors').append('<li> \
@@ -340,7 +330,8 @@
                 leftBoundColor = $('#leftBoundColor').val();
                 rightBoundColor = $('#rightBoundColor').val();
 
-                interpolateColors(leftBoundColor, rightBoundColor, amountOfColors);
+                interpolateColors(leftBoundColor, rightBoundColor,
+                    AMOUNTOFCOLORS);
             });
 
             function interpolateColors(leftBoundColor, rightBoundColor, amountOfColors) {

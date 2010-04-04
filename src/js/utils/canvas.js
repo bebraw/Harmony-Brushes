@@ -44,8 +44,9 @@ ProxyCanvas.prototype = {
     setData: function (data) {
         this.context.putImageData(data, 0, 0);
     },
-    fill: function (colorName) {
-        this.context.fillStyle = colorName;
+    fill: function (color) {
+        this.context.fillStyle = "rgb(" + color[0] + ", " + color[1] +
+            ", " + color[2] + ")";
         this.context.fillRect(0, 0, this.canvas.width, this.canvas.height);
     },
     text: function (label, colorName, font, x, y) {

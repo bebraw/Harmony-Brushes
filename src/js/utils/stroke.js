@@ -8,9 +8,6 @@ function StrokeManager() {
 StrokeManager.prototype = {
     init: function () {
         this.canvasii = {};
-
-        this.filterDistance = 500;
-        this.filterLength = 3;
     },
     destroy: function () {},
     start: function (point) {
@@ -54,7 +51,7 @@ StrokeManager.prototype = {
     paintTemplate: function (point) {
         this.cursorPoints.push(point);
 
-        if( this.cursorPoints.length == this.filterLength ) {
+        if( this.cursorPoints.length == FILTERLENGTH ) {
             var size = panels['brushes'].getSize();
             var opacity = panels['brushes'].getOpacity();
             var dist = this.cursorPoints[2].sub(this.cursorPoints[1]).toDist();
@@ -74,9 +71,8 @@ StrokeManager.prototype = {
             this.painters.paint(this.cursorPoints[0], size, opacity, this.mode,
                 points);
 
-            if(dist > this.filterDistance) {
-                midPoints = deCasteljau(this.cursorPoints,
-                    this.filterLength - 1);
+            if(dist > FILTERDISTANCE) {
+                midPoints = deCasteljau(this.cursorPoints, FILTERLENGTH - 1);
                 midPoints = midPoints.slice(1, midPoints.length - 1);
 
                 for( var i = 0; i < midPoints.length; i++ ) {
@@ -84,7 +80,7 @@ StrokeManager.prototype = {
                         points);
                 }
 
-                this.painters.paint(this.cursorPoints[this.filterLength - 1],
+                this.painters.paint(this.cursorPoints[FILTERLENGTH - 1],
                     size, opacity, this.mode, points);
 
                 this.initCursor();
@@ -92,13 +88,14 @@ StrokeManager.prototype = {
         }
     },
     initCursor: function () {
-        this.cursorPoints = new Queue(this.filterLength);
+        this.cursorPoints = new Queue(FILTERLENGTH);
     },
     addCanvas: function (canvasId) {
         this.canvasii[canvasId] = new ProxyCanvas(canvasId);
         this.setActiveCanvas(canvasId);
 
-        this.activeCanvas.fill('white'); // XXX: fetch this from canvas settings
+        // XXX: fetch this from canvas settings
+        this.activeCanvas.fill(BACKGROUNDCOLOR);
     },
     removeCanvas: function (canvasId) {
         delete this.canvasii[canvasId];
