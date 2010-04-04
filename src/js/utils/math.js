@@ -28,17 +28,37 @@ Points.prototype = {
         }
     },
     getWithinRange: function (point, range) {
-        var ret = [];
-
+        // 1. check y
+        var candidates = [];
         for (var i = 0; i < this.length; i++) {
             currentPoint = this[i];
+
+            if( range(Math.abs(point.x - currentPoint.x))) {
+                candidates.push(currentPoint);
+            }
+        }
+
+        // 2. check x
+        var finalCandidates = [];
+        for (i = 0; i < candidates.length; i++) {
+            currentPoint = candidates[i];
+
+            if( range(Math.abs(point.y - currentPoint.y)) ) {
+                finalCandidates.push(currentPoint);
+            }
+        }
+
+        // 3. check exact range
+        var ret = [];
+        for (i = 0; i < finalCandidates.length; i++) {
+            currentPoint = finalCandidates[i];
             dist = currentPoint.sub(point).toDist();
 
             if( range(dist) ) {
                 ret.push({'point': currentPoint, 'dist': dist});
             }
         }
-        
+
         return ret;
     }
 }
