@@ -29,17 +29,13 @@ Painters.prototype = {
             painter.paint(point, brushSize, brushOpacity, mode, points);
         }
     },
-    getPoints: function () {
+    getStrokes: function () {
         var ret = [];
 
         for (var i = 0; i < this.length; i++) {
             painter = this[i];
 
-            for (var j = 0; j < painter.points.length; j++) {
-                point = painter.points[j];
-
-                ret.push(point);
-            }
+            ret.push(painter.points);
         }
 
         return ret;

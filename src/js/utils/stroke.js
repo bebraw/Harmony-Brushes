@@ -32,7 +32,8 @@ StrokeManager.prototype = {
             // XXX: hack for amount
             if('attributes' in modifier) {
                 if('amount' in modifier.attributes) {
-                    this.painters.add(this.activeCanvas, clone(brush), color, modifier, modifier.amount);
+                    this.painters.add(this.activeCanvas, clone(brush), color,
+                        modifier, modifier.amount);
                 }
             }
             else {
@@ -49,8 +50,8 @@ StrokeManager.prototype = {
     end: function (point) {
         this.paintTemplate(point);
 
-        allStrokePoints = this.painters.getPoints();
-        this.activeCanvas.points.extend(allStrokePoints);
+        var strokes = this.painters.getStrokes();
+        this.activeCanvas.strokes.push(panels['brushes'].selected, strokes);
     },
     paintTemplate: function (point) {
         this.cursorPoints.push(point);
@@ -66,13 +67,11 @@ StrokeManager.prototype = {
                 shadingType = panels['brushes'].getShadingType();
 
                 if(shadingType == 'same') {
-                    // TODO
-                    //brush = panels['brushes'].getSelected();
-                    //points = this.activeCanvas.points.getPointsOfType(brush);
+                    points = this.activeCanvas.getPointsOfType(panels['brushes'].selected);
                 }
 
                 if(shadingType == 'all') {
-                    points = this.activeCanvas.points;
+                    points = this.activeCanvas.getAllPoints();
                 }
             }
 

@@ -13,7 +13,7 @@ ProxyCanvas.prototype = {
         this.width = this.canvas.width;
         this.height = this.canvas.height;
         
-        this.points = new Points();
+        this.strokes = new Strokes();
     },
     destroy: function () {},
     saveAs: function (format) {
@@ -97,9 +97,9 @@ ProxyCanvas.prototype = {
         this.context.arc(center.x, center.y, radius, 0, Math.PI * 2, true);
         this.context.stroke()
     },
-    getPointsInside: function (radius, location) {
-        points = panels['canvas'].points;
-        ret = [];
+    getPointsInside: function (radius, location) { // TODO: change to work with current system! -> make a func?
+        var points = panels['canvas'].points;
+        var ret = [];
 
         for (var i = 0; i < points.length; i++) {
             point = points[i];
@@ -112,5 +112,42 @@ ProxyCanvas.prototype = {
         }
 
         return ret;
+    },
+    getAllPoints: function () { // XXX: cache?
+        var ret = new Points();
+
+        for( var brushName in this.strokes ) {
+            ret.extend(this.getPointsOfType(brushName));
+        }
+
+        return ret;
+    },
+    getPointsOfType: function ( brushName ) {
+        var ret = new Points();
+        var brushStrokes = this.strokes[brushName];
+
+        for( var i = 0; i < brushStrokes.length; i++ ) {
+            ret.extend(brushStrokes[i]);
+        }
+
+        return ret;
+    },
+}
+
+// XXX: separate derived strokes somehow?
+function Strokes() {
+    this.init();
+}
+Strokes.prototype = {
+    init: function () {},
+    destroy: function () {},
+    push: function (brushName, strokes) {
+        if( !this[brushName] ) {
+            this[brushName] = [];
+        }
+
+        for( var i = 0; i < strokes.length; i++ ) {
+            this[brushName].push(strokes[i]);
+        }
     }
 }
