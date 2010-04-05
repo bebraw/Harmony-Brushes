@@ -26,7 +26,7 @@ canvas.prototype = {
                 </div> \
             </div>');
 
-        var backgroundColor = '00ff00';
+        var backgroundColor = RGBtoHex(BACKGROUNDCOLOR);
         $('#canvasPanel').append('<div id="solidColorSelector"> \
                 <input style="width: 1em; height: 1em;" class="color {valueElement:' +
                 "'backgroundColor'" + '}" /> \
