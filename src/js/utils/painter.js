@@ -2,11 +2,13 @@
  * http://www.opensource.org/licenses/mit-license.php
  * Copyright (c) 2010 Mr.doob, rhyolight, bebraw
  */
-function Painters() {
-    this.init();
+function Painters( canvas ) {
+    this.init(canvas);
 }
 Painters.prototype = {
-    init: function () {
+    init: function (canvas) {
+        this.canvas = canvas;
+
         this.length = 0;
     },
     destroy: function () {},
@@ -30,7 +32,7 @@ Painters.prototype = {
         }
     },
     getStrokePoints: function () {
-        var ret = new Points();
+        var ret = new Points(this.canvas.width, this.canvas.height);
 
         for (var i = 0; i < this.length; i++) {
             painter = this[i];
@@ -48,6 +50,7 @@ function InstancePainter(amount, canvas, brush, color, modifier) {
 InstancePainter.prototype = {
     init: function (amount, canvas, brush, color, modifier) {
         this.amount = amount;
+        this.canvas = canvas;
         this.modifier = modifier;
 
         this.painters = [];
@@ -67,7 +70,7 @@ InstancePainter.prototype = {
         }
     },
     getPoints: function () {
-        var ret = new Points();
+        var ret = new Points(this.canvas.width, this.canvas.height);
 
         for (var i = 0; i < this.painters.length; i++) {
             var painter = this.painters[i];
@@ -88,7 +91,7 @@ Painter.prototype = {
         this.brush = brush;
         this.color = color;
         this.modifier = modifier?modifier:new NullModifier();
-        this.points = new Points();
+        this.points = new Points(canvas.width, canvas.height);
     },
     destroy: function () {},
     paint: function (point, lineWidth, opacity, compositeOperation, points) {
@@ -100,10 +103,16 @@ Painter.prototype = {
             this.canvas.context.lineWidth = lineWidth;
             this.canvas.context.globalCompositeOperation = compositeOperation;
 
-            brushPoints = this.points;
             if(points) {
+                // XXX: fails!!! quadrants is empty after first stroke!
                 brushPoints = clone(points);
                 brushPoints.extend(this.points);
+                //brushPoints = new Points(this.canvas.width, this.canvas.height);
+                //brushPoints.extend(points);
+                //brushPoints.extend(this.points);
+            }
+            else {
+                brushPoints = this.points;
             }
 
             this.brush.stroke(this.canvas, brushPoints, this.color, opacity);

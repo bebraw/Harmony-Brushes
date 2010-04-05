@@ -13,7 +13,7 @@ ProxyCanvas.prototype = {
         this.width = this.canvas.width;
         this.height = this.canvas.height;
         
-        this.strokes = new Strokes();
+        this.strokes = new Strokes(this.width, this.height);
     },
     destroy: function () {},
     saveAs: function (format) {
@@ -125,17 +125,20 @@ ProxyCanvas.prototype = {
 }
 
 // XXX: separate derived strokes somehow?
-function Strokes() {
-    this.init();
+function Strokes( width, height ) {
+    this.init(width, height);
 }
 Strokes.prototype = {
-    init: function () {
-        this.all = new Points();
+    init: function (width, height) {
+        this.all = new Points(width, height);
+
+        this.width = width;
+        this.height = height;
     },
     destroy: function () {},
     push: function (brushName, points) {
         if( !this[brushName] ) {
-            this[brushName] = new BrushStroke();
+            this[brushName] = new BrushStroke(this.width, this.height);
         }
 
         this[brushName].points.extend(points);
@@ -144,12 +147,12 @@ Strokes.prototype = {
     }
 }
 
-function BrushStroke() {
-    this.init();
+function BrushStroke( width, height ) {
+    this.init(width, height);
 }
 BrushStroke.prototype = {
-    init: function () {
-        this.points = new Points();
+    init: function (width, height) {
+        this.points = new Points(width, height);
     },
     destroy: function () {},
 }

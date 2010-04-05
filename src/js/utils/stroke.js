@@ -16,7 +16,7 @@ StrokeManager.prototype = {
         color = getColor();
         this.mode = panels['brushes'].getMode();
 
-        this.painters = new Painters();
+        this.painters = new Painters(this.activeCanvas);
 
         this.painters.add(this.activeCanvas, brush, color);
 

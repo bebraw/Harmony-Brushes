@@ -2,11 +2,13 @@
  * http://www.opensource.org/licenses/mit-license.php
  * Copyright (c) 2010 Mr.doob, rhyolight, bebraw
  */
-function Points() {
-    this.init();
+function Points(width, height) {
+    this.init(width, height);
 }
 Points.prototype = {
-    init: function () {
+    init: function (width, height) {
+        this.quadrants = new Quadrants(width, height, 10, 10);
+
         this.current = null;
         this.previous = null;
 
@@ -14,20 +16,35 @@ Points.prototype = {
     },
     destroy: function () {},
     push: function (item) {
+        this.quadrants.push(item);
+
         this.content.push(item);
         this.previous = this.current;
         this.current = item;
     },
     extend: function (points) {
         if(points) {
+            this.quadrants.extend(points);
+
             this.content = points.content.concat(this.content);
             this.current = points.current;
             this.previous = points.previous;
         }
     },
     getWithinRange: function (point, range, maxRange) {
-        var content = this.content;
+        var ret = [];
+        var quadtrants = this.quadrants.find(point, Math.sqrt(maxRange));
 
+        for( var i = 0; i < quadtrants.length; i++ ) {
+            var points = quadtrants[i];
+            
+            ret = ret.concat(this._getWithinRange(point, range, maxRange,
+                points));
+        }
+
+        return ret;
+    },
+    _getWithinRange: function ( point, range, maxRange, content ) {
         // 1. check x
         // sort based on x
         function sortBasedOnX(a, b) {
@@ -216,5 +233,126 @@ Queue.prototype = {
             this[this.length] = item;
             this.length++;
         }
+    }
+}
+
+function Quadrants( width, height, xParts, yParts ) {
+    this.init(width, height, xParts, yParts);
+}
+Quadrants.prototype = {
+    init: function ( width, height, xParts, yParts ) {
+        this.xParts = xParts;
+        this.yParts = yParts;
+
+        this.rows = {};
+
+        var xOffset = width / xParts;
+        var yOffset = height / yParts;
+
+        for( var i = 0; i < xParts; i++ ) {
+            var x = i * xOffset;
+            this.rows[x] = {};
+
+            for( var j = 0; j < yParts; j++ ) {
+                var y = j * yOffset;
+                this.rows[x][y] = [];
+            }
+        }
+    },
+    destroy: function () {},
+    extend: function ( points ) {
+        // XXX: note that points contains quadrants already -> use that information?
+        for (var i = 0; i < points.content.length; i++) {
+            var point = points.content[i];
+
+            this.push(point);
+        }
+    },
+    push: function ( item ) {
+        for (var rowX in this.rows) {
+            if( rowX < item.x ) {
+                var row = this.rows[rowX];
+
+                for (var columnY in row) {
+                    if( columnY < item.y ) {
+                        var column = row[columnY];
+
+                        column.push(item);
+                    }
+                }
+            }
+        }
+    },
+    find: function (point, range) {
+        // finds quadrants that are within the radius of given circle
+        var ret = [];
+        var minX = Math.max(point.x - range, 0);
+        var maxX = point.x + range;
+        var minY = Math.max(point.y - range, 0);
+        var maxY = point.y + range;
+        var previousRowOk = false;
+        var suitableRows = [];
+        var currentRowIndex = 0;
+
+        for(var rowX in this.rows) {
+            var row = this.rows[rowX];
+
+            if( previousRowOk || (currentRowIndex == this.xParts - 1) ) {
+                if( rowX > maxX || (currentRowIndex == this.xParts - 1) ) {
+                    var previousColumnOk = false;
+                    var suitableColumns = [];
+                    
+                    suitableRows.push(row);
+
+                    for( var i = 0; i < suitableRows.length; i++ ) {
+                        var previousRow = suitableRows[i];
+                        var currentColumnIndex = 0;
+
+                        for (var columnY in previousRow ) {
+                            var column = previousRow[columnY];
+
+                            if( previousColumnOk || (currentColumnIndex == this.yParts - 1) ) {
+                                if( columnY > maxY || (currentColumnIndex == this.yParts - 1)) {
+                                    suitableColumns.push(column);
+
+                                    // TODO: check suitable columns now!
+                                    for( var j = 0; j < suitableColumns.length; j++ ) {
+                                        columnItems = suitableColumns[j];
+
+                                        ret.push(columnItems);
+                                    }
+
+                                    break;
+                                }
+                                else {
+                                    // accumulate previous columns. circle spans over boundaries
+                                    suitableColumns.push(column);
+                                }
+                            }
+                            else {
+                                previousColumnOk = columnY <= minY;
+                                suitableColumns = [column, ];
+                            }
+
+                            currentColumnIndex++;
+                        }
+                    }
+                    
+                    break;
+                }
+                else {
+                    // accumulate previous rows. circle spans over boundaries
+                    suitableRows.push(row);
+                }
+            }
+            else {
+                previousRowOk = rowX <= minX;
+                suitableRows = [row, ];
+            }
+
+            currentRowIndex++;
+        }
+
+        return ret;
     }
 }
