@@ -114,14 +114,8 @@ ProxyCanvas.prototype = {
 
         return ret;
     },
-    getAllPoints: function () { // XXX: cache?
-        var ret = new Points();
-
-        for( var brushName in this.strokes ) {
-            ret.extend(this.getPointsOfType(brushName));
-        }
-
-        return ret;
+    getAllPoints: function () {
+        return this.strokes.all;
     },
     getPointsOfType: function ( brushName ) {
         if( brushName in this.strokes ) {
@@ -135,7 +129,9 @@ function Strokes() {
     this.init();
 }
 Strokes.prototype = {
-    init: function () {},
+    init: function () {
+        this.all = new Points();
+    },
     destroy: function () {},
     push: function (brushName, points) {
         if( !this[brushName] ) {
@@ -143,6 +139,8 @@ Strokes.prototype = {
         }
 
         this[brushName].points.extend(points);
+        
+        this.all.extend(points);
     }
 }
 
