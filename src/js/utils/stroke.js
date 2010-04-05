@@ -8,6 +8,7 @@ function StrokeManager() {
 StrokeManager.prototype = {
     init: function () {
         this.canvasii = {};
+        this.activeCanvas = null;
     },
     destroy: function () {},
     start: function (point) {
@@ -97,13 +98,15 @@ StrokeManager.prototype = {
         this.canvasii[canvasId] = new ProxyCanvas(canvasId);
         this.setActiveCanvas(canvasId);
 
-        // XXX: fetch this from canvas settings
-        this.activeCanvas.fill(BACKGROUNDCOLOR);
+        $('#' + canvasId).css('backgroundColor', '#' + RGBtoHex(BACKGROUNDCOLOR));
     },
     removeCanvas: function (canvasId) {
         delete this.canvasii[canvasId];
     },
     setActiveCanvas: function (canvasId) {
         this.activeCanvas = this.canvasii[canvasId];
+
+        $('.pageCanvas').removeClass('activePage');
+        $('#' + canvasId).addClass('activePage');
     }
 }

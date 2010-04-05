@@ -14,7 +14,7 @@ var PANELS = ["brushes", "canvas", "modifiers", "playback"];
 var COLOR = [0, 0, 0];
 var AMOUNTOFCOLORS = 23; // amount of colors in the brush color gradient
 
-var BACKGROUNDCOLOR = [255, 255, 255];
+var BACKGROUNDCOLOR = [128, 128, 128];
 
 // stroke filtering options
 var FILTERDISTANCE = 500;
