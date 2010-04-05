@@ -40,10 +40,6 @@ canvas.prototype = {
 
         $("#canvasOptions").css("margin-bottom", "0.5em");
 
-        $("#solidColorSelector div").css("backgroundColor", "white");
-        $("#solidColorSelector div").css("width", "2em");
-        $("#solidColorSelector div").css("height", "2em");
-
         $("#canvasOptions").buttonset();
 
         $("#canvasPanel").dialog({
