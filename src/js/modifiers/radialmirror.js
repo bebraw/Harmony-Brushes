@@ -11,15 +11,18 @@ radialmirror.prototype = {
     destroy: function () {},
     modify: function (point) {
         // TODO: use some nice math lib for rot?
-        angle = 2 * Math.PI / (this.amount + 1);
-        cosine = Math.cos(angle);
-        sine = Math.sin(angle);
+        var angle = 2 * Math.PI / (this.amount + 1);
+        var cosine = Math.cos(angle);
+        var sine = Math.sin(angle);
 
-        centerX = window.innerWidth / 2;
-        centerY = window.innerHeight / 2;
+        var canvasWidth = $('.activePage').width();
+        var canvasHeight = $('.activePage').height();
 
-        originX = point.x - centerX;
-        originY = point.y - centerY;
+        var centerX = canvasWidth / 2;
+        var centerY = canvasHeight / 2;
+
+        var originX = point.x - centerX;
+        var originY = point.y - centerY;
 
         return new Point(originX * cosine - originY * sine + centerX,
             originY * cosine + originX * sine + centerY);
