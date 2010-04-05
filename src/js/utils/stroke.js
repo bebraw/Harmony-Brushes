@@ -53,29 +53,30 @@ StrokeManager.prototype = {
         this.cursorPoints.push(point);
 
         if( this.cursorPoints.length == FILTERLENGTH ) {
-            var size = panels['brushes'].getSize();
-            var opacity = panels['brushes'].getOpacity();
             var dist = this.cursorPoints[2].sub(this.cursorPoints[1]).toDist();
-            point = panels['brushes'].applyJitter(point);
 
-            this.painters.paint(this.cursorPoints[0], size, opacity, this.mode,
-                this.points);
+            this.applyJitterAndPaint(this.cursorPoints[0]);
 
-            if(dist > FILTERDISTANCE) {
+            if( dist > FILTERDISTANCE ) {
                 midPoints = deCasteljau(this.cursorPoints, FILTERLENGTH - 1);
                 midPoints = midPoints.slice(1, midPoints.length - 1);
 
                 for( var i = 0; i < midPoints.length; i++ ) {
-                    this.painters.paint(midPoints[i], size, opacity, this.mode,
-                        this.points);
+                    this.applyJitterAndPaint(midPoints[i]);
                 }
 
-                this.painters.paint(this.cursorPoints[FILTERLENGTH - 1],
-                    size, opacity, this.mode, this.points);
+                this.applyJitterAndPaint(this.cursorPoints[FILTERLENGTH - 1]);
 
                 this.initCursor();
             }
         }
+    },
+    applyJitterAndPaint: function ( point ) {
+        var size = panels['brushes'].getSize();
+        var opacity = panels['brushes'].getOpacity();
+        point = panels['brushes'].applyJitter(point);
+
+        this.painters.paint(point, size, opacity, this.mode, this.points);
     },
     initPoints: function () {
         this.points = null;
