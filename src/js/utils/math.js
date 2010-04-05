@@ -7,7 +7,7 @@ function Points(width, height) {
 }
 Points.prototype = {
     init: function (width, height) {
-        this.quadrants = new Quadrants(width, height, 10, 10);
+        this.quadrants = new Quadrants(width, height, 4, 4);
 
         this.current = null;
         this.previous = null;
@@ -278,6 +278,7 @@ Quadrants.prototype = {
                         var column = row[columnY];
 
                         column.push(item);
+                        break;
                     }
                 }
             }
@@ -315,11 +316,8 @@ Quadrants.prototype = {
                                 if( columnY > maxY || (currentColumnIndex == this.yParts - 1)) {
                                     suitableColumns.push(column);
 
-                                    // TODO: check suitable columns now!
                                     for( var j = 0; j < suitableColumns.length; j++ ) {
-                                        columnItems = suitableColumns[j];
-
-                                        ret.push(columnItems);
+                                        ret.push(suitableColumns[j]);
                                     }
 
                                     break;
