@@ -277,7 +277,9 @@ Quadrants.prototype = {
                     if( columnY < item.y ) {
                         var column = row[columnY];
 
-                        column.push(item);
+                        if( column.indexOf(item) == -1 ) {
+                            column.push(item);
+                        }
                         break;
                     }
                 }

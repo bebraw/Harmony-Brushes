@@ -104,12 +104,8 @@ Painter.prototype = {
             this.canvas.context.globalCompositeOperation = compositeOperation;
 
             if(points) {
-                // XXX: fails!!! quadrants is empty after first stroke!
                 brushPoints = clone(points);
                 brushPoints.extend(this.points);
-                //brushPoints = new Points(this.canvas.width, this.canvas.height);
-                //brushPoints.extend(points);
-                //brushPoints.extend(this.points);
             }
             else {
                 brushPoints = this.points;
