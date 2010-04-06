@@ -58,6 +58,10 @@ Points.prototype = {
 
             return -1;
         }
+        if( !content ) {
+            return [];
+        }
+
         content.sort(sortBasedOnX);
 
         var candidates = [];
@@ -298,40 +302,36 @@ Quadrants.prototype = {
         var currentRowIndex = 0;
 
         for(var rowX in this.rows) {
-            var row = this.rows[rowX];
-
             if( previousRowOk || (currentRowIndex == this.xParts - 1) ) {
                 if( rowX > maxX || (currentRowIndex == this.xParts - 1) ) {
                     var previousColumnOk = false;
                     var suitableColumns = [];
                     
-                    suitableRows.push(row);
+                    suitableRows.push(rowX);
 
                     for( var i = 0; i < suitableRows.length; i++ ) {
-                        var previousRow = suitableRows[i];
+                        var previousRow = this.rows[i];
                         var currentColumnIndex = 0;
 
                         for (var columnY in previousRow ) {
-                            var column = previousRow[columnY];
-
                             if( previousColumnOk || (currentColumnIndex == this.yParts - 1) ) {
                                 if( columnY > maxY || (currentColumnIndex == this.yParts - 1)) {
-                                    suitableColumns.push(column);
+                                    suitableColumns.push(columnY);
 
                                     for( var j = 0; j < suitableColumns.length; j++ ) {
-                                        ret.push(suitableColumns[j]);
+                                        ret.push(previousRow[j]);
                                     }
 
                                     break;
                                 }
                                 else {
                                     // accumulate previous columns. circle spans over boundaries
-                                    suitableColumns.push(column);
+                                    suitableColumns.push(columnY);
                                 }
                             }
                             else {
                                 previousColumnOk = columnY <= minY;
-                                suitableColumns = [column, ];
+                                suitableColumns = [columnY, ];
                             }
 
                             currentColumnIndex++;
@@ -342,12 +342,12 @@ Quadrants.prototype = {
                 }
                 else {
                     // accumulate previous rows. circle spans over boundaries
-                    suitableRows.push(row);
+                    suitableRows.push(rowX);
                 }
             }
             else {
                 previousRowOk = rowX <= minX;
-                suitableRows = [row, ];
+                suitableRows = [rowX, ];
             }
 
             currentRowIndex++;
