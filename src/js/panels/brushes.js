@@ -35,7 +35,7 @@ brushes.prototype = {
             </div>'
         );
 
-        var panelWidth = 250, panelHeight = 550;
+        var panelWidth = 250, panelHeight = 480;
         $("#brushesPanel").dialog({
             closeOnEscape: false, resizable: false,
             width: panelWidth, minWidth: panelWidth, maxWidth: panelWidth,
@@ -49,9 +49,9 @@ brushes.prototype = {
         );
 
         $("#brushOptions").append('<div id="brushMode" style="margin-top:0.5em;"> \
-                <input type="radio" id="normalMode" name="brushMode" value="source-over" checked="checked" /><label for="normalMode">Normal</label> \
-                <input type="radio" id="lightenMode" name="brushMode" value="lighter" /><label for="lightenMode">Lighten</label> \
-                <input type="radio" id="darkenMode" name="brushMode" value="darker" /><label for="darkenMode">Darken</label> \
+                <input type="radio" id="normalMode" name="brushMode" value="source-over" checked="checked" /><label style="width: 33.3%" for="normalMode">Normal</label> \
+                <input type="radio" id="lightenMode" name="brushMode" value="lighter" /><label style="width: 33.3%" for="lightenMode">Lighten</label> \
+                <input type="radio" id="darkenMode" name="brushMode" value="darker" /><label style="width: 33.3%" for="darkenMode">Darken</label> \
             </div> \
         ');
 
@@ -63,9 +63,9 @@ brushes.prototype = {
         //});
 
         $("#brushOptions").append('<div id="brushShading" style="margin-top:0.5em;"> \
-                <input type="radio" id="currentShading" name="brushShading" value="current" checked="checked" /><label for="currentShading">Current</label> \
-                <input type="radio" id="sameShading" name="brushShading" value="same" /><label for="sameShading">Same</label> \
-                <input type="radio" id="allShading" name="brushShading" value="all" /><label for="allShading">All</label> \
+                <input type="radio" id="currentShading" name="brushShading" value="current" checked="checked" /><label style="width: 33.3%" for="currentShading">Current</label> \
+                <input type="radio" id="sameShading" name="brushShading" value="same" /><label style="width: 33.3%" for="sameShading">Same</label> \
+                <input type="radio" id="allShading" name="brushShading" value="all" /><label style="width: 33.3%" for="allShading">All</label> \
             </div> \
         ');
 
@@ -74,7 +74,7 @@ brushes.prototype = {
         for (var brushOptionName in this.brushOptions) {
             brushOptionValue = this.brushOptions[brushOptionName];
 
-            $("#brushOptions").append('<div style="width:100%; margin-top:0.5em;">');
+            $("#brushOptions").append('<div style="width:100%; margin-top:1em; margin-bottom;0.5em;">');
 
             optionTitle = capitalizeFirstLetter(brushOptionName);
             optionId = 'brush' + brushOptionName;
@@ -83,7 +83,7 @@ brushes.prototype = {
 
                 $("#brushOptions").append('<input type="checkbox" id="' +
                     pressureId + '" /><label for="' + pressureId +
-                    '" style="float:left;">' + optionTitle + '</label>');
+                    '" style="float:left; width: 40%">' + optionTitle + '</label>');
 
                 pressureValue = brushOptionValue.pressure;
 
@@ -105,10 +105,8 @@ brushes.prototype = {
                     optionTitle + ':</div>');
             }
 
-            $("#brushOptions").append('<div style="clear:both;"></div>');
-
             if('value' in brushOptionValue) {
-                $("#brushOptions").append('<div style="width:100%; margin-bottom:0.5em; margin-top:0.5em;" id="' +
+                $("#brushOptions").append('<div style="float:right; width: 48%; margin-top: 0.5em;" id="' +
                     optionId + '"></div>');
 
                 $("#" + optionId).slider({
@@ -125,14 +123,14 @@ brushes.prototype = {
                 });
             }
 
-            $("#brushOptions").append('<div style="clear:both;"></div>');
+            $("#brushOptions").append('<div style="clear:both; height: 0.5em;"></div>');
 
             jitterToggleId = optionId + 'JitterToggle';
             jitterAmountId = optionId + 'JitterAmount';
             $("#brushOptions").append(
                 '<div class="jitter"> \
                     <input type="checkbox" style="float:left;" id="' +
-                        jitterToggleId + '" /><label for="' + jitterToggleId +
+                        jitterToggleId + '" /><label style="width: 40%;" for="' + jitterToggleId +
                         '">Jitter</label> \
                     <div style="float:right; width: 48%; margin-top: 0.5em;" id="' + jitterAmountId + '"></div> \
                 </div> \
