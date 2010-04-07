@@ -77,16 +77,13 @@ brushes.prototype = {
             $("#brushOptions").append('<div style="width:100%; margin-top:0.5em;">');
 
             optionTitle = capitalizeFirstLetter(brushOptionName);
-            $("#brushOptions").append('<div style="float:left;">' +
-                optionTitle + ':</div>');
-
             optionId = 'brush' + brushOptionName;
             if('pressure' in brushOptionValue) {
                 pressureId = optionId + 'pressure';
 
                 $("#brushOptions").append('<input type="checkbox" id="' +
                     pressureId + '" /><label for="' + pressureId +
-                    '" style="float:right;">P</label>');
+                    '" style="float:left;">' + optionTitle + '</label>');
 
                 pressureValue = brushOptionValue.pressure;
 
@@ -102,6 +99,10 @@ brushes.prototype = {
                         panels['brushes'].brushOptions[option].pressure = !pressure;
                     }
                 );
+            }
+            else {
+                $("#brushOptions").append('<div style="float:left;">' +
+                    optionTitle + ':</div>');
             }
 
             $("#brushOptions").append('<div style="clear:both;"></div>');
