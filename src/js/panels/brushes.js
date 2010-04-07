@@ -102,7 +102,7 @@ brushes.prototype = {
             }
             else {
                 $("#brushOptions").append('<div style="float:left;">' +
-                    optionTitle + ':</div>');
+                    optionTitle + '</div>');
             }
 
             if('value' in brushOptionValue) {
@@ -125,13 +125,10 @@ brushes.prototype = {
 
             $("#brushOptions").append('<div style="clear:both; height: 0.5em;"></div>');
 
-            jitterToggleId = optionId + 'JitterToggle';
             jitterAmountId = optionId + 'JitterAmount';
             $("#brushOptions").append(
                 '<div class="jitter"> \
-                    <input type="checkbox" style="float:left;" id="' +
-                        jitterToggleId + '" /><label style="width: 40%;" for="' + jitterToggleId +
-                        '">Jitter</label> \
+                    <div style="float:left; width: 40%">Jitter:</div> \
                     <div style="float:right; width: 48%; margin-top: 0.5em;" id="' + jitterAmountId + '"></div> \
                 </div> \
                 <div style="clear:both;"></div> \
@@ -143,33 +140,14 @@ brushes.prototype = {
 
             $("#brushOptions").append('</div>');
 
-            this.setUpJitter(jitterToggleId, jitterAmountId);
+            this.setUpJitter(jitterAmountId);
         }
 
         // XXX: figure out the width in a nicer way
         this.createBrushes(panelWidth / 3 + 10);
     },
     destroy: function () {},
-    setUpJitter: function ( jitterToggleId, jitterAmountId ) {
-        $("#" + jitterToggleId).button().toggle(
-            function () {
-                $(this).parent('.jitter').children('div').css('visibility',
-                    'visible');
-                // XXX: hack! figure out a nicer way to pass option name!
-                option = $(this).attr('id').replace('JitterToggle', '').replace('brush', '');
-                panels['brushes'].brushOptions[option].jitter.enabled = true;
-                panels['brushes'].renderBrushPreviews();
-            },
-            function () {
-                $(this).parent('.jitter').children('div').css('visibility',
-                    'hidden');
-                // XXX: hack! figure out a nicer way to pass option name!
-                option = $(this).attr('id').replace('JitterToggle', '').replace('brush', '');
-                panels['brushes'].brushOptions[option].jitter.enabled = false;
-                panels['brushes'].renderBrushPreviews();
-            }
-        );
-
+    setUpJitter: function ( jitterAmountId ) {
         $("#" + jitterAmountId).slider({
             range: "max",
             min: 0,
@@ -181,7 +159,7 @@ brushes.prototype = {
                 panels['brushes'].brushOptions[option].jitter.value = ui.value;
                 panels['brushes'].renderBrushPreviews();
             }
-        }).css('visibility', 'hidden');
+        });
     },
     createBrushes: function ( brushWidth ) {
         for (i = 0; i < BRUSHES.length; i++) {
@@ -261,15 +239,13 @@ brushes.prototype = {
     getValueTemplate: function (valueName) {
         value = this.brushOptions[valueName].value;
 
-        if(this.brushOptions[valueName].jitter.enabled) {
-            jitterValue = this.brushOptions[valueName].jitter.value / 100;
-            valueMax = this.brushOptions[valueName].max;
-            valueMin = this.brushOptions[valueName].min;
-            randomValue = Math.random() * ((value - valueMin) / (valueMax - valueMin));
-            jitterNeg = value * jitterValue * randomValue;
+        jitterValue = this.brushOptions[valueName].jitter.value / 100;
+        valueMax = this.brushOptions[valueName].max;
+        valueMin = this.brushOptions[valueName].min;
+        randomValue = Math.random() * ((value - valueMin) / (valueMax - valueMin));
+        jitterNeg = value * jitterValue * randomValue;
 
-            value = value - jitterNeg;
-        }
+        value = value - jitterNeg;
 
         if(this.brushOptions[valueName].pressure) {
             return value * this.wacom.pressure;
