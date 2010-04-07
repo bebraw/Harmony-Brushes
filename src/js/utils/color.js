@@ -3,18 +3,16 @@
  * Copyright (c) 2010 Mr.doob, rhyolight, bebraw
  */
 function colorToHex(color) {
-    // http://haacked.com/archive/2009/12/29/convert-rgb-to-hex.aspx
-    if (color.substr(0, 1) === '#') {
-        return color;
+    // http://stackoverflow.com/questions/638948/background-color-hex-to-js-variable-jquery
+    var parts = color.match(/^rgb\((\d+),\s*(\d+),\s*(\d+)\)$/);
+    // parts now should be ["rgb(0, 70, 255", "0", "70", "255"]
+
+    delete (parts[0]);
+    for (var i = 1; i <= 3; ++i) {
+        parts[i] = parseInt(parts[i]).toString(16);
+        if (parts[i].length == 1) parts[i] = '0' + parts[i];
     }
-    var digits = /(.*?)rgb\((\d+), (\d+), (\d+)\)/.exec(color);
-    
-    var red = parseInt(digits[2]);
-    var green = parseInt(digits[3]);
-    var blue = parseInt(digits[4]);
-    
-    var rgb = blue | (green << 8) | (red << 16);
-    return digits[1] + rgb.toString(16);
+    return parts.join('');
 };
 
 function hexToRGB(a) {
