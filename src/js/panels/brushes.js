@@ -49,8 +49,8 @@ brushes.prototype = {
         );
 
         $("#brushOptions").append('<div id="brushMode" style="margin-top:0.5em;"> \
-                <input type="radio" id="normalMode" name="brushMode" value="source-over" checked="checked" /><label style="width: 33.3%" for="normalMode">Normal</label> \
                 <input type="radio" id="lightenMode" name="brushMode" value="lighter" /><label style="width: 33.3%" for="lightenMode">Lighten</label> \
+                <input type="radio" id="normalMode" name="brushMode" value="source-over" checked="checked" /><label style="width: 33.3%" for="normalMode">Normal</label> \
                 <input type="radio" id="darkenMode" name="brushMode" value="darker" /><label style="width: 33.3%" for="darkenMode">Darken</label> \
             </div> \
         ');
