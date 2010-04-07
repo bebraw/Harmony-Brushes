@@ -6,6 +6,8 @@ function fur() {
     this.init();
 }
 fur.prototype = {
+    attributes: {'shading distance': {'type': 'int', 'min': 1, 'max': 100,
+        'value': 50}},
     init: function () {},
     destroy: function () {},
     stroke: function (canvas, points, color, opacity) {
