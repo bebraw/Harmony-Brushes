@@ -349,7 +349,12 @@
 
                 COLOR = hexToRGB(hexColor);
                 panels['brushes'].renderBrushPreviews();
+
+                $('.clickableColor').removeClass('activeColor');
+                $(this).addClass('activeColor');
             });
+
+            $('.clickableColor:first').addClass('activeColor');
 
             function getColor() {
                 return COLOR;
@@ -375,6 +380,17 @@
                     }
                 });
             }
+
+            // shortcuts for changing color
+            shortcut.add('q', function(e) {
+                var prev = $(".activeColor").parent().prev().children(':first');
+                prev.length && prev.focus();
+            });
+
+            shortcut.add('w', function(e) {
+                var next = $(".activeColor").parent().next().children(':first');
+                next.length && next.focus();
+            });
 
             // initialize panel UI
             for (panelName in panels) {

@@ -12,7 +12,7 @@ var PANELS = ["brushes", "canvas", "modifiers", "playback"];
 
 // color as RGB in range [0, 255]
 var COLOR = [0, 0, 0];
-var AMOUNTOFCOLORS = 23; // amount of colors in the brush color gradient
+var AMOUNTOFCOLORS = 14; // amount of colors in the brush color gradient
 
 var BACKGROUNDCOLOR = [128, 128, 128];
 
