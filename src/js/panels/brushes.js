@@ -48,7 +48,7 @@ brushes.prototype = {
             $("#brushesPod").css("visibility", "visible");}
         );
 
-        $("#brushOptions").append('<div id="brushMode"> \
+        $("#brushOptions").append('<div id="brushMode" style="margin-top:0.5em;"> \
                 <input type="radio" id="normalMode" name="brushMode" value="source-over" checked="checked" /><label for="normalMode">Normal</label> \
                 <input type="radio" id="lightenMode" name="brushMode" value="lighter" /><label for="lightenMode">Lighten</label> \
                 <input type="radio" id="darkenMode" name="brushMode" value="darker" /><label for="darkenMode">Darken</label> \
@@ -62,7 +62,7 @@ brushes.prototype = {
         //    panels['brushes'].renderBrushPreviews();
         //});
 
-        $("#brushOptions").append('<div id="brushShading" style="margin-top:1em;"> \
+        $("#brushOptions").append('<div id="brushShading" style="margin-top:0.5em;"> \
                 <input type="radio" id="currentShading" name="brushShading" value="current" checked="checked" /><label for="currentShading">Current</label> \
                 <input type="radio" id="sameShading" name="brushShading" value="same" /><label for="sameShading">Same</label> \
                 <input type="radio" id="allShading" name="brushShading" value="all" /><label for="allShading">All</label> \
@@ -74,7 +74,7 @@ brushes.prototype = {
         for (var brushOptionName in this.brushOptions) {
             brushOptionValue = this.brushOptions[brushOptionName];
 
-            $("#brushOptions").append('<div style="width:100%; margin-top:1em;">');
+            $("#brushOptions").append('<div style="width:100%; margin-top:0.5em;">');
 
             optionTitle = capitalizeFirstLetter(brushOptionName);
             $("#brushOptions").append('<div style="float:left;">' +
@@ -107,7 +107,7 @@ brushes.prototype = {
             $("#brushOptions").append('<div style="clear:both;"></div>');
 
             if('value' in brushOptionValue) {
-                $("#brushOptions").append('<div style="width:100%; margin-bottom:1em; margin-top:1em;" id="' +
+                $("#brushOptions").append('<div style="width:100%; margin-bottom:0.5em; margin-top:0.5em;" id="' +
                     optionId + '"></div>');
 
                 $("#" + optionId).slider({
