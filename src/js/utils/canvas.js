@@ -44,6 +44,96 @@ ProxyCanvas.prototype = {
     setData: function (data) {
         this.context.putImageData(data, 0, 0);
     },
+    blur: function (location, radius) {
+        var xPos = location.x - radius;
+        var yPos = location.y - radius;
+        var width = radius * 2;
+        var height = radius * 2;
+        var blurArea = this.context.getImageData(xPos, yPos, width, height);
+
+        var newArea = this.context.createImageData(width, height);
+
+        function avg(a, b, c) {
+            if(!a) {
+                return (b + c) / 2;
+            }
+
+            if(!b) {
+                return (a + c) / 2;
+            }
+
+            if(!c) {
+                return (a + b) / 2;
+            }
+
+            return (a + b + c) / 3;
+        }
+
+        function Color() {
+            return {'r': null, 'g': null, 'b': null, 'a': null};
+        }
+
+        function extractPixel(color, pixel, pos) {
+            color.r = pixel.data[pos++];
+            color.g = pixel.data[pos++];
+            color.b = pixel.data[pos++];
+            color.a = pixel.data[pos++];
+        }
+
+        function applyOperation(area, pos, op, params) {
+            var components = ['r', 'g', 'b', 'a'];
+
+            for( var i = 0; i < components.length; i++ ) {
+                var component = components[i];
+                area.data[pos++] = op(params[0][component],
+                    params[1][component], params[2][component]);
+            }
+        }
+
+        // XXX: add transpose too
+        // XXX: wrap ImageData (it should contain means to transpose iteration
+        // (just handle indices!))
+        var realRadius = radius * radius;
+        var offset = 4;
+        for (var y = 0; y < height; y++) {
+            var inPos = y * width * offset;
+            var outPos = inPos;
+
+            var prev = Color();
+            var current = Color();
+            var next = Color();
+
+            extractPixel(current, blurArea, inPos);
+            inPos += offset;
+
+            for (var x = 0; x < width; x++) {
+                var currentPoint = new Point(xPos + x, yPos + y);
+                var dist = currentPoint.sub(location).toDist();
+                var fac = 1 - Math.min(1.0, dist / realRadius);
+                
+                if( x == width - 1 ) {
+                    next = Color();
+                }
+                else {
+                    extractPixel(next, blurArea, inPos);
+                    inPos += offset;
+                }
+
+                function applyBlur(a, b, c) {
+                    return fac * avg(a, b, c) + (1 - fac) * b;
+                }
+
+                applyOperation(newArea, outPos, applyBlur,
+                    [prev, current, next]);
+                outPos += offset;
+
+                prev = clone(current);
+                current = clone(next);
+            }
+        }
+
+        this.context.putImageData(newArea, xPos, yPos);
+    },
     fill: function (color) {
         this.context.fillStyle = "rgb(" + color[0] + ", " + color[1] +
             ", " + color[2] + ")";
@@ -97,22 +187,6 @@ ProxyCanvas.prototype = {
         this.context.beginPath();
         this.context.arc(center.x, center.y, radius, 0, Math.PI * 2, true);
         this.context.stroke()
-    },
-    getPointsInside: function (radius, location) { // TODO: change to work with current system! -> make a func?
-        var points = panels['canvas'].points;
-        var ret = [];
-
-        for (var i = 0; i < points.length; i++) {
-            point = points[i];
-
-            if( Math.pow((location.x - point.x), 2) +
-                    Math.pow((location.y - point.y), 2) <
-                    Math.pow(radius, 2) ) {
-                ret.push(point);
-            }
-        }
-
-        return ret;
     },
     getAllPoints: function () {
         return this.strokes.all;
