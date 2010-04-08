@@ -16,6 +16,14 @@ brushes.prototype = {
             this.wacom = {'pressure': 1.0}; // proxy
         }
 
+        this.brushes = {};
+        
+        for( var i = 0; i < BRUSHES.length; i++ ) {
+            brushName = BRUSHES[i];
+            
+            this.brushes[brushName] = eval("new " + brushName + '()');
+        }
+
         this.selected = BRUSHES[0];
     },
     initUI: function () {
@@ -224,7 +232,7 @@ brushes.prototype = {
         return point.add(randomDirection);
     },
     getSelected: function () {
-        return eval("new " + this.selected + '()');
+        return this.brushes[this.selected];
     },
     getSize: function () {
         return this.getValueTemplate('size');
