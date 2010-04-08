@@ -108,7 +108,7 @@ ProxyCanvas.prototype = {
             var prev = Color();
             var current = Color();
             var next = Color();
-            var down = Color();
+            var bottom = Color();
 
             extractPixel(current, blurArea, inPos);
             inPos += offset;
@@ -126,12 +126,29 @@ ProxyCanvas.prototype = {
                     inPos += offset;
                 }
 
+                if( y > 0 ) {
+                    top.r = blurArea.data[(y - 1) * width * offset + offset * x];
+                    top.g = blurArea.data[(y - 1) * width * offset + offset * x + 1];
+                    top.b = blurArea.data[(y - 1) * width * offset + offset * x + 2];
+                    top.a = blurArea.data[(y - 1) * width * offset + offset * x + 3];
+                }
+
+                if( y == height - 1 ) {
+                    bottom = Color();
+                }
+                else {
+                    bottom.r = blurArea.data[(y + 1) * width * offset + offset * x];
+                    bottom.g = blurArea.data[(y + 1) * width * offset + 1 + offset * x];
+                    bottom.b = blurArea.data[(y + 1) * width * offset + 2 + offset * x];
+                    bottom.a = blurArea.data[(y + 1) * width * offset + 3 + offset * x];
+                }
+
                 function applyBlur(parts) {
                     return fac * avg(parts) + (1 - fac) * parts[2];
                 }
 
                 applyOperation(newArea, outPos, applyBlur,
-                    [top, prev, current, next, down], current.a);
+                    [top, prev, current, next, bottom], current.a);
                 outPos += offset;
 
                 prev = clone(current);
