@@ -53,20 +53,20 @@ ProxyCanvas.prototype = {
 
         var newArea = this.context.createImageData(width, height);
 
-        function avg(a, b, c) {
-            if(!a) {
-                return (b + c) / 2;
+        function avg(parts) {
+            var ret = 0;
+            var accum = 0;
+
+            for(var i = 0; i < parts.length; i++) {
+                var part = parts[i];
+
+                if( part ) {
+                    ret += part;
+                    accum++;
+                }
             }
 
-            if(!b) {
-                return (a + c) / 2;
-            }
-
-            if(!c) {
-                return (a + b) / 2;
-            }
-
-            return (a + b + c) / 3;
+            return ret / accum;
         }
 
         function Color() {
@@ -80,28 +80,35 @@ ProxyCanvas.prototype = {
             color.a = pixel.data[pos++];
         }
 
-        function applyOperation(area, pos, op, params) {
+        function applyOperation(area, pos, op, params, alpha) {
             var components = ['r', 'g', 'b', 'a'];
 
             for( var i = 0; i < components.length; i++ ) {
                 var component = components[i];
-                area.data[pos++] = op(params[0][component],
-                    params[1][component], params[2][component]);
+
+                var opParams = [];
+
+                for( var j = 0; j < params.length; j++ ) {
+                    // premul
+                    opParams[j] = params[j][component] * alpha
+                }
+
+                // unpremul
+                area.data[pos++] = op(opParams) / alpha;
             }
         }
 
-        // XXX: add transpose too
-        // XXX: wrap ImageData (it should contain means to transpose iteration
-        // (just handle indices!))
         var realRadius = radius * radius;
         var offset = 4;
         for (var y = 0; y < height; y++) {
             var inPos = y * width * offset;
             var outPos = inPos;
 
+            var top = Color();
             var prev = Color();
             var current = Color();
             var next = Color();
+            var down = Color();
 
             extractPixel(current, blurArea, inPos);
             inPos += offset;
@@ -119,12 +126,12 @@ ProxyCanvas.prototype = {
                     inPos += offset;
                 }
 
-                function applyBlur(a, b, c) {
-                    return fac * avg(a, b, c) + (1 - fac) * b;
+                function applyBlur(parts) {
+                    return fac * avg(parts) + (1 - fac) * parts[2];
                 }
 
                 applyOperation(newArea, outPos, applyBlur,
-                    [prev, current, next]);
+                    [top, prev, current, next, down], current.a);
                 outPos += offset;
 
                 prev = clone(current);
