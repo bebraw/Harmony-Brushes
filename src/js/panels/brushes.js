@@ -219,13 +219,9 @@ brushes.prototype = {
             10, brushCanvas.height / 2);
     },
     applyJitter: function ( point ) {
-        if(this.brushOptions.location.jitter.enabled) {
-            randomDirection = getRandomDirection(this.brushOptions.location.jitter.value);
+        randomDirection = getRandomDirection(this.brushOptions.location.jitter.value);
 
-            return point.add(randomDirection);
-        }
-        
-        return point;
+        return point.add(randomDirection);
     },
     getSelected: function () {
         return eval("new " + this.selected + '()');
