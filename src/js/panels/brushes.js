@@ -27,17 +27,17 @@ brushes.prototype = {
         this.selected = BRUSHES[0];
     },
     initUI: function () {
-        var panelWidth = 250;
-        setUpPanel("Brushes", "left", panelWidth, 480);
+        var panelWidth = 220;
+        setUpPanel("Brushes", "left", panelWidth, 460);
 
         // set up brushes panel
         $("#brushesPanel").append('<div id="brushes" style="height:170px;overflow:auto;"></div>' +
             '<div id="brushOptions"></div>');
 
         $("#brushOptions").append('<div id="brushMode" style="margin-top:0.5em;"> \
-                <input type="radio" id="lightenMode" name="brushMode" value="lighter" /><label style="width: 33.3%" for="lightenMode">Lighten</label> \
-                <input type="radio" id="normalMode" name="brushMode" value="source-over" checked="checked" /><label style="width: 33.3%" for="normalMode">Normal</label> \
-                <input type="radio" id="darkenMode" name="brushMode" value="darker" /><label style="width: 33.3%" for="darkenMode">Darken</label> \
+                <input type="radio" id="lightenMode" name="brushMode" value="lighter" /><label style="width: 33%" for="lightenMode">Lighten</label> \
+                <input type="radio" id="normalMode" name="brushMode" value="source-over" checked="checked" /><label style="width: 33%" for="normalMode">Normal</label> \
+                <input type="radio" id="darkenMode" name="brushMode" value="darker" /><label style="width: 33%" for="darkenMode">Darken</label> \
             </div> \
         ');
 
@@ -49,9 +49,9 @@ brushes.prototype = {
         //});
 
         $("#brushOptions").append('<div id="brushShading" style="margin-top:0.5em;"> \
-                <input type="radio" id="currentShading" name="brushShading" value="current" checked="checked" /><label style="width: 33.3%" for="currentShading">Current</label> \
-                <input type="radio" id="sameShading" name="brushShading" value="same" /><label style="width: 33.3%" for="sameShading">Same</label> \
-                <input type="radio" id="allShading" name="brushShading" value="all" /><label style="width: 33.3%" for="allShading">All</label> \
+                <input type="radio" id="currentShading" name="brushShading" value="current" checked="checked" /><label style="width: 33%" for="currentShading">Current</label> \
+                <input type="radio" id="sameShading" name="brushShading" value="same" /><label style="width: 33%" for="sameShading">Same</label> \
+                <input type="radio" id="allShading" name="brushShading" value="all" /><label style="width: 33%" for="allShading">All</label> \
             </div> \
         ');
 
@@ -130,7 +130,7 @@ brushes.prototype = {
         }
 
         // XXX: figure out the width in a nicer way
-        this.createBrushes(panelWidth / 3 + 10);
+        this.createBrushes(panelWidth / 2.5);
     },
     setUpJitter: function ( jitterAmountId ) {
         $("#" + jitterAmountId).slider({
