@@ -13,17 +13,7 @@ modifiers.prototype = {
         // XXX: construct modifiers here (see brush panel)
     },
     initUI: function () {
-        setUpPod("Modifiers");
-
-        $('#modifiersPod').click(function() {
-            $(this).css("visibility", "hidden");
-            $('#modifiersCheckbox').attr('checked', false);
-            $('#modifiersPanel').dialog('open');
-        });
-
-        // set up modifiers panel
-        $("body").append('<div class="panel" id="modifiersPanel" title="Modifiers">\
-            </div>');
+        setUpPanel("Modifiers", ['right', 'top'], 150);
 
         for (var i = 0; i < MODIFIERS.length; i++) {
             var modifierName = MODIFIERS[i];
@@ -36,8 +26,10 @@ modifiers.prototype = {
 
             $("#modifiersPanel").append('<div id="' +
                 modifierId +'" class="modifier"><input type="checkbox" id="' +
-                modifierLabel + '" /><label for="' + modifierLabel + '">' +
+                modifierLabel + '" /><label for="' + modifierLabel + '" style="width:100%">' +
                 modifierName + '</label><div class="attributes"></div></div>');
+
+            $("#" + modifierLabel).button();
 
             $('#' + modifierId + " input").click(function() {
                 var id = $(this).parent(".modifier").attr('id');
@@ -74,18 +66,6 @@ modifiers.prototype = {
                 }
             }
         }
-
-        $("#modifiersPanel input").button();
-        $("#modifiersPanel label").css("width", "130px").css("margin-bottom", "0.5em");
-
-        $("#modifiersPanel").dialog({
-           closeOnEscape: false, resizable: false, width: 150, autoOpen: false
-        });
-
-        $("#modifiersPanel").dialog( "option", "position", ["right", "top"] );
-        $("#modifiersPanel").bind( "dialogclose", function(event, ui) {
-            $("#modifiersPod").css("visibility", "visible");}
-        );
     },
     destroy: function () {},
     getActiveModifiers: function () {

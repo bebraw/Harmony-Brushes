@@ -9,22 +9,14 @@ canvas.prototype = {
     init: function () {},
     destroy: function () {},
     initUI: function () {
-        setUpPod("Canvas");
-
-        $('#canvasPod').click(function() {
-            $(this).css("visibility", "hidden");
-            $('#canvasCheckbox').attr('checked', false);
-            $('#canvasPanel').dialog('open');
-        });
+        setUpPanel("Canvas", ["left", "bottom"], 230);
 
         // set up background panel
-        $("body").append('<div class="panel" id="canvasPanel" title="Canvas"> \
-                <div id="canvasOptions"> \
+        $("#canvasPanel").append('<div id="canvasOptions"> \
                     <input type="radio" id="solidCanvas" name="canvasOptions" checked="checked" value="solid" /><label for="solidCanvas">Solid</label> \
                     <input type="radio" id="gradientCanvas" name="canvasOptions" value="gradient" /><label for="gradientCanvas">Gradient</label> \
                     <input type="radio" id="textureCanvas" name="canvasOptions" value="texture" /><label for="textureCanvas">Texture</label> \
-                </div> \
-            </div>');
+                </div>');
 
         var backgroundColor = RGBtoHex(BACKGROUNDCOLOR);
         $('#canvasPanel').append('<div id="solidColorSelector"> \
@@ -41,14 +33,5 @@ canvas.prototype = {
         $("#canvasOptions").css("margin-bottom", "0.5em");
 
         $("#canvasOptions").buttonset();
-
-        $("#canvasPanel").dialog({
-           closeOnEscape: false, resizable: false, width: 230, autoOpen: false
-        });
-
-        $("#canvasPanel").dialog( "option", "position", ["left", "bottom"] );
-        $("#canvasPanel").bind( "dialogclose", function(event, ui) {
-            $("#canvasPod").css("visibility", "visible");
-        });
     }
 }

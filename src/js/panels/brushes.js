@@ -27,34 +27,12 @@ brushes.prototype = {
         this.selected = BRUSHES[0];
     },
     initUI: function () {
-        setUpPod("Brushes");
-
-        $('#brushesPod').click(function() {
-            $(this).css('visibility', 'hidden'); //hide();
-            $('#brushesCheckbox').attr('checked', false);
-            $('#brushesPanel').dialog('open');
-        });
+        var panelWidth = 250;
+        setUpPanel("Brushes", "left", panelWidth, 480);
 
         // set up brushes panel
-        $("body").append(
-            '<div class="panel" id="brushesPanel" title="Brushes"> \
-                <div id="brushes" style="height:170px;overflow:auto;"></div> \
-                <div id="brushOptions"></div> \
-            </div>'
-        );
-
-        var panelWidth = 250, panelHeight = 480;
-        $("#brushesPanel").dialog({
-            closeOnEscape: false, resizable: false,
-            width: panelWidth, minWidth: panelWidth, maxWidth: panelWidth,
-            height: panelHeight, minHeight: panelHeight, maxHeight: panelHeight,
-            autoOpen: false
-        });
-
-        $("#brushesPanel").dialog("option", "position", "left");
-        $("#brushesPanel").bind("dialogclose", function(event, ui) {
-            $("#brushesPod").css("visibility", "visible");}
-        );
+        $("#brushesPanel").append('<div id="brushes" style="height:170px;overflow:auto;"></div>' +
+            '<div id="brushOptions"></div>');
 
         $("#brushOptions").append('<div id="brushMode" style="margin-top:0.5em;"> \
                 <input type="radio" id="lightenMode" name="brushMode" value="lighter" /><label style="width: 33.3%" for="lightenMode">Lighten</label> \

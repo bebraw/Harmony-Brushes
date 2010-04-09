@@ -8,36 +8,15 @@ function playback() {
 playback.prototype = {
     init: function () {},
     initUI: function () {
-        setUpPod("Playback");
-
-        $('#playbackPod').click(function() {
-            $(this).css("visibility", "hidden");
-            $('#playbackCheckbox').attr('checked', false);
-            $('#playbackPanel').dialog('open');
-        });
+        setUpPanel("Playback", "bottom", 220, 60);
 
         // set up playback panel
-        $("body").append('<div class="panel" id="playbackPanel" title="Playback"> \
-            <button id="beginning">go to beginning</button> \
+        $("#playbackPanel").append('<button id="beginning">go to beginning</button> \
             <button id="rewind">rewind</button> \
             <button id="play">play</button> \
             <button id="stop">stop</button> \
             <button id="forward">fast forward</button> \
-            <button id="end">go to end</button> \
-            </div>');
-
-        $("#playbackPanel button").button();
-
-        $("#playbackPanel").dialog({
-           closeOnEscape: false, resizable: false, width: 230, autoOpen: false
-        });
-
-        $("#playbackPanel").dialog( "option", "width", 220 );
-        $("#playbackPanel").dialog( "option", "height", 60 );
-        $("#playbackPanel").dialog( "option", "position", "bottom" );
-        $("#playbackPanel").bind( "dialogclose", function(event, ui) {
-            $("#playbackPod").css("visibility", "visible");}
-        );
+            <button id="end">go to end</button>');
 
         // set up icons
         $('#beginning').button({
