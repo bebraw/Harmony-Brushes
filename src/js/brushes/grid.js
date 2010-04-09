@@ -2,12 +2,8 @@
  * http://www.opensource.org/licenses/mit-license.php
  * Copyright (c) 2010 Mr.doob, rhyolight, bebraw
  */
-function grid() {
-    this.init();
-}
+function grid() {}
 grid.prototype = {
-    init: function () {},
-    destroy: function () {},
     stroke: function (canvas, points, color, opacity) {
         var a = points.current.div(100).round().mul(100);
         var b = a.sub(points.current).mul(10);

@@ -2,14 +2,10 @@
  * http://www.opensource.org/licenses/mit-license.php
  * Copyright (c) 2010 Mr.doob, rhyolight, bebraw
  */
-function sketchy() {
-    this.init()
-}
+function sketchy() {}
 sketchy.prototype = {
     attributes: {'shading distance': {'type': 'int', 'min': 1, 'max': 100,
         'value': 50}},
-    init: function () {},
-    destroy: function () {},
     stroke: function (canvas, points, color, opacity) {
         canvas.stroke(points.previous, points.current, color, opacity);
 

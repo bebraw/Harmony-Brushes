@@ -2,12 +2,8 @@
  * http://www.opensource.org/licenses/mit-license.php
  * Copyright (c) 2010 Mr.doob, rhyolight, bebraw
  */
-function curvy() {
-    this.init();
-}
+function curvy() {}
 curvy.prototype = {
-    init: function () {},
-    destroy: function () {},
     stroke: function (canvas, points, color, opacity) {
         var START = 30,
             CTL_PNT1_DIST = 10,
