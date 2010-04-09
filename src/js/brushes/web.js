@@ -13,7 +13,7 @@ web.prototype = {
     stroke: function (canvas, points, color, opacity) {
         canvas.stroke(points.previous, points.current, color, opacity);
 
-        adjacentPoints = points.getWithinRange(points.current,
+        var adjacentPoints = points.getWithinRange(points.current,
             function (dist) {
                 return dist < 2500 && Math.random() > 0.9;
             },
@@ -21,7 +21,7 @@ web.prototype = {
         );
 
         for (var i = 0; i < adjacentPoints.length; i++) {
-            currentPoint = adjacentPoints[i].point;
+            var currentPoint = adjacentPoints[i].point;
 
             canvas.stroke(points.current, currentPoint, color, opacity / 2);
         }

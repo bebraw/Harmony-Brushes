@@ -12,8 +12,8 @@ StrokeManager.prototype = {
     },
     destroy: function () {},
     start: function (point) {
-        brush = panels['brushes'].getSelected();
-        color = getColor();
+        var brush = panels['brushes'].getSelected();
+        var color = getColor();
         this.mode = panels['brushes'].getMode();
 
         this.painters = new Painters(this.activeCanvas);
@@ -21,9 +21,9 @@ StrokeManager.prototype = {
         this.painters.add(this.activeCanvas, brush, color);
 
         // TODO: stackify this!
-        modifiers = panels['modifiers'].getActiveModifiers();
-        for (i = 0; i < modifiers.length; i++) {
-            modifier = modifiers[i];
+        var modifiers = panels['modifiers'].getActiveModifiers();
+        for (var i = 0; i < modifiers.length; i++) {
+            var modifier = modifiers[i];
 
             // XXX: hack for amount
             if('attributes' in modifier) {
@@ -59,7 +59,7 @@ StrokeManager.prototype = {
             this.applyJitterAndPaint(this.cursorPoints[0]);
 
             if( dist > FILTERDISTANCE ) {
-                midPoints = deCasteljau(this.cursorPoints, FILTERLENGTH - 1);
+                var midPoints = deCasteljau(this.cursorPoints, FILTERLENGTH - 1);
                 midPoints = midPoints.slice(1, midPoints.length - 1);
 
                 for( var i = 0; i < midPoints.length; i++ ) {
@@ -81,7 +81,7 @@ StrokeManager.prototype = {
     },
     initPoints: function () {
         this.points = null;
-        shadingType = panels['brushes'].getShadingType();
+        var shadingType = panels['brushes'].getShadingType();
 
         if(shadingType == 'same') {
             this.points = this.activeCanvas.getPointsOfType(panels['brushes'].selected);

@@ -9,7 +9,7 @@ eraser.prototype = {
     init: function () {},
     destroy: function () {},
     stroke: function (canvas, points, color, opacity) {
-        radius = 1; // XXX: use brush size for radius! note that painter uses it context init! -> add flag for this case?
+        var radius = 1; // XXX: use brush size for radius! note that painter uses it context init! -> add flag for this case?
 
         // XXX: use points instead!
         //pointsInsideRadius = canvas.getPointsInside(radius, points.current);

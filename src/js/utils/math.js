@@ -121,7 +121,7 @@ Points.prototype = {
         var ret = [];
         for (i = 0; i < finalCandidates.length; i++) {
             currentPoint = finalCandidates[i];
-            dist = currentPoint.sub(point).toDist();
+            var dist = currentPoint.sub(point).toDist();
 
             if( range(dist) ) {
                 ret.push({'point': currentPoint, 'dist': dist});
@@ -182,13 +182,13 @@ function getRandomPoint(n) {
 }
 
 function getRandomDirection(maxDist) {
-            direction = 2 * Math.PI * Math.random();
-            distance = maxDist * Math.random();
+    var direction = 2 * Math.PI * Math.random();
+    var distance = maxDist * Math.random();
 
-            xOffset = Math.sin(direction) * distance;
-            yOffset = Math.cos(direction) * distance;
+    var xOffset = Math.sin(direction) * distance;
+    var yOffset = Math.cos(direction) * distance;
 
-            return new Point(xOffset, yOffset);
+    return new Point(xOffset, yOffset);
 }
 
 function isNumber(n) {

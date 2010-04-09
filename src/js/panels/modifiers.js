@@ -9,6 +9,8 @@ modifiers.prototype = {
     init: function () {
         this.modifierStatus = {};
         this.modifiers = {};
+
+        // XXX: construct modifiers here (see brush panel)
     },
     initUI: function () {
         setUpPod("Modifiers");
@@ -24,10 +26,10 @@ modifiers.prototype = {
             </div>');
 
         for (var i = 0; i < MODIFIERS.length; i++) {
-            modifierName = MODIFIERS[i];
-            modifierId = modifierName + 'Modifier';
-            modifierLabel = modifierId + 'Label';
-            modifier = eval("new " + modifierName + "()");
+            var modifierName = MODIFIERS[i];
+            var modifierId = modifierName + 'Modifier';
+            var modifierLabel = modifierId + 'Label';
+            var modifier = eval("new " + modifierName + "()");
 
             this.modifierStatus[modifierId] = false;
             this.modifiers[modifierId] = modifier;
@@ -38,19 +40,19 @@ modifiers.prototype = {
                 modifierName + '</label><div class="attributes"></div></div>');
 
             $('#' + modifierId + " input").click(function() {
-                id = $(this).parent(".modifier").attr('id');
+                var id = $(this).parent(".modifier").attr('id');
                 panels['modifiers'].modifierStatus[id] = !panels['modifiers'].modifierStatus[id];
             });
 
             if('attributes' in modifier) {
-                attributes = modifier['attributes'];
+                var attributes = modifier['attributes'];
 
                 for(var attributeName in attributes) {
-                    attributeValues = attributes[attributeName];
+                    var attributeValues = attributes[attributeName];
 
                     if(attributeValues['type'] == 'int') {
                         modifier[attributeName] = attributeValues['value'];
-                        attributeId = modifierId + attributeName;
+                        var attributeId = modifierId + attributeName;
 
                         $("#" + modifierId + " .attributes").append('<div id="' +
                             attributeId + '"></div>');
@@ -87,13 +89,13 @@ modifiers.prototype = {
     },
     destroy: function () {},
     getActiveModifiers: function () {
-        ret = [];
+        var ret = [];
 
         for (var modifierId in this.modifierStatus) {
-            modifierActive = this.modifierStatus[modifierId];
+            var modifierActive = this.modifierStatus[modifierId];
 
             if(modifierActive) {
-                modifier = this.modifiers[modifierId];
+                var modifier = this.modifiers[modifierId];
 
                 ret.push(modifier);
             }

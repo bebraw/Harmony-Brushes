@@ -3,9 +3,9 @@
  * Copyright (c) 2010 Mr.doob, rhyolight, bebraw
  */
 function setUpPod(name) {
-    id = name.toLowerCase();
-    podId = id + "Pod";
-    checkboxId = id + "Checkbox";
+    var id = name.toLowerCase();
+    var podId = id + "Pod";
+    var checkboxId = id + "Checkbox";
     //<input type="checkbox" id="horizontalMirrorModifier" /><label for="horizontalMirrorModifier">Horizontal Mirror</label> \
     $("#pods").append('<div style="display: inline;" id="' + podId + '"><input type="checkbox" id="' +
         checkboxId + '" /><label for="'+ checkboxId +'">' + name + '</label></div>');

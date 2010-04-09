@@ -11,7 +11,7 @@ longfur.prototype = {
     init: function () {},
     destroy: function () {},
     stroke: function (canvas, points, color, opacity) {
-        adjacentPoints = points.getWithinRange(points.current,
+        var adjacentPoints = points.getWithinRange(points.current,
             function (dist) {
                 return dist < 4000 && Math.random() > dist / 4000;
             },
@@ -19,13 +19,13 @@ longfur.prototype = {
         );
 
         for (var i = 0; i < adjacentPoints.length; i++) {
-            fac = -Math.random();
-            currentPoint = adjacentPoints[i].point;
-            offset = currentPoint.sub(points.current).mul(fac);
+            var fac = -Math.random();
+            var currentPoint = adjacentPoints[i].point;
+            var offset = currentPoint.sub(points.current).mul(fac);
 
-            randomPoint = getRandomPoint(2);
-            begin = points.current.add(offset);
-            end = currentPoint.sub(offset).add(randomPoint);
+            var randomPoint = getRandomPoint(2);
+            var begin = points.current.add(offset);
+            var end = currentPoint.sub(offset).add(randomPoint);
 
             canvas.stroke(begin, end, color, opacity);
         }

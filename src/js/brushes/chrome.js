@@ -13,22 +13,22 @@ chrome.prototype = {
     stroke: function (canvas, points, color, opacity) {
         canvas.stroke(points.previous, points.current, color, opacity);
 
-        adjacentPoints = points.getWithinRange(points.current,
+        var adjacentPoints = points.getWithinRange(points.current,
             function (dist) {
                 return dist < 1000;
             },
             1000
         );
 
-        fac = 0.2;
+        var fac = 0.2;
         for (var i = 0; i < adjacentPoints.length; i++) {
-            currentPoint = adjacentPoints[i].point;
-            offset = currentPoint.sub(points.current).mul(fac);
+            var currentPoint = adjacentPoints[i].point;
+            var offset = currentPoint.sub(points.current).mul(fac);
 
-            begin = points.current.add(offset);
-            end = currentPoint.sub(offset);
+            var begin = points.current.add(offset);
+            var end = currentPoint.sub(offset);
 
-            randomRGB = [Math.floor(Math.random() * 255),
+            var randomRGB = [Math.floor(Math.random() * 255),
                 Math.floor(Math.random() * 255),
                 Math.floor(Math.random() * 255)];
 

@@ -10,6 +10,7 @@ verticalmirror.prototype = {
     destroy: function () {},
     modify: function (point) {
         var canvasHeight = $('.activePage').height();
+        
         return new Point(point.x, canvasHeight - point.y);
     }
 }

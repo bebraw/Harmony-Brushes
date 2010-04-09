@@ -11,7 +11,7 @@ group.prototype = {
     init: function () {},
     destroy: function () {},
     modify: function (point) {
-        randomDirection = getRandomDirection(this.distance);
+        var randomDirection = getRandomDirection(this.distance);
 
         return point.add(randomDirection);
     }

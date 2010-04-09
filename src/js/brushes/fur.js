@@ -13,20 +13,20 @@ fur.prototype = {
     stroke: function (canvas, points, color, opacity) {
         canvas.stroke(points.previous, points.current, color, opacity);
 
-        adjacentPoints = points.getWithinRange(points.current,
+        var adjacentPoints = points.getWithinRange(points.current,
             function (dist) {
                 return dist < 2000 && Math.random() > dist / 2000;
             },
             2000
         );
 
-        fac = 0.5;
+        var fac = 0.5;
         for (var i = 0; i < adjacentPoints.length; i++) {
-            currentPoint = adjacentPoints[i].point;
-            offset = currentPoint.sub(points.current).mul(fac);
+            var currentPoint = adjacentPoints[i].point;
+            var offset = currentPoint.sub(points.current).mul(fac);
 
-            begin = points.current.add(offset);
-            end = points.current.sub(offset);
+            var begin = points.current.add(offset);
+            var end = points.current.sub(offset);
 
             canvas.stroke(begin, end, color, 0.1);
         }

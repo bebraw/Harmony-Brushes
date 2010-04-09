@@ -24,10 +24,10 @@ curvy.prototype = {
             }
         }
 
-        start = getPoint(START, points.content);
-        cOne = getPoint(CTL_PNT1_DIST, points.content);
-        cTwo = getPoint(CTL_PNT2_DIST, points.content);
+        var start = getPoint(START, points.content);
+        var cOne = getPoint(CTL_PNT1_DIST, points.content);
+        var cTwo = getPoint(CTL_PNT2_DIST, points.content);
         canvas.bezierCurve(start, cOne, cTwo, points.current, color,
-            0.15);
+            opacity / 2);
     }
 };

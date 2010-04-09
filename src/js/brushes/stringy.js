@@ -11,9 +11,9 @@ stringy.prototype = {
     stroke: function (canvas, points, color, opacity) {
         canvas.stroke(points.previous, points.current, color, opacity);
 
-        pointsMin = Math.max(points.content.length - 15, 0);
+        var pointsMin = Math.max(points.content.length - 15, 0);
         for (var i=points.content.length - 1; i >= pointsMin; i--) {
-            end = points.content[i]; // XXX: not ok!
+            var end = points.content[i]; // XXX: not ok!
             canvas.stroke(points.current, end, color, opacity / 2);
         }
     }

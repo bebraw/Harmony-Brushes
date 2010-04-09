@@ -27,7 +27,8 @@ Painters.prototype = {
     },
     paint: function (point, brushSize, brushOpacity, mode, points) {
         for (var i = 0; i < this.length; i++) {
-            painter = this[i];
+            var painter = this[i];
+
             painter.paint(point, brushSize, brushOpacity, mode, points);
         }
     },
@@ -35,8 +36,8 @@ Painters.prototype = {
         var ret = new Points(this.canvas.width, this.canvas.height);
 
         for (var i = 0; i < this.length; i++) {
-            painter = this[i];
-
+            var painter = this[i];
+            
             ret.extend(painter.getPoints());
         }
 
@@ -104,7 +105,7 @@ Painter.prototype = {
             this.canvas.context.globalCompositeOperation = compositeOperation;
 
             if(points) {
-                brushPoints = clone(points);
+                var brushPoints = clone(points);
                 brushPoints.extend(this.points);
             }
             else {

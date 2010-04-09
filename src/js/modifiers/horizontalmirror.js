@@ -10,6 +10,7 @@ horizontalmirror.prototype = {
     destroy: function () {},
     modify: function (point) {
         var canvasWidth = $('.activePage').width();
+        
         return new Point(canvasWidth - point.x, point.y);
     }
 }

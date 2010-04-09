@@ -58,7 +58,7 @@ ribbon.prototype = {
     update: function () {
         if(this.canvas) {
             for (var a = 0; a < this.painters.length; a++) {
-                begin = this.painters[a].dp;
+                var begin = this.painters[a].dp;
 
                 this.painters[a].ap = this.painters[a].ap.
                     add(this.painters[a].dp.
@@ -68,7 +68,7 @@ ribbon.prototype = {
                 this.painters[a].dp = this.painters[a].dp.
                     sub(this.painters[a].ap);
 
-                end = this.painters[a].dp;
+                var end = this.painters[a].dp;
 
                 this.canvas.stroke(begin, end, this.color, this.opacity);
             }

@@ -219,6 +219,8 @@ ProxyCanvas.prototype = {
         if( brushName in this.strokes ) {
             return this.strokes[brushName].points;
         }
+
+        return [];
     },
 }
 

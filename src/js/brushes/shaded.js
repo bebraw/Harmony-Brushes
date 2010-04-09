@@ -11,7 +11,7 @@ shaded.prototype = {
     init: function () {},
     destroy: function () {},
     stroke: function (canvas, points, color, opacity) {
-        adjacentPoints = points.getWithinRange(points.current,
+        var adjacentPoints = points.getWithinRange(points.current,
             function (dist) {
                 return dist < 1000;
             },
@@ -19,10 +19,10 @@ shaded.prototype = {
         );
 
         for (var i = 0; i < adjacentPoints.length; i++) {
-            currentPoint = adjacentPoints[i].point;
-            dist = adjacentPoints[i].dist;
+            var currentPoint = adjacentPoints[i].point;
+            var dist = adjacentPoints[i].dist;
 
-            alpha = ((1 - (dist / 1000)) * opacity);
+            var alpha = ((1 - (dist / 1000)) * opacity);
             canvas.stroke(points.current, currentPoint, color, alpha);
         }
     }

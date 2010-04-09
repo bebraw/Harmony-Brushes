@@ -19,7 +19,7 @@ brushes.prototype = {
         this.brushes = {};
         
         for( var i = 0; i < BRUSHES.length; i++ ) {
-            brushName = BRUSHES[i];
+            var brushName = BRUSHES[i];
             
             this.brushes[brushName] = eval("new " + brushName + '()');
         }
@@ -80,20 +80,20 @@ brushes.prototype = {
         $("#brushShading").buttonset();
 
         for (var brushOptionName in this.brushOptions) {
-            brushOptionValue = this.brushOptions[brushOptionName];
+            var brushOptionValue = this.brushOptions[brushOptionName];
 
             $("#brushOptions").append('<div style="width:100%; margin-top:1em; margin-bottom;0.5em;">');
 
-            optionTitle = capitalizeFirstLetter(brushOptionName);
-            optionId = 'brush' + brushOptionName;
+            var optionTitle = capitalizeFirstLetter(brushOptionName);
+            var optionId = 'brush' + brushOptionName;
             if('pressure' in brushOptionValue) {
-                pressureId = optionId + 'pressure';
+                var pressureId = optionId + 'pressure';
 
                 $("#brushOptions").append('<input type="checkbox" id="' +
                     pressureId + '" /><label for="' + pressureId +
                     '" style="float:left; width: 40%">' + optionTitle + '</label>');
 
-                pressureValue = brushOptionValue.pressure;
+                var pressureValue = brushOptionValue.pressure;
 
                 if(pressureValue) {
                     $('#' + pressureId).attr('checked', 'checked');
@@ -102,8 +102,8 @@ brushes.prototype = {
                 $('#' + pressureId).button().click(
                     function () {
                         // XXX: hack! figure out a nicer way to pass option name!
-                        option = $(this).attr('id').replace('JitterToggle', '').replace('brush', '').replace('pressure', '');
-                        pressure = panels['brushes'].brushOptions[option].pressure;
+                        var option = $(this).attr('id').replace('JitterToggle', '').replace('brush', '').replace('pressure', '');
+                        var pressure = panels['brushes'].brushOptions[option].pressure;
                         panels['brushes'].brushOptions[option].pressure = !pressure;
                     }
                 );
@@ -124,7 +124,7 @@ brushes.prototype = {
                     value: brushOptionValue.value,
                     slide: function(event, ui) {
                         // XXX: hack! figure out a nicer way to pass option name!
-                        option = $(this).attr('id').replace('brush', '');
+                        var option = $(this).attr('id').replace('brush', '');
                         panels['brushes'].brushOptions[option].value = ui.value;
                         panels['brushes'].renderBrushPreviews();
                     }
@@ -133,7 +133,7 @@ brushes.prototype = {
 
             $("#brushOptions").append('<div style="clear:both; height: 0.5em;"></div>');
 
-            jitterAmountId = optionId + 'JitterAmount';
+            var jitterAmountId = optionId + 'JitterAmount';
             $("#brushOptions").append(
                 '<div class="jitter"> \
                     <div style="float:left; width: 40%">Jitter:</div> \
@@ -163,17 +163,17 @@ brushes.prototype = {
             value: 0,
             slide: function(event, ui) {
                 // XXX: hack! figure out a nicer way to pass option name!
-                option = $(this).attr('id').replace('JitterAmount', '').replace('brush', '');
+                var option = $(this).attr('id').replace('JitterAmount', '').replace('brush', '');
                 panels['brushes'].brushOptions[option].jitter.value = ui.value;
                 panels['brushes'].renderBrushPreviews();
             }
         });
     },
     createBrushes: function ( brushWidth ) {
-        for (i = 0; i < BRUSHES.length; i++) {
-            brushName = BRUSHES[i];
-            brushId = brushName; //XXX: use + 'Brush'; to avoid id clashes!
-            brushHeight = 40;
+        for (var i = 0; i < BRUSHES.length; i++) {
+            var brushName = BRUSHES[i];
+            var brushId = brushName; //XXX: use + 'Brush'; to avoid id clashes!
+            var brushHeight = 40;
 
             $("#brushes").append('<canvas class="brush" id="' + brushId + '"' +
                 ' style="height:' + brushHeight + 'px;width:' + brushWidth +
@@ -193,41 +193,38 @@ brushes.prototype = {
         this.renderBrushPreviews();
     },
     renderBrushPreviews: function () {
-        for (i = 0; i < BRUSHES.length; i++) {
-            brushName = BRUSHES[i];
-            brushId = brushName; //XXX: use + 'Brush'; to avoid id clashes!
+        for (var brushName in this.brushes) {
+            var brush = this.brushes[brushName];
 
-            this.renderBrushPreview(brushId);
+            this.renderBrushPreview(brushName, brush);
         }
     },
-    renderBrushPreview: function (brushId) {
-        brushCanvas = new ProxyCanvas(brushId);
-        brushCanvas.fill([255, 255, 255]);
+    renderBrushPreview: function (brushName, brush) {
+        var brushCanvas = new ProxyCanvas(brushName); // XXX: add Canvas suffix?
+        brushCanvas.fill([255, 255, 255]); // XXX: set background color using CSS instead
 
         if( SHOWPREVIEWIMAGES ) {
-            brush = eval("new " + brushName + "()");
+            var brushPainter = new Painter(brushCanvas, brush, getColor());
 
-            brushPainter = new Painter(brushCanvas, brush, getColor());
+            var canvasWidth = brushCanvas.width;
+            var pad = 10;
 
-            canvasWidth = brushCanvas.width;
-            pad = 10;
-
-            for (x = pad; x < canvasWidth - pad; x += 5) {
-                y = Math.sin(5 * (x - pad) / (canvasWidth - pad) * 2 * Math.PI) *
+            for (var x = pad; x < canvasWidth - pad; x += 5) {
+                var y = Math.sin(5 * (x - pad) / (canvasWidth - pad) * 2 * Math.PI) *
                     (brushCanvas.height / 2 - pad * 2) + (brushCanvas.height / 2);
 
-                point = new Point(x, y);
+                var point = new Point(x, y);
                 point = this.applyJitter(point);
                 brushPainter.paint(point, this.getSize(), this.getOpacity(),
                     this.getMode());
             }
         }
 
-        brushCanvas.text(brushId, 'black', '48px Segoe UI, Arial, sans-serif',
+        brushCanvas.text(brushName, 'black', '48px Segoe UI, Arial, sans-serif',
             10, brushCanvas.height / 2);
     },
     applyJitter: function ( point ) {
-        randomDirection = getRandomDirection(this.brushOptions.location.jitter.value);
+        var randomDirection = getRandomDirection(this.brushOptions.location.jitter.value);
 
         return point.add(randomDirection);
     },
@@ -241,13 +238,13 @@ brushes.prototype = {
         return this.getValueTemplate('opacity') / 100;
     },
     getValueTemplate: function (valueName) {
-        value = this.brushOptions[valueName].value;
+        var value = this.brushOptions[valueName].value;
 
-        jitterValue = this.brushOptions[valueName].jitter.value / 100;
-        valueMax = this.brushOptions[valueName].max;
-        valueMin = this.brushOptions[valueName].min;
-        randomValue = Math.random() * ((value - valueMin) / (valueMax - valueMin));
-        jitterNeg = value * jitterValue * randomValue;
+        var jitterValue = this.brushOptions[valueName].jitter.value / 100;
+        var valueMax = this.brushOptions[valueName].max;
+        var valueMin = this.brushOptions[valueName].min;
+        var randomValue = Math.random() * ((value - valueMin) / (valueMax - valueMin));
+        var jitterNeg = value * jitterValue * randomValue;
 
         value = value - jitterNeg;
 
