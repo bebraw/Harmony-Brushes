@@ -11,7 +11,6 @@ Painters.prototype = {
 
         this.length = 0;
     },
-    destroy: function () {},
     add: function (canvas, brush, color, modifier, amount) {
         if(amount) {
             this.push(new InstancePainter(amount, canvas, brush,
@@ -60,7 +59,6 @@ InstancePainter.prototype = {
             this.painters.push(new Painter(canvas, brush, color));
         }
     },
-    destroy: function () {},
     paint: function (point, lineWidth, opacity, compositeOperation, points) {
         for (var i = 0; i < this.painters.length; i++) {
             var painter = this.painters[i];
@@ -94,7 +92,6 @@ Painter.prototype = {
         this.modifier = modifier?modifier:new NullModifier();
         this.points = new Points(canvas.width, canvas.height);
     },
-    destroy: function () {},
     paint: function (point, lineWidth, opacity, compositeOperation, points) {
         point = this.modifier.modify(point);
 

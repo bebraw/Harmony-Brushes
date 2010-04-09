@@ -83,7 +83,6 @@ playback.prototype = {
             }
         });
     },
-    destroy: function () {}
 }
 
 function onMenuUndo() {

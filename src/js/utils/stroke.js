@@ -10,7 +10,6 @@ StrokeManager.prototype = {
         this.canvasii = {};
         this.activeCanvas = null;
     },
-    destroy: function () {},
     start: function (point) {
         var brush = panels['brushes'].getSelected();
         var color = getColor();

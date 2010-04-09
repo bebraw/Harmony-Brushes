@@ -2,14 +2,10 @@
  * http://www.opensource.org/licenses/mit-license.php
  * Copyright (c) 2010 Mr.doob, rhyolight, bebraw
  */
-function group() {
-    this.init();
-}
+function group() {}
 group.prototype = {
     attributes: {'amount': {'type': 'int', 'min': 1, 'max': 16, 'value': 1},
         'distance': {'type': 'int', 'min': 1, 'max': 40, 'value': 5}},
-    init: function () {},
-    destroy: function () {},
     modify: function (point) {
         var randomDirection = getRandomDirection(this.distance);
 

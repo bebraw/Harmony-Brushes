@@ -67,7 +67,6 @@ modifiers.prototype = {
             }
         }
     },
-    destroy: function () {},
     getActiveModifiers: function () {
         var ret = [];
 
@@ -85,12 +84,8 @@ modifiers.prototype = {
     }
 }
 
-function NullModifier() {
-    this.init();
-}
+function NullModifier() {}
 NullModifier.prototype = {
-    init: function () {},
-    destroy: function () {},
     modify: function (point) {
         return point;
     }

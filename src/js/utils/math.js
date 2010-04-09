@@ -14,7 +14,6 @@ Points.prototype = {
 
         this.content = [];
     },
-    destroy: function () {},
     push: function (item) {
         this.quadrants.push(item);
 
@@ -140,7 +139,6 @@ Point.prototype = {
         this.x = x?x:0;
         this.y = y?y:0;
     },
-    destroy: function() {},
     add: function(other) {
         return this.operationTemplate(other, function(a, b) {return a + b});
     },
@@ -225,7 +223,6 @@ Queue.prototype = {
         this.maxLength =  maxLength;
         this.length = 0;
     },
-    destroy: function () {},
     push: function (item) {
         if( this.length == this.maxLength ) {
             for( var i = 0; i < this.maxLength - 1; i++ ) {
@@ -263,7 +260,6 @@ Quadrants.prototype = {
             }
         }
     },
-    destroy: function () {},
     extend: function ( points ) {
         // XXX: note that points contains quadrants already -> use that information?
         for (var i = 0; i < points.content.length; i++) {

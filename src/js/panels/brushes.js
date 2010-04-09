@@ -132,7 +132,6 @@ brushes.prototype = {
         // XXX: figure out the width in a nicer way
         this.createBrushes(panelWidth / 3 + 10);
     },
-    destroy: function () {},
     setUpJitter: function ( jitterAmountId ) {
         $("#" + jitterAmountId).slider({
             range: "max",

@@ -7,5 +7,4 @@ function Constraints() {
 }
 Constraints.prototype = {
     init: function () {},
-    destroy: function () {}
 }

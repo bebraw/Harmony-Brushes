@@ -2,13 +2,9 @@
  * http://www.opensource.org/licenses/mit-license.php
  * Copyright (c) 2010 Mr.doob, rhyolight, bebraw
  */
-function radialmirror() {
-    this.init();
-}
+function radialmirror() {}
 radialmirror.prototype = {
     attributes: {'amount': {'type': 'int', 'min': 1, 'max': 16, 'value': 1}},
-    init: function () {},
-    destroy: function () {},
     modify: function (point) {
         // TODO: use some nice math lib for rot?
         var angle = 2 * Math.PI / (this.amount + 1);

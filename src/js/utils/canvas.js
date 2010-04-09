@@ -15,7 +15,6 @@ ProxyCanvas.prototype = {
         
         this.strokes = new Strokes(this.width, this.height);
     },
-    destroy: function () {},
     saveAs: function (format) {
         var isChrome =  navigator.userAgent.toLowerCase().indexOf('chrome')  > -1;
 
@@ -235,7 +234,6 @@ Strokes.prototype = {
         this.width = width;
         this.height = height;
     },
-    destroy: function () {},
     push: function (brushName, points) {
         if( !this[brushName] ) {
             this[brushName] = new BrushStroke(this.width, this.height);
@@ -254,5 +252,4 @@ BrushStroke.prototype = {
     init: function (width, height) {
         this.points = new Points(width, height);
     },
-    destroy: function () {},
 }
