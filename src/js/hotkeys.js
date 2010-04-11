@@ -2,8 +2,8 @@
  * http://www.opensource.org/licenses/mit-license.php
  * Copyright (c) 2010 Mr.doob, rhyolight, bebraw
  */
-PREV_COLOR = 't'
-NEXT_COLOR = 'y'
+PREV_COLOR = 'o'
+NEXT_COLOR = 'p'
 
 INCREASE_BRUSH_SIZE = 'w'
 DECREASE_BRUSH_SIZE = 'q'

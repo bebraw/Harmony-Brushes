@@ -60,12 +60,13 @@ brushes.prototype = {
     },
     initUI: function () {
         var panelWidth = 220;
-        setUpPanel("Brushes", "left", panelWidth, 460);
+        setUpPanel("Brushes", "left", panelWidth, 390);
 
         // set up brushes panel
         $("#brushesPanel").append('<div id="brushes" style="height:170px;overflow:auto;"></div>' +
             '<div id="brushOptions"></div>');
 
+        // modes
         $("#brushOptions").append('<div id="brushMode" style="margin-top:0.5em;"> \
                 <input type="radio" id="lightenMode" name="brushMode" value="lighter" /><label style="width: 33%" for="lightenMode">Lighten</label> \
                 <input type="radio" id="normalMode" name="brushMode" value="source-over" checked="checked" /><label style="width: 33%" for="normalMode">Normal</label> \
@@ -80,10 +81,19 @@ brushes.prototype = {
         //    panels['brushes'].renderBrushPreviews();
         //});
 
+        // shading
         $("#brushOptions").append('<div id="brushShading" style="margin-top:0.5em;"> \
                 <input type="radio" id="currentShading" name="brushShading" value="current" checked="checked" /><label style="width: 33%" for="currentShading">Current</label> \
                 <input type="radio" id="sameShading" name="brushShading" value="same" /><label style="width: 33%" for="sameShading">Same</label> \
                 <input type="radio" id="allShading" name="brushShading" value="all" /><label style="width: 33%" for="allShading">All</label> \
+            </div> \
+        ');
+
+        // labels
+        $("#brushOptions").append('<div id="brushShading" style="margin-top:0.5em; width: 100%;"> \
+                <div style="width: 33%; display: inline; float:left" for="currentShading">Attribute</div> \
+                <div style="width: 33%; display: inline; float:left" for="sameShading">Value</div> \
+                <div style="width: 33%; display: inline; float:left" for="allShading">Jitter</div> \
             </div> \
         ');
 
@@ -101,7 +111,7 @@ brushes.prototype = {
 
                 $("#brushOptions").append('<input type="checkbox" id="' +
                     pressureId + '" /><label for="' + pressureId +
-                    '" style="float:left; width: 40%">' + optionTitle + '</label>');
+                    '" style="float:left; width: 28%; margin-right:5%">' + optionTitle + '</label>');
 
                 var pressureValue = brushOptionValue.pressure;
 
@@ -112,8 +122,9 @@ brushes.prototype = {
                 $('#' + pressureId).button().click(
                     function () {
                         // XXX: hack! figure out a nicer way to pass option name!
-                        var option = $(this).attr('id').replace('JitterToggle', '').replace('brush', '').replace('pressure', '');
+                        var option = $(this).attr('id').replace('brush', '').replace('pressure', '');
                         var pressure = panels['brushes'].brushOptions[option].pressure;
+
                         panels['brushes'].brushOptions[option].pressure = !pressure;
                     }
                 );
@@ -123,10 +134,10 @@ brushes.prototype = {
                     optionTitle + '</div>');
             }
 
-            if('value' in brushOptionValue) {
-                $("#brushOptions").append('<div style="float:right; width: 48%; margin-top: 0.5em;" id="' +
-                    optionId + '"></div>');
+            $("#brushOptions").append('<div style="float:left; width: 28%; margin-right: 5%; margin-top: 0.5em;" id="' +
+                optionId + '"></div>');
 
+            if('value' in brushOptionValue) {
                 $("#" + optionId).slider({
                     range: "max",
                     min: brushOptionValue.min,
@@ -141,22 +152,18 @@ brushes.prototype = {
                 });
             }
 
-            $("#brushOptions").append('<div style="clear:both; height: 0.5em;"></div>');
-
             var jitterAmountId = optionId + 'jitter';
             $("#brushOptions").append(
                 '<div class="jitter"> \
-                    <div style="float:left; width: 40%">Jitter:</div> \
-                    <div style="float:right; width: 48%; margin-top: 0.5em;" id="' + jitterAmountId + '"></div> \
+                    <div style="float:right; width: 28%; margin-right: 5%; margin-top: 0.5em;" id="' + jitterAmountId + '"></div> \
                 </div> \
-                <div style="clear:both;"></div> \
                 '
             );
 
             this.brushOptions[brushOptionName]['jitter'] = {'enabled': false,
                 'value': 0};
 
-            $("#brushOptions").append('</div>');
+            $("#brushOptions").append('<div style="clear:both;"></div></div>');
 
             this.setUpJitter(jitterAmountId);
         }
@@ -172,7 +179,7 @@ brushes.prototype = {
             value: 0,
             slide: function(event, ui) {
                 // XXX: hack! figure out a nicer way to pass option name!
-                var option = $(this).attr('id').replace('JitterAmount', '').replace('brush', '');
+                var option = $(this).attr('id').replace('jitter', '').replace('brush', '');
                 panels['brushes'].brushOptions[option].jitter.value = ui.value;
                 panels['brushes'].renderBrushPreviews();
             }
