@@ -66,6 +66,7 @@
         <script type="text/javascript" src="js/utils/painter.js"></script>
 
         <script type="text/javascript" src="js/conf.js"></script>
+        <script type="text/javascript" src="js/hotkeys.js"></script>
 
         <script type="text/javascript">
         $(function() {
@@ -381,12 +382,12 @@
             }
 
             // shortcuts for changing color
-            shortcut.add('q', function(e) {
+            shortcut.add(PREV_COLOR, function(e) {
                 var prev = $(".activeColor").parent().prev().children(':first');
                 prev.length && prev.focus();
             });
 
-            shortcut.add('w', function(e) {
+            shortcut.add(NEXT_COLOR, function(e) {
                 var next = $(".activeColor").parent().next().children(':first');
                 next.length && next.focus();
             });
