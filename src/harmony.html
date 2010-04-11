@@ -392,10 +392,14 @@
                 next.length && next.focus();
             });
 
-            // initialize panel UI
+            // initialize panel UI and hotkeys
             for (panelName in panels) {
                 panel = panels[panelName];
                 panel.initUI();
+
+                if( 'initHotkeys' in panel ) {
+                    panel.initHotkeys();
+                }
             }
         </script>
     </body>

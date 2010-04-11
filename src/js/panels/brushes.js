@@ -26,6 +26,38 @@ brushes.prototype = {
 
         this.selected = BRUSHES[0];
     },
+    initHotkeys: function () {
+        function increaseBrushValue(hotkey, attributeName) {
+            shortcut.add(hotkey, function(e) {
+                var currentSize = $("#" + attributeName).slider("value");
+
+                $("#" + attributeName).slider("value", currentSize + 1);
+            });
+        }
+
+        function decreaseBrushValue(hotkey, attributeName) {
+            shortcut.add(hotkey, function(e) {
+                var currentSize = $("#" + attributeName).slider("value");
+
+                $("#" + attributeName).slider("value", currentSize - 1);
+            });
+        }
+
+        increaseBrushValue(INCREASE_BRUSH_SIZE, 'brushsize');
+        decreaseBrushValue(DECREASE_BRUSH_SIZE, 'brushsize');
+
+        increaseBrushValue(INCREASE_BRUSH_SIZE_JITTER, 'brushsizejitter');
+        decreaseBrushValue(DECREASE_BRUSH_SIZE_JITTER, 'brushsizejitter');
+
+        increaseBrushValue(INCREASE_BRUSH_OPACITY, 'brushopacity');
+        decreaseBrushValue(DECREASE_BRUSH_OPACITY, 'brushopacity');
+
+        increaseBrushValue(INCREASE_BRUSH_OPACITY_JITTER, 'brushopacityjitter');
+        decreaseBrushValue(DECREASE_BRUSH_OPACITY_JITTER, 'brushopacityjitter');
+
+        increaseBrushValue(INCREASE_BRUSH_LOCATION_JITTER, 'brushlocationjitter');
+        decreaseBrushValue(DECREASE_BRUSH_LOCATION_JITTER, 'brushlocationjitter');
+    },
     initUI: function () {
         var panelWidth = 220;
         setUpPanel("Brushes", "left", panelWidth, 460);
@@ -111,7 +143,7 @@ brushes.prototype = {
 
             $("#brushOptions").append('<div style="clear:both; height: 0.5em;"></div>');
 
-            var jitterAmountId = optionId + 'JitterAmount';
+            var jitterAmountId = optionId + 'jitter';
             $("#brushOptions").append(
                 '<div class="jitter"> \
                     <div style="float:left; width: 40%">Jitter:</div> \
