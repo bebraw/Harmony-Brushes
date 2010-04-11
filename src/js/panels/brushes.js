@@ -27,6 +27,13 @@ brushes.prototype = {
         this.selected = BRUSHES[0];
     },
     initHotkeys: function () {
+        function toggleBrushValue(hotkey, attributeName) {
+            shortcut.add(hotkey, function(e) {
+                // TODO: figure out how to do this properly
+                //$('#' + attributeName).button("option", "value", "true");
+            });
+        }
+
         function increaseBrushValue(hotkey, attributeName) {
             shortcut.add(hotkey, function(e) {
                 var currentSize = $("#" + attributeName).slider("value");
@@ -43,15 +50,17 @@ brushes.prototype = {
             });
         }
 
+        // TODO: add hotkeys for modes and shading too
+
+        toggleBrushValue(TOGGLE_BRUSH_SIZE_PRESSURE, 'brushsizepressure');
         increaseBrushValue(INCREASE_BRUSH_SIZE, 'brushsize');
         decreaseBrushValue(DECREASE_BRUSH_SIZE, 'brushsize');
-
         increaseBrushValue(INCREASE_BRUSH_SIZE_JITTER, 'brushsizejitter');
         decreaseBrushValue(DECREASE_BRUSH_SIZE_JITTER, 'brushsizejitter');
 
+        toggleBrushValue(TOGGLE_BRUSH_OPACITY_PRESSURE, 'brushopacitypressure');
         increaseBrushValue(INCREASE_BRUSH_OPACITY, 'brushopacity');
         decreaseBrushValue(DECREASE_BRUSH_OPACITY, 'brushopacity');
-
         increaseBrushValue(INCREASE_BRUSH_OPACITY_JITTER, 'brushopacityjitter');
         decreaseBrushValue(DECREASE_BRUSH_OPACITY_JITTER, 'brushopacityjitter');
 
