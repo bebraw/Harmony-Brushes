@@ -137,9 +137,9 @@ ProxyCanvas.prototype = {
                 }
                 else {
                     bottom.r = blurArea.data[(y + 1) * width * offset + offset * x];
-                    bottom.g = blurArea.data[(y + 1) * width * offset + 1 + offset * x];
-                    bottom.b = blurArea.data[(y + 1) * width * offset + 2 + offset * x];
-                    bottom.a = blurArea.data[(y + 1) * width * offset + 3 + offset * x];
+                    bottom.g = blurArea.data[(y + 1) * width * offset + offset * x + 1];
+                    bottom.b = blurArea.data[(y + 1) * width * offset + offset * x + 2];
+                    bottom.a = blurArea.data[(y + 1) * width * offset + offset * x + 3];
                 }
 
                 function applyBlur(parts) {
