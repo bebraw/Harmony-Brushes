@@ -51,16 +51,6 @@ body {
     margin-right: 1em;
 }
 
-#colors {
-    float: right;
-    margin-right: 1em;
-}
-
-#colors li {
-    display: inline;
-    list-style-type: none;
-}
-
 #modifyPageDialog div, #exportFormats {
     margin-bottom: 1em;
 }

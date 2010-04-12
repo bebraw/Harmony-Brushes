@@ -12,7 +12,7 @@ StrokeManager.prototype = {
     },
     start: function (point) {
         var brush = panels['brushes'].getSelected();
-        var color = getColor();
+        var color = panels['palette'].getColor();
         this.mode = panels['brushes'].getMode();
 
         this.painters = new Painters(this.activeCanvas);

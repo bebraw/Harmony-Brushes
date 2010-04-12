@@ -8,11 +8,11 @@ var BRUSHES = ["sketchy", "shaded", "chrome", "blur", "fur", "longfur", "web",
 var CONSTRAINTS = ["horizontal", "perspective", "vertical"];
 var MODIFIERS = ["array", "group", "horizontalmirror", "verticalmirror",
     "radialmirror"];
-var PANELS = ["brushes", "canvas", "modifiers", "playback"];
+var PANELS = ["brushes", "canvas", "modifiers", "playback", "palette"];
 
 // color as RGB in range [0, 255]
 var COLOR = [0, 0, 0];
-var AMOUNTOFCOLORS = 14; // amount of colors in the brush color gradient
+var AMOUNTOFCOLORS = 5; // amount of colors in the brush color gradient
 
 var BACKGROUNDCOLOR = [128, 128, 128];
 

@@ -229,7 +229,8 @@ brushes.prototype = {
         brushCanvas.fill([255, 255, 255]); // XXX: set background color using CSS instead
 
         if( SHOWPREVIEWIMAGES ) {
-            var brushPainter = new Painter(brushCanvas, brush, getColor());
+            var brushPainter = new Painter(brushCanvas, brush,
+                panels['palette'].getColor());
 
             var canvasWidth = brushCanvas.width;
             var pad = 10;
