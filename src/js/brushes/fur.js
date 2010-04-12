@@ -24,7 +24,7 @@ fur.prototype = {
             var begin = points.current.add(offset);
             var end = points.current.sub(offset);
 
-            canvas.stroke(begin, end, color, 0.1);
+            canvas.stroke(begin, end, color, opacity / 2);
         }
     }
 };
