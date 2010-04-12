@@ -19,7 +19,7 @@ ProxyCanvas.prototype = {
         var isChrome =  navigator.userAgent.toLowerCase().indexOf('chrome')  > -1;
 
         if( isChrome ) {
-            // apparently this work just with png?
+            // apparently this works just with png?
             window.open(this.canvas.toDataURL('image/png'), 'mywindow');
         }
         else {
