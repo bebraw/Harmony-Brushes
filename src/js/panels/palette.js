@@ -58,7 +58,7 @@ palette.prototype = {
         $('.paletteColorRow li').css('display', 'inline').css('list-style-type', 'none');
         
         // set up last row
-        $('#paletteColors').append('<ul id="lastPaletteRow"><li style="margin-right:' + (AMOUNTOFCOLORCOLUMNS + 1) + 'em"> \
+        $('#paletteColors').append('<ul id="lastPaletteRow"><li style="margin-right:' + (AMOUNTOFCOLORCOLUMNS + 2) + 'em"> \
                 <input style="width: 1em; height: 1em;" class="color {valueElement:' +
                 "'bottomLeftColor'" + '}" /> \
                 <input type="hidden" class="cornerColor" id="bottomLeftColor" value="' +
