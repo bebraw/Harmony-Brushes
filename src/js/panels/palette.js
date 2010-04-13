@@ -2,6 +2,12 @@
  * http://www.opensource.org/licenses/mit-license.php
  * Copyright (c) 2010 Mr.doob, rhyolight, bebraw
  */
+
+// TODO: add color picker (samples from some predefined range using smooth gradient).
+// how to handle "active" color in this case? show it at the main bar?
+// make it possible to return to previous colors in history and show them as well?
+// should history be lockable? -> custom color scheme (similar to the current system!)
+
 function palette() {}
 palette.prototype = {
     initUI: function () {
@@ -124,13 +130,6 @@ palette.prototype = {
 
             next.length && next.focus();
         });
-
-        // TODO: add color picker (samples from some predefined range using smooth gradient).
-        // how to handle "active" color in this case? show it at the main bar?
-        // make it possible to return to previous colors in history and show them as well?
-        // should history be lockable? -> custom color scheme (similar to the current system!)
-
-        return;
     },
     getColor: function() {
         return COLOR;
