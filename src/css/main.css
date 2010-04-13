@@ -65,7 +65,7 @@ html, body
 	min-height: 300px;
 }
 .SplitterPane {
-	background: #eef;
+	background: #000000;
 	overflow: auto;
 }
 .vsplitbar {
