@@ -149,13 +149,12 @@ palette.prototype = {
                 bottomRightColor, fac);
 
             this._interpolateColorRow(paletteRowId, leftBoundColor,
-                rightBoundColor, AMOUNTOFCOLORS);
+                rightBoundColor);
         }
     },
-    _interpolateColorRow: function(rowId, leftBoundColor, rightBoundColor,
-            amountOfColors) {
-        $('#' + rowId + ' li input').each(function(k, v) {
-            var fac = (k + 1) / (amountOfColors + 2);
+    _interpolateColorRow: function(rowId, leftBoundColor, rightBoundColor) {
+        $('#' + rowId + ' li input').each(function(k, v) {console.log(k);
+            var fac = k / (AMOUNTOFCOLORS - 1);
             var color = '#' + colorLerp(leftBoundColor, rightBoundColor, fac);
 
             $(this).css('background-color', color);
