@@ -5,10 +5,10 @@
 function palette() {}
 palette.prototype = {
     initUI: function () {
-        var topLeftBoundColor = RGBtoHex(TOPLEFTCOLOR);
-        var topRightBoundColor = RGBtoHex(TOPRIGHTCOLOR);
-        var bottomLeftBoundColor = RGBtoHex(BOTTOMLEFTCOLOR);
-        var bottomRightBoundColor = RGBtoHex(BOTTOMRIGHTCOLOR);
+        var topLeftColor = RGBtoHex(PALETTECORNERS['topleft']);
+        var topRightColor = RGBtoHex(PALETTECORNERS['topright']);
+        var bottomLeftColor = RGBtoHex(PALETTECORNERS['bottomleft']);
+        var bottomRightColor = RGBtoHex(PALETTECORNERS['bottomright']);
 
         setUpPanel("Palette", ["right", "bottom"], 180, 160);
 
@@ -19,16 +19,16 @@ palette.prototype = {
         // set up first row
         $('#paletteColors').append('<ul id="firstPaletteRow"><li style="margin-right:' + (AMOUNTOFCOLORS + 1) + 'em"> \
                 <input style="width: 1em; height: 1em;" class="color {valueElement:' +
-                "'topLeftBoundColor'" + '}" /> \
-                <input type="hidden" class="boundColor" id="topLeftBoundColor" value="' +
-                topLeftBoundColor + '" /> \
+                "'topLeftColor'" + '}" /> \
+                <input type="hidden" class="cornerColor" id="topLeftColor" value="' +
+                topLeftColor + '" /> \
             </li>');
 
         $('#firstPaletteRow').append('<li> \
                 <input style="width: 1em; height: 1em;" class="color {valueElement:' +
-                "'topRightBoundColor'" + '}" /> \
-                <input type="hidden" class="boundColor" id="topRightBoundColor" value="' +
-                topRightBoundColor + '" /> \
+                "'topRightColor'" + '}" /> \
+                <input type="hidden" class="cornerColor" id="topRightColor" value="' +
+                topRightColor + '" /> \
             </li>');
 
         $('#paletteColors').append('</ul>');
@@ -54,16 +54,16 @@ palette.prototype = {
         // set up last row
         $('#paletteColors').append('<ul id="lastPaletteRow"><li style="margin-right:' + (AMOUNTOFCOLORS + 1) + 'em"> \
                 <input style="width: 1em; height: 1em;" class="color {valueElement:' +
-                "'bottomLeftBoundColor'" + '}" /> \
-                <input type="hidden" class="boundColor" id="bottomLeftBoundColor" value="' +
-                bottomLeftBoundColor + '" /> \
+                "'bottomLeftColor'" + '}" /> \
+                <input type="hidden" class="cornerColor" id="bottomLeftColor" value="' +
+                bottomLeftColor + '" /> \
             </li>');
 
         $('#lastPaletteRow').append('<li> \
                 <input style="width: 1em; height: 1em;" class="color {valueElement:' +
-                "'bottomRightBoundColor'" + '}" /> \
-                <input type="hidden" class="boundColor" id="bottomRightBoundColor" value="' +
-                bottomRightBoundColor + '" /> \
+                "'bottomRightColor'" + '}" /> \
+                <input type="hidden" class="cornerColor" id="bottomRightColor" value="' +
+                bottomRightColor + '" /> \
             </li>');
 
         $('#lastColors').append('</ul>');
@@ -72,59 +72,15 @@ palette.prototype = {
 
         $('#paletteColors ul').css('margin', '0 0 0 0');
 
-        // TODO: set up event handlers!
-        // 1. if a corner is changed, recalc gradients
-        // 2. if a color is clicked, set it active
-
-        // TODO: make initial corner colors configurable
-
-        // TODO: add hotkeys (up, down, left, right)
-
-        // TODO: add color picker (samples from some predefined range using smooth gradient).
-        // how to handle "active" color in this case? show it at the main bar?
-        // make it possible to return to previous colors in history and show them as well?
-        // should history be lockable? -> custom color scheme (similar to the current system!)
-
-        return;
-
-        var leftBoundColor = "000000";
-        var rightBoundColor = "ffffff";
-        $('#paletteColors').append('<li> \
-                <input style="width: 1em; height: 1em;" class="color {valueElement:' +
-                "'leftBoundColor'" + '}" /> \
-                <input type="hidden" class="boundColor" id="leftBoundColor" value="' +
-                leftBoundColor + '" /> \
-            </li>');
-
-        for( var i = 0; i < AMOUNTOFCOLORS; i++ ) {
-            $('#paletteColors').append('<li> \
-                    <input style="width: 1em; height: 1em;" class="clickableColor" /> \
-                </li>');
-        }
-
-        this._interpolateColors(leftBoundColor, rightBoundColor, AMOUNTOFCOLORS);
-
-        // right bound
-        $('#paletteColors').append('<li> \
-                <input style="width: 1em; height: 1em;" class="color {valueElement:' +
-                "'rightBoundColor'" + '}" /> \
-                <input type="hidden" class="boundColor" id="rightBoundColor" value="' +
-                rightBoundColor + '" /> \
-            </li>');
-
-        $('#paletteColors li').css('display', 'inline').css('list-style-type', 'none');
-
-        $('.boundColor').change(function(e) {
+        // set up event handlers
+        $('.cornerColor').change(function(e) {
+            var cornerName = $(this).attr('id').toLowerCase().replace('color', '');
             var hexColor = $(this).val();
 
-            COLOR = hexToRGB(hexColor);
+            PALETTECORNERS[cornerName] = hexToRGB(hexColor);
+
+            panels['palette']._interpolateColors();
             panels['brushes'].renderBrushPreviews();
-
-            leftBoundColor = $('#leftBoundColor').val();
-            rightBoundColor = $('#rightBoundColor').val();
-
-            panels['palette']._interpolateColors(leftBoundColor, rightBoundColor,
-                AMOUNTOFCOLORS);
         });
 
         $('.clickableColor').focus(function(e) {
@@ -150,15 +106,22 @@ palette.prototype = {
             var next = $(".activeColor").parent().next().children(':first');
             next.length && next.focus();
         });
+
+        // TODO: add color picker (samples from some predefined range using smooth gradient).
+        // how to handle "active" color in this case? show it at the main bar?
+        // make it possible to return to previous colors in history and show them as well?
+        // should history be lockable? -> custom color scheme (similar to the current system!)
+
+        return;
     },
     getColor: function() {
         return COLOR;
     },
     _interpolateColors: function() {
-        var topLeftColor = RGBtoHex(TOPLEFTCOLOR);
-        var topRightColor = RGBtoHex(TOPRIGHTCOLOR);
-        var bottomLeftColor = RGBtoHex(BOTTOMLEFTCOLOR);
-        var bottomRightColor = RGBtoHex(BOTTOMRIGHTCOLOR);
+        var topLeftColor = RGBtoHex(PALETTECORNERS['topleft']);
+        var topRightColor = RGBtoHex(PALETTECORNERS['topright']);
+        var bottomLeftColor = RGBtoHex(PALETTECORNERS['bottomleft']);
+        var bottomRightColor = RGBtoHex(PALETTECORNERS['bottomright']);
 
         for( var i = 0; i < AMOUNTOFCOLORS; i++ ) {
             var paletteRowId = 'paletteRow' + i;
