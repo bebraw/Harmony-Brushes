@@ -152,7 +152,7 @@ brushes.prototype = {
                     min: brushOptionValue.min,
                     max: brushOptionValue.max,
                     value: brushOptionValue.value,
-                    slide: function(event, ui) {
+                    change: function(event, ui) { // XXX: hook up this handler with slide too (preview!)
                         // XXX: hack! figure out a nicer way to pass option name!
                         var option = $(this).attr('id').replace('brush', '');
                         panels['brushes'].brushOptions[option].value = ui.value;
@@ -186,7 +186,7 @@ brushes.prototype = {
             min: 0,
             max: 50, // XXX: 100 for totally random, not really useful though
             value: 0,
-            slide: function(event, ui) {
+            change: function(event, ui) { // XXX: hook up this handler with slide too (preview!)
                 // XXX: hack! figure out a nicer way to pass option name!
                 var option = $(this).attr('id').replace('jitter', '').replace('brush', '');
                 panels['brushes'].brushOptions[option].jitter.value = ui.value;
