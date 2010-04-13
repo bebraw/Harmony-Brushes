@@ -97,13 +97,31 @@ palette.prototype = {
         $('.clickableColor:first').addClass('activeColor');
 
         // shortcuts for changing color
-        shortcut.add(PREV_COLOR, function(e) {
+        shortcut.add(TOP_COLOR, function(e) {
+            var listIndex = $(".activeColor").parent().index();
+            var listItem = $($(".activeColor").parent().parent().prev().children()[listIndex]);
+            var top = listItem.children(':first');
+
+            top.length && top.focus();
+        });
+
+        shortcut.add(BOTTOM_COLOR, function(e) {
+            var listIndex = $(".activeColor").parent().index();
+            var listItem = $($(".activeColor").parent().parent().next().children()[listIndex]);
+            var bottom = listItem.children(':first');
+
+            bottom.length && bottom.focus();
+        });
+
+        shortcut.add(LEFT_COLOR, function(e) {
             var prev = $(".activeColor").parent().prev().children(':first');
+
             prev.length && prev.focus();
         });
 
-        shortcut.add(NEXT_COLOR, function(e) {
+        shortcut.add(RIGHT_COLOR, function(e) {
             var next = $(".activeColor").parent().next().children(':first');
+
             next.length && next.focus();
         });
 
