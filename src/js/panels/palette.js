@@ -16,14 +16,14 @@ palette.prototype = {
         var bottomLeftColor = RGBtoHex(PALETTECORNERS['bottomleft']);
         var bottomRightColor = RGBtoHex(PALETTECORNERS['bottomright']);
 
-        setUpPanel("Palette", ["right", "bottom"], 180, 160);
+        setUpPanel("Palette", ["right", "bottom"], 220, 160);
 
         // set up background panel
         $("#palettePanel").append('<div id="paletteColors" style="position: relative; left:-4em;"> \
                 </div>');
 
         // set up first row
-        $('#paletteColors').append('<ul id="firstPaletteRow"><li style="margin-right:' + (AMOUNTOFCOLORS + 1) + 'em"> \
+        $('#paletteColors').append('<ul id="firstPaletteRow"><li style="margin-right:' + (AMOUNTOFCOLORCOLUMNS + 2) + 'em"> \
                 <input style="width: 1em; height: 1em;" class="color {valueElement:' +
                 "'topLeftColor'" + '}" /> \
                 <input type="hidden" class="cornerColor" id="topLeftColor" value="' +
@@ -42,11 +42,11 @@ palette.prototype = {
         $('#firstPaletteRow li').css('display', 'inline').css('list-style-type', 'none');
 
         // set up color rows
-        for( var i = 0; i < AMOUNTOFCOLORS; i++ ) {
+        for( var i = 0; i < AMOUNTOFCOLORROWS; i++ ) {
             var paletteRowId = 'paletteRow' + i;
             $('#paletteColors').append('<ul class="paletteColorRow" id="' + paletteRowId + '"></ul>');
 
-            for( var j = 0; j < AMOUNTOFCOLORS; j++ ) {
+            for( var j = 0; j < AMOUNTOFCOLORCOLUMNS; j++ ) {
                 $('#' + paletteRowId).append('<li><input style="width: 1em; height: 1em;" class="clickableColor" /></li>');
             }
 
@@ -58,7 +58,7 @@ palette.prototype = {
         $('.paletteColorRow li').css('display', 'inline').css('list-style-type', 'none');
         
         // set up last row
-        $('#paletteColors').append('<ul id="lastPaletteRow"><li style="margin-right:' + (AMOUNTOFCOLORS + 1) + 'em"> \
+        $('#paletteColors').append('<ul id="lastPaletteRow"><li style="margin-right:' + (AMOUNTOFCOLORCOLUMNS + 1) + 'em"> \
                 <input style="width: 1em; height: 1em;" class="color {valueElement:' +
                 "'bottomLeftColor'" + '}" /> \
                 <input type="hidden" class="cornerColor" id="bottomLeftColor" value="' +
@@ -140,9 +140,9 @@ palette.prototype = {
         var bottomLeftColor = RGBtoHex(PALETTECORNERS['bottomleft']);
         var bottomRightColor = RGBtoHex(PALETTECORNERS['bottomright']);
 
-        for( var i = 0; i < AMOUNTOFCOLORS; i++ ) {
+        for( var i = 0; i < AMOUNTOFCOLORROWS; i++ ) {
             var paletteRowId = 'paletteRow' + i;
-            var fac = i / (AMOUNTOFCOLORS - 1);
+            var fac = i / (AMOUNTOFCOLORROWS - 1);
             var leftBoundColor = colorLerp(topLeftColor,
                 bottomLeftColor, fac);
             var rightBoundColor = colorLerp(topRightColor,
@@ -154,7 +154,7 @@ palette.prototype = {
     },
     _interpolateColorRow: function(rowId, leftBoundColor, rightBoundColor) {
         $('#' + rowId + ' li input').each(function(k, v) {console.log(k);
-            var fac = k / (AMOUNTOFCOLORS - 1);
+            var fac = k / (AMOUNTOFCOLORCOLUMNS - 1);
             var color = '#' + colorLerp(leftBoundColor, rightBoundColor, fac);
 
             $(this).css('background-color', color);

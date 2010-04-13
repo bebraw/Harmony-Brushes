@@ -12,7 +12,8 @@ var PANELS = ["brushes", "canvas", "modifiers", "playback", "palette"];
 
 // color as RGB in range [0, 255]
 var COLOR = [0, 0, 0];
-var AMOUNTOFCOLORS = 5; // amount of colors in the brush color gradient
+var AMOUNTOFCOLORROWS = 5;
+var AMOUNTOFCOLORCOLUMNS = 8;
 
 // palette options
 var PALETTECORNERS = {
