@@ -10,13 +10,13 @@
 
 function palette() {}
 palette.prototype = {
-    initUI: function () {
+    initUI: function (parentId) {
         var topLeftColor = RGBtoHex(PALETTECORNERS['topleft']);
         var topRightColor = RGBtoHex(PALETTECORNERS['topright']);
         var bottomLeftColor = RGBtoHex(PALETTECORNERS['bottomleft']);
         var bottomRightColor = RGBtoHex(PALETTECORNERS['bottomright']);
 
-        setUpPanel("Palette", ["right", "bottom"], 220, 160);
+        setUpPanel(parentId, "Palette", ["right", "bottom"], 220, 160);
 
         // set up background panel
         $("#palettePanel").append('<div id="paletteColors" style="position: relative; left:-4em;"> \

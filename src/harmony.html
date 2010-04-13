@@ -203,7 +203,7 @@
             $("#MySplitter").splitter({
                     type: "v",
                     outline: false,
-                    minLeft: 150, sizeLeft: 200, maxLeft: 250,
+                    minLeft: 280, sizeLeft: 280, maxLeft: 280,
                     anchorToWindow: true,
             });
             // Second vertical splitter, nested in the right pane of the main one.
@@ -262,9 +262,7 @@
     </head>
     <body>
         <div id="MySplitter">
-            <div class="SplitterPane" id="brushColumn">
-             <p>Brush related panels should go here</p>
-            </div>
+            <div class="SplitterPane" id="brushColumn"></div>
 
             <div id="CenterAndRight">
                 <div class="SplitterPane" id="pages">
@@ -278,9 +276,7 @@
                     <div id="page1"></div>
                 </div>
 
-                <div class="SplitterPane" id="canvasColumn">
-                    <p>Canvas related panels should go here</p>
-                </div>
+                <div class="SplitterPane" id="canvasColumn"></div>
             </div>
         </div>
 
@@ -347,9 +343,10 @@
             }
 
             // initialize panel UI and hotkeys
+            panels['brushes'].initUI('brushColumn');
+            
             for (panelName in panels) {
                 panel = panels[panelName];
-                //panel.initUI();
 
                 if( 'initHotkeys' in panel ) {
                     panel.initHotkeys();

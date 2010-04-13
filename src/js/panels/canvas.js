@@ -4,8 +4,8 @@
  */
 function canvas() {}
 canvas.prototype = {
-    initUI: function () {
-        setUpPanel("Canvas", ["left", "bottom"], 230);
+    initUI: function (parentId) {
+        setUpPanel(parentId, "Canvas", ["left", "bottom"], 230);
 
         // set up background panel
         $("#canvasPanel").append('<div id="canvasOptions"> \

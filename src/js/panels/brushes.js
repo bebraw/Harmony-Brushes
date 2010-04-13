@@ -67,9 +67,9 @@ brushes.prototype = {
         increaseBrushValue(INCREASE_BRUSH_LOCATION_JITTER, 'brushlocationjitter');
         decreaseBrushValue(DECREASE_BRUSH_LOCATION_JITTER, 'brushlocationjitter');
     },
-    initUI: function () {
+    initUI: function (parentId) {
         var panelWidth = 220;
-        setUpPanel("Brushes", "left", panelWidth, 410);
+        setUpPanel(parentId, "Brushes", "left", panelWidth, 410);
 
         // set up brushes panel
         $("#brushesPanel").append('<div id="brushes" style="height:170px;overflow:auto;"></div>' +

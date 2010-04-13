@@ -7,8 +7,8 @@ function playback() {
 }
 playback.prototype = {
     init: function () {},
-    initUI: function () {
-        setUpPanel("Playback", "bottom", 220, 60);
+    initUI: function (parentId) {
+        setUpPanel(parentId, "Playback", "bottom", 220, 60);
 
         // set up playback panel
         $("#playbackPanel").append('<button id="beginning">go to beginning</button> \

@@ -12,8 +12,8 @@ modifiers.prototype = {
 
         // XXX: construct modifiers here (see brush panel)
     },
-    initUI: function () {
-        setUpPanel("Modifiers", ['right', 'top'], 150);
+    initUI: function (parentId) {
+        setUpPanel(parentId, "Modifiers", ['right', 'top'], 150);
 
         for (var i = 0; i < MODIFIERS.length; i++) {
             var modifierName = MODIFIERS[i];
