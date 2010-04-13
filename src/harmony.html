@@ -203,14 +203,14 @@
             $("#MySplitter").splitter({
                     type: "v",
                     outline: false,
-                    minLeft: 150, sizeLeft: 280, maxLeft: 280,
+                    minLeft: 0, sizeLeft: 280, maxLeft: 280,
                     anchorToWindow: true,
             });
             // Second vertical splitter, nested in the right pane of the main one.
             $("#CenterAndRight").splitter({
                     type: "v",
                     outline: false,
-                    minRight: 150, sizeRight: 240, maxRight: 240,
+                    minRight: 0, sizeRight: 240, maxRight: 240,
             });
 
             // set up initial canvas
@@ -221,11 +221,11 @@
 
                 // XXX: figure out how to calculate offsets dynamically
                 $("#" + pageName).append('<div style="overflow:auto;width:' +
-                    ($("#pages").width() - 30) + 'px;height:' +
-                    (window.innerHeight - 65) + 'px;">' +
+                    (screen.width - 60) + 'px;height:' +
+                    (window.innerHeight - 85) + 'px;">' +
                     '<canvas id="' + canvasId + '" width="' +
-                    ($("#pages").width() - 35) + '" height="' +
-                    (window.innerHeight - 70) +
+                    (screen.width - 70) + '" height="' +
+                    (window.innerHeight - 90) +
                     '" style="cursor:crosshair"' +
                     ' class="pageCanvas"></canvas></div>'
                 );
