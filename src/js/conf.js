@@ -14,6 +14,13 @@ var PANELS = ["brushes", "canvas", "modifiers", "playback", "palette"];
 var COLOR = [0, 0, 0];
 var AMOUNTOFCOLORS = 5; // amount of colors in the brush color gradient
 
+// palette options
+var TOPLEFTCOLOR = [0, 0, 0];
+var TOPRIGHTCOLOR = [128, 128, 128];
+var BOTTOMLEFTCOLOR = [128, 128, 128];
+var BOTTOMRIGHTCOLOR = [255, 255, 255];
+
+// background options
 var BACKGROUNDCOLOR = [128, 128, 128];
 
 // stroke filtering options

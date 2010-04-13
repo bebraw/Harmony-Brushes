@@ -5,6 +5,11 @@
 function palette() {}
 palette.prototype = {
     initUI: function () {
+        var topLeftBoundColor = RGBtoHex(TOPLEFTCOLOR);
+        var topRightBoundColor = RGBtoHex(TOPRIGHTCOLOR);
+        var bottomLeftBoundColor = RGBtoHex(BOTTOMLEFTCOLOR);
+        var bottomRightBoundColor = RGBtoHex(BOTTOMRIGHTCOLOR);
+
         setUpPanel("Palette", ["right", "bottom"], 180, 160);
 
         // set up background panel
@@ -12,7 +17,6 @@ palette.prototype = {
                 </div>');
 
         // set up first row
-        var topLeftBoundColor = "000000";
         $('#paletteColors').append('<ul id="firstPaletteRow"><li style="margin-right:' + (AMOUNTOFCOLORS + 1) + 'em"> \
                 <input style="width: 1em; height: 1em;" class="color {valueElement:' +
                 "'topLeftBoundColor'" + '}" /> \
@@ -20,7 +24,6 @@ palette.prototype = {
                 topLeftBoundColor + '" /> \
             </li>');
 
-        var topRightBoundColor = "888888";
         $('#firstPaletteRow').append('<li> \
                 <input style="width: 1em; height: 1em;" class="color {valueElement:' +
                 "'topRightBoundColor'" + '}" /> \
@@ -44,10 +47,11 @@ palette.prototype = {
             $('#' + paletteRowId + ' li:first').css('margin-left', '1em');
         }
 
+        this._interpolateColors();
+
         $('.paletteColorRow li').css('display', 'inline').css('list-style-type', 'none');
         
         // set up last row
-        var bottomLeftBoundColor = "888888";
         $('#paletteColors').append('<ul id="lastPaletteRow"><li style="margin-right:' + (AMOUNTOFCOLORS + 1) + 'em"> \
                 <input style="width: 1em; height: 1em;" class="color {valueElement:' +
                 "'bottomLeftBoundColor'" + '}" /> \
@@ -55,7 +59,6 @@ palette.prototype = {
                 bottomLeftBoundColor + '" /> \
             </li>');
 
-        var bottomRightBoundColor = "ffffff";
         $('#lastPaletteRow').append('<li> \
                 <input style="width: 1em; height: 1em;" class="color {valueElement:' +
                 "'bottomRightBoundColor'" + '}" /> \
@@ -68,6 +71,19 @@ palette.prototype = {
         $('#lastPaletteRow li').css('display', 'inline').css('list-style-type', 'none');
 
         $('#paletteColors ul').css('margin', '0 0 0 0');
+
+        // TODO: set up event handlers!
+        // 1. if a corner is changed, recalc gradients
+        // 2. if a color is clicked, set it active
+
+        // TODO: make initial corner colors configurable
+
+        // TODO: add hotkeys (up, down, left, right)
+
+        // TODO: add color picker (samples from some predefined range using smooth gradient).
+        // how to handle "active" color in this case? show it at the main bar?
+        // make it possible to return to previous colors in history and show them as well?
+        // should history be lockable? -> custom color scheme (similar to the current system!)
 
         return;
 
@@ -138,9 +154,27 @@ palette.prototype = {
     getColor: function() {
         return COLOR;
     },
-    _interpolateColors: function(leftBoundColor, rightBoundColor,
+    _interpolateColors: function() {
+        var topLeftColor = RGBtoHex(TOPLEFTCOLOR);
+        var topRightColor = RGBtoHex(TOPRIGHTCOLOR);
+        var bottomLeftColor = RGBtoHex(BOTTOMLEFTCOLOR);
+        var bottomRightColor = RGBtoHex(BOTTOMRIGHTCOLOR);
+
+        for( var i = 0; i < AMOUNTOFCOLORS; i++ ) {
+            var paletteRowId = 'paletteRow' + i;
+            var fac = i / (AMOUNTOFCOLORS - 1);
+            var leftBoundColor = colorLerp(topLeftColor,
+                bottomLeftColor, fac);
+            var rightBoundColor = colorLerp(topRightColor,
+                bottomRightColor, fac);
+
+            this._interpolateColorRow(paletteRowId, leftBoundColor,
+                rightBoundColor, AMOUNTOFCOLORS);
+        }
+    },
+    _interpolateColorRow: function(rowId, leftBoundColor, rightBoundColor,
             amountOfColors) {
-        $('.clickableColor').each(function(k, v) {
+        $('#' + rowId + ' li input').each(function(k, v) {
             var fac = (k + 1) / (amountOfColors + 2);
             var color = '#' + colorLerp(leftBoundColor, rightBoundColor, fac);
 
