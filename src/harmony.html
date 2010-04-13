@@ -203,14 +203,14 @@
             $("#MySplitter").splitter({
                     type: "v",
                     outline: false,
-                    minLeft: 280, sizeLeft: 280, maxLeft: 280,
+                    minLeft: 150, sizeLeft: 280, maxLeft: 280,
                     anchorToWindow: true,
             });
             // Second vertical splitter, nested in the right pane of the main one.
             $("#CenterAndRight").splitter({
                     type: "v",
                     outline: false,
-                    minRight: 150, sizeRight: 200, maxRight: 250,
+                    minRight: 150, sizeRight: 230, maxRight: 230,
             });
 
             // set up initial canvas
@@ -344,6 +344,9 @@
 
             // initialize panel UI and hotkeys
             panels['brushes'].initUI('brushColumn');
+            panels['palette'].initUI('brushColumn');
+            panels['canvas'].initUI('canvasColumn');
+            panels['modifiers'].initUI('canvasColumn'); // XXX: split up symmetry
             
             for (panelName in panels) {
                 panel = panels[panelName];
