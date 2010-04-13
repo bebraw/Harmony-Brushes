@@ -19,6 +19,7 @@
         <script type="text/javascript" src="js/lib/jquery-drag.js"></script>
         <script type="text/javascript" src="js/lib/shortcut.js"></script>
         <script type="text/javascript" src="js/lib/base64.js"></script>
+        <script type="text/javascript" src="js/lib/splitter.js"></script>
         <script type="text/javascript" src="js/lib/canvas2image.js"></script>
         <script type="text/javascript" src="js/lib/jscolor/jscolor.js"></script>
 
@@ -202,10 +203,10 @@
                 var canvasId = pageName + "Canvas";
 
                 $("#" + pageName).append('<div style="overflow:auto;width:' +
-                    (window.innerWidth - 40) + 'px;height:' +
+                    ($("#pages").innerWidth - 40) + 'px;height:' +
                     (window.innerHeight - 110) + 'px;">' +
                     '<canvas id="' + canvasId + '" width="' +
-                    (window.innerWidth - 40) + '" height="' +
+                    ($("#pages").innerWidth - 40) + '" height="' +
                     (window.innerHeight - 115) +
                     '" style="cursor:crosshair"' +
                     ' class="pageCanvas"></canvas></div>'
@@ -229,28 +230,57 @@
             function getMouseLocationOnCanvas(e) {
                 return new Point(e.layerX, e.layerY);
             }
+
+            // Main vertical splitter, anchored to the browser window
+            $("#MySplitter").splitter({
+                    type: "v",
+                    outline: true,
+                    minLeft: 100, sizeLeft: 150, maxLeft: 250,
+                    anchorToWindow: true,
+                    accessKey: "L"
+            });
+            // Second vertical splitter, nested in the right pane of the main one.
+            $("#CenterAndRight").splitter({
+                    type: "v",
+                    outline: true,
+                    minRight: 100, sizeRight: 150, maxRight: 250,
+                    accessKey: "R"
+            });
+
         });
-        </script>
-    </head>
-    <body>
-        <div id="header" style="height:2em">
+
+        /*<div id="header" style="height:2em">
             <div id="pods">
                 <span class="ui-icon ui-icon-plusthick" id="addNew">New</span>
             </div>
 
             <span class="ui-icon ui-icon-help" id="about">About</span>
-        </div>
-        
-        <div id="pages">
-            <ul>
-                <li>
-                    <span class="ui-icon ui-icon-wrench modifyPage">Tools</span>
-                    <a href="#page1">Page</a>
-                    <span class="ui-icon ui-icon-close removePage">Remove Page</span>
-                </li>
-            </ul>
-            <div id="page1"></div>
-        </div>
+        </div>*/
+        </script>
+    </head>
+    <body>
+        <div id="MySplitter">
+            <div class="SplitterPane" id="brushColumn">
+             <p>This is the left pane of the 3-column splitter. It has been limited to a range of 100 to 250 pixels wide by inline styles. It starts at 150 pixels wide.</p>
+            </div>
+
+            <div id="CenterAndRight">
+                <div class="SplitterPane" id="pages">
+                    <ul>
+                        <li>
+                            <span class="ui-icon ui-icon-wrench modifyPage">Tools</span>
+                            <a href="#page1">Page</a>
+                            <span class="ui-icon ui-icon-close removePage">Remove Page</span>
+                        </li>
+                    </ul>
+                    <div id="page1"></div>
+                </div>
+
+                <div class="SplitterPane" id="canvasColumn">
+                    <p>This is the right pane of the 3-column splitter. It has been limited to a range of 100 to 250 pixels wide by inline styles. It starts at 150 pixels wide.</p>
+                </div>
+            </div> <!-- #CenterAndRight -->
+        </div> <!-- #MySplitter -->
 
         <div id="newPageDialog" title="New Page">
             <form>
@@ -290,7 +320,7 @@
             </p>
         </div>
 
-        <embed id="wacomPlugin" type="application/x-wacom-tablet" hidden="true"/>
+        <embed id="wacomPlugin" type="application/x-wacom-tablet" hidden="true" />
 
         <script type="text/javascript">
             var panels = {}
@@ -317,7 +347,7 @@
             // initialize panel UI and hotkeys
             for (panelName in panels) {
                 panel = panels[panelName];
-                panel.initUI();
+                //panel.initUI();
 
                 if( 'initHotkeys' in panel ) {
                     panel.initHotkeys();
