@@ -69,7 +69,7 @@ brushes.prototype = {
     },
     initUI: function () {
         var panelWidth = 220;
-        setUpPanel("Brushes", "left", panelWidth, 390);
+        setUpPanel("Brushes", "left", panelWidth, 410);
 
         // set up brushes panel
         $("#brushesPanel").append('<div id="brushes" style="height:170px;overflow:auto;"></div>' +
@@ -178,7 +178,7 @@ brushes.prototype = {
         }
 
         // XXX: figure out the width in a nicer way
-        this.createBrushes(panelWidth / 2.5);
+        this.createBrushes(panelWidth / 2.8);
     },
     setUpJitter: function ( jitterAmountId ) {
         $("#" + jitterAmountId).slider({
