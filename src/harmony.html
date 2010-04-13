@@ -249,15 +249,6 @@
                 return new Point(e.layerX, e.layerY);
             }
         });
-
-        // TODO: set up "add new" and "about" to tab space
-        /*<div id="header" style="height:2em">
-            <div id="pods">
-                <span class="ui-icon ui-icon-plusthick" id="addNew">New</span>
-            </div>
-
-            <span class="ui-icon ui-icon-help" id="about">About</span>
-        </div>*/
         </script>
     </head>
     <body>
@@ -276,7 +267,15 @@
                     <div id="page1"></div>
                 </div>
 
-                <div class="SplitterPane" id="canvasColumn"></div>
+                <div class="SplitterPane" id="canvasColumn">
+                    <div id="menu" style="height:2em">
+                        <div id="pods">
+                            <span class="ui-icon ui-icon-plusthick" id="addNew">New</span>
+                        </div>
+
+                        <span class="ui-icon ui-icon-help" id="about">About</span>
+                    </div>
+                </div>
             </div>
         </div>
 
