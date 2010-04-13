@@ -153,7 +153,7 @@ palette.prototype = {
         }
     },
     _interpolateColorRow: function(rowId, leftBoundColor, rightBoundColor) {
-        $('#' + rowId + ' li input').each(function(k, v) {console.log(k);
+        $('#' + rowId + ' li input').each(function(k, v) {
             var fac = k / (AMOUNTOFCOLORCOLUMNS - 1);
             var color = '#' + colorLerp(leftBoundColor, rightBoundColor, fac);
 
