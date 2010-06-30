@@ -32,10 +32,10 @@ Points.prototype = {
     },
     getWithinRange: function (point, range, maxRange) {
         var ret = [];
-        var quadtrants = this.quadrants.find(point, Math.sqrt(maxRange));
+        var quadrants = this.quadrants.find(point, Math.sqrt(maxRange));
 
-        for( var i = 0; i < quadtrants.length; i++ ) {
-            var points = quadtrants[i];
+        for( var i = 0; i < quadrants.length; i++ ) {
+            var points = quadrants[i];
             
             ret = ret.concat(this._getWithinRange(point, range, maxRange,
                 points));
