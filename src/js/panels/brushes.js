@@ -10,11 +10,11 @@ brushes.prototype = {
         'opacity': {'min': 0, 'max': 100, 'value': 50, 'pressure': true},
         'location': {}},
     init: function () {
-        this.wacom = document.embeds["wacomPlugin"];
+        //this.wacom = document.embeds["wacomPlugin"];
 
-        if(!this.wacom.isWacom) {
-            this.wacom = {'pressure': 1.0}; // proxy
-        }
+        //if(!this.wacom.isWacom) {
+        this.wacom = {'pressure': 1.0}; // proxy
+        //}
 
         this.brushes = {};
         
