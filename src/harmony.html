@@ -88,37 +88,10 @@
                     }
             });
 
-            // modal dialog init: custom buttons and a "close" callback reseting the form inside
-            var $newPageDialog = $('#newPageDialog').dialog({
-                autoOpen: false,
-                modal: true,
-                buttons: {
-                    'New': function() {
-                        newTab();
-                        selectLastTab();
-                        $(this).dialog('close');
-                    },
-                    'Cancel': function() {
-                        $(this).dialog('close');
-                    }
-                },
-                open: function() {
-                        $pageNameInput.focus();
-                },
-                close: function() {
-                        $form[0].reset();
-                }
-            });
-
-            // addTab form: calls addTab function on submit and closes the dialog
-            var $form = $('form', $newPageDialog).submit(function() {
-                    newTab();
-                    $newPageDialog.dialog('close');
-                    return false;
-            });
-
-            $('#addNew').click(function() {
-                $newPageDialog.dialog('open');
+            $('#newPageButton').button().click(function() {
+                // TODO: clean up page naming
+                newTab();
+                selectLastTab();
             });
 
             $('#about').click(function() {
@@ -268,7 +241,7 @@
                 <div class="SplitterPane" id="canvasColumn">
                     <div id="menu" style="height:2em">
                         <div id="pods">
-                            <span class="ui-icon ui-icon-plusthick" id="addNew">New</span>
+                            <button id="newPageButton">New Page</button>
                         </div>
 
                         <span class="ui-icon ui-icon-help" id="about">About</span>
@@ -276,15 +249,6 @@
                 </div>
             </div>
         </div>
-
-        <div id="newPageDialog" title="New Page">
-            <form>
-                <fieldset class="ui-helper-reset">
-                    <label for="pageName">Name</label>
-                    <input type="text" name="pageName" id="pageName" value="" class="ui-widget-content ui-corner-all" />
-                </fieldset>
-            </form>
-	</div>
 
         <div id="modifyPageDialog" title="Tools">
             <div id="export">
