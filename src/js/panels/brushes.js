@@ -246,7 +246,7 @@ brushes.prototype = {
             }
         }
 
-        brushCanvas.text(brushName, 'black', '48px Segoe UI, Arial, sans-serif',
+        brushCanvas.text(brushName, 'black', PREVIEWFONTSIZE + ' Helvetiker',
             10, brushCanvas.height / 2);
     },
     applyJitter: function ( point ) {
