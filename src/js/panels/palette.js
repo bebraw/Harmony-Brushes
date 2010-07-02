@@ -78,6 +78,10 @@ palette.prototype = {
 
         $('#paletteColors ul').css('margin', '0 0 0 0');
 
+        // set up initial highlighting
+        $('.clickableColor').css('border-color', 'white');
+        $('.clickableColor:first').css('border-color', 'black');
+
         // set up event handlers
         $('.cornerColor').change(function(e) {
             var cornerName = $(this).attr('id').toLowerCase().replace('color', '');
@@ -98,6 +102,10 @@ palette.prototype = {
 
             $('.clickableColor').removeClass('activeColor');
             $(this).addClass('activeColor');
+
+            // highlight currently selected color
+            $('.clickableColor').css('border-color', 'white');
+            $(this).css('border-color', 'black');
         });
 
         $('.clickableColor:first').addClass('activeColor');
