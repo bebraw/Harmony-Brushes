@@ -78,18 +78,7 @@
             var $tabs = $('#pages').tabs({
                     tabTemplate: '<li><span class="ui-icon ui-icon-wrench modifyPage">Tools</span><a href="#{href}">#{label}</a><span class="ui-icon ui-icon-close removePage">Remove Page</span></li>',
                     add: function(event, ui) {
-                        if($("#copyPage").attr('checked')) {
-                            var oldCanvas = strokeManager.activeCanvas;
-                            var oldCanvasData = oldCanvas.getData();
-
-                            createCanvas(ui.panel.id);
-
-                            var newCanvas = strokeManager.activeCanvas;
-                            newCanvas.setData(oldCanvasData);
-                        }
-                        else {
-                            createCanvas(ui.panel.id);
-                        }
+                        createCanvas(ui.panel.id);
                     },
                     remove: function(event, ui) {
                         strokeManager.removeCanvas(ui.panel.id + 'Canvas');
@@ -106,7 +95,7 @@
                 buttons: {
                     'New': function() {
                         newTab();
-                        $tabs.tabs('select', $tabs.tabs('length') - 1);
+                        selectLastTab();
                         $(this).dialog('close');
                     },
                     'Cancel': function() {
@@ -120,7 +109,6 @@
                         $form[0].reset();
                 }
             });
-            $("#copyPage").button();
 
             // addTab form: calls addTab function on submit and closes the dialog
             var $form = $('form', $newPageDialog).submit(function() {
@@ -128,13 +116,6 @@
                     $newPageDialog.dialog('close');
                     return false;
             });
-
-            // actual addTab function: adds new tab using the title input from the form above
-            function newTab() {
-                    var tab_title = $pageNameInput.val() || 'Tab ' + tabCounter;
-                    $tabs.tabs('add', '#page' + tabCounter, tab_title);
-                    tabCounter++;
-            }
 
             $('#addNew').click(function() {
                 $newPageDialog.dialog('open');
@@ -180,36 +161,54 @@
                 }
             });
 
-            // export logic
-            $('#exportImage').click(function() {
-                $('#exportDialog').dialog('open');
-            });
-
+            // page tools
             $("#exportFormats").buttonset();
-            $("#exportButton").button();
-
-            $('#exportButton').click(function() {
+            $("#exportButton").button().click(function() {
                 var selectedFormat = $('#exportFormats input:checked').val();
 
                 strokeManager.activeCanvas.saveAs(selectedFormat);
 
-                $('#exportDialog').dialog('close');
+                $('#modifyPageDialog').dialog('close');
             });
+
+            $("#copyButton").button().click(function() {
+                var oldCanvas = strokeManager.activeCanvas;
+                var oldCanvasData = oldCanvas.getData();
+
+                newTab();
+                selectLastTab();
+
+                var newCanvas = strokeManager.activeCanvas;
+                newCanvas.setData(oldCanvasData);
+
+                $('#modifyPageDialog').dialog('close');
+            });
+
+            // actual addTab function: adds new tab using the title input from the form above
+            function newTab() {
+                var tab_title = $pageNameInput.val() || 'Tab ' + tabCounter;
+                $tabs.tabs('add', '#page' + tabCounter, tab_title);
+                tabCounter++;
+            }
+
+            function selectLastTab() {
+                $tabs.tabs('select', $tabs.tabs('length') - 1);
+            }
 
             // set up splitters
 
             // Main vertical splitter, anchored to the browser window
             $("#MySplitter").splitter({
-                    type: "v",
-                    outline: false,
-                    minLeft: 0, sizeLeft: 280, maxLeft: 280,
-                    anchorToWindow: true,
+                type: "v",
+                outline: false,
+                minLeft: 0, sizeLeft: 280, maxLeft: 280,
+                anchorToWindow: true,
             });
             // Second vertical splitter, nested in the right pane of the main one.
             $("#CenterAndRight").splitter({
-                    type: "v",
-                    outline: false,
-                    minRight: 0, sizeRight: 240, maxRight: 240,
+                type: "v",
+                outline: false,
+                minRight: 0, sizeRight: 240, maxRight: 240,
             });
 
             // set up initial canvas
@@ -283,7 +282,6 @@
                 <fieldset class="ui-helper-reset">
                     <label for="pageName">Name</label>
                     <input type="text" name="pageName" id="pageName" value="" class="ui-widget-content ui-corner-all" />
-                    <input type="checkbox" id="copyPage" value="copy" /><label for="copyPage">Copy</label>
                 </fieldset>
             </form>
 	</div>
@@ -296,6 +294,7 @@
                     <input type="radio" id="bmpFormat" name="exportFormats" value="bmp" /><label for="bmpFormat">BMP</label>
                 </div>
                 <button id="exportButton">Export</button>
+                <button id="copyButton">Copy</button>
             </div>
 	</div>
 
