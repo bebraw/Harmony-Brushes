@@ -19,7 +19,6 @@
         <script type="text/javascript" src="js/lib/jquery-drag.js"></script>
         <script type="text/javascript" src="js/lib/shortcut.js"></script>
         <script type="text/javascript" src="js/lib/base64.js"></script>
-        <script type="text/javascript" src="js/lib/splitter.js"></script>
         <script type="text/javascript" src="js/lib/canvas2image.js"></script>
         <script type="text/javascript" src="js/lib/jscolor/jscolor.js"></script>
 
@@ -171,35 +170,21 @@
                 $tabs.tabs('select', $tabs.tabs('length') - 1);
             }
 
-            // set up splitters
-
-            // Main vertical splitter, anchored to the browser window
-            $("#MySplitter").splitter({
-                type: "v",
-                outline: false,
-                minLeft: 0, sizeLeft: 280, maxLeft: 280,
-                anchorToWindow: true,
-            });
-            // Second vertical splitter, nested in the right pane of the main one.
-            $("#CenterAndRight").splitter({
-                type: "v",
-                outline: false,
-                minRight: 0, sizeRight: 240, maxRight: 240,
-            });
-
             // set up initial canvas
             createCanvas("page1");
 
             function createCanvas(pageName) {
                 var canvasId = pageName + "Canvas";
 
+                // TODO: size: Math.min(window_width, window_height)
+
                 // XXX: figure out how to calculate offsets dynamically
                 $("#" + pageName).append('<div style="overflow:auto;width:' +
-                    (screen.width - 60) + 'px;height:' +
-                    (window.innerHeight - 85) + 'px;">' +
+                    (screen.width - 30) + 'px;height:' +
+                    (window.innerHeight - 65) + 'px;">' +
                     '<canvas id="' + canvasId + '" width="' +
-                    (screen.width - 70) + '" height="' +
-                    (window.innerHeight - 90) +
+                    (screen.width - 40) + '" height="' +
+                    (window.innerHeight - 70) +
                     '" style="cursor:crosshair"' +
                     ' class="pageCanvas"></canvas></div>'
                 );
@@ -226,30 +211,26 @@
         </script>
     </head>
     <body>
-        <div id="MySplitter">
-            <div class="SplitterPane" id="brushColumn"></div>
+        <div id="pages">
+            <ul>
+                <li>
+                    <span class="ui-icon ui-icon-wrench modifyPage">Tools</span>
+                    <a href="#page1">Page</a>
+                    <span class="ui-icon ui-icon-close removePage">Remove Page</span>
+                </li>
+            </ul>
+            <div id="page1"></div>
+        </div>
 
-            <div id="CenterAndRight">
-                <div class="SplitterPane" id="pages">
-                    <ul>
-                        <li>
-                            <span class="ui-icon ui-icon-wrench modifyPage">Tools</span>
-                            <a href="#page1">Page</a>
-                            <span class="ui-icon ui-icon-close removePage">Remove Page</span>
-                        </li>
-                    </ul>
-                    <div id="page1"></div>
+        <div id="brushColumn" style="position:absolute;left:0px;top:50px;background-color:black"></div>
+
+        <div id="canvasColumn" style="position:absolute;right:0px;top:50px;background-color:black">
+            <div id="menu" style="height:2em">
+                <div id="pods">
+                    <button id="newPageButton">New Page</button>
                 </div>
 
-                <div class="SplitterPane" id="canvasColumn">
-                    <div id="menu" style="height:2em">
-                        <div id="pods">
-                            <button id="newPageButton">New Page</button>
-                        </div>
-
-                        <span class="ui-icon ui-icon-help" id="about">About</span>
-                    </div>
-                </div>
+                <span class="ui-icon ui-icon-help" id="about">About</span>
             </div>
         </div>
 
@@ -317,6 +298,9 @@
                     panel.initHotkeys();
                 }
             }
+
+            // CSS hack
+            $('#brushColumn').children().css('background-color', 'black');
         </script>
     </body>
 </html>
