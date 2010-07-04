@@ -29,8 +29,9 @@ brushes.prototype = {
     initHotkeys: function () {
         function toggleBrushValue(hotkey, attributeName) {
             shortcut.add(hotkey, function(e) {
-                // TODO: figure out how to do this properly
-                //$('#' + attributeName).button("option", "value", "true");
+                var $toggle = $("#" + attributeName);
+
+                $toggle.attr("checked", !$toggle.attr("checked")).button("refresh");
             });
         }
 
