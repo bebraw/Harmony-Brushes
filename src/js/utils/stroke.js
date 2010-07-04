@@ -9,21 +9,18 @@ StrokeManager.prototype = {
     init: function () {
         this.canvasii = {};
         this.activeCanvas = null;
-
-        // XXX
-        this.initialValues = {'x': null, 'y': null};
     },
     start: function (point) {
-        var brush = panels['brushes'].getSelected();
-        var color = panels['palette'].getColor();
-        this.mode = panels['brushes'].getMode();
+        var brush = panels.brushes.getSelected();
+        var color = panels.palette.getColor();
+        this.mode = panels.brushes.getMode();
 
         this.painters = new Painters(this.activeCanvas);
 
         this.painters.add(this.activeCanvas, brush, color);
 
         // TODO: stackify this!
-        var modifiers = panels['modifiers'].getActiveModifiers();
+        var modifiers = panels.modifiers.getActiveModifiers();
         for (var i = 0; i < modifiers.length; i++) {
             var modifier = modifiers[i];
 
@@ -50,12 +47,10 @@ StrokeManager.prototype = {
         this.paintTemplate(point);
 
         var points = this.painters.getStrokePoints();
-        this.activeCanvas.strokes.push(panels['brushes'].selected, points);
+        this.activeCanvas.strokes.push(panels.brushes.selected, points);
     },
     paintTemplate: function (point) {
-        this.applyProjection(point);
-
-        // projection.apply(point); // TODO: move hotkeys to projection module as well!
+        panels.canvas.projection.apply(point);
 
         this.cursorPoints.push(point);
 
@@ -76,29 +71,6 @@ StrokeManager.prototype = {
 
                 this.initCursor();
             }
-        }
-    },
-    applyProjection: function ( point ) {
-        if( panels['canvas'].projections.x ) {
-            if( !this.initialValues.y ) {
-                this.initialValues.y = point.y;
-            }
-
-            point.y = this.initialValues.y;
-        }
-        else {
-            this.initialValues.y = null;
-        }
-
-        if( panels['canvas'].projections.y ) {
-            if( !this.initialValues.x ) {
-                this.initialValues.x = point.x;
-            }
-
-            point.x = this.initialValues.x;
-        }
-        else {
-            this.initialValues.x = null;
         }
     },
     applyJitterAndPaint: function ( point ) {

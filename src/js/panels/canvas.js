@@ -7,40 +7,10 @@ function canvas() {
 }
 canvas.prototype = {
     init: function () {
-        this.projections = {'x': false, 'y': false};
+        this.projection = new projection();
     },
     initHotkeys: function () {
-        shortcut.add('1', function(e) {
-            panels.canvas.projections.x = true;
-        });
-
-        shortcut.add('1', function(e) {
-            panels.canvas.projections.x = false;
-        }, {'type': 'keyup'});
-
-        shortcut.add('2', function(e) {
-            panels.canvas.projections.y = true;
-        });
-
-        shortcut.add('2', function(e) {
-            panels.canvas.projections.y = false;
-        }, {'type': 'keyup'});
-
-        // TODO: custom projection (towards target)
-        shortcut.add('3', function(e) {
-        });
-
-        // TODO: custom projection (around target)
-        shortcut.add('4', function(e) {
-        });
-
-        // TODO: custom projection (parallel to previously stored vec)
-        shortcut.add('5', function(e) {
-        });
-
-        // TODO: set custom projection target
-        shortcut.add('6', function(e) {
-        });
+        this.projection.initHotkeys();
     },
     initUI: function (parentId) {
         setUpPanel(parentId, "Canvas", ["left", "bottom"], 230);
