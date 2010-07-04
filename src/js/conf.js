@@ -41,5 +41,31 @@ var HOTKEYS = {
         'radial': '3',
         'parallel': '4',
         'setTarget': '5'
+    },
+    'palette': {
+        'up': 'i',
+        'down': 'k',
+        'left': 'j',
+        'right': 'l'
+    },
+    'brushes': {
+        'size': {
+            'toggle': 'q',
+            'decrease': 'w',
+            'increase': 'e',
+            'decreaseJitter': 'r',
+            'increaseJitter': 't'
+        },
+        'opacity': {
+            'toggle': 'a',
+            'decrease': 's',
+            'increase': 'd',
+            'decreaseJitter': 'f',
+            'increaseJitter': 'g'
+        },
+        'location': {
+            'decreaseJitter': 'v',
+            'increaseJitter': 'b'
+        }
     }
 };

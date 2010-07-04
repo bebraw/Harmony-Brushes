@@ -10,6 +10,35 @@
 
 function palette() {}
 palette.prototype = {
+    initHotkeys: function () {
+        shortcut.add(HOTKEYS.palette.up, function(e) {
+            var listIndex = $(".activeColor").parent().index();
+            var listItem = $($(".activeColor").parent().parent().prev().children()[listIndex]);
+            var top = listItem.children(':first');
+
+            top.length && top.focus();
+        });
+
+        shortcut.add(HOTKEYS.palette.down, function(e) {
+            var listIndex = $(".activeColor").parent().index();
+            var listItem = $($(".activeColor").parent().parent().next().children()[listIndex]);
+            var bottom = listItem.children(':first');
+
+            bottom.length && bottom.focus();
+        });
+
+        shortcut.add(HOTKEYS.palette.left, function(e) {
+            var prev = $(".activeColor").parent().prev().children(':first');
+
+            prev.length && prev.focus();
+        });
+
+        shortcut.add(HOTKEYS.palette.right, function(e) {
+            var next = $(".activeColor").parent().next().children(':first');
+
+            next.length && next.focus();
+        });
+    },
     initUI: function (parentId) {
         var topLeftColor = RGBtoHex(PALETTECORNERS['topleft']);
         var topRightColor = RGBtoHex(PALETTECORNERS['topright']);
@@ -109,35 +138,6 @@ palette.prototype = {
         });
 
         $('.clickableColor:first').addClass('activeColor');
-
-        // shortcuts for changing color
-        shortcut.add(TOP_COLOR, function(e) {
-            var listIndex = $(".activeColor").parent().index();
-            var listItem = $($(".activeColor").parent().parent().prev().children()[listIndex]);
-            var top = listItem.children(':first');
-
-            top.length && top.focus();
-        });
-
-        shortcut.add(BOTTOM_COLOR, function(e) {
-            var listIndex = $(".activeColor").parent().index();
-            var listItem = $($(".activeColor").parent().parent().next().children()[listIndex]);
-            var bottom = listItem.children(':first');
-
-            bottom.length && bottom.focus();
-        });
-
-        shortcut.add(LEFT_COLOR, function(e) {
-            var prev = $(".activeColor").parent().prev().children(':first');
-
-            prev.length && prev.focus();
-        });
-
-        shortcut.add(RIGHT_COLOR, function(e) {
-            var next = $(".activeColor").parent().next().children(':first');
-
-            next.length && next.focus();
-        });
     },
     getColor: function() {
         return COLOR;

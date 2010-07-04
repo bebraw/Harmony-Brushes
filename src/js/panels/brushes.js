@@ -53,20 +53,20 @@ brushes.prototype = {
 
         // TODO: add hotkeys for modes and shading too
 
-        toggleBrushValue(TOGGLE_BRUSH_SIZE_PRESSURE, 'brushsizepressure');
-        increaseBrushValue(INCREASE_BRUSH_SIZE, 'brushsize');
-        decreaseBrushValue(DECREASE_BRUSH_SIZE, 'brushsize');
-        increaseBrushValue(INCREASE_BRUSH_SIZE_JITTER, 'brushsizejitter');
-        decreaseBrushValue(DECREASE_BRUSH_SIZE_JITTER, 'brushsizejitter');
+        toggleBrushValue(HOTKEYS.brushes.size.toggle, 'brushsizepressure');
+        increaseBrushValue(HOTKEYS.brushes.size.increase, 'brushsize');
+        decreaseBrushValue(HOTKEYS.brushes.size.decrease, 'brushsize');
+        increaseBrushValue(HOTKEYS.brushes.size.increaseJitter, 'brushsizejitter');
+        decreaseBrushValue(HOTKEYS.brushes.size.decreaseJitter, 'brushsizejitter');
 
-        toggleBrushValue(TOGGLE_BRUSH_OPACITY_PRESSURE, 'brushopacitypressure');
-        increaseBrushValue(INCREASE_BRUSH_OPACITY, 'brushopacity');
-        decreaseBrushValue(DECREASE_BRUSH_OPACITY, 'brushopacity');
-        increaseBrushValue(INCREASE_BRUSH_OPACITY_JITTER, 'brushopacityjitter');
-        decreaseBrushValue(DECREASE_BRUSH_OPACITY_JITTER, 'brushopacityjitter');
+        toggleBrushValue(HOTKEYS.brushes.opacity.toggle, 'brushopacitypressure');
+        increaseBrushValue(HOTKEYS.brushes.opacity.increase, 'brushopacity');
+        decreaseBrushValue(HOTKEYS.brushes.opacity.decrease, 'brushopacity');
+        increaseBrushValue(HOTKEYS.brushes.opacity.increaseJitter, 'brushopacityjitter');
+        decreaseBrushValue(HOTKEYS.brushes.opacity.decreaseJitter, 'brushopacityjitter');
 
-        increaseBrushValue(INCREASE_BRUSH_LOCATION_JITTER, 'brushlocationjitter');
-        decreaseBrushValue(DECREASE_BRUSH_LOCATION_JITTER, 'brushlocationjitter');
+        increaseBrushValue(HOTKEYS.brushes.location.increaseJitter, 'brushlocationjitter');
+        decreaseBrushValue(HOTKEYS.brushes.location.decreaseJitter, 'brushlocationjitter');
     },
     initUI: function (parentId) {
         var panelWidth = 220;
