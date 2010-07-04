@@ -20,35 +20,36 @@ projection.prototype = {
     initHotkeys: function () {
         var proj = this;
 
-        shortcut.add('1', function(e) {
+        shortcut.add(HOTKEYS.projection.horizontal, function(e) {
             proj.projections.x = true;
         });
 
-        shortcut.add('1', function(e) {
+        shortcut.add(HOTKEYS.projection.horizontal, function(e) {
             proj.projections.x = false;
         }, {'type': 'keyup'});
 
-        shortcut.add('2', function(e) {
+        shortcut.add(HOTKEYS.projection.vertical, function(e) {
             proj.projections.y = true;
         });
 
-        shortcut.add('2', function(e) {
+        shortcut.add(HOTKEYS.projection.vertical, function(e) {
             proj.projections.y = false;
         }, {'type': 'keyup'});
 
-        shortcut.add('3', function(e) {
+        shortcut.add(HOTKEYS.projection.radial, function(e) {
             proj.projections.around = true;
         });
 
-        shortcut.add('3', function(e) {
+        shortcut.add(HOTKEYS.projection.radial, function(e) {
             proj.projections.around = false;
         }, {'type': 'keyup'});
 
         // TODO: custom projection (parallel to previously stored vec)
-        shortcut.add('4', function(e) {
+        shortcut.add(HOTKEYS.projection.parallel, function(e) {
+            alert('not implemented yet!');
         });
 
-        shortcut.add('5', function(e) {
+        shortcut.add(HOTKEYS.projection.setTarget, function(e) {
             proj.targetValue = mouseLocation;
         });
     },

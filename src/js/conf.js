@@ -32,3 +32,14 @@ var FILTERLENGTH = 3;
 
 var SHOWPREVIEWIMAGES = false;
 var PREVIEWFONTSIZE = '90px';
+
+// hotkeys
+var HOTKEYS = {
+    'projection': { // note that "target" projection has been bound to hori+vert
+        'horizontal': '1',
+        'vertical': '2',
+        'radial': '3',
+        'parallel': '4',
+        'setTarget': '5'
+    }
+};
