@@ -9,6 +9,9 @@ StrokeManager.prototype = {
     init: function () {
         this.canvasii = {};
         this.activeCanvas = null;
+
+        // XXX
+        this.initialValues = {'x': null, 'y': null};
     },
     start: function (point) {
         var brush = panels['brushes'].getSelected();
@@ -50,6 +53,10 @@ StrokeManager.prototype = {
         this.activeCanvas.strokes.push(panels['brushes'].selected, points);
     },
     paintTemplate: function (point) {
+        this.applyProjection(point);
+
+        // projection.apply(point); // TODO: move hotkeys to projection module as well!
+
         this.cursorPoints.push(point);
 
         if( this.cursorPoints.length == FILTERLENGTH ) {
@@ -69,6 +76,29 @@ StrokeManager.prototype = {
 
                 this.initCursor();
             }
+        }
+    },
+    applyProjection: function ( point ) {
+        if( panels['canvas'].projections.x ) {
+            if( !this.initialValues.y ) {
+                this.initialValues.y = point.y;
+            }
+
+            point.y = this.initialValues.y;
+        }
+        else {
+            this.initialValues.y = null;
+        }
+
+        if( panels['canvas'].projections.y ) {
+            if( !this.initialValues.x ) {
+                this.initialValues.x = point.x;
+            }
+
+            point.x = this.initialValues.x;
+        }
+        else {
+            this.initialValues.x = null;
         }
     },
     applyJitterAndPaint: function ( point ) {
