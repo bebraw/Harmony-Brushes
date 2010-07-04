@@ -11,9 +11,8 @@ Planned features:
 
 - undo (branching?)
 - playback
-- better background (solid/background/texture)
+- better background (background/texture)
 - scanfill brush
-- constraints (restrict stroke path during painting)
 
 Currently it provides following extra functionality:
 
@@ -23,10 +22,12 @@ Currently it provides following extra functionality:
 - brush preview
 - support for multiple pages
 - better palette (bounds + slots interpolated between those)
+- projection (restrict stroke path during painting)
 
 You can find more information about Harmony at http://mrdoob.com/blog/post/689.
 
 See also http://rhyolight.posterous.com/new-brushes-for-harmony-canvas-app and
 the development gallery at http://picasaweb.google.fi/bebraw/Harmony .
 
-To run, just open harmony.html in a canvas-enabled web browser.
+To run, just open harmony.html in a canvas-enabled web browser. You can find
+hotkey listing and other goodies at /js/conf.js.
