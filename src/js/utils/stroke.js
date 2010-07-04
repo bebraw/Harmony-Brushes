@@ -36,6 +36,8 @@ StrokeManager.prototype = {
             }
         }
 
+        panels.canvas.projection.initInitialValues();
+
         this.initPoints();
         this.initCursor();
         this.paintTemplate(point);
@@ -50,7 +52,7 @@ StrokeManager.prototype = {
         this.activeCanvas.strokes.push(panels.brushes.selected, points);
     },
     paintTemplate: function (point) {
-        panels.canvas.projection.apply(point);
+        point = panels.canvas.projection.apply(point);
 
         this.cursorPoints.push(point);
 

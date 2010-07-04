@@ -74,6 +74,7 @@
 
         <script type="text/javascript">
         $(function() {
+            mouseLocation = null; // XXX: move to a nicer place (abstract out as a Mouse class?)
             var strokeManager = new StrokeManager();
             var $pageNameInput = $('#pageName');
             var tabCounter = 2;
@@ -193,15 +194,19 @@
                 strokeManager.addCanvas(canvasId);
 
                 $("#" + canvasId).bind('dragstart', function(e) {
-                    strokeManager.start(getMouseLocationOnCanvas(e));
+                    strokeManager.start(mouseLocation);
                 });
 
                 $("#" + canvasId).bind('drag', function(e) {
-                    strokeManager.paint(getMouseLocationOnCanvas(e));
+                    strokeManager.paint(mouseLocation);
                 });
 
                 $("#" + canvasId).bind('dragend', function(e) {
-                    strokeManager.end(getMouseLocationOnCanvas(e));
+                    strokeManager.end(mouseLocation);
+                });
+
+                $("#" + canvasId).bind('mousemove', function(e) {
+                    mouseLocation = getMouseLocationOnCanvas(e);
                 });
             }
 

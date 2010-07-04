@@ -7,8 +7,15 @@ function projection() {
 }
 projection.prototype = {
     init: function () {
-        this.projections = {'x': false, 'y': false};
-        this.initialValues = {'x': null, 'y': null};
+        this.projections = {'x': false, 'y': false}; // radial, parallel
+
+        this.initInitialValues();
+
+        this.targetValue = new Point();
+    },
+    initInitialValues: function () {
+        this.initialValue = new Point();
+        this.projectionInitialSet = false;
     },
     initHotkeys: function () {
         var proj = this;
@@ -29,43 +36,52 @@ projection.prototype = {
             proj.projections.y = false;
         }, {'type': 'keyup'});
 
-        // TODO: custom projection (towards target)
+        // TODO: custom projection (around target)
         shortcut.add('3', function(e) {
         });
 
-        // TODO: custom projection (around target)
+        // TODO: custom projection (parallel to previously stored vec)
         shortcut.add('4', function(e) {
         });
 
-        // TODO: custom projection (parallel to previously stored vec)
         shortcut.add('5', function(e) {
-        });
-
-        // TODO: set custom projection target
-        shortcut.add('6', function(e) {
+            proj.targetValue = mouseLocation;
         });
     },
     apply: function ( point ) {
-        if( this.projections.x ) {
-            if( !this.initialValues.y ) {
-                this.initialValues.y = point.y;
+        if( this.projections.x && this.projections.y ) {
+            if( !this.projectionInitialSet ) {
+                this.projectionInitialSet = true;
+                
+                this.initialValue = point;
             }
 
-            point.y = this.initialValues.y;
+            return project(this.targetValue, this.initialValue, point);
+        }
+        this.projectionInitialSet = false;
+
+        if( this.projections.x ) {
+            if( !this.initialValue.y ) {
+                this.initialValue.y = point.y;
+            }
+
+            point.y = this.initialValue.y;
         }
         else {
-            this.initialValues.y = null;
+            this.initialValue.y = null;
         }
 
         if( this.projections.y ) {
-            if( !this.initialValues.x ) {
-                this.initialValues.x = point.x;
+            if( !this.initialValue.x ) {
+                this.initialValue.x = point.x;
             }
 
-            point.x = this.initialValues.x;
+            point.x = this.initialValue.x;
         }
         else {
-            this.initialValues.x = null;
+            this.initialValue.x = null;
         }
+
+        return point
     }
 }

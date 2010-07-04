@@ -173,6 +173,18 @@ Point.prototype = {
     }
 }
 
+function project(target, initial, current) {
+    var delta = initial.sub(target);
+
+    if( (delta.x == 0) && (delta.y == 0) ) {
+        return target;
+    }
+
+    var t = current.sub(target).mul(delta).div(delta.toDist());
+
+    return delta.mul(t.x + t.y).add(target);
+}
+
 function getRandomPoint(n) {
     n = 1 ? n == null: n;
 
