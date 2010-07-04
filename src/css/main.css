@@ -4,6 +4,7 @@
  */
 * {
     font-size: 12px;
+    color: white;
 }
 
 button {
@@ -55,26 +56,4 @@ html, body
     margin: 0;
     padding: 0;
     overflow: hidden;	/* Remove scroll bars on browser window */
-}
-
-#MySplitter {
-    /* Height is set to match window size in $().ready() below */
-    border: 3px solid #669;
-    min-width:  600px;
-    min-height: 300px;
-}
-.SplitterPane {
-    background: black;
-    overflow: auto;
-    color: white;
-    font-family: Segoe UI, Arial, sans-serif;
-}
-.vsplitbar {
-    width: 6px;
-    background: #888888 url(../images/vgrabber.gif) no-repeat center;
-}
-.vsplitbar.active, .vsplitbar:hover {
-    width: 6px;
-    opacity: 0.5;
-    filter: alpha(opacity=50); /* IE */
 }
