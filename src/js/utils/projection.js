@@ -7,7 +7,7 @@ function projection() {
 }
 projection.prototype = {
     init: function () {
-        this.projections = {'x': false, 'y': false}; // radial, parallel
+        this.projections = {'x': false, 'y': false, 'around': false}; // parallel
 
         this.initInitialValues();
 
@@ -36,9 +36,13 @@ projection.prototype = {
             proj.projections.y = false;
         }, {'type': 'keyup'});
 
-        // TODO: custom projection (around target)
         shortcut.add('3', function(e) {
+            proj.projections.around = true;
         });
+
+        shortcut.add('3', function(e) {
+            proj.projections.around = false;
+        }, {'type': 'keyup'});
 
         // TODO: custom projection (parallel to previously stored vec)
         shortcut.add('4', function(e) {
@@ -49,6 +53,16 @@ projection.prototype = {
         });
     },
     apply: function ( point ) {
+        if( this.projections.around ) {
+            if( !this.projectionInitialSet ) {
+                this.projectionInitialSet = true;
+
+                this.initialValue = point;
+            }
+
+            return projectRadially(this.targetValue, this.initialValue, point);
+        }
+
         if( this.projections.x && this.projections.y ) {
             if( !this.projectionInitialSet ) {
                 this.projectionInitialSet = true;

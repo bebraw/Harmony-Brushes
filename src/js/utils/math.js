@@ -170,6 +170,14 @@ Point.prototype = {
     },
     toDist: function() {
         return this.x * this.x + this.y * this.y;
+    },
+    normalize: function() {
+        var dist = Math.sqrt(this.toDist());
+
+        return this.div(dist);
+    },
+    invert: function() {
+        return new Point(-this.x, -this.y);
     }
 }
 
@@ -183,6 +191,12 @@ function project(target, initial, current) {
     var t = current.sub(target).mul(delta).div(delta.toDist());
 
     return delta.mul(t.x + t.y).add(target);
+}
+
+function projectRadially(target, initial, current) {
+    var dist = Math.sqrt(target.sub(initial).toDist());
+
+    return target.sub(current).invert().normalize().mul(dist).add(target);
 }
 
 function getRandomPoint(n) {
