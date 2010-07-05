@@ -13,13 +13,15 @@ projection.prototype = {
         this.initInitialValues();
 
         this.targetValue = new Point();
+        this.previousProjectionInitial = new Point();
     },
     initInitialValues: function () {
         this.initialValue = new Point();
+        this.parallelTarget = new Point();
         this.projectionInitialSet = false;
     },
     initHotkeys: function () {
-        var proj = this;
+        var proj = this ;
 
         function initProjection(name) {
             var hotkey = HOTKEYS.projection[name];
@@ -53,7 +55,14 @@ projection.prototype = {
         }
 
         if( this.projections.parallel ) {
-            // TODO
+            if( !this.projectionInitialSet ) {
+                this.projectionInitialSet = true;
+
+                this.parallelTarget = this.targetValue.sub(this.previousProjectionInitial).add(point);
+                this.initialValue = point;
+            }
+
+            return project(this.parallelTarget, this.initialValue, point);
         }
 
         if( this.projections.horizontal && this.projections.vertical ) {
@@ -61,6 +70,7 @@ projection.prototype = {
                 this.projectionInitialSet = true;
                 
                 this.initialValue = point;
+                this.previousProjectionInitial = point;
             }
 
             return project(this.targetValue, this.initialValue, point);
