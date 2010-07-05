@@ -7,7 +7,8 @@ function projection() {
 }
 projection.prototype = {
     init: function () {
-        this.projections = {'x': false, 'y': false, 'around': false}; // parallel
+        this.projections = {'horizontal': false, 'vertical': false,
+            'radial': false, 'parallel': false};
 
         this.initInitialValues();
 
@@ -20,41 +21,28 @@ projection.prototype = {
     initHotkeys: function () {
         var proj = this;
 
-        shortcut.add(HOTKEYS.projection.horizontal, function(e) {
-            proj.projections.x = true;
-        });
+        function initProjection(name) {
+            var hotkey = HOTKEYS.projection[name];
 
-        shortcut.add(HOTKEYS.projection.horizontal, function(e) {
-            proj.projections.x = false;
-        }, {'type': 'keyup'});
+            shortcut.add(hotkey, function(e) {
+                proj.projections[name] = true;
+            });
 
-        shortcut.add(HOTKEYS.projection.vertical, function(e) {
-            proj.projections.y = true;
-        });
+            shortcut.add(hotkey, function(e) {
+                proj.projections[name] = false;
+            }, {'type': 'keyup'});
+        }
 
-        shortcut.add(HOTKEYS.projection.vertical, function(e) {
-            proj.projections.y = false;
-        }, {'type': 'keyup'});
-
-        shortcut.add(HOTKEYS.projection.radial, function(e) {
-            proj.projections.around = true;
-        });
-
-        shortcut.add(HOTKEYS.projection.radial, function(e) {
-            proj.projections.around = false;
-        }, {'type': 'keyup'});
-
-        // TODO: custom projection (parallel to previously stored vec)
-        shortcut.add(HOTKEYS.projection.parallel, function(e) {
-            alert('not implemented yet!');
-        });
+        for (var projectionName in this.projections) {
+            initProjection(projectionName)
+        }
 
         shortcut.add(HOTKEYS.projection.setTarget, function(e) {
             proj.targetValue = mouseLocation;
         });
     },
     apply: function ( point ) {
-        if( this.projections.around ) {
+        if( this.projections.radial ) {
             if( !this.projectionInitialSet ) {
                 this.projectionInitialSet = true;
 
@@ -64,7 +52,11 @@ projection.prototype = {
             return projectRadially(this.targetValue, this.initialValue, point);
         }
 
-        if( this.projections.x && this.projections.y ) {
+        if( this.projections.parallel ) {
+            // TODO
+        }
+
+        if( this.projections.horizontal && this.projections.vertical ) {
             if( !this.projectionInitialSet ) {
                 this.projectionInitialSet = true;
                 
@@ -75,7 +67,7 @@ projection.prototype = {
         }
         this.projectionInitialSet = false;
 
-        if( this.projections.x ) {
+        if( this.projections.horizontal ) {
             if( !this.initialValue.y ) {
                 this.initialValue.y = point.y;
             }
@@ -86,7 +78,7 @@ projection.prototype = {
             this.initialValue.y = null;
         }
 
-        if( this.projections.y ) {
+        if( this.projections.vertical ) {
             if( !this.initialValue.x ) {
                 this.initialValue.x = point.x;
             }
