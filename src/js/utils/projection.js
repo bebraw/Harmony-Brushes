@@ -23,7 +23,7 @@ projection.prototype = {
             projector.isActive = false;
 
             // TODO: check out if there's a way to set superclass to a ob dynamically
-            var possibleMethods = ['apply', 'onPress', 'onRelease'];
+            var possibleMethods = ['apply', 'onPress', 'onRelease', 'onDown'];
             for (var j = 0; j < possibleMethods.length; j++) {
                 var possibleMethod = possibleMethods[j];
                 
@@ -52,6 +52,10 @@ projection.prototype = {
                         projector.onPress(proj.initialValue, proj.targetValue,
                             proj.projectors);
                     }
+
+                    // bind this to mouse move and remove binding once hotkey is released
+                    projector.onDown(proj.initialValue, proj.targetValue,
+                        proj.projectors);
                 });
 
                 shortcut.add(hotkey, function(e) {

@@ -9,7 +9,7 @@ settarget.prototype = {
 
         overlayCanvas.clear();
         overlayCanvas.cross(initialValue, PROJECTIONTARGETRADIUS,
-            [0, 255, 0], 1.0);
+            PROJECTIONOVERLAYCOLOR, PROJECTIONOVERLAYALPHA);
 
         targetValue.x = initialValue.x;
         targetValue.y = initialValue.y;
