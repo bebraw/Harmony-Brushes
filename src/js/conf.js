@@ -35,15 +35,18 @@ var PREVIEWFONTSIZE = '90px';
 
 // projection options
 var PROJECTIONTARGETRADIUS = 10;
+var AMOUNTOFTARGETS = 3;
 
 // hotkeys
 var HOTKEYS = {
-    'projection': { // note that "target" projection has been bound to hori+vert
+    'projection': {
         'horizontal': '1',
         'vertical': '2',
-        'radial': '3',
+        'target': '3',
         'parallel': '4',
-        'setTarget': '5'
+        'radial': '5',
+        'setTarget': '6',
+        'cycleTarget': '7'
     },
     'palette': {
         'up': 'i',

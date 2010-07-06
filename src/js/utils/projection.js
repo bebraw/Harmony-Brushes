@@ -8,7 +8,7 @@ function projection() {
 projection.prototype = {
     init: function () {
         this.projections = {'horizontal': false, 'vertical': false,
-            'radial': false, 'parallel': false};
+            'target': false, 'radial': false, 'parallel': false};
 
         this.initInitialValues();
 
@@ -35,6 +35,8 @@ projection.prototype = {
             }, {'type': 'keyup'});
         }
 
+        // TODO: interactive viz for different projection options!
+
         for (var projectionName in this.projections) {
             initProjection(projectionName)
         }
@@ -43,7 +45,18 @@ projection.prototype = {
             var overlayCanvas = new ProxyCanvas('overlayCanvas');
 
             overlayCanvas.clear();
-            overlayCanvas.cross(mouseLocation, PROJECTIONTARGETRADIUS, [0, 255, 0], 1.0);
+            overlayCanvas.cross(mouseLocation, PROJECTIONTARGETRADIUS,
+                [0, 255, 0], 1.0);
+
+            proj.targetValue = mouseLocation;
+        });
+
+        shortcut.add(HOTKEYS.projection.cycleTarget, function(e) {
+            var overlayCanvas = new ProxyCanvas('overlayCanvas');
+
+            overlayCanvas.clear();
+            overlayCanvas.cross(mouseLocation, PROJECTIONTARGETRADIUS,
+                [0, 255, 0], 1.0);
 
             proj.targetValue = mouseLocation;
         });
@@ -70,7 +83,7 @@ projection.prototype = {
             return project(this.parallelTarget, this.initialValue, point);
         }
 
-        if( this.projections.horizontal && this.projections.vertical ) {
+        if( this.projections.target ) {
             if( !this.projectionInitialSet ) {
                 this.projectionInitialSet = true;
                 
