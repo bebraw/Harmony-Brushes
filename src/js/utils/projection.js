@@ -40,6 +40,11 @@ projection.prototype = {
         }
 
         shortcut.add(HOTKEYS.projection.setTarget, function(e) {
+            var overlayCanvas = new ProxyCanvas('overlayCanvas');
+
+            overlayCanvas.clear();
+            overlayCanvas.cross(mouseLocation, PROJECTIONTARGETRADIUS, [0, 255, 0], 1.0);
+
             proj.targetValue = mouseLocation;
         });
     },

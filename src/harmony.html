@@ -77,20 +77,6 @@
             mouseLocation = null; // XXX: move to a nicer place (abstract out as a Mouse class?)
             var strokeManager = new StrokeManager();
             var $pageNameInput = $('#pageName');
-            var tabCounter = 2;
-
-            var $tabs = $('#pages').tabs({
-                    tabTemplate: '<li><span class="ui-icon ui-icon-wrench modifyPage">Tools</span><a href="#{href}">#{label}</a><span class="ui-icon ui-icon-close removePage">Remove Page</span></li>',
-                    add: function(event, ui) {
-                        createCanvas(ui.panel.id);
-                    },
-                    remove: function(event, ui) {
-                        strokeManager.removeCanvas(ui.panel.id + 'Canvas');
-                    },
-                    select: function(event, ui) {
-                        strokeManager.setActiveCanvas(ui.panel.id + 'Canvas');
-                    }
-            });
 
             $('#newPageButton').button().click(function() {
                 // TODO: clean up page naming
@@ -161,51 +147,42 @@
                 $('#modifyPageDialog').dialog('close');
             });
 
-            // actual addTab function: adds new tab using the title input from the form above
-            function newTab() {
+            function newTab() { // XXX
                 var tab_title = $pageNameInput.val() || 'Tab ' + tabCounter;
                 $tabs.tabs('add', '#page' + tabCounter, tab_title);
                 tabCounter++;
             }
 
-            function selectLastTab() {
+            function selectLastTab() { // XXX
                 $tabs.tabs('select', $tabs.tabs('length') - 1);
             }
 
-            // set up initial canvas
+            // set up initial canvas and overlay
             createCanvas("page1");
 
             function createCanvas(pageName) {
                 var canvasId = pageName + "Canvas";
+                var canvasWidth = screen.width;
+                var canvasHeight = window.innerHeight;
 
-                // TODO: size: Math.min(window_width, window_height)
-
-                // XXX: figure out how to calculate offsets dynamically
-                $("#" + pageName).append('<div style="overflow:auto;width:' +
-                    (screen.width - 30) + 'px;height:' +
-                    (window.innerHeight - 65) + 'px;">' +
-                    '<canvas id="' + canvasId + '" width="' +
-                    (screen.width - 40) + '" height="' +
-                    (window.innerHeight - 70) +
-                    '" style="cursor:crosshair"' +
-                    ' class="pageCanvas"></canvas></div>'
-                );
+                $("#main").append('<canvas id="' + canvasId + '" width="' +
+                    canvasWidth + '" height="' +
+                    canvasHeight + '" style="z-index:0;position:absolute;top:0px;left:0px;"' +
+                    ' class="pageCanvas"></canvas>' +
+                    '<canvas id="overlayCanvas" width="' + canvasWidth + '"' +
+                    ' height="' + canvasHeight +
+                    '" style="cursor:crosshair;z-index:100;position:absolute;top:0px;left:0px;"></canvas>'
+                 );
 
                 strokeManager.addCanvas(canvasId);
 
-                $("#" + canvasId).bind('dragstart', function(e) {
+                $("#overlayCanvas").bind('dragstart', function(e) {
                     strokeManager.start(mouseLocation);
-                });
-
-                $("#" + canvasId).bind('drag', function(e) {
+                }).bind('drag', function(e) {
                     strokeManager.paint(mouseLocation);
-                });
-
-                $("#" + canvasId).bind('dragend', function(e) {
+                }).bind('dragend', function(e) {
                     strokeManager.end(mouseLocation);
-                });
-
-                $("#" + canvasId).bind('mousemove', function(e) {
+                }).bind('mousemove', function(e) {
                     mouseLocation = getMouseLocationOnCanvas(e);
                 });
             }
@@ -217,16 +194,7 @@
         </script>
     </head>
     <body>
-        <div id="pages">
-            <ul>
-                <li>
-                    <span class="ui-icon ui-icon-wrench modifyPage">Tools</span>
-                    <a href="#page1">Page</a>
-                    <span class="ui-icon ui-icon-close removePage">Remove Page</span>
-                </li>
-            </ul>
-            <div id="page1"></div>
-        </div>
+        <div id="main"></div>
 
         <div id="brushColumn" style="position:absolute;left:0px;top:50px;background-color:black"></div>
 
@@ -305,8 +273,9 @@
                 }
             }
 
-            // CSS hack
+            // CSS hacks
             $('#brushColumn').children().css('background-color', 'black');
+            $('#brushColumn').find('*').css('z-index', '100');
         </script>
     </body>
 </html>

@@ -157,9 +157,14 @@ ProxyCanvas.prototype = {
 
         this.context.putImageData(newArea, xPos, yPos);
     },
-    fill: function (color) {
-        this.context.fillStyle = "rgb(" + color[0] + ", " + color[1] +
-            ", " + color[2] + ")";
+    clear: function () {
+        this.context.clearRect(0, 0, this.width, this.height);
+    },
+    fill: function (color, alpha) {
+        alpha=alpha?alpha:1.0;
+        
+        this.context.fillStyle = "rgba(" + color[0] + ", " + color[1] +
+            ", " + color[2] + ", " + alpha + ")";
         this.context.fillRect(0, 0, this.canvas.width, this.canvas.height);
     },
     text: function (label, colorName, font, x, y) {
@@ -167,7 +172,13 @@ ProxyCanvas.prototype = {
         this.context.font = font;
         this.context.fillText(label, x, y);
     },
+    cross: function (loc, radius, color, alpha) {
+        this.stroke(new Point(loc.x - radius, loc.y), new Point(loc.x + radius, loc.y), color, alpha);
+        this.stroke(new Point(loc.x, loc.y - radius), new Point(loc.x, loc.y + radius), color, alpha);
+    },
     stroke: function (startLoc, endLoc, color, alpha) {
+        alpha=alpha?alpha:1.0;
+
         this.context.strokeStyle = "rgba(" + color[0] + ", " + color[1] +
             ", " + color[2] + ", " + alpha + ")";
         this.context.beginPath();
@@ -176,6 +187,8 @@ ProxyCanvas.prototype = {
         this.context.stroke();
     },
     rect: function (xy1, xy2, xy3, xy4, color, alpha) {
+        alpha=alpha?alpha:1.0;
+
         this.context.fillStyle = "rgb(255, 255, 255)"; // XXX: replace with fillColor
         this.context.strokeStyle = "rgba(" + color[0] + ", " + color[1] +
             ", " + color[2] + ", " + alpha + ")";

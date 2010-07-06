@@ -33,6 +33,9 @@ var FILTERLENGTH = 3;
 var SHOWPREVIEWIMAGES = false;
 var PREVIEWFONTSIZE = '90px';
 
+// projection options
+var PROJECTIONTARGETRADIUS = 10;
+
 // hotkeys
 var HOTKEYS = {
     'projection': { // note that "target" projection has been bound to hori+vert
