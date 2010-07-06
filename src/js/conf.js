@@ -5,9 +5,10 @@
 var BRUSHES = ["sketchy", "shaded", "chrome", "blur", "fur", "longfur", "web",
     "simple", "squares", "ribbon", "circles", "grid", "stringy", "curvy",
     "eraser"];
-var CONSTRAINTS = ["horizontal", "perspective", "vertical"];
 var MODIFIERS = ["array", "group", "horizontalmirror", "verticalmirror",
     "radialmirror"];
+var PROJECTORS = ["horizontal", "vertical", "target", "radial", "parallel",
+    "settarget", "cycletarget"];
 var PANELS = ["brushes", "canvas", "modifiers", "playback", "palette"];
 
 // color as RGB in range [0, 255]
@@ -45,8 +46,8 @@ var HOTKEYS = {
         'target': '3',
         'parallel': '4',
         'radial': '5',
-        'setTarget': '6',
-        'cycleTarget': '7'
+        'settarget': '6',
+        'cycletarget': '7'
     },
     'palette': {
         'up': 'i',

@@ -36,7 +36,7 @@ StrokeManager.prototype = {
             }
         }
 
-        panels.canvas.projection.initInitialValues();
+        panels.canvas.projection.initInitialValues(point);
 
         this.initPoints();
         this.initCursor();

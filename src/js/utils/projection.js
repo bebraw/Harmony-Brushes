@@ -7,116 +7,78 @@ function projection() {
 }
 projection.prototype = {
     init: function () {
-        this.projections = {'horizontal': false, 'vertical': false,
-            'target': false, 'radial': false, 'parallel': false};
-
-        this.initInitialValues();
+        this.initProjectors();
+        this.initHotkeys();
 
         this.targetValue = new Point();
-        this.previousProjectionInitial = new Point();
     },
-    initInitialValues: function () {
-        this.initialValue = new Point();
-        this.parallelTarget = new Point();
-        this.projectionInitialSet = false;
+    initProjectors: function () {
+        this.projectors = {};
+        
+        for (var i = 0; i < PROJECTORS.length; i++) {
+            var projectorName = PROJECTORS[i];
+            this.projectors[projectorName] = eval("new " + projectorName + '()');
+            var projector = this.projectors[projectorName];
+
+            projector.isActive = false;
+
+            // TODO: check out if there's a way to set superclass to a ob dynamically
+            var possibleMethods = ['apply', 'onPress', 'onRelease'];
+            for (var j = 0; j < possibleMethods.length; j++) {
+                var possibleMethod = possibleMethods[j];
+                
+                if( !(possibleMethod in this.projectors[projectorName]) ) {
+                    projector[possibleMethod] = function() {};
+                }
+            }
+        }
+    },
+    initInitialValues: function (point) {
+        this.initialValue = point;
     },
     initHotkeys: function () {
-        var proj = this ;
+        var proj = this;
 
-        function initProjection(name) {
-            var hotkey = HOTKEYS.projection[name];
+        function init(projectorName, projector) {
+            if( projectorName in HOTKEYS.projection ) {
+                var hotkey = HOTKEYS.projection[projectorName];
 
-            shortcut.add(hotkey, function(e) {
-                proj.projections[name] = true;
-            });
+                shortcut.add(hotkey, function(e) {
+                    if( !projector.isActive ) {
+                        projector.isActive = true;
 
-            shortcut.add(hotkey, function(e) {
-                proj.projections[name] = false;
-            }, {'type': 'keyup'});
+                        proj.initialValue = mouseLocation;
+
+                        projector.onPress(proj.initialValue, proj.targetValue,
+                            proj.projectors);
+                    }
+                });
+
+                shortcut.add(hotkey, function(e) {
+                    projector.isActive = false;
+
+                    projector.onRelease();
+                }, {'type': 'keyup'});
+            }
         }
 
-        // TODO: interactive viz for different projection options!
+        for (var projectorName in this.projectors) {
+            var projector = this.projectors[projectorName];
 
-        for (var projectionName in this.projections) {
-            initProjection(projectionName)
+            init(projectorName, projector);
         }
-
-        shortcut.add(HOTKEYS.projection.setTarget, function(e) {
-            var overlayCanvas = new ProxyCanvas('overlayCanvas');
-
-            overlayCanvas.clear();
-            overlayCanvas.cross(mouseLocation, PROJECTIONTARGETRADIUS,
-                [0, 255, 0], 1.0);
-
-            proj.targetValue = mouseLocation;
-        });
-
-        shortcut.add(HOTKEYS.projection.cycleTarget, function(e) {
-            var overlayCanvas = new ProxyCanvas('overlayCanvas');
-
-            overlayCanvas.clear();
-            overlayCanvas.cross(mouseLocation, PROJECTIONTARGETRADIUS,
-                [0, 255, 0], 1.0);
-
-            proj.targetValue = mouseLocation;
-        });
     },
     apply: function ( point ) {
-        if( this.projections.radial ) {
-            if( !this.projectionInitialSet ) {
-                this.projectionInitialSet = true;
+        for (var projectorName in this.projectors) {
+            var projector = this.projectors[projectorName];
 
-                this.initialValue = point;
+            if( projector.isActive ) {
+                // note that only one projector may be active at a time!
+                return projector.apply(point, this.initialValue,
+                    this.targetValue, this.projectors);
             }
-
-            return projectRadially(this.targetValue, this.initialValue, point);
         }
 
-        if( this.projections.parallel ) {
-            if( !this.projectionInitialSet ) {
-                this.projectionInitialSet = true;
-
-                this.parallelTarget = this.targetValue.sub(this.previousProjectionInitial).add(point);
-                this.initialValue = point;
-            }
-
-            return project(this.parallelTarget, this.initialValue, point);
-        }
-
-        if( this.projections.target ) {
-            if( !this.projectionInitialSet ) {
-                this.projectionInitialSet = true;
-                
-                this.initialValue = point;
-                this.previousProjectionInitial = point;
-            }
-
-            return project(this.targetValue, this.initialValue, point);
-        }
-        this.projectionInitialSet = false;
-
-        if( this.projections.horizontal ) {
-            if( !this.initialValue.y ) {
-                this.initialValue.y = point.y;
-            }
-
-            point.y = this.initialValue.y;
-        }
-        else {
-            this.initialValue.y = null;
-        }
-
-        if( this.projections.vertical ) {
-            if( !this.initialValue.x ) {
-                this.initialValue.x = point.x;
-            }
-
-            point.x = this.initialValue.x;
-        }
-        else {
-            this.initialValue.x = null;
-        }
-
-        return point
+        return point;
     }
 }
