@@ -11,6 +11,8 @@ parallel.prototype = {
     },
     onPress: function ( initialValue, targetValue, projectors ) {
         this.initParallelTarget(initialValue, targetValue, projectors);
+
+        this.projectors = projectors;
     },
     initParallelTarget: function ( initialValue, targetValue, projectors ) {
         var previousInitial = projectors.target.previousInitial;
@@ -25,9 +27,12 @@ parallel.prototype = {
                 this.initialValue, initialValue);
             var target = this.parallelTarget.sub(projectedInitial).add(initialValue);
 
+            var bounds = this.projectors.target.getPreviewBounds(initialValue,
+                target, overlayCanvas);
+
             overlayCanvas.clear();
             
-            overlayCanvas.stroke(initialValue, target,
+            overlayCanvas.stroke(bounds[0], bounds[1],
                 PROJECTIONOVERLAYCOLOR, PROJECTIONOVERLAYALPHA);
         }
     },

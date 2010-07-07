@@ -16,7 +16,6 @@ settarget.prototype = {
             },
             cycle: function() {
                 this._id = (this._id + 1) % AMOUNTOFTARGETS;
-                console.log(this._id);
             }
         };
 
