@@ -9,7 +9,7 @@ horizontal.prototype = {
 
         return point;
     },
-    onDown: function ( initialValue ) {console.log(this);
+    onDown: function ( initialValue ) {
         if( !mousePressed ) {
             var overlayCanvas = new ProxyCanvas('overlayCanvas');
 
