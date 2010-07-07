@@ -22,13 +22,12 @@ projection.prototype = {
 
             projector.isActive = false;
 
-            // TODO: check out if there's a way to set superclass to a ob dynamically
             var possibleMethods = ['apply', 'onPress', 'onRelease', 'onDown'];
             for (var j = 0; j < possibleMethods.length; j++) {
                 var possibleMethod = possibleMethods[j];
                 
                 if( !(possibleMethod in this.projectors[projectorName]) ) {
-                    projector[possibleMethod] = function() {};
+                    projector.__proto__[possibleMethod] = function() {};
                 }
             }
         }
@@ -47,22 +46,21 @@ projection.prototype = {
                     if( !projector.isActive ) {
                         projector.isActive = true;
 
-                        // XXX: set mouseLocation properly initially! -> no need for null check
-                        proj.initialValue = mouseLocation?mouseLocation:new Point();
+                        proj.initialValue = mouseLocation;
 
                         projector.onPress(proj.initialValue, proj.targetValue,
                             proj.projectors);
                     }
 
-                    // bind this to mouse move and remove binding once hotkey is released
-                    projector.onDown(proj.initialValue, proj.targetValue,
-                        proj.projectors);
+                    moveCallbacks[projectorName] = projector;
                 });
 
                 shortcut.add(hotkey, function(e) {
                     projector.isActive = false;
 
                     projector.onRelease();
+
+                    delete moveCallbacks[projectorName];
                 }, {'type': 'keyup'});
             }
         }

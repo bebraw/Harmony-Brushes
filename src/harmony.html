@@ -78,7 +78,11 @@
 
         <script type="text/javascript">
         $(function() {
-            mouseLocation = null; // XXX: move to a nicer place (abstract out as a Mouse class?)
+            // XXX: move to a nicer place (abstract out as a Mouse class?)
+            // + figure out how to get loc without having to move mouse
+            mouseLocation = new Point();
+            mousePressed = false; // XXX
+            moveCallbacks = {}; // XXX
             var strokeManager = new StrokeManager();
             var $pageNameInput = $('#pageName');
 
@@ -182,12 +186,22 @@
 
                 $("#overlayCanvas").bind('dragstart', function(e) {
                     strokeManager.start(mouseLocation);
+
+                    mousePressed = true;
                 }).bind('drag', function(e) {
                     strokeManager.paint(mouseLocation);
                 }).bind('dragend', function(e) {
                     strokeManager.end(mouseLocation);
+
+                    mousePressed = false;
                 }).bind('mousemove', function(e) {
                     mouseLocation = getMouseLocationOnCanvas(e);
+
+                    for( var moveCallbackName in moveCallbacks ) {
+                        var ob = moveCallbacks[moveCallbackName];
+
+                        ob.onDown(mouseLocation);
+                    }
                 });
             }
 

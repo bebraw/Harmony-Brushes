@@ -9,18 +9,20 @@ horizontal.prototype = {
 
         return point;
     },
-    onDown: function ( initialValue ) {
-        var overlayCanvas = new ProxyCanvas('overlayCanvas');
+    onDown: function ( initialValue ) {console.log(this);
+        if( !mousePressed ) {
+            var overlayCanvas = new ProxyCanvas('overlayCanvas');
 
-        // TODO: figure out how to handle clear in a nice manner (abstract overlay as a class)
-        overlayCanvas.clear();
+            overlayCanvas.clear();
 
-        // TODO: preview (draw line)
-        overlayCanvas.stroke(new Point(0, initialValue.y),
-            new Point(overlayCanvas.width, initialValue.y),
-            PROJECTIONOVERLAYCOLOR, PROJECTIONOVERLAYALPHA);
+            overlayCanvas.stroke(new Point(0, initialValue.y),
+                new Point(overlayCanvas.width, initialValue.y),
+                PROJECTIONOVERLAYCOLOR, PROJECTIONOVERLAYALPHA);
+        }
     },
     onRelease: function () {
-        // TODO: this should hide preview
+        var overlayCanvas = new ProxyCanvas('overlayCanvas');
+
+        overlayCanvas.clear();
     }
 }
