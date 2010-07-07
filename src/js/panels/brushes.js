@@ -73,7 +73,7 @@ brushes.prototype = {
         setUpPanel(parentId, "Brushes", "left", panelWidth, 410);
 
         // set up brushes panel
-        $("#brushesPanel").append('<div id="brushes" style="height:170px;overflow:auto;"></div>' +
+        $("#brushesPanel").append('<div id="brushes" style="height:170px;overflow:auto;position:relative"></div>' +
             '<div id="brushOptions"></div>');
 
         // modes
