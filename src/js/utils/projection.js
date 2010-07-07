@@ -47,7 +47,8 @@ projection.prototype = {
                     if( !projector.isActive ) {
                         projector.isActive = true;
 
-                        proj.initialValue = mouseLocation;
+                        // XXX: set mouseLocation properly initially! -> no need for null check
+                        proj.initialValue = mouseLocation?mouseLocation:new Point();
 
                         projector.onPress(proj.initialValue, proj.targetValue,
                             proj.projectors);

@@ -2,14 +2,29 @@
  * http://www.opensource.org/licenses/mit-license.php
  * Copyright (c) 2010 Mr.doob, rhyolight, bebraw
  */
-function settarget() {}
+function settarget() {
+    this.init();
+}
 settarget.prototype = {
-    onPress: function ( initialValue, targetValue ) {
-        var overlayCanvas = new ProxyCanvas('overlayCanvas');
+    init: function () {
+        var canvasDiameter = 1 + PROJECTIONTARGETRADIUS * 2;
 
-        overlayCanvas.clear();
-        overlayCanvas.cross(initialValue, PROJECTIONTARGETRADIUS,
+        $('#main').append('<canvas id="projectionTarget"' +
+            ' width="' + canvasDiameter + '"' +
+            ' height="' + canvasDiameter + '"' +
+            ' style="z-index:100;position:absolute"></canvas>')
+
+        var overlayCanvas = new ProxyCanvas('projectionTarget');
+
+        overlayCanvas.cross(new Point(10, 10), PROJECTIONTARGETRADIUS,
             PROJECTIONOVERLAYCOLOR, PROJECTIONOVERLAYALPHA);
+    },
+    onPress: function ( initialValue, targetValue ) {
+        var topCoord = initialValue.y - PROJECTIONTARGETRADIUS;
+        var leftCoord = initialValue.x - PROJECTIONTARGETRADIUS;
+
+        $('#projectionTarget').css('top', topCoord + 'px').
+            css('left', leftCoord + 'px');
 
         targetValue.x = initialValue.x;
         targetValue.y = initialValue.y;
