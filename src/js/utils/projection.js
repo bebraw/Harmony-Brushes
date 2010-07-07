@@ -50,9 +50,11 @@ projection.prototype = {
 
                         projector.onPress(proj.initialValue, proj.targetValue,
                             proj.projectors);
-                    }
 
-                    moveCallbacks[projectorName] = projector;
+                        moveCallbacks[projectorName] = projector;
+
+                        projector.onDown(proj.initialValue);
+                    }
                 });
 
                 shortcut.add(hotkey, function(e) {

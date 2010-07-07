@@ -5,8 +5,26 @@
 function radial() {}
 radial.prototype = {
     apply: function ( point, initialValue, targetValue ) {
-        console.log(initialValue.x + ' ' + targetValue.x);
-
         return projectRadially(targetValue, initialValue, point);
+    },
+    onPress: function ( initialValue, targetValue ) {
+        this.targetValue = targetValue; // XXX
+    },
+    onDown: function ( initialValue ) {
+        if( !mousePressed ) {
+            var overlayCanvas = new ProxyCanvas('overlayCanvas');
+            var center = this.targetValue;
+            var radius = Math.sqrt(initialValue.sub(center).toDist());
+
+            overlayCanvas.clear();
+
+            overlayCanvas.circle(center, radius, PROJECTIONOVERLAYCOLOR,
+                PROJECTIONOVERLAYALPHA);
+        }
+    },
+    onRelease: function () {
+        var overlayCanvas = new ProxyCanvas('overlayCanvas');
+
+        overlayCanvas.clear();
     }
 }
