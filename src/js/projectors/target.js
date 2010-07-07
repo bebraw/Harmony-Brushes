@@ -13,5 +13,23 @@ target.prototype = {
         this.previousInitial = initialValue;
 
         return project(targetValue, initialValue, point);
+    },
+    onPress: function ( initialValue, targetValue ) {
+        this.targetValue = targetValue; // XXX
+    },
+    onDown: function ( initialValue ) {
+        if( !mousePressed ) {
+            var overlayCanvas = new ProxyCanvas('overlayCanvas');
+
+            overlayCanvas.clear();
+
+            overlayCanvas.stroke(initialValue, this.targetValue,
+                PROJECTIONOVERLAYCOLOR, PROJECTIONOVERLAYALPHA);
+        }
+    },
+    onRelease: function () {
+        var overlayCanvas = new ProxyCanvas('overlayCanvas');
+
+        overlayCanvas.clear();
     }
 }
