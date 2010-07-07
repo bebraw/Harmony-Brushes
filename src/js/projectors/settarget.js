@@ -18,6 +18,8 @@ settarget.prototype = {
 
         overlayCanvas.cross(new Point(10, 10), PROJECTIONTARGETRADIUS,
             PROJECTIONOVERLAYCOLOR, PROJECTIONOVERLAYALPHA);
+
+        this.onPress(new Point(), new Point());
     },
     onPress: function ( initialValue, targetValue ) {
         var topCoord = initialValue.y - PROJECTIONTARGETRADIUS;
