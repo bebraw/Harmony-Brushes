@@ -33,7 +33,7 @@ modifiers.prototype = {
 
             $('#' + modifierId + " input").click(function() {
                 var id = $(this).parent(".modifier").attr('id');
-                panels['modifiers'].modifierStatus[id] = !panels['modifiers'].modifierStatus[id];
+                panels.modifiers.modifierStatus[id] = !panels.modifiers.modifierStatus[id];
             });
 
             if('attributes' in modifier) {
@@ -59,7 +59,7 @@ modifiers.prototype = {
                             slide: function(event, ui) {
                                 modifierId = $(this).parents(".modifier").attr('id');
 
-                                panels['modifiers'].modifiers[modifierId][$(this).data($(this).attr('id'))] = ui.value;
+                                panels.modifiers.modifiers[modifierId][$(this).data($(this).attr('id'))] = ui.value;
                             }
                         });
                     }

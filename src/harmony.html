@@ -278,10 +278,10 @@
             }
 
             // initialize panel UI and hotkeys
-            panels['brushes'].initUI('brushColumn');
-            panels['palette'].initUI('brushColumn');
-            panels['canvas'].initUI('canvasColumn');
-            panels['modifiers'].initUI('canvasColumn'); // XXX: split up symmetry
+            panels.brushes.initUI('brushColumn');
+            panels.palette.initUI('brushColumn');
+            panels.canvas.initUI('canvasColumn');
+            panels.modifiers.initUI('canvasColumn'); // XXX: split up symmetry
             
             for (panelName in panels) {
                 panel = panels[panelName];

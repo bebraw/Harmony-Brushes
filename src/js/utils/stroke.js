@@ -76,18 +76,18 @@ StrokeManager.prototype = {
         }
     },
     applyJitterAndPaint: function ( point ) {
-        var size = panels['brushes'].getSize();
-        var opacity = panels['brushes'].getOpacity();
-        point = panels['brushes'].applyJitter(point);
+        var size = panels.brushes.getSize();
+        var opacity = panels.brushes.getOpacity();
+        point = panels.brushes.applyJitter(point);
 
         this.painters.paint(point, size, opacity, this.mode, this.points);
     },
     initPoints: function () {
         this.points = null;
-        var shadingType = panels['brushes'].getShadingType();
+        var shadingType = panels.brushes.getShadingType();
 
         if(shadingType == 'same') {
-            this.points = this.activeCanvas.getPointsOfType(panels['brushes'].selected);
+            this.points = this.activeCanvas.getPointsOfType(panels.brushes.selected);
         }
 
         if(shadingType == 'all') {

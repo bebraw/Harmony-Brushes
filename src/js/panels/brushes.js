@@ -88,7 +88,7 @@ brushes.prototype = {
 
         // TODO: figure out a neat way to visualize different modes
         //$("#brushMode").buttonset().click( function() {
-        //    panels['brushes'].renderBrushPreviews();
+        //    panels.brushes.renderBrushPreviews();
         //});
 
         // shading
@@ -133,9 +133,9 @@ brushes.prototype = {
                     function () {
                         // XXX: hack! figure out a nicer way to pass option name!
                         var option = $(this).attr('id').replace('brush', '').replace('pressure', '');
-                        var pressure = panels['brushes'].brushOptions[option].pressure;
+                        var pressure = panels.brushes.brushOptions[option].pressure;
 
-                        panels['brushes'].brushOptions[option].pressure = !pressure;
+                        panels.brushes.brushOptions[option].pressure = !pressure;
                     }
                 );
             }
@@ -156,8 +156,8 @@ brushes.prototype = {
                     change: function(event, ui) { // XXX: hook up this handler with slide too (preview!)
                         // XXX: hack! figure out a nicer way to pass option name!
                         var option = $(this).attr('id').replace('brush', '');
-                        panels['brushes'].brushOptions[option].value = ui.value;
-                        panels['brushes'].renderBrushPreviews();
+                        panels.brushes.brushOptions[option].value = ui.value;
+                        panels.brushes.renderBrushPreviews();
                     }
                 });
             }
@@ -190,8 +190,8 @@ brushes.prototype = {
             change: function(event, ui) { // XXX: hook up this handler with slide too (preview!)
                 // XXX: hack! figure out a nicer way to pass option name!
                 var option = $(this).attr('id').replace('jitter', '').replace('brush', '');
-                panels['brushes'].brushOptions[option].jitter.value = ui.value;
-                panels['brushes'].renderBrushPreviews();
+                panels.brushes.brushOptions[option].jitter.value = ui.value;
+                panels.brushes.renderBrushPreviews();
             }
         });
     },
@@ -207,7 +207,7 @@ brushes.prototype = {
             $('.brush:first').css('border', '1px dashed');
 
             $('#' + brushId).click(function() {
-                panels['brushes'].selected = $(this).attr('id');
+                panels.brushes.selected = $(this).attr('id');
 
                 // XXX: render bg as gray instead?
                 $('.brush').css('border', '');
@@ -231,7 +231,7 @@ brushes.prototype = {
 
         if( SHOWPREVIEWIMAGES ) {
             var brushPainter = new Painter(brushCanvas, brush,
-                panels['palette'].getColor());
+                panels.palette.getColor());
 
             var canvasWidth = brushCanvas.width;
             var pad = 10;

@@ -118,8 +118,8 @@ palette.prototype = {
 
             PALETTECORNERS[cornerName] = hexToRGB(hexColor);
 
-            panels['palette']._interpolateColors();
-            panels['brushes'].renderBrushPreviews();
+            panels.palette._interpolateColors();
+            panels.brushes.renderBrushPreviews();
         });
 
         $('.clickableColor').focus(function(e) {
@@ -127,7 +127,7 @@ palette.prototype = {
             var hexColor = colorToHex(color);
 
             COLOR = hexToRGB(hexColor);
-            panels['brushes'].renderBrushPreviews();
+            panels.brushes.renderBrushPreviews();
 
             $('.clickableColor').removeClass('activeColor');
             $(this).addClass('activeColor');
