@@ -21,6 +21,7 @@
         <script type="text/javascript" src="js/lib/base64.js"></script>
         <script type="text/javascript" src="js/lib/canvas2image.js"></script>
         <script type="text/javascript" src="js/lib/jscolor/jscolor.js"></script>
+        <script type="text/javascript" src="js/lib/stats.js"></script>
 
         <script type="text/javascript" src="js/lib/canvas.text.js"></script>
         <script type="text/javascript" src="js/lib/faces/helvetiker-normal-normal.js"></script>
@@ -295,6 +296,20 @@
             $('#brushColumn').children().css('background-color', 'black');
             $('#brushColumn').find('*').css('z-index', '100');
             $('#canvasColumn').find('*').css('z-index', '100');
+
+            if( DEBUG ) {
+                var stats = new Stats();
+                $('body').append('<div id="stats"></div>');
+                $('#stats').append(stats.domElement).css({
+                    'position': 'absolute',
+                    'bottom': '0px',
+                    'right': '0px'
+                }).find('*').css('z-index', '200');
+
+                setInterval(function () {
+                    stats.update();
+                }, 1000/60);
+            }
         </script>
     </body>
 </html>
