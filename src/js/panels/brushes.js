@@ -10,11 +10,7 @@ brushes.prototype = {
         'opacity': {'min': 0, 'max': 100, 'value': 50, 'pressure': true},
         'location': {}},
     init: function () {
-        //this.wacom = document.embeds["wacomPlugin"];
-
-        //if(!this.wacom.isWacom) {
-        this.wacom = {'pressure': 1.0}; // proxy
-        //}
+        this._checkWacom();
 
         this.brushes = {};
         
@@ -25,6 +21,19 @@ brushes.prototype = {
         }
 
         this.selected = BRUSHES[0];
+    },
+    _checkWacom: function () {
+        var wacomOk = false;
+
+        if( "wacom-plugin" in document.embeds ) {
+            this.wacom = document.embeds["wacom-plugin"];
+
+            wacomOk = this.wacom.isWacom;
+        }
+
+        if( !wacomOk ) {
+            this.wacom = {'pressure': 1.0}; // proxy
+        }
     },
     initHotkeys: function () {
         function toggleBrushValue(hotkey, attributeName) {

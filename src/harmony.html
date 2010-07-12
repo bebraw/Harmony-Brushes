@@ -257,6 +257,14 @@
         </div>
 
         <script type="text/javascript">
+            // Wacom support
+            if( navigator.mimeTypes["application/x-wacom-tablet"] ) {
+                $('body').append('<embed name="wacom-plugin"' +
+                    'id="wacom-plugin" type="application/x-wacom-tablet" ' +
+                    'HIDDEN="TRUE" />');
+            }
+
+            // UI
             var panels = {}
             for (var i = 0; i < PANELS.length; i++) {
                 var panelName = PANELS[i];
