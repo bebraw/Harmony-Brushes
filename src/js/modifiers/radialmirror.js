@@ -2,8 +2,7 @@
  * http://www.opensource.org/licenses/mit-license.php
  * Copyright (c) 2010 Mr.doob, rhyolight, bebraw
  */
-function radialmirror() {}
-radialmirror.prototype = {
+modifiers.radialmirror = {
     attributes: {'amount': {'type': 'int', 'min': 1, 'max': 16, 'value': 1}},
     modify: function (point) {
         // TODO: use some nice math lib for rot?

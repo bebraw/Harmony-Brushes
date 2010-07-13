@@ -6,8 +6,7 @@
 // TODO: figure out how to set direction!
 // TODO: add option to set follow cursor direction? (get direction vector)
 
-function array() {}
-array.prototype = {
+modifiers.array = {
     attributes: {'amount': {'type': 'int', 'min': 1, 'max': 16, 'value': 1},
         'distance': {'type': 'int', 'min': -40, 'max': 40, 'value': 5}},
     modify: function (point) {

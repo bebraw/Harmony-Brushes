@@ -2,8 +2,7 @@
  * http://www.opensource.org/licenses/mit-license.php
  * Copyright (c) 2010 Mr.doob, rhyolight, bebraw
  */
-function verticalmirror() {}
-verticalmirror.prototype = {
+modifiers.verticalmirror = {
     modify: function (point) {
         var canvasHeight = $('.activePage').height();
         

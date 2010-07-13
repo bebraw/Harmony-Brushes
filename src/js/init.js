@@ -6,6 +6,7 @@
 // globals
 panels = {};
 brushes = {};
+modifiers = {};
 
 // XXX: move to a nicer place (abstract out as a Mouse class?)
 // + figure out how to get loc without having to move mouse

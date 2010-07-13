@@ -8,18 +8,21 @@ panels.modifiers = {
         this.modifierStatus = {};
         this.modifiers = {};
 
-        // XXX: construct modifiers here (see brush panel)
+        for( var i = 0; i < MODIFIERS.length; i++ ) {
+            var modifierName = MODIFIERS[i];
+
+            this.modifiers[modifierName] = modifiers[modifierName];
+        }
 
         this._initUI();
     },
     _initUI: function () {
         setUpPanel(this.parentId, "Modifiers", ['right', 'top'], 150);
 
-        for (var i = 0; i < MODIFIERS.length; i++) {
-            var modifierName = MODIFIERS[i];
+        for (var modifierName in this.modifiers) {
             var modifierId = modifierName + 'Modifier';
             var modifierLabel = modifierId + 'Label';
-            var modifier = eval("new " + modifierName + "()");
+            var modifier = this.modifiers[modifierName];
 
             this.modifierStatus[modifierId] = false;
             this.modifiers[modifierId] = modifier;
