@@ -2,8 +2,7 @@
  * http://www.opensource.org/licenses/mit-license.php
  * Copyright (c) 2010 Mr.doob, rhyolight, bebraw
  */
-function squares() {}
-squares.prototype = {
+brushes.squares = {
     stroke: function (canvas, points, color, opacity)  {
         var b, a, g, e, c;
         b = points.current.x - points.previous.x;

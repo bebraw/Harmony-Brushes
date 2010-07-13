@@ -2,8 +2,7 @@
  * http://www.opensource.org/licenses/mit-license.php
  * Copyright (c) 2010 Mr.doob, rhyolight, bebraw
  */
-function circles() {}
-circles.prototype = {
+brushes.circles = {
     stroke: function (canvas, points, color, opacity) {
         var center = points.current.div(100).floor().mul(100).add(50);
         var sub = points.current.sub(points.previous);

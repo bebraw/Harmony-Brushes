@@ -11,11 +11,11 @@ panels.brushes = {
         this._checkWacom();
 
         this.brushes = {};
-        
+
         for( var i = 0; i < BRUSHES.length; i++ ) {
             var brushName = BRUSHES[i];
             
-            this.brushes[brushName] = eval("new " + brushName + '()');
+            this.brushes[brushName] = brushes[brushName];
         }
 
         this.selected = BRUSHES[0];

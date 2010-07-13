@@ -2,8 +2,7 @@
  * http://www.opensource.org/licenses/mit-license.php
  * Copyright (c) 2010 Mr.doob, rhyolight, bebraw
  */
-function web() {}
-web.prototype = {
+brushes.web = {
     attributes: {'shading distance': {'type': 'int', 'min': 1, 'max': 100,
         'value': 50}},
     stroke: function (canvas, points, color, opacity) {

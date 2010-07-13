@@ -2,8 +2,7 @@
  * http://www.opensource.org/licenses/mit-license.php
  * Copyright (c) 2010 Mr.doob, rhyolight, bebraw
  */
-function blur() {}
-blur.prototype = {
+brushes.blur = {
     stroke: function (canvas, points, color, opacity) {
         canvas.blur(points.current, 25);
     }

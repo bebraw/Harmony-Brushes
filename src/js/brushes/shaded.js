@@ -2,8 +2,7 @@
  * http://www.opensource.org/licenses/mit-license.php
  * Copyright (c) 2010 Mr.doob, rhyolight, bebraw
  */
-function shaded() {}
-shaded.prototype = {
+brushes.shaded = {
     attributes: {'shading distance': {'type': 'int', 'min': 1, 'max': 100,
         'value': 50}},
     stroke: function (canvas, points, color, opacity) {

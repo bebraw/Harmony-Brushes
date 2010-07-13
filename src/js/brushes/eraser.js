@@ -2,8 +2,7 @@
  * http://www.opensource.org/licenses/mit-license.php
  * Copyright (c) 2010 Mr.doob, rhyolight, bebraw
  */
-function eraser() {}
-eraser.prototype = {
+brushes.eraser = {
     stroke: function (canvas, points, color, opacity) {
         var radius = 1; // XXX: use brush size for radius! note that painter uses it context init! -> add flag for this case?
 

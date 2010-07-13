@@ -12,10 +12,7 @@ function bargs(c) {
     }
 }
 
-function ribbon() {
-    this.init();
-}
-ribbon.prototype = {
+brushes.ribbon = {
     init: function () {
         this.canvas = null;
         this.mouseX = null;
