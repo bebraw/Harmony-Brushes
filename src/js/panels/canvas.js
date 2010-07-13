@@ -2,18 +2,19 @@
  * http://www.opensource.org/licenses/mit-license.php
  * Copyright (c) 2010 Mr.doob, rhyolight, bebraw
  */
-function canvas() {
-    this.init();
-}
-canvas.prototype = {
+panels.canvas = {
+    parentId: 'canvasColumn',
     init: function () {
         this.projection = new projection();
+
+        this._initHotkeys();
+        this._initUI();
     },
-    initHotkeys: function () {
+    _initHotkeys: function () {
         this.projection.initHotkeys();
     },
-    initUI: function (parentId) {
-        setUpPanel(parentId, "Canvas", ["left", "bottom"], 230);
+    _initUI: function () {
+        setUpPanel(this.parentId, "Canvas", ["left", "bottom"], 230);
 
         // set up background panel
         $("#canvasPanel").append('<div id="canvasOptions"> \
@@ -34,8 +35,6 @@ canvas.prototype = {
             $('.activePage').css('backgroundColor', '#' + $(this).val());
         });
 
-        $("#canvasOptions").css("margin-bottom", "0.5em");
-
-        $("#canvasOptions").buttonset();
+        $("#canvasOptions").css("margin-bottom", "0.5em").buttonset();
     }
 }

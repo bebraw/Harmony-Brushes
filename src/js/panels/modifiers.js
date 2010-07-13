@@ -2,18 +2,18 @@
  * http://www.opensource.org/licenses/mit-license.php
  * Copyright (c) 2010 Mr.doob, rhyolight, bebraw
  */
-function modifiers() {
-    this.init();
-}
-modifiers.prototype = {
+panels.modifiers = {
+    parentId: 'canvasColumn',
     init: function () {
         this.modifierStatus = {};
         this.modifiers = {};
 
         // XXX: construct modifiers here (see brush panel)
+
+        this._initUI();
     },
-    initUI: function (parentId) {
-        setUpPanel(parentId, "Modifiers", ['right', 'top'], 150);
+    _initUI: function () {
+        setUpPanel(this.parentId, "Modifiers", ['right', 'top'], 150);
 
         for (var i = 0; i < MODIFIERS.length; i++) {
             var modifierName = MODIFIERS[i];

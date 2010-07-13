@@ -2,13 +2,13 @@
  * http://www.opensource.org/licenses/mit-license.php
  * Copyright (c) 2010 Mr.doob, rhyolight, bebraw
  */
-function playback() {
-    this.init();
-}
-playback.prototype = {
-    init: function () {},
-    initUI: function (parentId) {
-        setUpPanel(parentId, "Playback", "bottom", 220, 60);
+panels.playback = {
+    parentId: 'canvasColumn',
+    init: function () {
+        this._initUI();
+    },
+    _initUI: function () {
+        setUpPanel(this.parentId, "Playback", "bottom", 220, 60);
 
         // set up playback panel
         $("#playbackPanel").append('<button id="beginning">go to beginning</button> \

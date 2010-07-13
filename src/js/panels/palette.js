@@ -8,9 +8,13 @@
 // make it possible to return to previous colors in history and show them as well?
 // should history be lockable? -> custom color scheme (similar to the current system!)
 
-function palette() {}
-palette.prototype = {
-    initHotkeys: function () {
+panels.palette = {
+    parentId: 'brushColumn',
+    init: function () {
+        this._initHotkeys();
+        this._initUI();
+    },
+    _initHotkeys: function () {
         shortcut.add(HOTKEYS.palette.up, function(e) {
             var listIndex = $(".activeColor").parent().index();
             var listItem = $($(".activeColor").parent().parent().prev().children()[listIndex]);
@@ -39,13 +43,13 @@ palette.prototype = {
             next.length && next.focus();
         });
     },
-    initUI: function (parentId) {
+    _initUI: function () {
         var topLeftColor = RGBtoHex(PALETTECORNERS['topleft']);
         var topRightColor = RGBtoHex(PALETTECORNERS['topright']);
         var bottomLeftColor = RGBtoHex(PALETTECORNERS['bottomleft']);
         var bottomRightColor = RGBtoHex(PALETTECORNERS['bottomright']);
 
-        setUpPanel(parentId, "Palette", ["right", "bottom"], 220, 160);
+        setUpPanel(this.parentId, "Palette", ["right", "bottom"], 220, 160);
 
         // set up background panel
         $("#palettePanel").append('<div id="paletteColors" style="position: relative; left:-4em;"> \

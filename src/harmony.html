@@ -17,6 +17,7 @@
         <script type="text/javascript" src="js/lib/jquery-ui.js"></script>
         <script type="text/javascript" src="js/lib/jquery-keycodes.js"></script>
         <script type="text/javascript" src="js/lib/jquery-drag.js"></script>
+        <script type="text/javascript" src="js/lib/jquery-includemany.js"></script>
         <script type="text/javascript" src="js/lib/shortcut.js"></script>
         <script type="text/javascript" src="js/lib/base64.js"></script>
         <script type="text/javascript" src="js/lib/canvas2image.js"></script>
@@ -25,43 +26,6 @@
 
         <script type="text/javascript" src="js/lib/canvas.text.js"></script>
         <script type="text/javascript" src="js/lib/faces/helvetiker-normal-normal.js"></script>
-
-        <script type="text/javascript" src="js/panels/brushes.js"></script>
-        <script type="text/javascript" src="js/panels/canvas.js"></script>
-        <script type="text/javascript" src="js/panels/modifiers.js"></script>
-        <script type="text/javascript" src="js/panels/playback.js"></script>
-        <script type="text/javascript" src="js/panels/palette.js"></script>
-
-        <script type="text/javascript" src="js/brushes/sketchy.js"></script>
-        <script type="text/javascript" src="js/brushes/shaded.js"></script>
-        <script type="text/javascript" src="js/brushes/chrome.js"></script>
-        <script type="text/javascript" src="js/brushes/fur.js"></script>
-        <script type="text/javascript" src="js/brushes/longfur.js"></script>
-        <script type="text/javascript" src="js/brushes/web.js"></script>
-        <script type="text/javascript" src="js/brushes/simple.js"></script>
-        <script type="text/javascript" src="js/brushes/square.js"></script>
-        <script type="text/javascript" src="js/brushes/ribbon.js"></script>
-        <script type="text/javascript" src="js/brushes/circles.js"></script>
-        <script type="text/javascript" src="js/brushes/squares.js"></script>
-        <script type="text/javascript" src="js/brushes/grid.js"></script>
-        <script type="text/javascript" src="js/brushes/stringy.js"></script>
-        <script type="text/javascript" src="js/brushes/curvy.js"></script>
-        <script type="text/javascript" src="js/brushes/eraser.js"></script>
-        <script type="text/javascript" src="js/brushes/blur.js"></script>
-
-        <script type="text/javascript" src="js/modifiers/array.js"></script>
-        <script type="text/javascript" src="js/modifiers/group.js"></script>
-        <script type="text/javascript" src="js/modifiers/horizontalmirror.js"></script>
-        <script type="text/javascript" src="js/modifiers/radialmirror.js"></script>
-        <script type="text/javascript" src="js/modifiers/verticalmirror.js"></script>
-
-        <script type="text/javascript" src="js/projectors/cycletarget.js"></script>
-        <script type="text/javascript" src="js/projectors/horizontal.js"></script>
-        <script type="text/javascript" src="js/projectors/parallel.js"></script>
-        <script type="text/javascript" src="js/projectors/radial.js"></script>
-        <script type="text/javascript" src="js/projectors/settarget.js"></script>
-        <script type="text/javascript" src="js/projectors/target.js"></script>
-        <script type="text/javascript" src="js/projectors/vertical.js"></script>
 
         <script type="text/javascript" src="js/utils/canvas.js"></script>
         <script type="text/javascript" src="js/utils/color.js"></script>
@@ -77,147 +41,15 @@
         <script type="text/javascript" src="js/conf.js"></script>
         <script type="text/javascript" src="js/hotkeys.js"></script>
 
-        <script type="text/javascript">
-        $(function() {
-            // XXX: move to a nicer place (abstract out as a Mouse class?)
-            // + figure out how to get loc without having to move mouse
-            mouseLocation = new Point();
-            mousePressed = false; // XXX
-            moveCallbacks = {}; // XXX
-            var strokeManager = new StrokeManager();
-            var $pageNameInput = $('#pageName');
-
-            $('#newPageButton').button().click(function() {
-                // TODO: clean up page naming
-                newTab();
-                selectLastTab();
-            });
-
-            $('#about').click(function() {
-                $('#aboutDialog').dialog('open');
-            });
-
-            $("#aboutDialog").dialog({
-                height: 140, modal: true, autoOpen: false
-            });
-
-            // TODO: make it possible to modify name, bg color etc. as well
-            $('.modifyPage').live('click', function() {
-                $('#modifyPageDialog').dialog('open');
-            });
-
-            $("#modifyPageDialog").dialog({
-                height: 120, modal: true, autoOpen: false
-            });
-
-            var index = null;
-            $('.removePage').live('click', function() {
-                index = $('li',$tabs).index($(this).parent());
-
-                $('#deleteConfirmDialog').dialog('open');
-            });
-
-            $("#deleteConfirmDialog").dialog({
-                autoOpen: false,
-                resizable: false,
-                height:150,
-                modal: true,
-                buttons: {
-                    'Delete page': function() {
-                        $tabs.tabs('remove', index);
-                        $(this).dialog('close');
-                    },
-                    Cancel: function() {
-                        $(this).dialog('close');
-                    }
-                }
-            });
-
-            // page tools
-            $("#exportFormats").buttonset();
-            $("#exportButton").button().click(function() {
-                var selectedFormat = $('#exportFormats input:checked').val();
-
-                strokeManager.activeCanvas.saveAs(selectedFormat);
-
-                $('#modifyPageDialog').dialog('close');
-            });
-
-            $("#copyButton").button().click(function() {
-                var oldCanvas = strokeManager.activeCanvas;
-                var oldCanvasData = oldCanvas.getData();
-
-                newTab();
-                selectLastTab();
-
-                var newCanvas = strokeManager.activeCanvas;
-                newCanvas.setData(oldCanvasData);
-
-                $('#modifyPageDialog').dialog('close');
-            });
-
-            function newTab() { // XXX
-                var tab_title = $pageNameInput.val() || 'Tab ' + tabCounter;
-                $tabs.tabs('add', '#page' + tabCounter, tab_title);
-                tabCounter++;
-            }
-
-            function selectLastTab() { // XXX
-                $tabs.tabs('select', $tabs.tabs('length') - 1);
-            }
-
-            // set up initial canvas and overlay
-            createCanvas("page1");
-
-            function createCanvas(pageName) {
-                var canvasId = pageName + "Canvas";
-                var canvasWidth = screen.width;
-                var canvasHeight = window.innerHeight;
-
-                $("#main").append('<canvas id="' + canvasId + '" width="' +
-                    canvasWidth + '" height="' +
-                    canvasHeight + '" style="z-index:0;position:absolute;top:0px;left:0px;"' +
-                    ' class="pageCanvas"></canvas>' +
-                    '<canvas id="overlayCanvas" width="' + canvasWidth + '"' +
-                    ' height="' + canvasHeight +
-                    '" style="cursor:crosshair;z-index:100;position:absolute;top:0px;left:0px;"></canvas>'
-                 );
-
-                strokeManager.addCanvas(canvasId);
-
-                $("#overlayCanvas").bind('dragstart', function(e) {
-                    strokeManager.start(mouseLocation);
-
-                    mousePressed = true;
-                }).bind('drag', function(e) {
-                    strokeManager.paint(mouseLocation);
-                }).bind('dragend', function(e) {
-                    strokeManager.end(mouseLocation);
-
-                    mousePressed = false;
-                }).bind('mousemove', function(e) {
-                    mouseLocation = getMouseLocationOnCanvas(e);
-
-                    for( var moveCallbackName in moveCallbacks ) {
-                        var ob = moveCallbacks[moveCallbackName];
-
-                        ob.onDown(mouseLocation);
-                    }
-                });
-            }
-
-            function getMouseLocationOnCanvas(e) {
-                return new Point(e.layerX, e.layerY);
-            }
-        });
-        </script>
+        <script type="text/javascript" src="js/init.js"></script>
+        <script type="text/javascript" src="js/main.js"></script>
     </head>
     <body>
         <div id="main"></div>
 
-        <div id="brushColumn" style="position:absolute;left:0px;top:50px;background-color:black"></div>
+        <div id="brushColumn" class="column" style="position:absolute;left:0px;top:50px;background-color:black"></div>
 
-        <div id="canvasColumn" style="position:absolute;right:0px;top:50px;background-color:black">
+        <div id="canvasColumn" class="column" style="position:absolute;right:0px;top:50px;background-color:black">
             <div id="menu" style="height:2em">
                 <div id="pods">
                     <button id="newPageButton">New Page</button>
@@ -255,69 +87,5 @@
                     The page will be deleted permanently and cannot be recovered. Are you sure?
             </p>
         </div>
-
-        <script type="text/javascript">
-            // Wacom support
-            if( navigator.mimeTypes["application/x-wacom-tablet"] ) {
-                $('body').append('<embed name="wacom-plugin"' +
-                    'id="wacom-plugin" type="application/x-wacom-tablet" ' +
-                    'HIDDEN="TRUE" />');
-            }
-
-            // UI
-            var panels = {}
-            for (var i = 0; i < PANELS.length; i++) {
-                var panelName = PANELS[i];
-
-                var panel = eval("new " + panelName + "()");
-                panels[panelName] = panel;
-
-                shortcut.add((i+1).toString(), function(e) {
-                    var keyChar = $.charcode(e);
-                    var keyNum = parseInt(keyChar) - 1;
-                    var panel = PANELS[keyNum];
-
-                    if($("#" + panel + "Pod").css('visibility') == 'visible') {
-                        $("#" + panel + "Pod").click();
-                    }
-                    else {
-                        $("#" + panel + "Panel").dialog('close');
-                    }
-                });
-            }
-
-            // initialize panel UI and hotkeys
-            panels.brushes.initUI('brushColumn');
-            panels.palette.initUI('brushColumn');
-            panels.canvas.initUI('canvasColumn');
-            panels.modifiers.initUI('canvasColumn'); // XXX: split up symmetry
-            
-            for (panelName in panels) {
-                panel = panels[panelName];
-
-                if( 'initHotkeys' in panel ) {
-                    panel.initHotkeys();
-                }
-            }
-
-            // CSS hacks
-            $('#brushColumn').children().css('background-color', 'black');
-            $('#brushColumn').find('*').css('z-index', '100');
-            $('#canvasColumn').find('*').css('z-index', '100');
-
-            if( DEBUG ) {
-                var stats = new Stats();
-                $('body').append('<div id="stats"></div>');
-                $('#stats').append(stats.domElement).css({
-                    'position': 'absolute',
-                    'bottom': '0px',
-                    'right': '0px'
-                }).find('*').css('z-index', '200');
-
-                setInterval(function () {
-                    stats.update();
-                }, 1000/60);
-            }
-        </script>
     </body>
 </html>

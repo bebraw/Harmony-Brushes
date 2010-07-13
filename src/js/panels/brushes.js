@@ -2,13 +2,11 @@
  * http://www.opensource.org/licenses/mit-license.php
  * Copyright (c) 2010 Mr.doob, rhyolight, bebraw
  */
-function brushes() {
-    this.init();
-}
-brushes.prototype = {
+panels.brushes = {
     brushOptions: {'size': {'min': 1, 'max': 30, 'value': 1, 'pressure': false},
         'opacity': {'min': 0, 'max': 100, 'value': 50, 'pressure': true},
         'location': {}},
+    parentId: 'brushColumn',
     init: function () {
         this._checkWacom();
 
@@ -21,6 +19,9 @@ brushes.prototype = {
         }
 
         this.selected = BRUSHES[0];
+
+        this._initHotkeys();
+        this._initUI();
     },
     _checkWacom: function () {
         var wacomOk = false;
@@ -35,7 +36,7 @@ brushes.prototype = {
             this.wacom = {'pressure': 1.0}; // proxy
         }
     },
-    initHotkeys: function () {
+    _initHotkeys: function () {
         function toggleBrushValue(hotkey, attributeName) {
             shortcut.add(hotkey, function(e) {
                 var $toggle = $("#" + attributeName);
@@ -77,9 +78,9 @@ brushes.prototype = {
         increaseBrushValue(HOTKEYS.brushes.location.increaseJitter, 'brushlocationjitter');
         decreaseBrushValue(HOTKEYS.brushes.location.decreaseJitter, 'brushlocationjitter');
     },
-    initUI: function (parentId) {
+    _initUI: function () {
         var panelWidth = 220;
-        setUpPanel(parentId, "Brushes", "left", panelWidth, 410);
+        setUpPanel(this.parentId, "Brushes", "left", panelWidth, 410);
 
         // set up brushes panel
         $("#brushesPanel").append('<div id="brushes" style="height:170px;overflow:auto;position:relative"></div>' +
