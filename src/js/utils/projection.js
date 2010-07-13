@@ -7,6 +7,9 @@ function projection() {
 }
 projection.prototype = {
     init: function () {
+        PROJECTIONOVERLAYCOLOR = new RGBColor(PROJECTIONOVERLAYCOLOR);
+        DISABLEDTARGETCOLOR = new RGBColor(DISABLEDTARGETCOLOR);
+
         this._initProjectors();
         this._initHotkeys(); // TODO!
 

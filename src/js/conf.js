@@ -13,21 +13,20 @@ var PROJECTORS = ["horizontal", "vertical", "target", "radial", "parallel",
     "settarget", "cycletarget"];
 var PANELS = ["brushes", "canvas", "modifiers", "playback", "palette"];
 
-// color as RGB in range [0, 255]
-var COLOR = [0, 0, 0];
+var COLOR = 'black';
 var AMOUNTOFCOLORROWS = 5;
 var AMOUNTOFCOLORCOLUMNS = 8;
 
 // palette options
 var PALETTECORNERS = {
-    'topleft': [0, 0, 0],
-    'topright': [128, 128, 128],
-    'bottomleft': [128, 128, 128],
-    'bottomright': [255, 255, 255],
+    'topleft': 'black',
+    'topright': 'gray',
+    'bottomleft': 'gray',
+    'bottomright': 'white',
 }
 
 // background options
-var BACKGROUNDCOLOR = [128, 128, 128];
+var BACKGROUNDCOLOR = 'gray';
 
 // stroke filtering options
 var FILTERDISTANCE = 500;
@@ -35,13 +34,14 @@ var FILTERLENGTH = 3;
 
 var SHOWPREVIEWIMAGES = false;
 var PREVIEWFONTSIZE = '90px';
+var PREVIEWBACKGROUNDCOLOR = 'white';
 
 // projection options
-var PROJECTIONOVERLAYCOLOR = [0, 255, 0];
+var PROJECTIONOVERLAYCOLOR = 'limegreen';
 var PROJECTIONOVERLAYALPHA = 0.5;
 var PROJECTIONTARGETRADIUS = 10;
 var AMOUNTOFTARGETS = 3;
-var DISABLEDTARGETCOLOR = [255, 0, 0];
+var DISABLEDTARGETCOLOR = 'red';
 
 // hotkeys
 var HOTKEYS = {

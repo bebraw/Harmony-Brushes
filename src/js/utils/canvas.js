@@ -163,9 +163,8 @@ ProxyCanvas.prototype = {
     fill: function (color, alpha) {
         alpha=alpha?alpha:1.0;
         
-        this.context.fillStyle = "rgba(" + color[0] + ", " + color[1] +
-            ", " + color[2] + ", " + alpha + ")";
-        this.context.fillRect(0, 0, this.canvas.width, this.canvas.height);
+        this._setFillColor(color, alpha);
+        this.context.fillRect(0, 0, this.width, this.height);
     },
     text: function (label, colorName, font, x, y) {
         this.context.fillStyle = colorName;
@@ -173,14 +172,17 @@ ProxyCanvas.prototype = {
         this.context.fillText(label, x, y);
     },
     cross: function (loc, radius, color, alpha) {
-        this.stroke(new Point(loc.x - radius, loc.y), new Point(loc.x + radius, loc.y), color, alpha);
-        this.stroke(new Point(loc.x, loc.y - radius), new Point(loc.x, loc.y + radius), color, alpha);
+        alpha=alpha?alpha:1.0;
+
+        this.stroke(new Point(loc.x - radius, loc.y),
+            new Point(loc.x + radius, loc.y), color, alpha);
+        this.stroke(new Point(loc.x, loc.y - radius),
+            new Point(loc.x, loc.y + radius), color, alpha);
     },
     stroke: function (startLoc, endLoc, color, alpha) {
         alpha=alpha?alpha:1.0;
 
-        this.context.strokeStyle = "rgba(" + color[0] + ", " + color[1] +
-            ", " + color[2] + ", " + alpha + ")";
+        this._setStrokeColor(color, alpha);
         this.context.beginPath();
         this.context.moveTo(startLoc.x, startLoc.y);
         this.context.lineTo(endLoc.x, endLoc.y);
@@ -189,9 +191,8 @@ ProxyCanvas.prototype = {
     rect: function (xy1, xy2, xy3, xy4, color, alpha) {
         alpha=alpha?alpha:1.0;
 
-        this.context.fillStyle = "rgb(255, 255, 255)"; // XXX: replace with fillColor
-        this.context.strokeStyle = "rgba(" + color[0] + ", " + color[1] +
-            ", " + color[2] + ", " + alpha + ")";
+        this._setFillColor(new RGBColor('white'), 1.0); // TODO: expose fill color
+        this._setStrokeColor(color, alpha);
         this.context.beginPath();
         this.context.moveTo(xy1.x, xy1.y);
         this.context.lineTo(xy2.x, xy2.y);
@@ -202,27 +203,32 @@ ProxyCanvas.prototype = {
         this.context.stroke();
     },
     bezierCurve: function (begin, cp1, cp2, end, color, alpha) {
-        this.context.strokeStyle = "rgba(" + color[0] + ", " + color[1] +
-            ", " + color[2] + ", " + alpha + ")";
+        this._setStrokeColor(color, alpha);
         this.context.beginPath();
         this.context.moveTo(begin.x, begin.y);
         this.context.bezierCurveTo(cp1.x, cp1.y, cp2.x, cp2.y, end.x, end.y);
         this.context.stroke();
     },
     quadraticCurve: function (begin, cp, end, color, alpha) {
-        this.context.strokeStyle = "rgba(" + color[0] + ", " + color[1] +
-            ", " + color[2] + ", " + alpha + ")";
+        this._setStrokeColor(color, alpha);
         this.context.beginPath();
         this.context.moveTo(begin.x, begin.y);
         this.context.quadraticCurveTo(cp.x, cp.y, end.x, end.y);
         this.context.stroke();
     },
     circle: function (center, radius, color, alpha) {
-        this.context.strokeStyle = "rgba(" + color[0] + ", " + color[1] +
-            ", " + color[2] + ", " + alpha + ")";
+        this._setStrokeColor(color, alpha);
         this.context.beginPath();
         this.context.arc(center.x, center.y, radius, 0, Math.PI * 2, true);
         this.context.stroke()
+    },
+    _setFillColor: function (color, alpha) {
+        this.context.fillStyle = "rgba(" + color.r + ", " + color.g +
+            ", " + color.b + ", " + alpha + ")";
+    },
+    _setStrokeColor: function (color, alpha) {
+        this.context.strokeStyle = "rgba(" + color.r + ", " + color.g +
+            ", " + color.b + ", " + alpha + ")";
     },
     getAllPoints: function () {
         return this.strokes.all;

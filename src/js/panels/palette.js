@@ -11,8 +11,16 @@
 panels.palette = {
     parentId: 'brushColumn',
     init: function () {
+        this._initPaletteCornerColors();
         this._initHotkeys();
         this._initUI();
+    },
+    _initPaletteCornerColors: function () {
+        for (var paletteCornerName in PALETTECORNERS) {
+            var paletteCornerColor = PALETTECORNERS[paletteCornerName];
+
+            PALETTECORNERS[paletteCornerName] = new RGBColor(paletteCornerColor);
+        }
     },
     _initHotkeys: function () {
         shortcut.add(HOTKEYS.palette.up, function(e) {
@@ -44,10 +52,10 @@ panels.palette = {
         });
     },
     _initUI: function () {
-        var topLeftColor = RGBtoHex(PALETTECORNERS['topleft']);
-        var topRightColor = RGBtoHex(PALETTECORNERS['topright']);
-        var bottomLeftColor = RGBtoHex(PALETTECORNERS['bottomleft']);
-        var bottomRightColor = RGBtoHex(PALETTECORNERS['bottomright']);
+        var topLeftColor = PALETTECORNERS.topleft.toHex();
+        var topRightColor = PALETTECORNERS.topright.toHex();
+        var bottomLeftColor = PALETTECORNERS.bottomleft.toHex();
+        var bottomRightColor = PALETTECORNERS.bottomright.toHex();
 
         setUpPanel(this.parentId, "Palette", ["right", "bottom"], 220, 160);
 
@@ -120,17 +128,30 @@ panels.palette = {
             var cornerName = $(this).attr('id').toLowerCase().replace('color', '');
             var hexColor = $(this).val();
 
-            PALETTECORNERS[cornerName] = hexToRGB(hexColor);
+            PALETTECORNERS[cornerName] = new RGBColor(hexColor);
 
             panels.palette._interpolateColors();
             panels.brushes.renderBrushPreviews();
         });
 
         $('.clickableColor').focus(function(e) {
+            function colorToHex(color) {
+                // http://stackoverflow.com/questions/638948/background-color-hex-to-js-variable-jquery
+                var parts = color.match(/^rgb\((\d+),\s*(\d+),\s*(\d+)\)$/);
+                // parts now should be ["rgb(0, 70, 255", "0", "70", "255"]
+
+                delete (parts[0]);
+                for (var i = 1; i <= 3; ++i) {
+                    parts[i] = parseInt(parts[i]).toString(16);
+                    if (parts[i].length == 1) parts[i] = '0' + parts[i];
+                }
+                return parts.join('');
+            }
+
             var color = $(this).css('background-color');
             var hexColor = colorToHex(color);
 
-            COLOR = hexToRGB(hexColor);
+            COLOR = new RGBColor(hexColor);
             panels.brushes.renderBrushPreviews();
 
             $('.clickableColor').removeClass('activeColor');
@@ -147,18 +168,16 @@ panels.palette = {
         return COLOR;
     },
     _interpolateColors: function() {
-        var topLeftColor = RGBtoHex(PALETTECORNERS['topleft']);
-        var topRightColor = RGBtoHex(PALETTECORNERS['topright']);
-        var bottomLeftColor = RGBtoHex(PALETTECORNERS['bottomleft']);
-        var bottomRightColor = RGBtoHex(PALETTECORNERS['bottomright']);
+        var topLeftColor = PALETTECORNERS.topleft;
+        var topRightColor = PALETTECORNERS.topright;
+        var bottomLeftColor = PALETTECORNERS.bottomleft;
+        var bottomRightColor = PALETTECORNERS.bottomright;
 
         for( var i = 0; i < AMOUNTOFCOLORROWS; i++ ) {
             var paletteRowId = 'paletteRow' + i;
             var fac = i / (AMOUNTOFCOLORROWS - 1);
-            var leftBoundColor = colorLerp(topLeftColor,
-                bottomLeftColor, fac);
-            var rightBoundColor = colorLerp(topRightColor,
-                bottomRightColor, fac);
+            var leftBoundColor = topLeftColor.lerp(bottomLeftColor, fac);
+            var rightBoundColor = topRightColor.lerp(bottomRightColor, fac);
 
             this._interpolateColorRow(paletteRowId, leftBoundColor,
                 rightBoundColor);
@@ -167,9 +186,9 @@ panels.palette = {
     _interpolateColorRow: function(rowId, leftBoundColor, rightBoundColor) {
         $('#' + rowId + ' li input').each(function(k, v) {
             var fac = k / (AMOUNTOFCOLORCOLUMNS - 1);
-            var color = '#' + colorLerp(leftBoundColor, rightBoundColor, fac);
+            var color = leftBoundColor.lerp(rightBoundColor, fac);
 
-            $(this).css('background-color', color);
+            $(this).css('background-color', color.toHex());
         });
     }
 }

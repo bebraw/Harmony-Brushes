@@ -8,6 +8,8 @@ panels.brushes = {
         'location': {}},
     parentId: 'brushColumn',
     init: function () {
+        PREVIEWBACKGROUNDCOLOR = new RGBColor(PREVIEWBACKGROUNDCOLOR);
+
         this._checkWacom();
 
         this.brushes = {};
@@ -213,7 +215,8 @@ panels.brushes = {
 
             $("#brushes").append('<canvas class="brush" id="' + brushId + '"' +
                 ' style="height:' + brushHeight + 'px;width:' + brushWidth +
-                'px"' +  '></canvas>');
+                'px;background-color:' + PREVIEWBACKGROUNDCOLOR.toHex() +
+                '"' +  '></canvas>');
             $('.brush:first').css('border', '1px dashed');
 
             $('#' + brushId).click(function() {
@@ -237,7 +240,6 @@ panels.brushes = {
     },
     renderBrushPreview: function (brushName, brush) {
         var brushCanvas = new ProxyCanvas(brushName); // XXX: add Canvas suffix?
-        brushCanvas.fill([255, 255, 255]); // XXX: set background color using CSS instead
 
         if( SHOWPREVIEWIMAGES ) {
             var brushPainter = new Painter(brushCanvas, brush,

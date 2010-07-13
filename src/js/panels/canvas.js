@@ -19,7 +19,8 @@ panels.canvas = {
                     <input type="radio" id="textureCanvas" name="canvasOptions" value="texture" /><label for="textureCanvas">Texture</label> \
                 </div>');
 
-        var backgroundColor = RGBtoHex(BACKGROUNDCOLOR);
+        var backgroundColor = BACKGROUNDCOLOR.toHex();
+        
         $('#canvasPanel').append('<div id="solidColorSelector"> \
                 <input style="width: 1em; height: 1em; position: relative" class="color {valueElement:' +
                 "'backgroundColor'" + '}" /> \

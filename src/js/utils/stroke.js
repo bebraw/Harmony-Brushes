@@ -101,7 +101,7 @@ StrokeManager.prototype = {
         this.canvasii[canvasId] = new ProxyCanvas(canvasId);
         this.setActiveCanvas(canvasId);
 
-        $('#' + canvasId).css('backgroundColor', '#' + RGBtoHex(BACKGROUNDCOLOR));
+        $('#' + canvasId).css('backgroundColor', BACKGROUNDCOLOR.toHex());
     },
     removeCanvas: function (canvasId) {
         delete this.canvasii[canvasId];

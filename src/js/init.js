@@ -15,6 +15,8 @@ mouseLocation = new Point();
 mousePressed = false; // XXX
 moveCallbacks = {}; // XXX
 
+BACKGROUNDCOLOR = new RGBColor(BACKGROUNDCOLOR);
+
 // includes
 $(function(){
     var includes = {'brushes': {'items': BRUSHES},
