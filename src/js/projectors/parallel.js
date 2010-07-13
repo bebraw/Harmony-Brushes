@@ -2,8 +2,7 @@
  * http://www.opensource.org/licenses/mit-license.php
  * Copyright (c) 2010 Mr.doob, rhyolight, bebraw
  */
-function parallel() {}
-parallel.prototype = {
+projectors.parallel = {
     apply: function ( point, initialValue, targetValue, projectors ) {
         this.initParallelTarget(initialValue, targetValue, projectors);
 

@@ -7,11 +7,7 @@ panels.canvas = {
     init: function () {
         this.projection = new projection();
 
-        this._initHotkeys();
         this._initUI();
-    },
-    _initHotkeys: function () {
-        this.projection.initHotkeys();
     },
     _initUI: function () {
         setUpPanel(this.parentId, "Canvas", ["left", "bottom"], 230);

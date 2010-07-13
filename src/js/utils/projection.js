@@ -7,17 +7,24 @@ function projection() {
 }
 projection.prototype = {
     init: function () {
-        this.initProjectors();
-        this.initHotkeys();
+        this._initProjectors();
+        this._initHotkeys(); // TODO!
 
         this.targetValue = new Point();
     },
-    initProjectors: function () {
+    _initProjectors: function () {
         this.projectors = {};
-        
+
         for (var i = 0; i < PROJECTORS.length; i++) {
             var projectorName = PROJECTORS[i];
-            this.projectors[projectorName] = eval("new " + projectorName + '()');
+
+            if( 'init' in projectors[projectorName] ) {
+                this.projectors[projectorName] = projectors[projectorName].init();
+            }
+            else {
+                this.projectors[projectorName] = projectors[projectorName];
+            }
+
             var projector = this.projectors[projectorName];
 
             projector.isActive = false;
@@ -27,7 +34,7 @@ projection.prototype = {
                 var possibleMethod = possibleMethods[j];
                 
                 if( !(possibleMethod in this.projectors[projectorName]) ) {
-                    projector.__proto__[possibleMethod] = function() {};
+                    projector[possibleMethod] = function() {};
                 }
             }
         }
@@ -35,7 +42,7 @@ projection.prototype = {
     initInitialValues: function (point) {
         this.initialValue = point;
     },
-    initHotkeys: function () {
+    _initHotkeys: function () {
         var proj = this;
 
         function init(projectorName, projector) {

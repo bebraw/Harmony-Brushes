@@ -2,8 +2,7 @@
  * http://www.opensource.org/licenses/mit-license.php
  * Copyright (c) 2010 Mr.doob, rhyolight, bebraw
  */
-function radial() {}
-radial.prototype = {
+projectors.radial = {
     apply: function ( point, initialValue, targetValue ) {
         return projectRadially(targetValue, initialValue, point);
     },

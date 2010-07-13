@@ -2,8 +2,7 @@
  * http://www.opensource.org/licenses/mit-license.php
  * Copyright (c) 2010 Mr.doob, rhyolight, bebraw
  */
-function vertical() {}
-vertical.prototype = {
+projectors.vertical = {
     apply: function ( point, initialValue) {
         point.x = initialValue.x;
 

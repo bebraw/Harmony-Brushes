@@ -2,8 +2,7 @@
  * http://www.opensource.org/licenses/mit-license.php
  * Copyright (c) 2010 Mr.doob, rhyolight, bebraw
  */
-function cycletarget() {}
-cycletarget.prototype = {
+projectors.cycletarget = {
     onPress: function ( initialValue, targetValue, projectors ) {
         var currentTarget = projectors.settarget.currentTarget;
         currentTarget.cycle();

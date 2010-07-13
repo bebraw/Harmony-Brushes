@@ -2,10 +2,7 @@
  * http://www.opensource.org/licenses/mit-license.php
  * Copyright (c) 2010 Mr.doob, rhyolight, bebraw
  */
-function settarget() {
-    this.init();
-}
-settarget.prototype = {
+projectors.settarget = {
     init: function () {
         var canvasDiameter = 1 + PROJECTIONTARGETRADIUS * 2;
 
@@ -30,6 +27,8 @@ settarget.prototype = {
 
         this.initTargetCanvas('activeTarget', canvasDiameter,
             PROJECTIONOVERLAYCOLOR, 1.0);
+
+        return this;
     },
     initTargetCanvas: function ( id, diameter, color, alpha ) {
         $('#main').append('<canvas id="' + id + '"' +

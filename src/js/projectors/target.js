@@ -2,12 +2,11 @@
  * http://www.opensource.org/licenses/mit-license.php
  * Copyright (c) 2010 Mr.doob, rhyolight, bebraw
  */
-function target() {
-    this.init();
-}
-target.prototype = {
+projectors.target = {
     init: function () {
         this.previousInitial = new Point();
+
+        return this;
     },
     apply: function ( point, initialValue, targetValue ) {
         this.previousInitial = initialValue;
