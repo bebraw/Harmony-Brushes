@@ -26,7 +26,7 @@ var PALETTECORNERS = {
 }
 
 // background options
-var BACKGROUNDCOLOR = 'gray';
+var BACKGROUNDCOLOR = 'darkgray';
 
 // stroke filtering options
 var FILTERDISTANCE = 500;
