@@ -14,6 +14,8 @@ panels.palette = {
         this._initPaletteCornerColors();
         this._initHotkeys();
         this._initUI();
+
+        COLOR = new RGBColor(COLOR);
     },
     _initPaletteCornerColors: function () {
         for (var paletteCornerName in PALETTECORNERS) {
