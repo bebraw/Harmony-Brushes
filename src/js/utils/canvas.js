@@ -161,7 +161,7 @@ ProxyCanvas.prototype = {
         this.context.clearRect(0, 0, this.width, this.height);
     },
     fill: function (color, alpha) {
-        alpha=alpha?alpha:1.0;
+        alpha = alpha != undefined? alpha: 1.0;
         
         this._setFillColor(color, alpha);
         this.context.fillRect(0, 0, this.width, this.height);
@@ -172,7 +172,7 @@ ProxyCanvas.prototype = {
         this.context.fillText(label, x, y);
     },
     cross: function (loc, radius, color, alpha) {
-        alpha=alpha?alpha:1.0;
+        alpha = alpha != undefined? alpha: 1.0;
 
         this.stroke(new Point(loc.x - radius, loc.y),
             new Point(loc.x + radius, loc.y), color, alpha);
@@ -180,7 +180,7 @@ ProxyCanvas.prototype = {
             new Point(loc.x, loc.y + radius), color, alpha);
     },
     stroke: function (startLoc, endLoc, color, alpha) {
-        alpha=alpha?alpha:1.0;
+        alpha = alpha != undefined? alpha: 1.0;
 
         this._setStrokeColor(color, alpha);
         this.context.beginPath();
@@ -189,7 +189,7 @@ ProxyCanvas.prototype = {
         this.context.stroke();
     },
     rect: function (xy1, xy2, xy3, xy4, color, alpha) {
-        alpha=alpha?alpha:1.0;
+        alpha = alpha != undefined? alpha: 1.0;
 
         this._setFillColor(new RGBColor('white'), 1.0); // TODO: expose fill color
         this._setStrokeColor(color, alpha);
