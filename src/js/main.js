@@ -10,15 +10,41 @@ $(function() {
         // TODO: clean up page naming
         newTab();
         selectLastTab();
-    });
+    }).hide();
 
-    $('#about').click(function() {
+    $('#about').button().click(function() {
         $('#aboutDialog').dialog('open');
     });
 
     $("#aboutDialog").dialog({
-        height: 140, modal: true, autoOpen: false
+        height: 300, modal: true, autoOpen: false
     });
+
+    // get hotkeys from conf and render them to about dialog
+    // TODO: tidy up
+    function renderHotkeys(keys, legend) {
+        var $ret = $('<ul>');
+
+        if (legend) {
+            $ret.append('<label>' + legend + '</label>');
+        }
+
+        for (var i in keys) {
+            var k = keys[i];
+
+            if (typeof k == 'object') {
+                $ret.append(renderHotkeys(k, i));
+            }
+            else {
+                $ret.append('<li>' + i + ' - ' + k + '</li>');
+            }
+        }
+
+        return $ret;
+    }
+
+    var $hotkeys = renderHotkeys(HOTKEYS, 'Hotkeys');
+    $('#aboutDialog').append($hotkeys);
 
     // TODO: make it possible to modify name, bg color etc. as well
     $('.modifyPage').live('click', function() {
